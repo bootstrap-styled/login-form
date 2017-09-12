@@ -56,7 +56,7 @@ We recommend using a fixed version
 
 We have choosen a default LoginForm you can import.
  
-```jsx harmony
+```jsx
 import React from 'react';
 import LoginForm from 'login-form';
 
