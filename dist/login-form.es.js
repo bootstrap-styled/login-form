@@ -5,6 +5,23 @@ import styled, { keyframes } from 'styled-components';
 import cn from 'classnames';
 import { LoadingIndicator } from 'loaders';
 
+var theme$1 = makeTheme$1();
+function makeTheme$1() {
+  var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var newTheme = { loginForm: {} };
+  var u = userTheme;
+  newTheme.loginForm['$background-color'] = u.loginForm && u.loginForm['$background-color'] ? u.loginForm['$background-color'] : '#fff';
+  newTheme.loginForm['$box-shadow'] = u.loginForm && u.loginForm['$box-shadow'] ? u.loginForm['$box-shadow'] : '0px 1px 3px rgba(0, 0, 0, 0.25)';
+  newTheme.loginForm['$border-radius'] = u.loginForm && u.loginForm['$border-radius'] ? u.loginForm['$border-radius'] : '3px';
+  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
+  newTheme.loginForm['$max-width'] = u.loginForm && u.loginForm['$max-width'] ? u.loginForm['$max-width'] : '325px';
+  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
+  newTheme.loginForm['$color-light'] = u.loginForm && u.loginForm['$color-light'] ? u.loginForm['$color-light'] : '#999';
+  newTheme.loginForm.$color = u.loginForm && u.loginForm.$color ? u.loginForm.$color : '#666';
+  newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
+  return newTheme;
+}
+
 var asyncGenerator = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -212,15 +229,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var theme = makeTheme({
-  loginForm: {
-    '$background-color': '#fff',
-    '$color-lighter': '#EDEDED',
-    '$color-light': '#999',
-    $color: '#666',
-    '$color-dark': '#333'
-  }
-});
+var theme$2 = makeTheme(theme$1);
 var defaultProps$1 = {
   url: '/',
   header: null,
@@ -238,7 +247,7 @@ var defaultProps$1 = {
   onChange: null,
   onError: null,
   isSending: false,
-  theme: theme,
+  theme: theme$2,
   messages: {
     title: 'Login',
     username: 'Username',
@@ -248,7 +257,7 @@ var defaultProps$1 = {
   }
 };
 var loadingButtonDefaultProps = {
-  theme: theme
+  theme: theme$2
 };
 var LoadingButton = styled(Button).withConfig({
   displayName: 'LoginForm__LoadingButton'
@@ -425,6 +434,7 @@ var LoginForm = styled(LoginFormUnstyled).withConfig({
 });
 LoginForm.defaultProps = defaultProps$1;
 
+var theme = makeTheme(theme$1);
 var defaultProps = {
   url: '/',
   logo: null,
@@ -446,15 +456,7 @@ var defaultProps = {
     buttonLogin: 'Login',
     error: 'Please fill out the entire form'
   },
-  theme: makeTheme({
-    loginForm: {
-      '$background-color': '#fff',
-      '$box-shadow': '0px 1px 3px rgba(0, 0, 0, 0.25)',
-      '$border-radius': '3px',
-      '$color-lighter': '#EDEDED',
-      '$max-width': '325px'
-    }
-  })
+  theme: theme
 };
 var FormPageWrapperUnstyled = function (_React$Component) {
   inherits(FormPageWrapperUnstyled, _React$Component);
@@ -557,5 +559,5 @@ var FormPageWrapper = styled(FormPageWrapperUnstyled).withConfig({
 });
 FormPageWrapper.defaultProps = defaultProps;
 
-export default FormPageWrapper;
+export { FormPageWrapper as LoginForm };
 //# sourceMappingURL=login-form.es.js.map
