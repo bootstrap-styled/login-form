@@ -45,12 +45,12 @@ To enable ES features in older browsers, you MUST include in the package.json
 
 Quick install
 
-    npm install --save ssh://git@module.kopaxgroup.com:20024/bootstrap-styled/login-form.git
+    npm install --save git+ssh://git@module.kopaxgroup.com:20024/bootstrap-styled/login-form.git
     
 We recommend using a fixed version
 
     VERSION=0.0.1
-    npm install --save ssh://git@module.kopaxgroup.com:20024/bootstrap-styled/login-form.git#$VERSION
+    npm install --save git+ssh://git@module.kopaxgroup.com:20024/bootstrap-styled/login-form.git#$VERSION
 
 ## Usage
 
