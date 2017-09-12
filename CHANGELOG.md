@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - 2017-09-12
+
+- Corrected customization of theme in `README.md`.
+
 ## [0.0.4] - 2017-09-12
 
 - Clarify explanation and usage of `theme` in `README.md`.

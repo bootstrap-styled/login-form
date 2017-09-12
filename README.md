@@ -72,12 +72,12 @@ const customLoginForm = {
 
 const theme = {
   ...makeThemeBootstrap(customBootstrap),
-  ...makeThemeLoginForm(customLoginForm),
+  loginForm: makeThemeLoginForm(customLoginForm),
 };
 
 render(
 	<BootstrapProvider theme={theme)}>
-    <LoginForm />
+      <LoginForm />
 	</BootstrapProvider>,
 	document.getElementById('app')
 );
@@ -97,12 +97,12 @@ const customBootstrap = {
 
 const theme = {
   ...makeThemeBootstrap(customBootstrap),
-  ...themeLoginForm,
+  loginForm: themeLoginForm,
 };
 
 render(
 	<BootstrapProvider theme={theme}>
-    <LoginForm />
+      <LoginForm />
 	</BootstrapProvider>,
 	document.getElementById('app')
 );
@@ -140,7 +140,7 @@ render(
 
 | key         | sub-key             | value                             |
 |-------------|---------------------|-----------------------------------|
-| `formLogin` | `$background-color` | '#fff'                            |
+| `loginForm` | `$background-color` | '#fff'                            |
 |             | '$box-shadow`       | '0px 1px 3px rgba(0, 0, 0, 0.25)' |
 |             | `$border-radius`    | '3px'                             |
 |             | `$color-lighter`    | '#EDEDED'                         |
