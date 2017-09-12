@@ -16,6 +16,9 @@ login-form npm package is a group of LoginForm components made with [bootstrap-s
 
   - [Changelog](#changelog)
   - [Reminders](#reminders)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [LoginForm (default)](#loginform-default)
   - [Quick start](#quick-start)
   - [Release](#release)
   - [License](#license)
@@ -61,7 +64,7 @@ class MyPage extends React.PureComponent {
   render() {
     return (
       <LoginForm {...props} />
-    ):
+    );
   }
 }
 
