@@ -67,12 +67,14 @@ const customBootstrap = {
 };
 
 const customLoginForm = {
-  '$border-radius': '0',
+  loginForm: {
+    '$border-radius': '0',  
+  },
 };
 
 const theme = {
   ...makeThemeBootstrap(customBootstrap),
-  loginForm: makeThemeLoginForm(customLoginForm),
+  ...makeThemeLoginForm(customLoginForm),
 };
 
 render(
@@ -97,7 +99,7 @@ const customBootstrap = {
 
 const theme = {
   ...makeThemeBootstrap(customBootstrap),
-  loginForm: themeLoginForm,
+  ...themeLoginForm,
 };
 
 render(
