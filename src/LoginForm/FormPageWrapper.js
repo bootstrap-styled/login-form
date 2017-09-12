@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 import { Alert, Small, boxShadow, radius, makeTheme } from 'bootstrap-styled';
 import styled, { keyframes } from 'styled-components';
 import cn from 'classnames';
-
+import themeLoginForm from './theme';
 import LoginForm from './LoginForm';
+const theme = makeTheme(themeLoginForm);
 
 export const defaultProps = {
   url: '/',
@@ -31,15 +32,7 @@ export const defaultProps = {
     buttonLogin: 'Login',
     error: 'Please fill out the entire form',
   },
-  theme: makeTheme({
-    loginForm: {
-      '$background-color': '#fff',
-      '$box-shadow': '0px 1px 3px rgba(0, 0, 0, 0.25)',
-      '$border-radius': '3px',
-      '$color-lighter': '#EDEDED',
-      '$max-width': '325px',
-    },
-  }),
+  theme,
 };
 
 // eslint-disable-next-line react/prefer-stateless-function

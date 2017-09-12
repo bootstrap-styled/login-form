@@ -12,16 +12,9 @@ import styled from 'styled-components';
 import cn from 'classnames';
 import { LoadingIndicator } from 'loaders';
 import { Form, Button, makeTheme } from 'bootstrap-styled';
+import themeLoginForm from './theme';
 
-const theme = makeTheme({
-  loginForm: {
-    '$background-color': '#fff',
-    '$color-lighter': '#EDEDED',
-    '$color-light': '#999',
-    $color: '#666',
-    '$color-dark': '#333',
-  },
-});
+const theme = makeTheme(themeLoginForm);
 
 export const defaultProps = {
   url: '/',
