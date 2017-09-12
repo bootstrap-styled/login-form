@@ -94,9 +94,9 @@ render(
 );
 ``` 
 
-## LoginForm (default)
+## LoginForm
 
-**props**
+**props**:
 
 | Name        | Type     | Default                        | Description               |
 |-------------|----------|--------------------------------|---------------------------|
@@ -112,7 +112,7 @@ render(
 | `error`     | any      | null                           | toggle error state        |
 | `messages`  | object   | (see below)                    | change default messages   |
 
-**messages** : 
+**messages**: 
 
 | key           | value                             |
 |---------------|-----------------------------------|
@@ -122,9 +122,18 @@ render(
 | `buttonLogin` | 'Login'                           |
 | `error`       | 'Please fill out the entire form' |
 
-**theme** (Use with `<BootstrapProvider />`):
+**theme**:
 
-
+| key         | sub-key             | value                             |
+|-------------|---------------------|-----------------------------------|
+| `formLogin` | `$background-color` | '#fff'                            |
+|             | '$box-shadow`       | '0px 1px 3px rgba(0, 0, 0, 0.25)' |
+|             | `$border-radius`    | '3px'                             |
+|             | `$color-lighter`    | '#EDEDED'                         |
+|             | `$color-lighter`    | '#EDEDED'                         |
+|             | `$color-light`      | '#999'                            |
+|             | `$color`            | '#666'                            |
+|             | `$color-dark`       | '#333'                            |
 
 ## Quick start
 
