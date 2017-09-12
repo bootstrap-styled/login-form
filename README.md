@@ -54,22 +54,45 @@ We recommend using a fixed version
 
 ## Usage
 
-We have choosen a default LoginForm you can import.
+Our form can be imported from `login-form/lib/$Form`:
  
-```jsx
+```jsx harmony
 import React from 'react';
-import LoginForm from 'login-form';
+import { render } from 'react-dom';
+import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
+import { LoginForm, makeTheme as makeThemeLoginForm } from 'login-form/lib/LoginForm';
 
-class MyPage extends React.PureComponent {
-  render() {
-    return (
-      <LoginForm {...props} />
-    );
-  }
-}
+render(
+	<BootstrapProvider theme={makeTheme(makeThemeLoginForm())}>
+    <LoginForm />
+	</BootstrapProvider>,
+	document.getElementById('app')
+);
 ```
 
-Note: There is currently only one Form, more about to come.
+**Explanation**
+
+- We import `makeTheme` from 'bootstrap-styled' to get all the theme of `bootstrap-styled`
+- We import `makeTheme` that will provide the `<LoginForm />` theme extensions.
+- We do `makeTheme(makeThemeLoginForm())` to build a theme with `bootstrap-styled` and `<LoginForm />` theme extensions.
+
+**Note**
+
+If you don't want to edit the theme you can also import `theme` from `login-form/lib/LoginForm`, eg:
+
+```jsx harmony
+import React from 'react';
+import { render } from 'react-dom';
+import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
+import { LoginForm, theme as themeLoginForm } from 'login-form/lib/LoginForm';
+
+render(
+	<BootstrapProvider theme={makeTheme(themeLoginForm)}>
+    <LoginForm />
+	</BootstrapProvider>,
+	document.getElementById('app')
+);
+``` 
 
 ## LoginForm (default)
 
@@ -98,6 +121,10 @@ Note: There is currently only one Form, more about to come.
 | `password`    | 'Password'                        |
 | `buttonLogin` | 'Login'                           |
 | `error`       | 'Please fill out the entire form' |
+
+**theme** (Use with `<BootstrapProvider />`):
+
+
 
 ## Quick start
 
