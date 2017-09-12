@@ -70,6 +70,6 @@ describe('<FormPageWrapper />', () => {
         <FormPageWrapper {...Object.assign({}, props, { messages: { title: 'new title' } })} />
       </BootstrapProvider>
     );
-    expect(renderedComponent.find('.form-page__form-heading').text()).toEqual('Hello error');
+    expect(renderedComponent.find('.form-page__form-heading').text()).toEqual('new title');
   });
 });
