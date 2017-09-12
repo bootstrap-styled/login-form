@@ -54,40 +54,54 @@ We recommend using a fixed version
 
 ## Usage
 
-Our form can be imported from `login-form/lib/$Form`:
+Our form can be imported from `login-form/lib/*`:
  
 ```jsx
 import React from 'react';
 import { render } from 'react-dom';
-import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
+import { BootstrapProvider, makeTheme as makeThemeBootstrap }  from 'bootstrap-styled';
 import { LoginForm, makeTheme as makeThemeLoginForm } from 'login-form/lib/LoginForm';
 
+const customBootstrap = {
+  '$enable-rounded': true,
+};
+
+const customLoginForm = {
+  '$border-radius': '0',
+};
+
+const theme = {
+  ...makeThemeBootstrap(customBootstrap),
+  ...makeThemeLoginForm(customLoginForm),
+};
+
 render(
-	<BootstrapProvider theme={makeTheme(makeThemeLoginForm())}>
+	<BootstrapProvider theme={theme)}>
     <LoginForm />
 	</BootstrapProvider>,
 	document.getElementById('app')
 );
 ```
 
-**Explanation**
-
-- We import `makeTheme` from 'bootstrap-styled' to get all the theme of `bootstrap-styled`
-- We import `makeTheme` that will provide the `<LoginForm />` theme extensions.
-- We do `makeTheme(makeThemeLoginForm())` to build a theme with `bootstrap-styled` and `<LoginForm />` theme extensions.
-
-**Note**
-
-If you don't want to edit the theme you can also import `theme` from `login-form/lib/LoginForm`, eg:
+If you don't want to customize the `theme` and use it's with it's default values, it is also possible to import `theme` (like in `bootstrap-styled`):
 
 ```jsx
 import React from 'react';
 import { render } from 'react-dom';
-import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
+import { BootstrapProvider, makeTheme as makeThemeBootstrap }  from 'bootstrap-styled';
 import { LoginForm, theme as themeLoginForm } from 'login-form/lib/LoginForm';
 
+const customBootstrap = {
+  '$enable-rounded': true,
+};
+
+const theme = {
+  ...makeThemeBootstrap(customBootstrap),
+  ...themeLoginForm,
+};
+
 render(
-	<BootstrapProvider theme={makeTheme(themeLoginForm)}>
+	<BootstrapProvider theme={theme}>
     <LoginForm />
 	</BootstrapProvider>,
 	document.getElementById('app')

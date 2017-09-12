@@ -533,7 +533,7 @@ var FormPageWrapperUnstyled = function (_React$Component) {
 }(React.Component);
 FormPageWrapperUnstyled.defaultProps = defaultProps;
 FormPageWrapperUnstyled.propTypes = {
-  logo: PropTypes.string,
+  logo: PropTypes.node,
   version: PropTypes.string,
   className: PropTypes.string.isRequired,
   url: PropTypes.string,

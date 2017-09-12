@@ -39,7 +39,7 @@ export const defaultProps = {
 class FormPageWrapperUnstyled extends React.Component {
   static defaultProps = defaultProps;
   static propTypes = {
-    logo: PropTypes.string,
+    logo: PropTypes.node,
     version: PropTypes.string,
     className: PropTypes.string.isRequired,
     url: PropTypes.string,
