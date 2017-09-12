@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { BootstrapProvider, theme as bsTheme } from 'bootstrap-styled';
+import { BootstrapProvider } from 'bootstrap-styled';
 import FormPageWrapper, { defaultProps } from '../FormPageWrapper';
 
 describe('<FormPageWrapper />', () => {
@@ -8,9 +8,7 @@ describe('<FormPageWrapper />', () => {
   let props;
 
   beforeEach(() => {
-    theme = Object.assign(bsTheme, {
-      loginForm: defaultProps.theme.loginForm,
-    });
+    theme = defaultProps.theme;
     props = Object.assign(defaultProps, {
       onSubmit: jest.fn(),
       onError: jest.fn(),

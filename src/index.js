@@ -1,1 +1,1 @@
-export { default as LoginForm } from './LoginForm';
+export { default as LoginForm, makeTheme as makeThemeLoginForm, theme as themeLoginForm } from './LoginForm';
