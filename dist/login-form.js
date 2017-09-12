@@ -438,7 +438,7 @@ var LoginForm = styled__default(LoginFormUnstyled).withConfig({
 });
 LoginForm.defaultProps = defaultProps$1;
 
-var theme = bootstrapStyled.makeTheme(theme$1);
+var theme$$1 = bootstrapStyled.makeTheme(theme$1);
 var defaultProps = {
   url: '/',
   logo: null,
@@ -460,7 +460,7 @@ var defaultProps = {
     buttonLogin: 'Login',
     error: 'Please fill out the entire form'
   },
-  theme: theme
+  theme: theme$$1
 };
 var FormPageWrapperUnstyled = function (_React$Component) {
   inherits(FormPageWrapperUnstyled, _React$Component);
@@ -564,6 +564,8 @@ var FormPageWrapper = styled__default(FormPageWrapperUnstyled).withConfig({
 FormPageWrapper.defaultProps = defaultProps;
 
 exports.LoginForm = FormPageWrapper;
+exports.makeThemeLoginForm = makeTheme$1;
+exports.themeLoginForm = theme$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
