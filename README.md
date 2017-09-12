@@ -67,7 +67,6 @@ class MyPage extends React.PureComponent {
     );
   }
 }
-
 ```
 
 Note: There is currently only one Form, more about to come.
