@@ -18,7 +18,7 @@ login-form npm package is a group of LoginForm components made with [bootstrap-s
   - [Reminders](#reminders)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [LoginForm (default)](#loginform-default)
+  - [LoginForm](#loginform)
   - [Quick start](#quick-start)
   - [Release](#release)
   - [License](#license)
@@ -56,7 +56,7 @@ We recommend using a fixed version
 
 Our form can be imported from `login-form/lib/$Form`:
  
-```jsx harmony
+```jsx
 import React from 'react';
 import { render } from 'react-dom';
 import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
@@ -80,7 +80,7 @@ render(
 
 If you don't want to edit the theme you can also import `theme` from `login-form/lib/LoginForm`, eg:
 
-```jsx harmony
+```jsx
 import React from 'react';
 import { render } from 'react-dom';
 import { BootstrapProvider, makeTheme }  from 'bootstrap-styled';
