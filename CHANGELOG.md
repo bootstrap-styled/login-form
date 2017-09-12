@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2017-09-12
+
+- Clarify explanation and usage of `theme` in `README.md`.
+- Corrected default propTypes for prop `logo`.
+
 ## [0.0.3] - 2017-09-12
 
 - Added `<FormLogin />` exports of component, makeTheme and theme in `index.js`.
