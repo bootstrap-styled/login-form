@@ -1,4 +1,4 @@
-import theme, { makeTheme } from '../theme';
+import { makeTheme, theme } from '../theme';
 
 describe('makeTheme', () => {
   it('should use default values', () => {

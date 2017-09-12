@@ -1,6 +1,4 @@
-const theme = makeTheme();
-
-export default theme;
+export const theme = makeTheme();
 
 export function makeTheme(userTheme = {}) {
   const newTheme = { loginForm: {} };

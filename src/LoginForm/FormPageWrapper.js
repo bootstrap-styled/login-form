@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Alert, Small, boxShadow, radius, makeTheme } from 'bootstrap-styled';
 import styled, { keyframes } from 'styled-components';
 import cn from 'classnames';
-import themeLoginForm from './theme';
+import { theme as themeLoginForm } from './theme';
 import LoginForm from './LoginForm';
 const theme = makeTheme(themeLoginForm);
 

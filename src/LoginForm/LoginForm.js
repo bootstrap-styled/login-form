@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import cn from 'classnames';
 import { LoadingIndicator } from 'loaders';
 import { Form, Button, makeTheme } from 'bootstrap-styled';
-import themeLoginForm from './theme';
+import { theme as themeLoginForm } from './theme';
 
 const theme = makeTheme(themeLoginForm);
 

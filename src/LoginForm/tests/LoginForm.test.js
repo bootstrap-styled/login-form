@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { BootstrapProvider, theme as bsTheme } from 'bootstrap-styled';
+import { BootstrapProvider } from 'bootstrap-styled';
 import LoginForm, { defaultProps } from '../LoginForm';
 
 describe('<LoginForm />', () => {
@@ -8,9 +8,7 @@ describe('<LoginForm />', () => {
   let props;
 
   beforeEach(() => {
-    theme = Object.assign(bsTheme, {
-      loginForm: defaultProps.theme.loginForm,
-    });
+    theme = defaultProps.theme;
     props = Object.assign(defaultProps, {
       isSending: false,
       formData: {
