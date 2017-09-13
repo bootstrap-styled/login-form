@@ -18,7 +18,7 @@ login-form npm package is a group of LoginForm components made with [bootstrap-s
   - [Reminders](#reminders)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [LoginForm](#loginform)
+  - [Components](#components)
   - [Quick start](#quick-start)
   - [Release](#release)
   - [License](#license)
@@ -49,7 +49,7 @@ Quick install
     
 We recommend using a fixed version
 
-    VERSION=0.0.1
+    VERSION=v0.0.1
     npm install --save git+ssh://git@module.kopaxgroup.com:20024/bootstrap-styled/login-form.git#$VERSION
 
 ## Usage
@@ -67,7 +67,9 @@ const customBootstrap = {
 };
 
 const customLoginForm = {
-  '$border-radius': '0',
+  loginForm: {
+    '$border-radius': '0',  
+  },
 };
 
 const theme = {
@@ -76,9 +78,9 @@ const theme = {
 };
 
 render(
-	<BootstrapProvider theme={theme)}>
+  <BootstrapProvider theme={theme)}>
     <LoginForm />
-	</BootstrapProvider>,
+  </BootstrapProvider>,
 	document.getElementById('app')
 );
 ```
@@ -101,53 +103,16 @@ const theme = {
 };
 
 render(
-	<BootstrapProvider theme={theme}>
+  <BootstrapProvider theme={theme}>
     <LoginForm />
-	</BootstrapProvider>,
+  </BootstrapProvider>,
 	document.getElementById('app')
 );
 ``` 
 
-## LoginForm
+## Components
 
-**props**:
-
-| Name        | Type     | Default                        | Description               |
-|-------------|----------|--------------------------------|---------------------------|
-| `logo`      | string   | null                           | used under the form title |
-| `version`   | string   | null                           | used in the form footer   |
-| `url`       | string   | '/'                            | form action url           |
-| `isSending` | boolean  | false                          | toggle sending state      |
-| `onSubmit`  | function | null                           | handle onSubmit action    |
-| `onChange`  | function | null                           | handle onChange action    |
-| `onError`   | function | null                           | handle onError action     |
-| `formData`  | object   | { username: '', password: '' } | form data                 |
-| `success`   | any      | null                           | toggle success state      |
-| `error`     | any      | null                           | toggle error state        |
-| `messages`  | object   | (see below)                    | change default messages   |
-
-**messages**: 
-
-| key           | value                             |
-|---------------|-----------------------------------|
-| `title`       | 'Login'                           |
-| `username`    | 'Username'                        |
-| `password`    | 'Password'                        |
-| `buttonLogin` | 'Login'                           |
-| `error`       | 'Please fill out the entire form' |
-
-**theme**:
-
-| key         | sub-key             | value                             |
-|-------------|---------------------|-----------------------------------|
-| `formLogin` | `$background-color` | '#fff'                            |
-|             | '$box-shadow`       | '0px 1px 3px rgba(0, 0, 0, 0.25)' |
-|             | `$border-radius`    | '3px'                             |
-|             | `$color-lighter`    | '#EDEDED'                         |
-|             | `$color-lighter`    | '#EDEDED'                         |
-|             | `$color-light`      | '#999'                            |
-|             | `$color`            | '#666'                            |
-|             | `$color-dark`       | '#333'                            |
+- [LoginForm](src/LoginForm/README.md)
 
 ## Quick start
 

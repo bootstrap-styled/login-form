@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - 2017-09-13
+
+- Corrected customization of theme in `README.md`.
+- Upgrade `bootstrap-styled` from v1.3.0 to v1.3.2. 
+- Upgrade `loaders` from v0.0.1 to v0.0.2.
+- Moved `LoginForm` readme in `src/LoginForm/README.md`.
+
 ## [0.0.4] - 2017-09-12
 
 - Clarify explanation and usage of `theme` in `README.md`.
