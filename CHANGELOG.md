@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.7] - 2017-09-13
+
+- remove peer message on installation.
+
 ## [0.0.6] - 2017-09-13
 
 - props `error` and `success` are now expecting string message.
