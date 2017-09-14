@@ -51,8 +51,8 @@ class FormPageWrapperUnstyled extends React.Component {
       username: PropTypes.string,
       password: PropTypes.string,
     }).isRequired,
-    success: PropTypes.any,
-    error: PropTypes.any,
+    success: PropTypes.string,
+    error: PropTypes.string,
     messages: PropTypes.shape({
       title: PropTypes.string,
       username: PropTypes.string,
