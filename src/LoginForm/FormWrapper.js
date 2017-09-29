@@ -36,6 +36,7 @@ class FormWrapperUnstyled extends React.Component {
         'primary',
         'secondary',
         'warning',
+        'inverse',
       ]),
     }),
     hideNotification: PropTypes.func,

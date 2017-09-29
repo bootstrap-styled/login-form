@@ -6,11 +6,15 @@
 |---------------------|----------|--------------------------------|---------------------------|
 | `logo`              | any      | null                           | used under the form title |
 | `version`           | string   | null                           | display the version in the form footer   |
+| `notification`      | object   | { text: '', type: 'info' }     | notification system |
+| `hideNotificationDelay`| number | 3000                          | notification delay before hidding |
 | `header`            | any      | null                           | inserted in the header |
 | `footer`            | any      | null                           | inserted in the footer |
 | `beforeButton`      | any      | null                           | inserted before the button |
 | `onSubmit`          | function | null                           | handle onSubmit action    |
 | `initialValues`     | object   | { username: '', password: '' } | form initial values                 |
+| `placeHolder`       | object   | { username: 'Santaclauze', password: '••••••••••' } | form initial values                 |
+
 
 **theme**:
 
