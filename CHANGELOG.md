@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The login form now require [redux-form](https://www.npmjs.com/package/redux-form).
 
-- Upgrade CI image to `kopaxgroup/node8-jdk8-sonarscanner2`.
+- Upgrade CI image to `kopaxgroup/node8-jdk8-sonarscanner2-debian`.
 - Add dependency [classnames](https://www.npmjs.com/package/classnames) from ^2.2.5.
 - Add dependency [redux-form](https://www.npmjs.com/package/redux-form) from ^7.0.4.
 - Add dependency [bootstrap-styled-mixins](https://module.kopaxgroup.com/styled-components/bootstrap-styled-mixins/tags/v1.0.0) 1.0.0.
