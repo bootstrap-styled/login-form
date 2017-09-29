@@ -10,7 +10,7 @@
     "last 2 versions"
   ],
   "scripts": {
-    "prebuild": "npm run build:clean && npm run test",
+    "prebuild": "npm run build:clean",
     "build": "npm run build:lib && npm run build:dist",
     "prebuild:lib": "rimraf lib/*",
     "build:lib": "BABEL_ENV=production babel --out-dir lib src",
@@ -27,7 +27,7 @@
     "lint": "eslint src",
     "prepublish": "npm run build",
     "lint-staged": "lint-staged",
-    "rollup-umd": "node ./internal/rollup-umd --"
+    "rollup-umd": "node ./internals/rollup-umd --"
   },
   "repository": {
     "type": "git",
@@ -95,7 +95,15 @@
       "require-yield": 0,
       "jsx-a11y/aria-props": 2,
       "jsx-a11y/heading-has-content": 0,
-      "jsx-a11y/href-no-hash": 2,
+      "jsx-a11y/href-no-hash": "off",
+      "jsx-a11y/anchor-is-valid": [
+        "warn",
+        {
+          "aspects": [
+            "invalidHref"
+          ]
+        }
+      ],
       "jsx-a11y/label-has-for": 2,
       "jsx-a11y/mouse-events-have-key-events": 2,
       "jsx-a11y/role-has-required-aria-props": 2,
@@ -136,40 +144,77 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#v1.3.3",
+    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#v1.4.1",
+    "bootstrap-styled-mixins": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-mixins.git#v1.0.0",
+    "bootstrap-styled-motion": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-motion.git#v1.0.1",
     "classnames": "^2.2.5",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.0",
     "eslint-plugin-react": "^7.3.0",
+    "immutable": "^3.8.1",
     "jest-cli": "^21.0.1",
     "jest-sonar-reporter": "^1.3.0",
     "lint-staged": "^4.1.3",
-    "loaders": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/loaders.git#v0.0.3",
+    "loaders": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/loaders.git#0.0.4",
+    "message-common": "git+ssh://git@module.kopaxgroup.com:20024/translation/message-common.git",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-addons-test-utils": "^15.6.0",
-    "react-dom": "^15.6.1",
-    "react-test-renderer": "^15.6.1",
+    "prop-types": "^15.6.0",
+    "raf": "^3.3.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-intl": "^2.4.0",
+    "react-redux": "^5.0.6",
+    "react-test-renderer": "^16.0.0",
     "react-transition-group": "^1.2.0",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.49.3",
+    "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-cleanup": "^1.0.1",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-plugin-visualizer": "^0.3.1",
     "rollup-watch": "^4.3.1",
     "sinon": "^2.3.2",
     "styled-components": "^2.1.2",
     "toctoc": "^0.2.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "pre-commit": [
+    "build:readme",
+    "lint-staged"
+  ],
+  "peerDependencies": {
+    "immutable": "^3.8.1",
+    "react-transition-group": "^1.2.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "prop-types": "^15.6.0",
+    "styled-components": "^2.1.2",
+    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#v1.4.1",
+    "bootstrap-styled-motion": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-motion.git#v1.0.1",
+    "bootstrap-styled-mixins": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-mixins.git#v1.0.0",
+    "classnames": "^2.2.5",
+    "loaders": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/loaders.git#0.0.4",
+    "redux-form": "^7.0.4",
+    "redux": "^3.7.2",
+    "react-redux": "^5.0.6",
+    "react-intl": "^2.4.0",
+    "message-common": "git+ssh://git@module.kopaxgroup.com:20024/translation/message-common.git"
   },
   "jest": {
     "roots": [
@@ -185,10 +230,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
+        "statements": 89,
+        "branches": 89,
+        "functions": 70,
+        "lines": 89
       }
     },
     "moduleDirectories": [
@@ -196,27 +241,10 @@
       "src"
     ],
     "testRegex": "tests/.*\\.test\\.js$",
-    "testResultsProcessor": "jest-sonar-reporter"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "pre-commit": [
-    "build:readme",
-    "lint-staged"
-  ],
-  "dependencies": {},
-  "peerDependencies": {
-    "react-transition-group": "^1.2.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "prop-types": "^15.5.10",
-    "styled-components": "^2.1.2",
-    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#v1.3.3",
-    "classnames": "^2.2.5",
-    "loaders": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/loaders.git#v0.0.3"
+    "testResultsProcessor": "jest-sonar-reporter",
+    "setupFiles": [
+      "raf/polyfill"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/internals/testing/test-bundler.js"
   }
 }

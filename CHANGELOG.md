@@ -4,7 +4,32 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.7] - 2017-09-13
 
-- remove peer message on installation.
+The login form now require to be used with [redux-form](https://www.npmjs.com/package/redux-form).
+
+- Add dependency [classnames](https://www.npmjs.com/package/classnames) from ^2.2.5.
+- Add dependency [redux-form](https://www.npmjs.com/package/redux-form) from ^7.0.4.
+- Add dependency [bootstrap-styled-mixins](https://module.kopaxgroup.com/styled-components/bootstrap-styled-mixins/tags/v1.0.0) 1.0.0.
+- Add dependency [bootstrap-styled-motion](https://module.kopaxgroup.com/styled-components/bootstrap-styled-motion/tags/v1.0.1) 1.0.1.
+- Add dependency [enzyme-adapter-react-16](https://www.npmjs.com/package/enzyme-adapter-react-16) ^1.0.0.
+- Add dependency [immutable](https://www.npmjs.com/package/immutable) ^3.8.1.
+- Add dependency [message-common](https://module.kopaxgroup.com/translation/message-common/tags/v1.4.1) 1.4.1.
+- Add dependency [react-redux](https://www.npmjs.com/package/react-redux) ^5.0.6.
+- Add dependency [react-intl](https://www.npmjs.com/package/react-intl) ^2.4.0.
+- Add dependency [message-common](https://module.kopaxgroup.com/translation/message-common/tags/v1.4.0) 1.4.0.
+- Remove dependency [prop-types](https://www.npmjs.com/package/prop-types).
+- Remove dependency [react](https://www.npmjs.com/package/react).
+- Remove dependency [react-addons-test-utils](https://www.npmjs.com/package/react-addons-test-utils).
+- Remove dependency [react-dom](https://www.npmjs.com/package/react-dom).
+- Remove dependency [react-test-renderer](https://www.npmjs.com/package/react-test-renderer).
+- Remove dependency [rollup](https://www.npmjs.com/package/rollup).
+- Remove dependency [rollup-plugin-replace](https://www.npmjs.com/package/rollup-plugin-replace).
+- Remove dependency [toctoc](https://www.npmjs.com/package/toctoc).
+- Remove dependency [react-transition-group](https://www.npmjs.com/package/react-transition-group).
+- Remove dependency [styled-components](https://www.npmjs.com/package/styled-components).
+- Remove dependency [redux](https://www.npmjs.com/package/redux).
+- Upgrade dependency [bootstrap-styled](https://module.kopaxgroup.com/styled-components/bootstrap-styled/tags/v1.4.1) from 1.4.0 to 1.4.1.
+- Upgrade dependency [enzyme](https://www.npmjs.com/package/enzyme) from ^2.9.1 to ^3.0.0.
+- Upgrade dependency [loaders](https://www.npmjs.com/package/loaders) from 0.0.3 to 20024/styled-components/loaders.git#0.0.4.
 
 ## [0.0.6] - 2017-09-13
 

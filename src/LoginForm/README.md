@@ -2,29 +2,15 @@
 
 **props**:
 
-| Name        | Type     | Default                        | Description               |
-|-------------|----------|--------------------------------|---------------------------|
-| `logo`      | string   | null                           | used under the form title |
-| `version`   | string   | null                           | used in the form footer   |
-| `url`       | string   | '/'                            | form action url           |
-| `isSending` | boolean  | false                          | toggle sending state      |
-| `onSubmit`  | function | null                           | handle onSubmit action    |
-| `onChange`  | function | null                           | handle onChange action    |
-| `onError`   | function | null                           | handle onError action     |
-| `formData`  | object   | { username: '', password: '' } | form data                 |
-| `success`   | any      | null                           | toggle success state      |
-| `error`     | any      | null                           | toggle error state        |
-| `messages`  | object   | (see below)                    | change default messages   |
-
-**props.messages**: 
-
-| key           | value                             |
-|---------------|-----------------------------------|
-| `title`       | 'Login'                           |
-| `username`    | 'Username'                        |
-| `password`    | 'Password'                        |
-| `buttonLogin` | 'Login'                           |
-| `error`       | 'Please fill out the entire form' |
+| Name                | Type     | Default                        | Description               |
+|---------------------|----------|--------------------------------|---------------------------|
+| `logo`              | any      | null                           | used under the form title |
+| `version`           | string   | null                           | display the version in the form footer   |
+| `header`            | any      | null                           | inserted in the header |
+| `footer`            | any      | null                           | inserted in the footer |
+| `beforeButton`      | any      | null                           | inserted before the button |
+| `onSubmit`          | function | null                           | handle onSubmit action    |
+| `initialValues`     | object   | { username: '', password: '' } | form initial values                 |
 
 **theme**:
 

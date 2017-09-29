@@ -41,6 +41,9 @@ const plugins = [
   nodeResolve(),
   commonjs({
     include: 'node_modules/**',
+    namedExports: {
+      './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record'],
+    },
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'development'),
@@ -48,11 +51,11 @@ const plugins = [
   inject({
     process: processShim,
   }),
+  json(),
   babel({
     plugins: ['external-helpers'],
     exclude: 'node_modules/**',
   }),
-  json(),
   cleanup(),
 ];
 
@@ -62,9 +65,9 @@ export default {
   input: 'src/index.js',
   sourcemap: true,
   name: pkg.name,
-  external: ['react', 'react-dom', 'prop-types', 'styled-components', 'bootstrap-styled', 'classnames', 'react-transition-group', 'loaders'],
+  external: ['react', 'react-dom', 'prop-types', 'styled-components', 'bootstrap-styled', 'classnames', 'react-transition-group', 'loaders', 'redux-form', 'redux', 'react-redux', 'react-intl', 'message-common', 'bootstrap-styled-motion'],
   exports: 'named',
   output,
   plugins,
-  globals: { react: 'React', 'react-dom': 'ReactDom', 'prop-types': 'PropTypes', 'styled-components': 'styled', 'bootstrap-styled': 'BootstrapStyled', classnames: 'cn', 'react-transition-group': 'ReactTransitionGroup', loaders: 'loaders' },
+  globals: { react: 'React', 'react-dom': 'ReactDom', 'prop-types': 'PropTypes', 'styled-components': 'styled', 'bootstrap-styled': 'BootstrapStyled', classnames: 'cn', 'react-transition-group': 'ReactTransitionGroup', loaders: 'loaders', 'redux-form': 'redux-form', redux: 'redux', 'react-redux': 'react-redux', 'react-intl': 'react-intl', 'message-common': 'message-common', 'bootstrap-styled-motion': 'bootstrap-styled-motion' },
 };
