@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.7] - 2017-09-13
 
-The login form now require to be used with [redux-form](https://www.npmjs.com/package/redux-form).
+The login form now require [redux-form](https://www.npmjs.com/package/redux-form).
 
 - Upgrade CI image to `kopaxgroup/node8-jdk8-sonarscanner2`.
 - Add dependency [classnames](https://www.npmjs.com/package/classnames) from ^2.2.5.
