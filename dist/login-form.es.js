@@ -2985,6 +2985,74 @@ unwrapExports(unitUtils);
 
 var process = { argv: [], env: {} };
 
+var unitUtils$1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var UnitUtils = function UnitUtils() {
+  var _this = this;
+  _classCallCheck(this, UnitUtils);
+  this.UNIT = {
+    EM: 'em',
+    REM: 'rem',
+    PX: 'px',
+    PERCENT: '%'
+  };
+  this.math = {
+    addition: function addition(a, b) {
+      var unit = this.detectUnit(a) || this.detectUnit(b);
+      return this.rmUnit(a) + this.rmUnit(b) + unit;
+    }.bind(this),
+    subtract: function subtract(a, b) {
+      var unit = this.detectUnit(a) || this.detectUnit(b);
+      return this.rmUnit(a) - this.rmUnit(b) + unit;
+    }.bind(this),
+    multiply: function multiply(a, b) {
+      var unit = this.detectUnit(a) || this.detectUnit(b);
+      return this.rmUnit(a) * this.rmUnit(b) + unit;
+    }.bind(this),
+    divide: function divide(a, b) {
+      var unit = this.detectUnit(a) || this.detectUnit(b);
+      return this.rmUnit(a) / this.rmUnit(b) + unit;
+    }.bind(this)
+  };
+  this.detectUnit = function (value) {
+    var ext = void 0;
+    var valueStr = value.toString();
+    if (valueStr.match(_this.UNIT.PX)) {
+      ext = _this.UNIT.PX;
+    } else if (valueStr.match(_this.UNIT.REM)) {
+      ext = _this.UNIT.REM;
+    } else if (valueStr.match(_this.UNIT.EM)) {
+      ext = _this.UNIT.EM;
+    } else if (valueStr.match(_this.UNIT.PERCENT)) {
+      ext = _this.UNIT.PERCENT;
+    } else if (!isNaN(value)) {
+      return null;
+    } else {
+      throw new Error('detectUnit can\'t find unit for ' + value);
+    }
+    return ext;
+  };
+  this.rmUnit = function (value, unit) {
+    var valueStr = value.toString();
+    var ext = unit || _this.detectUnit(valueStr);
+    var number = valueStr.replace(ext, '');
+    return parseFloat(number);
+  };
+  this.toPercent = function (value) {
+    var total = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+    var decimal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2;
+    return '' + Math.floor(value / total * 100 * Math.pow(10, decimal)) / Math.pow(10, decimal) + _this.UNIT.PERCENT;
+  };
+};
+exports.default = new UnitUtils();
+module.exports = exports['default'];
+});
+unwrapExports(unitUtils$1);
+
 var variables = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
@@ -2993,7 +3061,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.assertAscending = assertAscending;
 exports.assertStartAtZero = assertStartAtZero;
 exports.comparable = comparable;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function assertAscending(map, mapName) {
   var prevKey = void 0;
@@ -4166,7 +4234,7 @@ exports.mediaBreakpointUp = mediaBreakpointUp;
 exports.mediaBreakpointDown = mediaBreakpointDown;
 exports.mediaBreakpointBetween = mediaBreakpointBetween;
 exports.mediaBreakpointOnly = mediaBreakpointOnly;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var defaultProps = exports.defaultProps = {
   '$grid-breakpoints': {
@@ -4258,7 +4326,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultProps = undefined;
 exports.customForms = customForms;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var defaultProps = exports.defaultProps = {
   '$enable-rounded': true,
@@ -4431,7 +4499,7 @@ exports.makeColOffset = makeColOffset;
 exports.makeColPush = makeColPush;
 exports.makeColPull = makeColPull;
 exports.makeColModifier = makeColModifier;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var defaultProps = exports.defaultProps = {
   '$grid-gutter-widths': {
@@ -13762,7 +13830,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultProps = undefined;
 exports.navDivider = navDivider;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var defaultProps = exports.defaultProps = {
   '$spacer-y': '1rem'
@@ -13787,7 +13855,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultProps = undefined;
 exports.buttonGroup = buttonGroup;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
+var _unitUtils2 = _interopRequireDefault(unitUtils$1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var defaultProps = exports.defaultProps = {
   '$enable-shadows': true,
@@ -16718,7 +16786,7 @@ FormWrapperUnstyled.propTypes = {
   version: _propTypes.any,
   notification: _propTypes.shape({
     text: _propTypes.string,
-    type: _propTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning'])
+    type: _propTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning', 'inverse'])
   }),
   hideNotification: _propTypes.func,
   hideNotificationDelay: _propTypes.number
