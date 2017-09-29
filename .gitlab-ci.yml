@@ -1,4 +1,4 @@
-image: kopaxgroup/node7-jdk8-sonarscanner2:latest
+image: kopaxgroup/node8-jdk8-sonarscanner2-docker17-debian:latest
 
 variables:
   GIT_STRATEGY: none
@@ -53,7 +53,6 @@ stages:
 # Job: Build
 build_dev:
   stage: build
-  coverage: '/All files[^|]*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*([\d.]*)\s*\|\s*/'
   script:
     - npm install
     - npm run build
@@ -79,7 +78,6 @@ build_dev:
 
 build:
   stage: build
-  coverage: '/All files[^|]*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*([\d.]*)\s*\|\s*/'
   script:
     - npm install
     - npm run build
@@ -102,7 +100,9 @@ build:
 # Job: Test
 test_dev:
   stage: test
+  coverage: '/All files[^|]*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*[\d.]*\s*\|\s*([\d.]*)\s*\|\s*/'
   script:
+    - npm run test
     - sonar-scanner -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.branch=${CI_COMMIT_REF_NAME} -Dsonar.projectVersion=${SONAR_VERSION}
   dependencies:
     - build_dev
@@ -114,6 +114,7 @@ test_dev:
 test:
   stage: test
   script:
+    - npm run test
     - sonar-scanner -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.branch=${CI_COMMIT_REF_NAME} -Dsonar.projectVersion=${SONAR_VERSION}
   dependencies:
     - build
@@ -127,13 +128,14 @@ release:
   stage: release
   script:
     # create branch for release version
-    - git checkout -b v${PACKAGE_VERSION}
-    - git push origin v${PACKAGE_VERSION}
+    - git checkout -b ${PACKAGE_VERSION}
+    - git push origin ${PACKAGE_VERSION}
     # tag version
-    - git tag -a -m "new version v${PACKAGE_VERSION}" v${PACKAGE_VERSION}
+    - git tag -a -m "new version ${PACKAGE_VERSION}" ${PACKAGE_VERSION}
     - git push --tags
     # prepare next dev version
     - git checkout dev
+    - git reset HEAD --hard
     - npm version patch
     - git push origin HEAD:dev
   dependencies:

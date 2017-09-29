@@ -1,2 +1,2 @@
-export { default } from './FormPageWrapper';
-export { makeTheme, theme } from './theme';
+export { default, default as LoginForm } from './FormWrapper';
+export * from './theme';

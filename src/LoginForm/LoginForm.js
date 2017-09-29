@@ -1,27 +1,28 @@
-/**
- * Form.react.js
- *
- * The form with a username and a password input field, both of which are
- * controlled via the application state.
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import cn from 'classnames';
+import { FormattedMessage } from 'react-intl';
+import messages from 'message-common';
 import { LoadingIndicator } from 'loaders';
-import { Form, Button, makeTheme } from 'bootstrap-styled';
+import { FadeInRight, theme as themeMotion } from 'bootstrap-styled-motion';
+import Form from 'bootstrap-styled/lib/Form';
+import makeTheme from 'bootstrap-styled/lib/makeTheme';
+import Field from 'redux-form/lib/immutable/Field';
+import reduxForm from 'redux-form/lib/immutable/reduxForm';
+import Button from 'bootstrap-styled/lib/Button';
+import P from 'bootstrap-styled/lib/P';
 import { theme as themeLoginForm } from './theme';
-
-const theme = makeTheme(themeLoginForm);
+import { validate as validateForm } from './validate';
+const theme = makeTheme({ ...themeLoginForm, ...themeMotion });
 
 export const defaultProps = {
-  url: '/',
   header: null,
   footer: null,
-  localToggle: null,
-  formData: {
+  beforeButton: null,
+  onSubmit: null,
+  loading: null,
+  initialValues: {
     username: '',
     password: '',
   },
@@ -29,155 +30,140 @@ export const defaultProps = {
     username: 'Santaclauze',
     password: '••••••••••',
   },
-  onSubmit: null,
-  onChange: null,
-  onError: null,
-  isSending: false,
-  theme,
-  messages: {
-    title: 'Login',
-    username: 'Username',
-    password: 'Password',
-    buttonLogin: 'Login',
-    error: 'Please fill out the entire form',
-  },
-};
-
-const loadingButtonDefaultProps = {
   theme,
 };
 
-const LoadingButton = styled(Button)`
-  ${(props) => `
-    &>span:first-child {
-      padding-right: ${props.theme['$padding-base-vertical']};
-    }
-  `}
+/* eslint-disable react/require-default-props */
+export const propTypes = {
+  header: PropTypes.node,
+  footer: PropTypes.node,
+  beforeButton: PropTypes.node,
+  className: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  initialValues: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string,
+  }),
+  placeHolder: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string,
+  }),
+  theme: PropTypes.object,
+};
+/* eslint-enable react/require-default-props */
+
+const ErrorParagraph = styled(P)`
+  position: absolute;
+  font-size: 0.8rem;
+  right: 0.2rem;
+  bottom: 0;
+  margin-bottom: 0;
 `;
 
-LoadingButton.defaultProps = loadingButtonDefaultProps;
+/* eslint-disable react/require-default-props, react/prop-types, no-unused-vars */
+const renderField = ({ input, placeHolder, theme: unused, type, label, name, meta: { touched, error } }) => (
+  <div>
+    <input className="form__field-input" {...input} type={type} placeholder={placeHolder} name={name} />
+    <label className="form__field-label" htmlFor={name}>
+      {label}
+    </label>
+    {touched && error && (
+      <FadeInRight inline={false}>
+        <ErrorParagraph color="warning" className="form_field-error">{' '}<FormattedMessage id={error} />{' '}<i className="fa fa-exclamation-circle" /></ErrorParagraph>
+      </FadeInRight>
+    )}
+  </div>
+);
+/* eslint-enable react/require-default-props, react/prop-types, no-unused-vars */
 
-class LoginFormUnstyled extends React.Component {
-  static defaultProps = defaultProps;
-  static propTypes = {
-    header: PropTypes.node,
-    footer: PropTypes.node,
-    localToggle: PropTypes.node,
-    url: PropTypes.string,
-    isSending: PropTypes.bool,
-    className: PropTypes.string.isRequired,
-    onSubmit: PropTypes.func,
-    onChange: PropTypes.func,
-    formData: PropTypes.shape({
-      username: PropTypes.string,
-      password: PropTypes.string,
-    }),
-    placeHolder: PropTypes.shape({
-      username: PropTypes.string,
-      password: PropTypes.string,
-    }),
-    onError: PropTypes.func,
-    messages: PropTypes.shape({
-      title: PropTypes.string,
-      username: PropTypes.string,
-      password: PropTypes.string,
-      buttonLogin: PropTypes.string,
-      error: PropTypes.string,
-    }),
-  }
+const LoginFormUnstyled = (props) => {
+  const {
+    className,
+    placeHolder,
+    header, footer,
+    beforeButton,
+    loading,
+    ...reduxFormProps
+  } = props;
+  const {
+    anyTouched,
+    asyncValidate,
+    asyncValidating,
+    blur,
+    change,
+    clearSubmit,
+    destroy,
+    dirty,
+    dispatch,
+    success,
+    error,
+    handleSubmit,
+    initialize,
+    initialized,
+    initialValues,
+    invalid,
+    pristine,
+    reset,
+    submitFailed,
+    submitSucceeded,
+    submitting,
+    touch,
+    untouch,
+    valid,
+    warning,
+    pure,
+    triggerSubmit,
+    autofill,
+    clearSubmitErrors,
+    clearAsyncError,
+    submit,
+    array,
+    onSubmit,
+    validate,
+    warn,
+    onError,
+    ...rest
+  } = reduxFormProps;
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { formData, onSubmit, onError, messages } = this.props;
-    const isValidated = this.validateForm(formData);
-    if (isValidated && onSubmit) {
-      onSubmit(formData);
-    } else if (!isValidated && onError) {
-      onError(new Error(messages.error));
-    }
-  }
-
-  onChange(formData) {
-    const { onChange } = this.props;
-    onChange(formData);
-  }
-
-  changePassword = (e) => {
-    const newState = this.mergeFormData({
-      password: e.target.value,
-    });
-    this.onChange(newState);
-  }
-
-  changeUsername = (evt) => {
-    const newState = this.mergeFormData({
-      username: evt.target.value,
-    });
-    this.onChange(newState);
-  }
-
-  mergeFormData(newFormData) {
-    const { formData } = this.props;
-    return Object.assign(formData, newFormData);
-  }
-
-  validateForm(formData) {
-    return formData.username.trim().length > 0 && formData.password.trim().length > 0;
-  }
-
-  render() {
-    const { url, className, isSending, messages: someMessages, placeHolder, header, footer, localToggle, ...props } = this.props;
-    const messages = Object.assign({}, defaultProps.messages, someMessages);
-
-    const { formData, onSubmit, onError, onChange, ...rest } = props;
-    return (
-      <Form action={url} name="login-form" className={cn('form', className)} onSubmit={this.onSubmit} {...rest}>
-        {header}
-        <div className="form__field-wrapper">
-          <input
-            className="form__field-input"
-            name="username"
-            type="text"
-            placeholder={placeHolder.username}
-            onChange={this.changeUsername}
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck="false"
-          />
-          <label className="form__field-label" htmlFor="username">{messages.username}</label>
+  return (
+    <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit(onSubmit)} {...rest}>
+      {header}
+      <div className="form__field-wrapper">
+        <Field
+          name="username"
+          type="text"
+          label={<FormattedMessage {...messages.formUsername} />}
+          placeHolder={placeHolder.username}
+          component={renderField}
+        />
+      </div>
+      <div className="form__field-wrapper">
+        <Field
+          name="password"
+          type="password"
+          label={<FormattedMessage {...messages.formPassword} />}
+          placeHolder={placeHolder.password}
+          component={renderField}
+        />
+      </div>
+      <div className="form__submit-btn-wrapper">
+        <div>
+          {beforeButton}
+          <Button disabled={loading || submitting} color="success">
+            {<FormattedMessage {...messages.authLogin} />}
+            {(loading || submitting) && (<span>{' '}<LoadingIndicator /></span>)}
+          </Button>
         </div>
-        <div className="form__field-wrapper">
-          <input
-            className="form__field-input"
-            name="password"
-            type="password"
-            placeholder={placeHolder.password}
-            onChange={this.changePassword}
-          />
-          <label className="form__field-label" htmlFor="password">{messages.password}</label>
-        </div>
-        <div className="form__submit-btn-wrapper">
-          {isSending ? (
-            <LoadingButton disabled color="primary">
-              {messages.buttonLogin}{' '}
-              <LoadingIndicator />
-            </LoadingButton>
-          ) : (
-            <div>
-              {localToggle}
-              <Button color="success">
-                {messages.buttonLogin}
-              </Button>
-            </div>
-          )}
-        </div>
-        {footer}
-      </Form>
-    );
-  }
-}
+      </div>
+      {footer}
+    </Form>
+  );
+};
 
-const LoginForm = styled(LoginFormUnstyled)`
+LoginFormUnstyled.propTypes = propTypes;
+
+const LoginFormStyled = styled(LoginFormUnstyled)`
   ${(props) => `
     .form__field-wrapper {
       width: 100%;
@@ -217,6 +203,10 @@ const LoginForm = styled(LoginFormUnstyled)`
       font-weight: 400;
       user-select: none;
       cursor: text;
+      
+      .form_field-error {
+        float: right;
+      }
     }
     
     .form__field-input {
@@ -240,6 +230,12 @@ const LoginForm = styled(LoginFormUnstyled)`
   `}
 `;
 
-LoginForm.defaultProps = defaultProps;
+LoginFormStyled.defaultProps = defaultProps;
+
+const LoginForm = reduxForm({
+  form: 'login',
+  enableReinitialize: false,
+  validate: validateForm,
+})(LoginFormStyled);
 
 export default LoginForm;
