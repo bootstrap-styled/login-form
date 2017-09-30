@@ -1,2853 +1,50 @@
-import _react from 'react';
-import _propTypes from 'prop-types';
-import _styledComponents, { keyframes } from 'styled-components';
-import _classnames from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { keyframes } from 'styled-components';
+import cn from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import messages from 'message-common';
-import _reactDom from 'react-dom';
+import { Alert, Button, Form, P, Small, makeTheme } from 'bootstrap-styled';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme } from 'bootstrap-styled-motion';
-import reactRedux from 'react-redux';
-import redux from 'redux';
+import _reactRedux from 'react-redux';
+import _redux from 'redux';
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
-}
 
-function unwrapExports (x) {
-	return x && x.__esModule ? x['default'] : x;
-}
+
+
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var chainFunction = function chain(){
-  var len = arguments.length;
-  var args = [];
-  for (var i = 0; i < len; i++)
-    args[i] = arguments[i];
-  args = args.filter(function(fn){ return fn != null });
-  if (args.length === 0) return undefined
-  if (args.length === 1) return args[0]
-  return args.reduce(function(current, next){
-    return function chainedFunction() {
-      current.apply(this, arguments);
-      next.apply(this, arguments);
-    };
-  })
-};
-
-'use strict';
-var __DEV__ = "development" !== 'production';
-var warning = function() {};
-if (__DEV__) {
-  warning = function(condition, format, args) {
-    var len = arguments.length;
-    args = new Array(len > 2 ? len - 2 : 0);
-    for (var key = 2; key < len; key++) {
-      args[key - 2] = arguments[key];
-    }
-    if (format === undefined) {
-      throw new Error(
-        '`warning(condition, format, ...args)` requires a warning ' +
-        'message argument'
-      );
-    }
-    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
-      throw new Error(
-        'The warning format should be able to uniquely identify this ' +
-        'warning. Please, use a more descriptive format than: ' + format
-      );
-    }
-    if (!condition) {
-      var argIndex = 0;
-      var message = 'Warning: ' +
-        format.replace(/%s/g, function() {
-          return args[argIndex++];
-        });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        throw new Error(message);
-      } catch(x) {}
-    }
-  };
-}
-var warning_1 = warning;
-
-var ChildMapping = createCommonjsModule(function (module, exports) {
-'use strict';
-exports.__esModule = true;
-exports.getChildMapping = getChildMapping;
-exports.mergeChildMappings = mergeChildMappings;
-function getChildMapping(children) {
-  if (!children) {
-    return children;
-  }
-  var result = {};
-  _react.Children.map(children, function (child) {
-    return child;
-  }).forEach(function (child) {
-    result[child.key] = child;
-  });
-  return result;
-}
-function mergeChildMappings(prev, next) {
-  prev = prev || {};
-  next = next || {};
-  function getValueForKey(key) {
-    if (next.hasOwnProperty(key)) {
-      return next[key];
-    }
-    return prev[key];
-  }
-  var nextKeysPending = {};
-  var pendingKeys = [];
-  for (var prevKey in prev) {
-    if (next.hasOwnProperty(prevKey)) {
-      if (pendingKeys.length) {
-        nextKeysPending[prevKey] = pendingKeys;
-        pendingKeys = [];
-      }
-    } else {
-      pendingKeys.push(prevKey);
-    }
-  }
-  var i = void 0;
-  var childMapping = {};
-  for (var nextKey in next) {
-    if (nextKeysPending.hasOwnProperty(nextKey)) {
-      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-        var pendingNextKey = nextKeysPending[nextKey][i];
-        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
-      }
-    }
-    childMapping[nextKey] = getValueForKey(nextKey);
-  }
-  for (i = 0; i < pendingKeys.length; i++) {
-    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-  }
-  return childMapping;
-}
-});
-unwrapExports(ChildMapping);
-
-var TransitionGroup_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-exports.__esModule = true;
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _chainFunction2 = _interopRequireDefault(chainFunction);
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _warning2 = _interopRequireDefault(warning_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var propTypes = {
-  component: _propTypes2.default.any,
-  childFactory: _propTypes2.default.func,
-  children: _propTypes2.default.node
-};
-var defaultProps = {
-  component: 'span',
-  childFactory: function childFactory(child) {
-    return child;
-  }
-};
-var TransitionGroup = function (_React$Component) {
-  _inherits(TransitionGroup, _React$Component);
-  function TransitionGroup(props, context) {
-    _classCallCheck(this, TransitionGroup);
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
-    _this.performAppear = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-      if (component.componentWillAppear) {
-        component.componentWillAppear(_this._handleDoneAppearing.bind(_this, key, component));
-      } else {
-        _this._handleDoneAppearing(key, component);
-      }
-    };
-    _this._handleDoneAppearing = function (key, component) {
-      if (component.componentDidAppear) {
-        component.componentDidAppear();
-      }
-      delete _this.currentlyTransitioningKeys[key];
-      var currentChildMapping = (0, ChildMapping.getChildMapping)(_this.props.children);
-      if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-        _this.performLeave(key, component);
-      }
-    };
-    _this.performEnter = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-      if (component.componentWillEnter) {
-        component.componentWillEnter(_this._handleDoneEntering.bind(_this, key, component));
-      } else {
-        _this._handleDoneEntering(key, component);
-      }
-    };
-    _this._handleDoneEntering = function (key, component) {
-      if (component.componentDidEnter) {
-        component.componentDidEnter();
-      }
-      delete _this.currentlyTransitioningKeys[key];
-      var currentChildMapping = (0, ChildMapping.getChildMapping)(_this.props.children);
-      if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-        _this.performLeave(key, component);
-      }
-    };
-    _this.performLeave = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-      if (component.componentWillLeave) {
-        component.componentWillLeave(_this._handleDoneLeaving.bind(_this, key, component));
-      } else {
-        _this._handleDoneLeaving(key, component);
-      }
-    };
-    _this._handleDoneLeaving = function (key, component) {
-      if (component.componentDidLeave) {
-        component.componentDidLeave();
-      }
-      delete _this.currentlyTransitioningKeys[key];
-      var currentChildMapping = (0, ChildMapping.getChildMapping)(_this.props.children);
-      if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
-        _this.keysToEnter.push(key);
-      } else {
-        _this.setState(function (state) {
-          var newChildren = _extends({}, state.children);
-          delete newChildren[key];
-          return { children: newChildren };
-        });
-      }
-    };
-    _this.childRefs = Object.create(null);
-    _this.state = {
-      children: (0, ChildMapping.getChildMapping)(props.children)
-    };
-    return _this;
-  }
-  TransitionGroup.prototype.componentWillMount = function componentWillMount() {
-    this.currentlyTransitioningKeys = {};
-    this.keysToEnter = [];
-    this.keysToLeave = [];
-  };
-  TransitionGroup.prototype.componentDidMount = function componentDidMount() {
-    var initialChildMapping = this.state.children;
-    for (var key in initialChildMapping) {
-      if (initialChildMapping[key]) {
-        this.performAppear(key, this.childRefs[key]);
-      }
-    }
-  };
-  TransitionGroup.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    var nextChildMapping = (0, ChildMapping.getChildMapping)(nextProps.children);
-    var prevChildMapping = this.state.children;
-    this.setState({
-      children: (0, ChildMapping.mergeChildMappings)(prevChildMapping, nextChildMapping)
-    });
-    for (var key in nextChildMapping) {
-      var hasPrev = prevChildMapping && prevChildMapping.hasOwnProperty(key);
-      if (nextChildMapping[key] && !hasPrev && !this.currentlyTransitioningKeys[key]) {
-        this.keysToEnter.push(key);
-      }
-    }
-    for (var _key in prevChildMapping) {
-      var hasNext = nextChildMapping && nextChildMapping.hasOwnProperty(_key);
-      if (prevChildMapping[_key] && !hasNext && !this.currentlyTransitioningKeys[_key]) {
-        this.keysToLeave.push(_key);
-      }
-    }
-  };
-  TransitionGroup.prototype.componentDidUpdate = function componentDidUpdate() {
-    var _this2 = this;
-    var keysToEnter = this.keysToEnter;
-    this.keysToEnter = [];
-    keysToEnter.forEach(function (key) {
-      return _this2.performEnter(key, _this2.childRefs[key]);
-    });
-    var keysToLeave = this.keysToLeave;
-    this.keysToLeave = [];
-    keysToLeave.forEach(function (key) {
-      return _this2.performLeave(key, _this2.childRefs[key]);
-    });
-  };
-  TransitionGroup.prototype.render = function render() {
-    var _this3 = this;
-    var childrenToRender = [];
-    var _loop = function _loop(key) {
-      var child = _this3.state.children[key];
-      if (child) {
-        var isCallbackRef = typeof child.ref !== 'string';
-        var factoryChild = _this3.props.childFactory(child);
-        var ref = function ref(r) {
-          _this3.childRefs[key] = r;
-        };
-        (0, _warning2.default)(isCallbackRef, 'string refs are not supported on children of TransitionGroup and will be ignored. ' + 'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute');
-        if (factoryChild === child && isCallbackRef) {
-          ref = (0, _chainFunction2.default)(child.ref, ref);
-        }
-        childrenToRender.push(_react2.default.cloneElement(factoryChild, {
-          key: key,
-          ref: ref
-        }));
-      }
-    };
-    for (var key in this.state.children) {
-      _loop(key);
-    }
-    var props = _extends({}, this.props);
-    delete props.transitionLeave;
-    delete props.transitionName;
-    delete props.transitionAppear;
-    delete props.transitionEnter;
-    delete props.childFactory;
-    delete props.transitionLeaveTimeout;
-    delete props.transitionEnterTimeout;
-    delete props.transitionAppearTimeout;
-    delete props.component;
-    return _react2.default.createElement(this.props.component, props, childrenToRender);
-  };
-  return TransitionGroup;
-}(_react2.default.Component);
-TransitionGroup.displayName = 'TransitionGroup';
-TransitionGroup.propTypes = propTypes;
-TransitionGroup.defaultProps = defaultProps;
-exports.default = TransitionGroup;
-module.exports = exports['default'];
-});
-unwrapExports(TransitionGroup_1);
-
-var hasClass_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = hasClass;
-function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);else return (" " + element.className + " ").indexOf(" " + className + " ") !== -1;
-}
-module.exports = exports["default"];
-});
-unwrapExports(hasClass_1);
-
-var addClass_1 = createCommonjsModule(function (module, exports) {
+var boxShadow_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = addClass;
-var _hasClass2 = _interopRequireDefault(hasClass_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element)) element.className = element.className + ' ' + className;
-}
-module.exports = exports['default'];
-});
-unwrapExports(addClass_1);
-
-'use strict';
-var removeClass = function removeClass(element, className) {
-  if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+exports.boxShadow = boxShadow;
+var defaultProps = exports.defaultProps = {
+  '$enable-shadows': false
 };
-
-var inDOM = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-module.exports = exports['default'];
-});
-unwrapExports(inDOM);
-
-var requestAnimationFrame = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _inDOM2 = _interopRequireDefault(inDOM);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var vendors = ['', 'webkit', 'moz', 'o', 'ms'];
-var cancel = 'clearTimeout';
-var raf = fallback;
-var compatRaf = void 0;
-var getKey = function getKey(vendor, k) {
-  return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + 'AnimationFrame';
-};
-if (_inDOM2.default) {
-  vendors.some(function (vendor) {
-    var rafKey = getKey(vendor, 'request');
-    if (rafKey in window) {
-      cancel = getKey(vendor, 'cancel');
-      return raf = function raf(cb) {
-        return window[rafKey](cb);
-      };
+function boxShadow() {
+  var enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
+  if (enableShadows) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
     }
-  });
-}
-var prev = new Date().getTime();
-function fallback(fn) {
-  var curr = new Date().getTime(),
-      ms = Math.max(0, 16 - (curr - prev)),
-      req = setTimeout(fn, ms);
-  prev = curr;
-  return req;
-}
-compatRaf = function compatRaf(cb) {
-  return raf(cb);
-};
-compatRaf.cancel = function (id) {
-  window[cancel] && typeof window[cancel] === 'function' && window[cancel](id);
-};
-exports.default = compatRaf;
-module.exports = exports['default'];
-});
-unwrapExports(requestAnimationFrame);
-
-var properties = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
-var _inDOM2 = _interopRequireDefault(inDOM);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var transform = 'transform';
-var prefix = void 0,
-    transitionEnd = void 0,
-    animationEnd = void 0;
-var transitionProperty = void 0,
-    transitionDuration = void 0,
-    transitionTiming = void 0,
-    transitionDelay = void 0;
-var animationName = void 0,
-    animationDuration = void 0,
-    animationTiming = void 0,
-    animationDelay = void 0;
-if (_inDOM2.default) {
-  var _getTransitionPropert = getTransitionProperties();
-  prefix = _getTransitionPropert.prefix;
-  exports.transitionEnd = transitionEnd = _getTransitionPropert.transitionEnd;
-  exports.animationEnd = animationEnd = _getTransitionPropert.animationEnd;
-  exports.transform = transform = prefix + '-' + transform;
-  exports.transitionProperty = transitionProperty = prefix + '-transition-property';
-  exports.transitionDuration = transitionDuration = prefix + '-transition-duration';
-  exports.transitionDelay = transitionDelay = prefix + '-transition-delay';
-  exports.transitionTiming = transitionTiming = prefix + '-transition-timing-function';
-  exports.animationName = animationName = prefix + '-animation-name';
-  exports.animationDuration = animationDuration = prefix + '-animation-duration';
-  exports.animationTiming = animationTiming = prefix + '-animation-delay';
-  exports.animationDelay = animationDelay = prefix + '-animation-timing-function';
-}
-exports.transform = transform;
-exports.transitionProperty = transitionProperty;
-exports.transitionTiming = transitionTiming;
-exports.transitionDelay = transitionDelay;
-exports.transitionDuration = transitionDuration;
-exports.transitionEnd = transitionEnd;
-exports.animationName = animationName;
-exports.animationDuration = animationDuration;
-exports.animationTiming = animationTiming;
-exports.animationDelay = animationDelay;
-exports.animationEnd = animationEnd;
-exports.default = {
-  transform: transform,
-  end: transitionEnd,
-  property: transitionProperty,
-  timing: transitionTiming,
-  delay: transitionDelay,
-  duration: transitionDuration
-};
-function getTransitionProperties() {
-  var style = document.createElement('div').style;
-  var vendorMap = {
-    O: function O(e) {
-      return 'o' + e.toLowerCase();
-    },
-    Moz: function Moz(e) {
-      return e.toLowerCase();
-    },
-    Webkit: function Webkit(e) {
-      return 'webkit' + e;
-    },
-    ms: function ms(e) {
-      return 'MS' + e;
-    }
-  };
-  var vendors = Object.keys(vendorMap);
-  var transitionEnd = void 0,
-      animationEnd = void 0;
-  var prefix = '';
-  for (var i = 0; i < vendors.length; i++) {
-    var vendor = vendors[i];
-    if (vendor + 'TransitionProperty' in style) {
-      prefix = '-' + vendor.toLowerCase();
-      transitionEnd = vendorMap[vendor]('TransitionEnd');
-      animationEnd = vendorMap[vendor]('AnimationEnd');
-      break;
-    }
-  }
-  if (!transitionEnd && 'transitionProperty' in style) transitionEnd = 'transitionend';
-  if (!animationEnd && 'animationName' in style) animationEnd = 'animationend';
-  style = null;
-  return { animationEnd: animationEnd, transitionEnd: transitionEnd, prefix: prefix };
-}
-});
-unwrapExports(properties);
-
-var PropTypes = createCommonjsModule(function (module, exports) {
-'use strict';
-exports.__esModule = true;
-exports.nameShape = undefined;
-exports.transitionTimeout = transitionTimeout;
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function transitionTimeout(transitionType) {
-  var timeoutPropName = 'transition' + transitionType + 'Timeout';
-  var enabledPropName = 'transition' + transitionType;
-  return function (props) {
-    if (props[enabledPropName]) {
-      if (props[timeoutPropName] == null) {
-        return new Error(timeoutPropName + ' wasn\'t supplied to CSSTransitionGroup: ' + 'this can cause unreliable animations and won\'t be supported in ' + 'a future version of React. See ' + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
-      } else if (typeof props[timeoutPropName] !== 'number') {
-        return new Error(timeoutPropName + ' must be a number (in milliseconds)');
-      }
-    }
-    return null;
-  };
-}
-var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
-  enter: _propTypes2.default.string,
-  leave: _propTypes2.default.string,
-  active: _propTypes2.default.string
-}), _propTypes2.default.shape({
-  enter: _propTypes2.default.string,
-  enterActive: _propTypes2.default.string,
-  leave: _propTypes2.default.string,
-  leaveActive: _propTypes2.default.string,
-  appear: _propTypes2.default.string,
-  appearActive: _propTypes2.default.string
-})]);
-});
-unwrapExports(PropTypes);
-
-var CSSTransitionGroupChild_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-exports.__esModule = true;
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _addClass2 = _interopRequireDefault(addClass_1);
-var _removeClass2 = _interopRequireDefault(removeClass);
-var _requestAnimationFrame2 = _interopRequireDefault(requestAnimationFrame);
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var events = [];
-if (properties.transitionEnd) events.push(properties.transitionEnd);
-if (properties.animationEnd) events.push(properties.animationEnd);
-function addEndListener(node, listener) {
-  if (events.length) {
-    events.forEach(function (e) {
-      return node.addEventListener(e, listener, false);
-    });
-  } else {
-    setTimeout(listener, 0);
-  }
-  return function () {
-    if (!events.length) return;
-    events.forEach(function (e) {
-      return node.removeEventListener(e, listener, false);
-    });
-  };
-}
-var propTypes = {
-  children: _propTypes2.default.node,
-  name: PropTypes.nameShape.isRequired,
-  appear: _propTypes2.default.bool,
-  enter: _propTypes2.default.bool,
-  leave: _propTypes2.default.bool,
-  appearTimeout: _propTypes2.default.number,
-  enterTimeout: _propTypes2.default.number,
-  leaveTimeout: _propTypes2.default.number
-};
-var CSSTransitionGroupChild = function (_React$Component) {
-  _inherits(CSSTransitionGroupChild, _React$Component);
-  function CSSTransitionGroupChild() {
-    var _temp, _this, _ret;
-    _classCallCheck(this, CSSTransitionGroupChild);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.componentWillAppear = function (done) {
-      if (_this.props.appear) {
-        _this.transition('appear', done, _this.props.appearTimeout);
-      } else {
-        done();
-      }
-    }, _this.componentWillEnter = function (done) {
-      if (_this.props.enter) {
-        _this.transition('enter', done, _this.props.enterTimeout);
-      } else {
-        done();
-      }
-    }, _this.componentWillLeave = function (done) {
-      if (_this.props.leave) {
-        _this.transition('leave', done, _this.props.leaveTimeout);
-      } else {
-        done();
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  CSSTransitionGroupChild.prototype.componentWillMount = function componentWillMount() {
-    this.classNameAndNodeQueue = [];
-    this.transitionTimeouts = [];
-  };
-  CSSTransitionGroupChild.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.unmounted = true;
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    this.transitionTimeouts.forEach(function (timeout) {
-      clearTimeout(timeout);
-    });
-    this.classNameAndNodeQueue.length = 0;
-  };
-  CSSTransitionGroupChild.prototype.transition = function transition(animationType, finishCallback, timeout) {
-    var node = (0, _reactDom.findDOMNode)(this);
-    if (!node) {
-      if (finishCallback) {
-        finishCallback();
-      }
-      return;
-    }
-    var className = this.props.name[animationType] || this.props.name + '-' + animationType;
-    var activeClassName = this.props.name[animationType + 'Active'] || className + '-active';
-    var timer = null;
-    var removeListeners = void 0;
-    (0, _addClass2.default)(node, className);
-    this.queueClassAndNode(activeClassName, node);
-    var finish = function finish(e) {
-      if (e && e.target !== node) {
-        return;
-      }
-      clearTimeout(timer);
-      if (removeListeners) removeListeners();
-      (0, _removeClass2.default)(node, className);
-      (0, _removeClass2.default)(node, activeClassName);
-      if (removeListeners) removeListeners();
-      if (finishCallback) {
-        finishCallback();
-      }
-    };
-    if (timeout) {
-      timer = setTimeout(finish, timeout);
-      this.transitionTimeouts.push(timer);
-    } else if (properties.transitionEnd) {
-      removeListeners = addEndListener(node, finish);
-    }
-  };
-  CSSTransitionGroupChild.prototype.queueClassAndNode = function queueClassAndNode(className, node) {
-    var _this2 = this;
-    this.classNameAndNodeQueue.push({
-      className: className,
-      node: node
-    });
-    if (!this.rafHandle) {
-      this.rafHandle = (0, _requestAnimationFrame2.default)(function () {
-        return _this2.flushClassNameAndNodeQueue();
-      });
-    }
-  };
-  CSSTransitionGroupChild.prototype.flushClassNameAndNodeQueue = function flushClassNameAndNodeQueue() {
-    if (!this.unmounted) {
-      this.classNameAndNodeQueue.forEach(function (obj) {
-        obj.node.scrollTop;
-        (0, _addClass2.default)(obj.node, obj.className);
-      });
-    }
-    this.classNameAndNodeQueue.length = 0;
-    this.rafHandle = null;
-  };
-  CSSTransitionGroupChild.prototype.render = function render() {
-    var props = _extends({}, this.props);
-    delete props.name;
-    delete props.appear;
-    delete props.enter;
-    delete props.leave;
-    delete props.appearTimeout;
-    delete props.enterTimeout;
-    delete props.leaveTimeout;
-    delete props.children;
-    return _react2.default.cloneElement(_react2.default.Children.only(this.props.children), props);
-  };
-  return CSSTransitionGroupChild;
-}(_react2.default.Component);
-CSSTransitionGroupChild.displayName = 'CSSTransitionGroupChild';
-CSSTransitionGroupChild.propTypes = propTypes;
-exports.default = CSSTransitionGroupChild;
-module.exports = exports['default'];
-});
-unwrapExports(CSSTransitionGroupChild_1);
-
-var CSSTransitionGroup_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-exports.__esModule = true;
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _TransitionGroup2 = _interopRequireDefault(TransitionGroup_1);
-var _CSSTransitionGroupChild2 = _interopRequireDefault(CSSTransitionGroupChild_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var propTypes = {
-  transitionName: PropTypes.nameShape.isRequired,
-  transitionAppear: _propTypes2.default.bool,
-  transitionEnter: _propTypes2.default.bool,
-  transitionLeave: _propTypes2.default.bool,
-  transitionAppearTimeout: (0, PropTypes.transitionTimeout)('Appear'),
-  transitionEnterTimeout: (0, PropTypes.transitionTimeout)('Enter'),
-  transitionLeaveTimeout: (0, PropTypes.transitionTimeout)('Leave')
-};
-var defaultProps = {
-  transitionAppear: false,
-  transitionEnter: true,
-  transitionLeave: true
-};
-var CSSTransitionGroup = function (_React$Component) {
-  _inherits(CSSTransitionGroup, _React$Component);
-  function CSSTransitionGroup() {
-    var _temp, _this, _ret;
-    _classCallCheck(this, CSSTransitionGroup);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this._wrapChild = function (child) {
-      return _react2.default.createElement(_CSSTransitionGroupChild2.default, {
-        name: _this.props.transitionName,
-        appear: _this.props.transitionAppear,
-        enter: _this.props.transitionEnter,
-        leave: _this.props.transitionLeave,
-        appearTimeout: _this.props.transitionAppearTimeout,
-        enterTimeout: _this.props.transitionEnterTimeout,
-        leaveTimeout: _this.props.transitionLeaveTimeout
-      }, child);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  CSSTransitionGroup.prototype.render = function render() {
-    return _react2.default.createElement(_TransitionGroup2.default, _extends({}, this.props, { childFactory: this._wrapChild }));
-  };
-  return CSSTransitionGroup;
-}(_react2.default.Component);
-CSSTransitionGroup.displayName = 'CSSTransitionGroup';
-CSSTransitionGroup.propTypes = propTypes;
-CSSTransitionGroup.defaultProps = defaultProps;
-exports.default = CSSTransitionGroup;
-module.exports = exports['default'];
-});
-unwrapExports(CSSTransitionGroup_1);
-
-var LARGE_ARRAY_SIZE = 200;
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
-var INFINITY = 1 / 0;
-var MAX_SAFE_INTEGER = 9007199254740991;
-var argsTag = '[object Arguments]';
-var funcTag = '[object Function]';
-var genTag = '[object GeneratorFunction]';
-var symbolTag = '[object Symbol]';
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-var root = freeGlobal || freeSelf || Function('return this')();
-function apply(func, thisArg, args) {
-  switch (args.length) {
-    case 0: return func.call(thisArg);
-    case 1: return func.call(thisArg, args[0]);
-    case 2: return func.call(thisArg, args[0], args[1]);
-    case 3: return func.call(thisArg, args[0], args[1], args[2]);
-  }
-  return func.apply(thisArg, args);
-}
-function arrayIncludes(array, value) {
-  var length = array ? array.length : 0;
-  return !!length && baseIndexOf(array, value, 0) > -1;
-}
-function arrayIncludesWith(array, value, comparator) {
-  var index = -1,
-      length = array ? array.length : 0;
-  while (++index < length) {
-    if (comparator(value, array[index])) {
-      return true;
-    }
-  }
-  return false;
-}
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array ? array.length : 0,
-      result = Array(length);
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-function arrayPush(array, values) {
-  var index = -1,
-      length = values.length,
-      offset = array.length;
-  while (++index < length) {
-    array[offset + index] = values[index];
-  }
-  return array;
-}
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 1 : -1);
-  while ((fromRight ? index-- : ++index < length)) {
-    if (predicate(array[index], index, array)) {
-      return index;
-    }
-  }
-  return -1;
-}
-function baseIndexOf(array, value, fromIndex) {
-  if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
-  }
-  var index = fromIndex - 1,
-      length = array.length;
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-function baseIsNaN(value) {
-  return value !== value;
-}
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-function baseUnary(func) {
-  return function(value) {
-    return func(value);
-  };
-}
-function cacheHas(cache, key) {
-  return cache.has(key);
-}
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-function isHostObject(value) {
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-var arrayProto = Array.prototype;
-var funcProto = Function.prototype;
-var objectProto = Object.prototype;
-var coreJsData = root['__core-js_shared__'];
-var maskSrcKey = (function() {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-  return uid ? ('Symbol(src)_1.' + uid) : '';
-}());
-var funcToString = funcProto.toString;
-var hasOwnProperty = objectProto.hasOwnProperty;
-var objectToString = objectProto.toString;
-var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-var Symbol$1 = root.Symbol;
-var getPrototype = overArg(Object.getPrototypeOf, Object);
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-var splice = arrayProto.splice;
-var spreadableSymbol = Symbol$1 ? Symbol$1.isConcatSpreadable : undefined;
-var nativeGetSymbols = Object.getOwnPropertySymbols;
-var nativeMax = Math.max;
-var Map = getNative(root, 'Map');
-var nativeCreate = getNative(Object, 'create');
-function Hash(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-function hashClear() {
-  this.__data__ = nativeCreate ? nativeCreate(null) : {};
-}
-function hashDelete(key) {
-  return this.has(key) && delete this.__data__[key];
-}
-function hashGet(key) {
-  var data = this.__data__;
-  if (nativeCreate) {
-    var result = data[key];
-    return result === HASH_UNDEFINED ? undefined : result;
-  }
-  return hasOwnProperty.call(data, key) ? data[key] : undefined;
-}
-function hashHas(key) {
-  var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-}
-function hashSet(key, value) {
-  var data = this.__data__;
-  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
-  return this;
-}
-Hash.prototype.clear = hashClear;
-Hash.prototype['delete'] = hashDelete;
-Hash.prototype.get = hashGet;
-Hash.prototype.has = hashHas;
-Hash.prototype.set = hashSet;
-function ListCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-function listCacheClear() {
-  this.__data__ = [];
-}
-function listCacheDelete(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-  if (index < 0) {
-    return false;
-  }
-  var lastIndex = data.length - 1;
-  if (index == lastIndex) {
-    data.pop();
-  } else {
-    splice.call(data, index, 1);
-  }
-  return true;
-}
-function listCacheGet(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-  return index < 0 ? undefined : data[index][1];
-}
-function listCacheHas(key) {
-  return assocIndexOf(this.__data__, key) > -1;
-}
-function listCacheSet(key, value) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-  if (index < 0) {
-    data.push([key, value]);
-  } else {
-    data[index][1] = value;
-  }
-  return this;
-}
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-function MapCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-function mapCacheClear() {
-  this.__data__ = {
-    'hash': new Hash,
-    'map': new (Map || ListCache),
-    'string': new Hash
-  };
-}
-function mapCacheDelete(key) {
-  return getMapData(this, key)['delete'](key);
-}
-function mapCacheGet(key) {
-  return getMapData(this, key).get(key);
-}
-function mapCacheHas(key) {
-  return getMapData(this, key).has(key);
-}
-function mapCacheSet(key, value) {
-  getMapData(this, key).set(key, value);
-  return this;
-}
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
-function SetCache(values) {
-  var index = -1,
-      length = values ? values.length : 0;
-  this.__data__ = new MapCache;
-  while (++index < length) {
-    this.add(values[index]);
-  }
-}
-function setCacheAdd(value) {
-  this.__data__.set(value, HASH_UNDEFINED);
-  return this;
-}
-function setCacheHas(value) {
-  return this.__data__.has(value);
-}
-SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
-SetCache.prototype.has = setCacheHas;
-function arrayLikeKeys(value, inherited) {
-  var result = (isArray(value) || isArguments(value))
-    ? baseTimes(value.length, String)
-    : [];
-  var length = result.length,
-      skipIndexes = !!length;
-  for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) &&
-        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-function baseDifference(array, values, iteratee, comparator) {
-  var index = -1,
-      includes = arrayIncludes,
-      isCommon = true,
-      length = array.length,
-      result = [],
-      valuesLength = values.length;
-  if (!length) {
-    return result;
-  }
-  if (iteratee) {
-    values = arrayMap(values, baseUnary(iteratee));
-  }
-  if (comparator) {
-    includes = arrayIncludesWith;
-    isCommon = false;
-  }
-  else if (values.length >= LARGE_ARRAY_SIZE) {
-    includes = cacheHas;
-    isCommon = false;
-    values = new SetCache(values);
-  }
-  outer:
-  while (++index < length) {
-    var value = array[index],
-        computed = iteratee ? iteratee(value) : value;
-    value = (comparator || value !== 0) ? value : 0;
-    if (isCommon && computed === computed) {
-      var valuesIndex = valuesLength;
-      while (valuesIndex--) {
-        if (values[valuesIndex] === computed) {
-          continue outer;
-        }
-      }
-      result.push(value);
-    }
-    else if (!includes(values, computed, comparator)) {
-      result.push(value);
-    }
-  }
-  return result;
-}
-function baseFlatten(array, depth, predicate, isStrict, result) {
-  var index = -1,
-      length = array.length;
-  predicate || (predicate = isFlattenable);
-  result || (result = []);
-  while (++index < length) {
-    var value = array[index];
-    if (depth > 0 && predicate(value)) {
-      if (depth > 1) {
-        baseFlatten(value, depth - 1, predicate, isStrict, result);
-      } else {
-        arrayPush(result, value);
-      }
-    } else if (!isStrict) {
-      result[result.length] = value;
-    }
-  }
-  return result;
-}
-function baseGetAllKeys(object, keysFunc, symbolsFunc) {
-  var result = keysFunc(object);
-  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
-}
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
-    return false;
-  }
-  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
-}
-function baseKeysIn(object) {
-  if (!isObject(object)) {
-    return nativeKeysIn(object);
-  }
-  var isProto = isPrototype(object),
-      result = [];
-  for (var key in object) {
-    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-function basePick(object, props) {
-  object = Object(object);
-  return basePickBy(object, props, function(value, key) {
-    return key in object;
-  });
-}
-function basePickBy(object, props, predicate) {
-  var index = -1,
-      length = props.length,
-      result = {};
-  while (++index < length) {
-    var key = props[index],
-        value = object[key];
-    if (predicate(value, key)) {
-      result[key] = value;
-    }
-  }
-  return result;
-}
-function baseRest(func, start) {
-  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax(args.length - start, 0),
-        array = Array(length);
-    while (++index < length) {
-      array[index] = args[start + index];
-    }
-    index = -1;
-    var otherArgs = Array(start + 1);
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = array;
-    return apply(func, this, otherArgs);
-  };
-}
-function getAllKeysIn(object) {
-  return baseGetAllKeys(object, keysIn, getSymbolsIn);
-}
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
-}
-var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
-var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
-  var result = [];
-  while (object) {
-    arrayPush(result, getSymbols(object));
-    object = getPrototype(object);
-  }
-  return result;
-};
-function isFlattenable(value) {
-  return isArray(value) || isArguments(value) ||
-    !!(spreadableSymbol && value && value[spreadableSymbol]);
-}
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-function isKeyable(value) {
-  var type = typeof value;
-  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
-    ? (value !== '__proto__')
-    : (value === null);
-}
-function isMasked(func) {
-  return !!maskSrcKey && (maskSrcKey in func);
-}
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
-  return value === proto;
-}
-function nativeKeysIn(object) {
-  var result = [];
-  if (object != null) {
-    for (var key in Object(object)) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-function toKey(value) {
-  if (typeof value == 'string' || isSymbol(value)) {
-    return value;
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-function toSource(func) {
-  if (func != null) {
-    try {
-      return funcToString.call(func);
-    } catch (e) {}
-    try {
-      return (func + '');
-    } catch (e) {}
+    return '\n      box-shadow: ' + args.join(' ') + ';\n    ';
   }
   return '';
 }
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-function isArguments(value) {
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-}
-var isArray = Array.isArray;
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-function isFunction(value) {
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-function keysIn(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
-}
-var omit = baseRest(function(object, props) {
-  if (object == null) {
-    return {};
-  }
-  props = arrayMap(baseFlatten(props, 1), toKey);
-  return basePick(object, baseDifference(getAllKeysIn(object), props));
-});
-function stubArray() {
-  return [];
-}
-var lodash_omit = omit;
-
-function mapToCssModules(className, cssModule) {
-  if (!cssModule) return className;
-  return className.split(' ').map(function (c) {
-    return cssModule[c] || c;
-  }).join(' ');
-}
-
-
-
-var mapToCssModules_es = Object.freeze({
-	default: mapToCssModules
-});
-
-'use strict';
-var colorName = {
-	"aliceblue": [240, 248, 255],
-	"antiquewhite": [250, 235, 215],
-	"aqua": [0, 255, 255],
-	"aquamarine": [127, 255, 212],
-	"azure": [240, 255, 255],
-	"beige": [245, 245, 220],
-	"bisque": [255, 228, 196],
-	"black": [0, 0, 0],
-	"blanchedalmond": [255, 235, 205],
-	"blue": [0, 0, 255],
-	"blueviolet": [138, 43, 226],
-	"brown": [165, 42, 42],
-	"burlywood": [222, 184, 135],
-	"cadetblue": [95, 158, 160],
-	"chartreuse": [127, 255, 0],
-	"chocolate": [210, 105, 30],
-	"coral": [255, 127, 80],
-	"cornflowerblue": [100, 149, 237],
-	"cornsilk": [255, 248, 220],
-	"crimson": [220, 20, 60],
-	"cyan": [0, 255, 255],
-	"darkblue": [0, 0, 139],
-	"darkcyan": [0, 139, 139],
-	"darkgoldenrod": [184, 134, 11],
-	"darkgray": [169, 169, 169],
-	"darkgreen": [0, 100, 0],
-	"darkgrey": [169, 169, 169],
-	"darkkhaki": [189, 183, 107],
-	"darkmagenta": [139, 0, 139],
-	"darkolivegreen": [85, 107, 47],
-	"darkorange": [255, 140, 0],
-	"darkorchid": [153, 50, 204],
-	"darkred": [139, 0, 0],
-	"darksalmon": [233, 150, 122],
-	"darkseagreen": [143, 188, 143],
-	"darkslateblue": [72, 61, 139],
-	"darkslategray": [47, 79, 79],
-	"darkslategrey": [47, 79, 79],
-	"darkturquoise": [0, 206, 209],
-	"darkviolet": [148, 0, 211],
-	"deeppink": [255, 20, 147],
-	"deepskyblue": [0, 191, 255],
-	"dimgray": [105, 105, 105],
-	"dimgrey": [105, 105, 105],
-	"dodgerblue": [30, 144, 255],
-	"firebrick": [178, 34, 34],
-	"floralwhite": [255, 250, 240],
-	"forestgreen": [34, 139, 34],
-	"fuchsia": [255, 0, 255],
-	"gainsboro": [220, 220, 220],
-	"ghostwhite": [248, 248, 255],
-	"gold": [255, 215, 0],
-	"goldenrod": [218, 165, 32],
-	"gray": [128, 128, 128],
-	"green": [0, 128, 0],
-	"greenyellow": [173, 255, 47],
-	"grey": [128, 128, 128],
-	"honeydew": [240, 255, 240],
-	"hotpink": [255, 105, 180],
-	"indianred": [205, 92, 92],
-	"indigo": [75, 0, 130],
-	"ivory": [255, 255, 240],
-	"khaki": [240, 230, 140],
-	"lavender": [230, 230, 250],
-	"lavenderblush": [255, 240, 245],
-	"lawngreen": [124, 252, 0],
-	"lemonchiffon": [255, 250, 205],
-	"lightblue": [173, 216, 230],
-	"lightcoral": [240, 128, 128],
-	"lightcyan": [224, 255, 255],
-	"lightgoldenrodyellow": [250, 250, 210],
-	"lightgray": [211, 211, 211],
-	"lightgreen": [144, 238, 144],
-	"lightgrey": [211, 211, 211],
-	"lightpink": [255, 182, 193],
-	"lightsalmon": [255, 160, 122],
-	"lightseagreen": [32, 178, 170],
-	"lightskyblue": [135, 206, 250],
-	"lightslategray": [119, 136, 153],
-	"lightslategrey": [119, 136, 153],
-	"lightsteelblue": [176, 196, 222],
-	"lightyellow": [255, 255, 224],
-	"lime": [0, 255, 0],
-	"limegreen": [50, 205, 50],
-	"linen": [250, 240, 230],
-	"magenta": [255, 0, 255],
-	"maroon": [128, 0, 0],
-	"mediumaquamarine": [102, 205, 170],
-	"mediumblue": [0, 0, 205],
-	"mediumorchid": [186, 85, 211],
-	"mediumpurple": [147, 112, 219],
-	"mediumseagreen": [60, 179, 113],
-	"mediumslateblue": [123, 104, 238],
-	"mediumspringgreen": [0, 250, 154],
-	"mediumturquoise": [72, 209, 204],
-	"mediumvioletred": [199, 21, 133],
-	"midnightblue": [25, 25, 112],
-	"mintcream": [245, 255, 250],
-	"mistyrose": [255, 228, 225],
-	"moccasin": [255, 228, 181],
-	"navajowhite": [255, 222, 173],
-	"navy": [0, 0, 128],
-	"oldlace": [253, 245, 230],
-	"olive": [128, 128, 0],
-	"olivedrab": [107, 142, 35],
-	"orange": [255, 165, 0],
-	"orangered": [255, 69, 0],
-	"orchid": [218, 112, 214],
-	"palegoldenrod": [238, 232, 170],
-	"palegreen": [152, 251, 152],
-	"paleturquoise": [175, 238, 238],
-	"palevioletred": [219, 112, 147],
-	"papayawhip": [255, 239, 213],
-	"peachpuff": [255, 218, 185],
-	"peru": [205, 133, 63],
-	"pink": [255, 192, 203],
-	"plum": [221, 160, 221],
-	"powderblue": [176, 224, 230],
-	"purple": [128, 0, 128],
-	"rebeccapurple": [102, 51, 153],
-	"red": [255, 0, 0],
-	"rosybrown": [188, 143, 143],
-	"royalblue": [65, 105, 225],
-	"saddlebrown": [139, 69, 19],
-	"salmon": [250, 128, 114],
-	"sandybrown": [244, 164, 96],
-	"seagreen": [46, 139, 87],
-	"seashell": [255, 245, 238],
-	"sienna": [160, 82, 45],
-	"silver": [192, 192, 192],
-	"skyblue": [135, 206, 235],
-	"slateblue": [106, 90, 205],
-	"slategray": [112, 128, 144],
-	"slategrey": [112, 128, 144],
-	"snow": [255, 250, 250],
-	"springgreen": [0, 255, 127],
-	"steelblue": [70, 130, 180],
-	"tan": [210, 180, 140],
-	"teal": [0, 128, 128],
-	"thistle": [216, 191, 216],
-	"tomato": [255, 99, 71],
-	"turquoise": [64, 224, 208],
-	"violet": [238, 130, 238],
-	"wheat": [245, 222, 179],
-	"white": [255, 255, 255],
-	"whitesmoke": [245, 245, 245],
-	"yellow": [255, 255, 0],
-	"yellowgreen": [154, 205, 50]
-};
-
-'use strict';
-var isArrayish = function isArrayish(obj) {
-	if (!obj || typeof obj === 'string') {
-		return false;
-	}
-	return obj instanceof Array || Array.isArray(obj) ||
-		(obj.length >= 0 && (obj.splice instanceof Function ||
-			(Object.getOwnPropertyDescriptor(obj, (obj.length - 1)) && obj.constructor.name !== 'String')));
-};
-
-var simpleSwizzle = createCommonjsModule(function (module) {
-'use strict';
-var concat = Array.prototype.concat;
-var slice = Array.prototype.slice;
-var swizzle = module.exports = function swizzle(args) {
-	var results = [];
-	for (var i = 0, len = args.length; i < len; i++) {
-		var arg = args[i];
-		if (isArrayish(arg)) {
-			results = concat.call(results, slice.call(arg));
-		} else {
-			results.push(arg);
-		}
-	}
-	return results;
-};
-swizzle.wrap = function (fn) {
-	return function () {
-		return fn(swizzle(arguments));
-	};
-};
-});
-
-var colorString = createCommonjsModule(function (module) {
-var reverseNames = {};
-for (var name in colorName) {
-	if (colorName.hasOwnProperty(name)) {
-		reverseNames[colorName[name]] = name;
-	}
-}
-var cs = module.exports = {
-	to: {}
-};
-cs.get = function (string) {
-	var prefix = string.substring(0, 3).toLowerCase();
-	var val;
-	var model;
-	switch (prefix) {
-		case 'hsl':
-			val = cs.get.hsl(string);
-			model = 'hsl';
-			break;
-		case 'hwb':
-			val = cs.get.hwb(string);
-			model = 'hwb';
-			break;
-		default:
-			val = cs.get.rgb(string);
-			model = 'rgb';
-			break;
-	}
-	if (!val) {
-		return null;
-	}
-	return {model: model, value: val};
-};
-cs.get.rgb = function (string) {
-	if (!string) {
-		return null;
-	}
-	var abbr = /^#([a-f0-9]{3,4})$/i;
-	var hex = /^#([a-f0-9]{6})([a-f0-9]{2})?$/i;
-	var rgba = /^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/;
-	var per = /^rgba?\(\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/;
-	var keyword = /(\D+)/;
-	var rgb = [0, 0, 0, 1];
-	var match;
-	var i;
-	var hexAlpha;
-	if (match = string.match(hex)) {
-		hexAlpha = match[2];
-		match = match[1];
-		for (i = 0; i < 3; i++) {
-			var i2 = i * 2;
-			rgb[i] = parseInt(match.slice(i2, i2 + 2), 16);
-		}
-		if (hexAlpha) {
-			rgb[3] = Math.round((parseInt(hexAlpha, 16) / 255) * 100) / 100;
-		}
-	} else if (match = string.match(abbr)) {
-		match = match[1];
-		hexAlpha = match[3];
-		for (i = 0; i < 3; i++) {
-			rgb[i] = parseInt(match[i] + match[i], 16);
-		}
-		if (hexAlpha) {
-			rgb[3] = Math.round((parseInt(hexAlpha + hexAlpha, 16) / 255) * 100) / 100;
-		}
-	} else if (match = string.match(rgba)) {
-		for (i = 0; i < 3; i++) {
-			rgb[i] = parseInt(match[i + 1], 0);
-		}
-		if (match[4]) {
-			rgb[3] = parseFloat(match[4]);
-		}
-	} else if (match = string.match(per)) {
-		for (i = 0; i < 3; i++) {
-			rgb[i] = Math.round(parseFloat(match[i + 1]) * 2.55);
-		}
-		if (match[4]) {
-			rgb[3] = parseFloat(match[4]);
-		}
-	} else if (match = string.match(keyword)) {
-		if (match[1] === 'transparent') {
-			return [0, 0, 0, 0];
-		}
-		rgb = colorName[match[1]];
-		if (!rgb) {
-			return null;
-		}
-		rgb[3] = 1;
-		return rgb;
-	} else {
-		return null;
-	}
-	for (i = 0; i < 3; i++) {
-		rgb[i] = clamp(rgb[i], 0, 255);
-	}
-	rgb[3] = clamp(rgb[3], 0, 1);
-	return rgb;
-};
-cs.get.hsl = function (string) {
-	if (!string) {
-		return null;
-	}
-	var hsl = /^hsla?\(\s*([+-]?\d*[\.]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/;
-	var match = string.match(hsl);
-	if (match) {
-		var alpha = parseFloat(match[4]);
-		var h = ((parseFloat(match[1]) % 360) + 360) % 360;
-		var s = clamp(parseFloat(match[2]), 0, 100);
-		var l = clamp(parseFloat(match[3]), 0, 100);
-		var a = clamp(isNaN(alpha) ? 1 : alpha, 0, 1);
-		return [h, s, l, a];
-	}
-	return null;
-};
-cs.get.hwb = function (string) {
-	if (!string) {
-		return null;
-	}
-	var hwb = /^hwb\(\s*([+-]?\d*[\.]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/;
-	var match = string.match(hwb);
-	if (match) {
-		var alpha = parseFloat(match[4]);
-		var h = ((parseFloat(match[1]) % 360) + 360) % 360;
-		var w = clamp(parseFloat(match[2]), 0, 100);
-		var b = clamp(parseFloat(match[3]), 0, 100);
-		var a = clamp(isNaN(alpha) ? 1 : alpha, 0, 1);
-		return [h, w, b, a];
-	}
-	return null;
-};
-cs.to.hex = function () {
-	var rgba = simpleSwizzle(arguments);
-	return (
-		'#' +
-		hexDouble(rgba[0]) +
-		hexDouble(rgba[1]) +
-		hexDouble(rgba[2]) +
-		(rgba[3] < 1
-			? (hexDouble(Math.round(rgba[3] * 255)))
-			: '')
-	);
-};
-cs.to.rgb = function () {
-	var rgba = simpleSwizzle(arguments);
-	return rgba.length < 4 || rgba[3] === 1
-		? 'rgb(' + Math.round(rgba[0]) + ', ' + Math.round(rgba[1]) + ', ' + Math.round(rgba[2]) + ')'
-		: 'rgba(' + Math.round(rgba[0]) + ', ' + Math.round(rgba[1]) + ', ' + Math.round(rgba[2]) + ', ' + rgba[3] + ')';
-};
-cs.to.rgb.percent = function () {
-	var rgba = simpleSwizzle(arguments);
-	var r = Math.round(rgba[0] / 255 * 100);
-	var g = Math.round(rgba[1] / 255 * 100);
-	var b = Math.round(rgba[2] / 255 * 100);
-	return rgba.length < 4 || rgba[3] === 1
-		? 'rgb(' + r + '%, ' + g + '%, ' + b + '%)'
-		: 'rgba(' + r + '%, ' + g + '%, ' + b + '%, ' + rgba[3] + ')';
-};
-cs.to.hsl = function () {
-	var hsla = simpleSwizzle(arguments);
-	return hsla.length < 4 || hsla[3] === 1
-		? 'hsl(' + hsla[0] + ', ' + hsla[1] + '%, ' + hsla[2] + '%)'
-		: 'hsla(' + hsla[0] + ', ' + hsla[1] + '%, ' + hsla[2] + '%, ' + hsla[3] + ')';
-};
-cs.to.hwb = function () {
-	var hwba = simpleSwizzle(arguments);
-	var a = '';
-	if (hwba.length >= 4 && hwba[3] !== 1) {
-		a = ', ' + hwba[3];
-	}
-	return 'hwb(' + hwba[0] + ', ' + hwba[1] + '%, ' + hwba[2] + '%' + a + ')';
-};
-cs.to.keyword = function (rgb) {
-	return reverseNames[rgb.slice(0, 3)];
-};
-function clamp(num, min, max) {
-	return Math.min(Math.max(min, num), max);
-}
-function hexDouble(num) {
-	var str = num.toString(16).toUpperCase();
-	return (str.length < 2) ? '0' + str : str;
-}
-});
-
-var conversions = createCommonjsModule(function (module) {
-var reverseKeywords = {};
-for (var key in colorName) {
-	if (colorName.hasOwnProperty(key)) {
-		reverseKeywords[colorName[key]] = key;
-	}
-}
-var convert = module.exports = {
-	rgb: {channels: 3, labels: 'rgb'},
-	hsl: {channels: 3, labels: 'hsl'},
-	hsv: {channels: 3, labels: 'hsv'},
-	hwb: {channels: 3, labels: 'hwb'},
-	cmyk: {channels: 4, labels: 'cmyk'},
-	xyz: {channels: 3, labels: 'xyz'},
-	lab: {channels: 3, labels: 'lab'},
-	lch: {channels: 3, labels: 'lch'},
-	hex: {channels: 1, labels: ['hex']},
-	keyword: {channels: 1, labels: ['keyword']},
-	ansi16: {channels: 1, labels: ['ansi16']},
-	ansi256: {channels: 1, labels: ['ansi256']},
-	hcg: {channels: 3, labels: ['h', 'c', 'g']},
-	apple: {channels: 3, labels: ['r16', 'g16', 'b16']},
-	gray: {channels: 1, labels: ['gray']}
-};
-for (var model in convert) {
-	if (convert.hasOwnProperty(model)) {
-		if (!('channels' in convert[model])) {
-			throw new Error('missing channels property: ' + model);
-		}
-		if (!('labels' in convert[model])) {
-			throw new Error('missing channel labels property: ' + model);
-		}
-		if (convert[model].labels.length !== convert[model].channels) {
-			throw new Error('channel and label counts mismatch: ' + model);
-		}
-		var channels = convert[model].channels;
-		var labels = convert[model].labels;
-		delete convert[model].channels;
-		delete convert[model].labels;
-		Object.defineProperty(convert[model], 'channels', {value: channels});
-		Object.defineProperty(convert[model], 'labels', {value: labels});
-	}
-}
-convert.rgb.hsl = function (rgb) {
-	var r = rgb[0] / 255;
-	var g = rgb[1] / 255;
-	var b = rgb[2] / 255;
-	var min = Math.min(r, g, b);
-	var max = Math.max(r, g, b);
-	var delta = max - min;
-	var h;
-	var s;
-	var l;
-	if (max === min) {
-		h = 0;
-	} else if (r === max) {
-		h = (g - b) / delta;
-	} else if (g === max) {
-		h = 2 + (b - r) / delta;
-	} else if (b === max) {
-		h = 4 + (r - g) / delta;
-	}
-	h = Math.min(h * 60, 360);
-	if (h < 0) {
-		h += 360;
-	}
-	l = (min + max) / 2;
-	if (max === min) {
-		s = 0;
-	} else if (l <= 0.5) {
-		s = delta / (max + min);
-	} else {
-		s = delta / (2 - max - min);
-	}
-	return [h, s * 100, l * 100];
-};
-convert.rgb.hsv = function (rgb) {
-	var r = rgb[0];
-	var g = rgb[1];
-	var b = rgb[2];
-	var min = Math.min(r, g, b);
-	var max = Math.max(r, g, b);
-	var delta = max - min;
-	var h;
-	var s;
-	var v;
-	if (max === 0) {
-		s = 0;
-	} else {
-		s = (delta / max * 1000) / 10;
-	}
-	if (max === min) {
-		h = 0;
-	} else if (r === max) {
-		h = (g - b) / delta;
-	} else if (g === max) {
-		h = 2 + (b - r) / delta;
-	} else if (b === max) {
-		h = 4 + (r - g) / delta;
-	}
-	h = Math.min(h * 60, 360);
-	if (h < 0) {
-		h += 360;
-	}
-	v = ((max / 255) * 1000) / 10;
-	return [h, s, v];
-};
-convert.rgb.hwb = function (rgb) {
-	var r = rgb[0];
-	var g = rgb[1];
-	var b = rgb[2];
-	var h = convert.rgb.hsl(rgb)[0];
-	var w = 1 / 255 * Math.min(r, Math.min(g, b));
-	b = 1 - 1 / 255 * Math.max(r, Math.max(g, b));
-	return [h, w * 100, b * 100];
-};
-convert.rgb.cmyk = function (rgb) {
-	var r = rgb[0] / 255;
-	var g = rgb[1] / 255;
-	var b = rgb[2] / 255;
-	var c;
-	var m;
-	var y;
-	var k;
-	k = Math.min(1 - r, 1 - g, 1 - b);
-	c = (1 - r - k) / (1 - k) || 0;
-	m = (1 - g - k) / (1 - k) || 0;
-	y = (1 - b - k) / (1 - k) || 0;
-	return [c * 100, m * 100, y * 100, k * 100];
-};
-function comparativeDistance(x, y) {
-	return (
-		Math.pow(x[0] - y[0], 2) +
-		Math.pow(x[1] - y[1], 2) +
-		Math.pow(x[2] - y[2], 2)
-	);
-}
-convert.rgb.keyword = function (rgb) {
-	var reversed = reverseKeywords[rgb];
-	if (reversed) {
-		return reversed;
-	}
-	var currentClosestDistance = Infinity;
-	var currentClosestKeyword;
-	for (var keyword in colorName) {
-		if (colorName.hasOwnProperty(keyword)) {
-			var value = colorName[keyword];
-			var distance = comparativeDistance(rgb, value);
-			if (distance < currentClosestDistance) {
-				currentClosestDistance = distance;
-				currentClosestKeyword = keyword;
-			}
-		}
-	}
-	return currentClosestKeyword;
-};
-convert.keyword.rgb = function (keyword) {
-	return colorName[keyword];
-};
-convert.rgb.xyz = function (rgb) {
-	var r = rgb[0] / 255;
-	var g = rgb[1] / 255;
-	var b = rgb[2] / 255;
-	r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
-	g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
-	b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
-	var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
-	var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
-	var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
-	return [x * 100, y * 100, z * 100];
-};
-convert.rgb.lab = function (rgb) {
-	var xyz = convert.rgb.xyz(rgb);
-	var x = xyz[0];
-	var y = xyz[1];
-	var z = xyz[2];
-	var l;
-	var a;
-	var b;
-	x /= 95.047;
-	y /= 100;
-	z /= 108.883;
-	x = x > 0.008856 ? Math.pow(x, 1 / 3) : (7.787 * x) + (16 / 116);
-	y = y > 0.008856 ? Math.pow(y, 1 / 3) : (7.787 * y) + (16 / 116);
-	z = z > 0.008856 ? Math.pow(z, 1 / 3) : (7.787 * z) + (16 / 116);
-	l = (116 * y) - 16;
-	a = 500 * (x - y);
-	b = 200 * (y - z);
-	return [l, a, b];
-};
-convert.hsl.rgb = function (hsl) {
-	var h = hsl[0] / 360;
-	var s = hsl[1] / 100;
-	var l = hsl[2] / 100;
-	var t1;
-	var t2;
-	var t3;
-	var rgb;
-	var val;
-	if (s === 0) {
-		val = l * 255;
-		return [val, val, val];
-	}
-	if (l < 0.5) {
-		t2 = l * (1 + s);
-	} else {
-		t2 = l + s - l * s;
-	}
-	t1 = 2 * l - t2;
-	rgb = [0, 0, 0];
-	for (var i = 0; i < 3; i++) {
-		t3 = h + 1 / 3 * -(i - 1);
-		if (t3 < 0) {
-			t3++;
-		}
-		if (t3 > 1) {
-			t3--;
-		}
-		if (6 * t3 < 1) {
-			val = t1 + (t2 - t1) * 6 * t3;
-		} else if (2 * t3 < 1) {
-			val = t2;
-		} else if (3 * t3 < 2) {
-			val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
-		} else {
-			val = t1;
-		}
-		rgb[i] = val * 255;
-	}
-	return rgb;
-};
-convert.hsl.hsv = function (hsl) {
-	var h = hsl[0];
-	var s = hsl[1] / 100;
-	var l = hsl[2] / 100;
-	var smin = s;
-	var lmin = Math.max(l, 0.01);
-	var sv;
-	var v;
-	l *= 2;
-	s *= (l <= 1) ? l : 2 - l;
-	smin *= lmin <= 1 ? lmin : 2 - lmin;
-	v = (l + s) / 2;
-	sv = l === 0 ? (2 * smin) / (lmin + smin) : (2 * s) / (l + s);
-	return [h, sv * 100, v * 100];
-};
-convert.hsv.rgb = function (hsv) {
-	var h = hsv[0] / 60;
-	var s = hsv[1] / 100;
-	var v = hsv[2] / 100;
-	var hi = Math.floor(h) % 6;
-	var f = h - Math.floor(h);
-	var p = 255 * v * (1 - s);
-	var q = 255 * v * (1 - (s * f));
-	var t = 255 * v * (1 - (s * (1 - f)));
-	v *= 255;
-	switch (hi) {
-		case 0:
-			return [v, t, p];
-		case 1:
-			return [q, v, p];
-		case 2:
-			return [p, v, t];
-		case 3:
-			return [p, q, v];
-		case 4:
-			return [t, p, v];
-		case 5:
-			return [v, p, q];
-	}
-};
-convert.hsv.hsl = function (hsv) {
-	var h = hsv[0];
-	var s = hsv[1] / 100;
-	var v = hsv[2] / 100;
-	var vmin = Math.max(v, 0.01);
-	var lmin;
-	var sl;
-	var l;
-	l = (2 - s) * v;
-	lmin = (2 - s) * vmin;
-	sl = s * vmin;
-	sl /= (lmin <= 1) ? lmin : 2 - lmin;
-	sl = sl || 0;
-	l /= 2;
-	return [h, sl * 100, l * 100];
-};
-convert.hwb.rgb = function (hwb) {
-	var h = hwb[0] / 360;
-	var wh = hwb[1] / 100;
-	var bl = hwb[2] / 100;
-	var ratio = wh + bl;
-	var i;
-	var v;
-	var f;
-	var n;
-	if (ratio > 1) {
-		wh /= ratio;
-		bl /= ratio;
-	}
-	i = Math.floor(6 * h);
-	v = 1 - bl;
-	f = 6 * h - i;
-	if ((i & 0x01) !== 0) {
-		f = 1 - f;
-	}
-	n = wh + f * (v - wh);
-	var r;
-	var g;
-	var b;
-	switch (i) {
-		default:
-		case 6:
-		case 0: r = v; g = n; b = wh; break;
-		case 1: r = n; g = v; b = wh; break;
-		case 2: r = wh; g = v; b = n; break;
-		case 3: r = wh; g = n; b = v; break;
-		case 4: r = n; g = wh; b = v; break;
-		case 5: r = v; g = wh; b = n; break;
-	}
-	return [r * 255, g * 255, b * 255];
-};
-convert.cmyk.rgb = function (cmyk) {
-	var c = cmyk[0] / 100;
-	var m = cmyk[1] / 100;
-	var y = cmyk[2] / 100;
-	var k = cmyk[3] / 100;
-	var r;
-	var g;
-	var b;
-	r = 1 - Math.min(1, c * (1 - k) + k);
-	g = 1 - Math.min(1, m * (1 - k) + k);
-	b = 1 - Math.min(1, y * (1 - k) + k);
-	return [r * 255, g * 255, b * 255];
-};
-convert.xyz.rgb = function (xyz) {
-	var x = xyz[0] / 100;
-	var y = xyz[1] / 100;
-	var z = xyz[2] / 100;
-	var r;
-	var g;
-	var b;
-	r = (x * 3.2406) + (y * -1.5372) + (z * -0.4986);
-	g = (x * -0.9689) + (y * 1.8758) + (z * 0.0415);
-	b = (x * 0.0557) + (y * -0.2040) + (z * 1.0570);
-	r = r > 0.0031308
-		? ((1.055 * Math.pow(r, 1.0 / 2.4)) - 0.055)
-		: r * 12.92;
-	g = g > 0.0031308
-		? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
-		: g * 12.92;
-	b = b > 0.0031308
-		? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
-		: b * 12.92;
-	r = Math.min(Math.max(0, r), 1);
-	g = Math.min(Math.max(0, g), 1);
-	b = Math.min(Math.max(0, b), 1);
-	return [r * 255, g * 255, b * 255];
-};
-convert.xyz.lab = function (xyz) {
-	var x = xyz[0];
-	var y = xyz[1];
-	var z = xyz[2];
-	var l;
-	var a;
-	var b;
-	x /= 95.047;
-	y /= 100;
-	z /= 108.883;
-	x = x > 0.008856 ? Math.pow(x, 1 / 3) : (7.787 * x) + (16 / 116);
-	y = y > 0.008856 ? Math.pow(y, 1 / 3) : (7.787 * y) + (16 / 116);
-	z = z > 0.008856 ? Math.pow(z, 1 / 3) : (7.787 * z) + (16 / 116);
-	l = (116 * y) - 16;
-	a = 500 * (x - y);
-	b = 200 * (y - z);
-	return [l, a, b];
-};
-convert.lab.xyz = function (lab) {
-	var l = lab[0];
-	var a = lab[1];
-	var b = lab[2];
-	var x;
-	var y;
-	var z;
-	y = (l + 16) / 116;
-	x = a / 500 + y;
-	z = y - b / 200;
-	var y2 = Math.pow(y, 3);
-	var x2 = Math.pow(x, 3);
-	var z2 = Math.pow(z, 3);
-	y = y2 > 0.008856 ? y2 : (y - 16 / 116) / 7.787;
-	x = x2 > 0.008856 ? x2 : (x - 16 / 116) / 7.787;
-	z = z2 > 0.008856 ? z2 : (z - 16 / 116) / 7.787;
-	x *= 95.047;
-	y *= 100;
-	z *= 108.883;
-	return [x, y, z];
-};
-convert.lab.lch = function (lab) {
-	var l = lab[0];
-	var a = lab[1];
-	var b = lab[2];
-	var hr;
-	var h;
-	var c;
-	hr = Math.atan2(b, a);
-	h = hr * 360 / 2 / Math.PI;
-	if (h < 0) {
-		h += 360;
-	}
-	c = Math.sqrt(a * a + b * b);
-	return [l, c, h];
-};
-convert.lch.lab = function (lch) {
-	var l = lch[0];
-	var c = lch[1];
-	var h = lch[2];
-	var a;
-	var b;
-	var hr;
-	hr = h / 360 * 2 * Math.PI;
-	a = c * Math.cos(hr);
-	b = c * Math.sin(hr);
-	return [l, a, b];
-};
-convert.rgb.ansi16 = function (args) {
-	var r = args[0];
-	var g = args[1];
-	var b = args[2];
-	var value = 1 in arguments ? arguments[1] : convert.rgb.hsv(args)[2];
-	value = Math.round(value / 50);
-	if (value === 0) {
-		return 30;
-	}
-	var ansi = 30
-		+ ((Math.round(b / 255) << 2)
-		| (Math.round(g / 255) << 1)
-		| Math.round(r / 255));
-	if (value === 2) {
-		ansi += 60;
-	}
-	return ansi;
-};
-convert.hsv.ansi16 = function (args) {
-	return convert.rgb.ansi16(convert.hsv.rgb(args), args[2]);
-};
-convert.rgb.ansi256 = function (args) {
-	var r = args[0];
-	var g = args[1];
-	var b = args[2];
-	if (r === g && g === b) {
-		if (r < 8) {
-			return 16;
-		}
-		if (r > 248) {
-			return 231;
-		}
-		return Math.round(((r - 8) / 247) * 24) + 232;
-	}
-	var ansi = 16
-		+ (36 * Math.round(r / 255 * 5))
-		+ (6 * Math.round(g / 255 * 5))
-		+ Math.round(b / 255 * 5);
-	return ansi;
-};
-convert.ansi16.rgb = function (args) {
-	var color = args % 10;
-	if (color === 0 || color === 7) {
-		if (args > 50) {
-			color += 3.5;
-		}
-		color = color / 10.5 * 255;
-		return [color, color, color];
-	}
-	var mult = (~~(args > 50) + 1) * 0.5;
-	var r = ((color & 1) * mult) * 255;
-	var g = (((color >> 1) & 1) * mult) * 255;
-	var b = (((color >> 2) & 1) * mult) * 255;
-	return [r, g, b];
-};
-convert.ansi256.rgb = function (args) {
-	if (args >= 232) {
-		var c = (args - 232) * 10 + 8;
-		return [c, c, c];
-	}
-	args -= 16;
-	var rem;
-	var r = Math.floor(args / 36) / 5 * 255;
-	var g = Math.floor((rem = args % 36) / 6) / 5 * 255;
-	var b = (rem % 6) / 5 * 255;
-	return [r, g, b];
-};
-convert.rgb.hex = function (args) {
-	var integer = ((Math.round(args[0]) & 0xFF) << 16)
-		+ ((Math.round(args[1]) & 0xFF) << 8)
-		+ (Math.round(args[2]) & 0xFF);
-	var string = integer.toString(16).toUpperCase();
-	return '000000'.substring(string.length) + string;
-};
-convert.hex.rgb = function (args) {
-	var match = args.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
-	if (!match) {
-		return [0, 0, 0];
-	}
-	var colorString = match[0];
-	if (match[0].length === 3) {
-		colorString = colorString.split('').map(function (char) {
-			return char + char;
-		}).join('');
-	}
-	var integer = parseInt(colorString, 16);
-	var r = (integer >> 16) & 0xFF;
-	var g = (integer >> 8) & 0xFF;
-	var b = integer & 0xFF;
-	return [r, g, b];
-};
-convert.rgb.hcg = function (rgb) {
-	var r = rgb[0] / 255;
-	var g = rgb[1] / 255;
-	var b = rgb[2] / 255;
-	var max = Math.max(Math.max(r, g), b);
-	var min = Math.min(Math.min(r, g), b);
-	var chroma = (max - min);
-	var grayscale;
-	var hue;
-	if (chroma < 1) {
-		grayscale = min / (1 - chroma);
-	} else {
-		grayscale = 0;
-	}
-	if (chroma <= 0) {
-		hue = 0;
-	} else
-	if (max === r) {
-		hue = ((g - b) / chroma) % 6;
-	} else
-	if (max === g) {
-		hue = 2 + (b - r) / chroma;
-	} else {
-		hue = 4 + (r - g) / chroma + 4;
-	}
-	hue /= 6;
-	hue %= 1;
-	return [hue * 360, chroma * 100, grayscale * 100];
-};
-convert.hsl.hcg = function (hsl) {
-	var s = hsl[1] / 100;
-	var l = hsl[2] / 100;
-	var c = 1;
-	var f = 0;
-	if (l < 0.5) {
-		c = 2.0 * s * l;
-	} else {
-		c = 2.0 * s * (1.0 - l);
-	}
-	if (c < 1.0) {
-		f = (l - 0.5 * c) / (1.0 - c);
-	}
-	return [hsl[0], c * 100, f * 100];
-};
-convert.hsv.hcg = function (hsv) {
-	var s = hsv[1] / 100;
-	var v = hsv[2] / 100;
-	var c = s * v;
-	var f = 0;
-	if (c < 1.0) {
-		f = (v - c) / (1 - c);
-	}
-	return [hsv[0], c * 100, f * 100];
-};
-convert.hcg.rgb = function (hcg) {
-	var h = hcg[0] / 360;
-	var c = hcg[1] / 100;
-	var g = hcg[2] / 100;
-	if (c === 0.0) {
-		return [g * 255, g * 255, g * 255];
-	}
-	var pure = [0, 0, 0];
-	var hi = (h % 1) * 6;
-	var v = hi % 1;
-	var w = 1 - v;
-	var mg = 0;
-	switch (Math.floor(hi)) {
-		case 0:
-			pure[0] = 1; pure[1] = v; pure[2] = 0; break;
-		case 1:
-			pure[0] = w; pure[1] = 1; pure[2] = 0; break;
-		case 2:
-			pure[0] = 0; pure[1] = 1; pure[2] = v; break;
-		case 3:
-			pure[0] = 0; pure[1] = w; pure[2] = 1; break;
-		case 4:
-			pure[0] = v; pure[1] = 0; pure[2] = 1; break;
-		default:
-			pure[0] = 1; pure[1] = 0; pure[2] = w;
-	}
-	mg = (1.0 - c) * g;
-	return [
-		(c * pure[0] + mg) * 255,
-		(c * pure[1] + mg) * 255,
-		(c * pure[2] + mg) * 255
-	];
-};
-convert.hcg.hsv = function (hcg) {
-	var c = hcg[1] / 100;
-	var g = hcg[2] / 100;
-	var v = c + g * (1.0 - c);
-	var f = 0;
-	if (v > 0.0) {
-		f = c / v;
-	}
-	return [hcg[0], f * 100, v * 100];
-};
-convert.hcg.hsl = function (hcg) {
-	var c = hcg[1] / 100;
-	var g = hcg[2] / 100;
-	var l = g * (1.0 - c) + 0.5 * c;
-	var s = 0;
-	if (l > 0.0 && l < 0.5) {
-		s = c / (2 * l);
-	} else
-	if (l >= 0.5 && l < 1.0) {
-		s = c / (2 * (1 - l));
-	}
-	return [hcg[0], s * 100, l * 100];
-};
-convert.hcg.hwb = function (hcg) {
-	var c = hcg[1] / 100;
-	var g = hcg[2] / 100;
-	var v = c + g * (1.0 - c);
-	return [hcg[0], (v - c) * 100, (1 - v) * 100];
-};
-convert.hwb.hcg = function (hwb) {
-	var w = hwb[1] / 100;
-	var b = hwb[2] / 100;
-	var v = 1 - b;
-	var c = v - w;
-	var g = 0;
-	if (c < 1) {
-		g = (v - c) / (1 - c);
-	}
-	return [hwb[0], c * 100, g * 100];
-};
-convert.apple.rgb = function (apple) {
-	return [(apple[0] / 65535) * 255, (apple[1] / 65535) * 255, (apple[2] / 65535) * 255];
-};
-convert.rgb.apple = function (rgb) {
-	return [(rgb[0] / 255) * 65535, (rgb[1] / 255) * 65535, (rgb[2] / 255) * 65535];
-};
-convert.gray.rgb = function (args) {
-	return [args[0] / 100 * 255, args[0] / 100 * 255, args[0] / 100 * 255];
-};
-convert.gray.hsl = convert.gray.hsv = function (args) {
-	return [0, 0, args[0]];
-};
-convert.gray.hwb = function (gray) {
-	return [0, 100, gray[0]];
-};
-convert.gray.cmyk = function (gray) {
-	return [0, 0, 0, gray[0]];
-};
-convert.gray.lab = function (gray) {
-	return [gray[0], 0, 0];
-};
-convert.gray.hex = function (gray) {
-	var val = Math.round(gray[0] / 100 * 255) & 0xFF;
-	var integer = (val << 16) + (val << 8) + val;
-	var string = integer.toString(16).toUpperCase();
-	return '000000'.substring(string.length) + string;
-};
-convert.rgb.gray = function (rgb) {
-	var val = (rgb[0] + rgb[1] + rgb[2]) / 3;
-	return [val / 255 * 100];
-};
-});
-
-var models$1 = Object.keys(conversions);
-function buildGraph() {
-	var graph = {};
-	for (var len = models$1.length, i = 0; i < len; i++) {
-		graph[models$1[i]] = {
-			distance: -1,
-			parent: null
-		};
-	}
-	return graph;
-}
-function deriveBFS(fromModel) {
-	var graph = buildGraph();
-	var queue = [fromModel];
-	graph[fromModel].distance = 0;
-	while (queue.length) {
-		var current = queue.pop();
-		var adjacents = Object.keys(conversions[current]);
-		for (var len = adjacents.length, i = 0; i < len; i++) {
-			var adjacent = adjacents[i];
-			var node = graph[adjacent];
-			if (node.distance === -1) {
-				node.distance = graph[current].distance + 1;
-				node.parent = current;
-				queue.unshift(adjacent);
-			}
-		}
-	}
-	return graph;
-}
-function link(from, to) {
-	return function (args) {
-		return to(from(args));
-	};
-}
-function wrapConversion(toModel, graph) {
-	var path = [graph[toModel].parent, toModel];
-	var fn = conversions[graph[toModel].parent][toModel];
-	var cur = graph[toModel].parent;
-	while (graph[cur].parent) {
-		path.unshift(graph[cur].parent);
-		fn = link(conversions[graph[cur].parent][cur], fn);
-		cur = graph[cur].parent;
-	}
-	fn.conversion = path;
-	return fn;
-}
-var route = function (fromModel) {
-	var graph = deriveBFS(fromModel);
-	var conversion = {};
-	var models = Object.keys(graph);
-	for (var len = models.length, i = 0; i < len; i++) {
-		var toModel = models[i];
-		var node = graph[toModel];
-		if (node.parent === null) {
-			continue;
-		}
-		conversion[toModel] = wrapConversion(toModel, graph);
-	}
-	return conversion;
-};
-
-var convert = {};
-var models = Object.keys(conversions);
-function wrapRaw(fn) {
-	var wrappedFn = function (args) {
-		if (args === undefined || args === null) {
-			return args;
-		}
-		if (arguments.length > 1) {
-			args = Array.prototype.slice.call(arguments);
-		}
-		return fn(args);
-	};
-	if ('conversion' in fn) {
-		wrappedFn.conversion = fn.conversion;
-	}
-	return wrappedFn;
-}
-function wrapRounded(fn) {
-	var wrappedFn = function (args) {
-		if (args === undefined || args === null) {
-			return args;
-		}
-		if (arguments.length > 1) {
-			args = Array.prototype.slice.call(arguments);
-		}
-		var result = fn(args);
-		if (typeof result === 'object') {
-			for (var len = result.length, i = 0; i < len; i++) {
-				result[i] = Math.round(result[i]);
-			}
-		}
-		return result;
-	};
-	if ('conversion' in fn) {
-		wrappedFn.conversion = fn.conversion;
-	}
-	return wrappedFn;
-}
-models.forEach(function (fromModel) {
-	convert[fromModel] = {};
-	Object.defineProperty(convert[fromModel], 'channels', {value: conversions[fromModel].channels});
-	Object.defineProperty(convert[fromModel], 'labels', {value: conversions[fromModel].labels});
-	var routes = route(fromModel);
-	var routeModels = Object.keys(routes);
-	routeModels.forEach(function (toModel) {
-		var fn = routes[toModel];
-		convert[fromModel][toModel] = wrapRounded(fn);
-		convert[fromModel][toModel].raw = wrapRaw(fn);
-	});
-});
-var colorConvert = convert;
-
-'use strict';
-var _slice = [].slice;
-var skippedModels = [
-	'keyword',
-	'gray',
-	'hex'
-];
-var hashedModelKeys = {};
-Object.keys(colorConvert).forEach(function (model) {
-	hashedModelKeys[_slice.call(colorConvert[model].labels).sort().join('')] = model;
-});
-var limiters = {};
-function Color(obj, model) {
-	if (!(this instanceof Color)) {
-		return new Color(obj, model);
-	}
-	if (model && model in skippedModels) {
-		model = null;
-	}
-	if (model && !(model in colorConvert)) {
-		throw new Error('Unknown model: ' + model);
-	}
-	var i;
-	var channels;
-	if (!obj) {
-		this.model = 'rgb';
-		this.color = [0, 0, 0];
-		this.valpha = 1;
-	} else if (obj instanceof Color) {
-		this.model = obj.model;
-		this.color = obj.color.slice();
-		this.valpha = obj.valpha;
-	} else if (typeof obj === 'string') {
-		var result = colorString.get(obj);
-		if (result === null) {
-			throw new Error('Unable to parse color from string: ' + obj);
-		}
-		this.model = result.model;
-		channels = colorConvert[this.model].channels;
-		this.color = result.value.slice(0, channels);
-		this.valpha = typeof result.value[channels] === 'number' ? result.value[channels] : 1;
-	} else if (obj.length) {
-		this.model = model || 'rgb';
-		channels = colorConvert[this.model].channels;
-		var newArr = _slice.call(obj, 0, channels);
-		this.color = zeroArray(newArr, channels);
-		this.valpha = typeof obj[channels] === 'number' ? obj[channels] : 1;
-	} else if (typeof obj === 'number') {
-		obj &= 0xFFFFFF;
-		this.model = 'rgb';
-		this.color = [
-			(obj >> 16) & 0xFF,
-			(obj >> 8) & 0xFF,
-			obj & 0xFF
-		];
-		this.valpha = 1;
-	} else {
-		this.valpha = 1;
-		var keys = Object.keys(obj);
-		if ('alpha' in obj) {
-			keys.splice(keys.indexOf('alpha'), 1);
-			this.valpha = typeof obj.alpha === 'number' ? obj.alpha : 0;
-		}
-		var hashedKeys = keys.sort().join('');
-		if (!(hashedKeys in hashedModelKeys)) {
-			throw new Error('Unable to parse color from object: ' + JSON.stringify(obj));
-		}
-		this.model = hashedModelKeys[hashedKeys];
-		var labels = colorConvert[this.model].labels;
-		var color = [];
-		for (i = 0; i < labels.length; i++) {
-			color.push(obj[labels[i]]);
-		}
-		this.color = zeroArray(color);
-	}
-	if (limiters[this.model]) {
-		channels = colorConvert[this.model].channels;
-		for (i = 0; i < channels; i++) {
-			var limit = limiters[this.model][i];
-			if (limit) {
-				this.color[i] = limit(this.color[i]);
-			}
-		}
-	}
-	this.valpha = Math.max(0, Math.min(1, this.valpha));
-	if (Object.freeze) {
-		Object.freeze(this);
-	}
-}
-Color.prototype = {
-	toString: function () {
-		return this.string();
-	},
-	toJSON: function () {
-		return this[this.model]();
-	},
-	string: function (places) {
-		var self = this.model in colorString.to ? this : this.rgb();
-		self = self.round(typeof places === 'number' ? places : 1);
-		var args = self.valpha === 1 ? self.color : self.color.concat(this.valpha);
-		return colorString.to[self.model](args);
-	},
-	percentString: function (places) {
-		var self = this.rgb().round(typeof places === 'number' ? places : 1);
-		var args = self.valpha === 1 ? self.color : self.color.concat(this.valpha);
-		return colorString.to.rgb.percent(args);
-	},
-	array: function () {
-		return this.valpha === 1 ? this.color.slice() : this.color.concat(this.valpha);
-	},
-	object: function () {
-		var result = {};
-		var channels = colorConvert[this.model].channels;
-		var labels = colorConvert[this.model].labels;
-		for (var i = 0; i < channels; i++) {
-			result[labels[i]] = this.color[i];
-		}
-		if (this.valpha !== 1) {
-			result.alpha = this.valpha;
-		}
-		return result;
-	},
-	unitArray: function () {
-		var rgb = this.rgb().color;
-		rgb[0] /= 255;
-		rgb[1] /= 255;
-		rgb[2] /= 255;
-		if (this.valpha !== 1) {
-			rgb.push(this.valpha);
-		}
-		return rgb;
-	},
-	unitObject: function () {
-		var rgb = this.rgb().object();
-		rgb.r /= 255;
-		rgb.g /= 255;
-		rgb.b /= 255;
-		if (this.valpha !== 1) {
-			rgb.alpha = this.valpha;
-		}
-		return rgb;
-	},
-	round: function (places) {
-		places = Math.max(places || 0, 0);
-		return new Color(this.color.map(roundToPlace(places)).concat(this.valpha), this.model);
-	},
-	alpha: function (val) {
-		if (arguments.length) {
-			return new Color(this.color.concat(Math.max(0, Math.min(1, val))), this.model);
-		}
-		return this.valpha;
-	},
-	red: getset('rgb', 0, maxfn(255)),
-	green: getset('rgb', 1, maxfn(255)),
-	blue: getset('rgb', 2, maxfn(255)),
-	hue: getset(['hsl', 'hsv', 'hsl', 'hwb', 'hcg'], 0, function (val) { return ((val % 360) + 360) % 360; }),
-	saturationl: getset('hsl', 1, maxfn(100)),
-	lightness: getset('hsl', 2, maxfn(100)),
-	saturationv: getset('hsv', 1, maxfn(100)),
-	value: getset('hsv', 2, maxfn(100)),
-	chroma: getset('hcg', 1, maxfn(100)),
-	gray: getset('hcg', 2, maxfn(100)),
-	white: getset('hwb', 1, maxfn(100)),
-	wblack: getset('hwb', 2, maxfn(100)),
-	cyan: getset('cmyk', 0, maxfn(100)),
-	magenta: getset('cmyk', 1, maxfn(100)),
-	yellow: getset('cmyk', 2, maxfn(100)),
-	black: getset('cmyk', 3, maxfn(100)),
-	x: getset('xyz', 0, maxfn(100)),
-	y: getset('xyz', 1, maxfn(100)),
-	z: getset('xyz', 2, maxfn(100)),
-	l: getset('lab', 0, maxfn(100)),
-	a: getset('lab', 1),
-	b: getset('lab', 2),
-	keyword: function (val) {
-		if (arguments.length) {
-			return new Color(val);
-		}
-		return colorConvert[this.model].keyword(this.color);
-	},
-	hex: function (val) {
-		if (arguments.length) {
-			return new Color(val);
-		}
-		return colorString.to.hex(this.rgb().round().color);
-	},
-	rgbNumber: function () {
-		var rgb = this.rgb().color;
-		return ((rgb[0] & 0xFF) << 16) | ((rgb[1] & 0xFF) << 8) | (rgb[2] & 0xFF);
-	},
-	luminosity: function () {
-		var rgb = this.rgb().color;
-		var lum = [];
-		for (var i = 0; i < rgb.length; i++) {
-			var chan = rgb[i] / 255;
-			lum[i] = (chan <= 0.03928) ? chan / 12.92 : Math.pow(((chan + 0.055) / 1.055), 2.4);
-		}
-		return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
-	},
-	contrast: function (color2) {
-		var lum1 = this.luminosity();
-		var lum2 = color2.luminosity();
-		if (lum1 > lum2) {
-			return (lum1 + 0.05) / (lum2 + 0.05);
-		}
-		return (lum2 + 0.05) / (lum1 + 0.05);
-	},
-	level: function (color2) {
-		var contrastRatio = this.contrast(color2);
-		if (contrastRatio >= 7.1) {
-			return 'AAA';
-		}
-		return (contrastRatio >= 4.5) ? 'AA' : '';
-	},
-	dark: function () {
-		var rgb = this.rgb().color;
-		var yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
-		return yiq < 128;
-	},
-	light: function () {
-		return !this.dark();
-	},
-	negate: function () {
-		var rgb = this.rgb();
-		for (var i = 0; i < 3; i++) {
-			rgb.color[i] = 255 - rgb.color[i];
-		}
-		return rgb;
-	},
-	lighten: function (ratio) {
-		var hsl = this.hsl();
-		hsl.color[2] += hsl.color[2] * ratio;
-		return hsl;
-	},
-	darken: function (ratio) {
-		var hsl = this.hsl();
-		hsl.color[2] -= hsl.color[2] * ratio;
-		return hsl;
-	},
-	saturate: function (ratio) {
-		var hsl = this.hsl();
-		hsl.color[1] += hsl.color[1] * ratio;
-		return hsl;
-	},
-	desaturate: function (ratio) {
-		var hsl = this.hsl();
-		hsl.color[1] -= hsl.color[1] * ratio;
-		return hsl;
-	},
-	whiten: function (ratio) {
-		var hwb = this.hwb();
-		hwb.color[1] += hwb.color[1] * ratio;
-		return hwb;
-	},
-	blacken: function (ratio) {
-		var hwb = this.hwb();
-		hwb.color[2] += hwb.color[2] * ratio;
-		return hwb;
-	},
-	grayscale: function () {
-		var rgb = this.rgb().color;
-		var val = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11;
-		return Color.rgb(val, val, val);
-	},
-	fade: function (ratio) {
-		return this.alpha(this.valpha - (this.valpha * ratio));
-	},
-	opaquer: function (ratio) {
-		return this.alpha(this.valpha + (this.valpha * ratio));
-	},
-	rotate: function (degrees) {
-		var hsl = this.hsl();
-		var hue = hsl.color[0];
-		hue = (hue + degrees) % 360;
-		hue = hue < 0 ? 360 + hue : hue;
-		hsl.color[0] = hue;
-		return hsl;
-	},
-	mix: function (mixinColor, weight) {
-		var color1 = this.rgb();
-		var color2 = mixinColor.rgb();
-		var p = weight === undefined ? 0.5 : weight;
-		var w = 2 * p - 1;
-		var a = color1.alpha() - color2.alpha();
-		var w1 = (((w * a === -1) ? w : (w + a) / (1 + w * a)) + 1) / 2.0;
-		var w2 = 1 - w1;
-		return Color.rgb(
-				w1 * color1.red() + w2 * color2.red(),
-				w1 * color1.green() + w2 * color2.green(),
-				w1 * color1.blue() + w2 * color2.blue(),
-				color1.alpha() * p + color2.alpha() * (1 - p));
-	}
-};
-Object.keys(colorConvert).forEach(function (model) {
-	if (skippedModels.indexOf(model) !== -1) {
-		return;
-	}
-	var channels = colorConvert[model].channels;
-	Color.prototype[model] = function () {
-		if (this.model === model) {
-			return new Color(this);
-		}
-		if (arguments.length) {
-			return new Color(arguments, model);
-		}
-		var newAlpha = typeof arguments[channels] === 'number' ? channels : this.valpha;
-		return new Color(assertArray(colorConvert[this.model][model].raw(this.color)).concat(newAlpha), model);
-	};
-	Color[model] = function (color) {
-		if (typeof color === 'number') {
-			color = zeroArray(_slice.call(arguments), channels);
-		}
-		return new Color(color, model);
-	};
-});
-function roundTo(num, places) {
-	return Number(num.toFixed(places));
-}
-function roundToPlace(places) {
-	return function (num) {
-		return roundTo(num, places);
-	};
-}
-function getset(model, channel, modifier) {
-	model = Array.isArray(model) ? model : [model];
-	model.forEach(function (m) {
-		(limiters[m] || (limiters[m] = []))[channel] = modifier;
-	});
-	model = model[0];
-	return function (val) {
-		var result;
-		if (arguments.length) {
-			if (modifier) {
-				val = modifier(val);
-			}
-			result = this[model]();
-			result.color[channel] = val;
-			return result;
-		}
-		result = this[model]().color[channel];
-		if (modifier) {
-			result = modifier(result);
-		}
-		return result;
-	};
-}
-function maxfn(max) {
-	return function (v) {
-		return Math.max(0, Math.min(max, v));
-	};
-}
-function assertArray(val) {
-	return Array.isArray(val) ? val : [val];
-}
-function zeroArray(arr, length) {
-	for (var i = 0; i < length; i++) {
-		if (typeof arr[i] !== 'number') {
-			arr[i] = 0;
-		}
-	}
-	return arr;
-}
-var color = Color;
-
-var alert = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.alertVariant = alertVariant;
-var _color2 = _interopRequireDefault(color);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function alertVariant(background, border, bodyColor) {
-  return '\n    background-color: ' + background + ';\n    border-color: ' + border + ';\n    color: ' + bodyColor + ';\n  \n    hr {\n      border-top-color: ' + (0, _color2.default)(border).darken(0.5).toString() + ';\n    }\n    .alert-link {\n      color: ' + (0, _color2.default)(bodyColor).darken(0.1).toString() + ';\n    }\n  ';
-}
 exports.default = {
-  alertVariant: alertVariant
+  defaultProps: defaultProps,
+  boxShadow: boxShadow
 };
 });
-unwrapExports(alert);
+var boxShadow_2 = boxShadow_1.boxShadow;
 
 var borderRadius_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -2912,2348 +109,357 @@ exports.default = {
   left: borderLeftRadius
 };
 });
-unwrapExports(borderRadius_1);
 var borderRadius_2 = borderRadius_1.borderRadius;
 
-var unitUtils = createCommonjsModule(function (module, exports) {
+var defaultShouldAsyncValidate_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-var UnitUtils = function UnitUtils() {
-  var _this = this;
-  _classCallCheck(this, UnitUtils);
-  this.UNIT = {
-    EM: 'em',
-    REM: 'rem',
-    PX: 'px',
-    PERCENT: '%'
-  };
-  this.math = {
-    addition: function addition(a, b) {
-      var unit = this.detectUnit(a) || this.detectUnit(b);
-      return this.rmUnit(a) + this.rmUnit(b) + unit;
-    }.bind(this),
-    subtract: function subtract(a, b) {
-      var unit = this.detectUnit(a) || this.detectUnit(b);
-      return this.rmUnit(a) - this.rmUnit(b) + unit;
-    }.bind(this),
-    multiply: function multiply(a, b) {
-      var unit = this.detectUnit(a) || this.detectUnit(b);
-      return this.rmUnit(a) * this.rmUnit(b) + unit;
-    }.bind(this),
-    divide: function divide(a, b) {
-      var unit = this.detectUnit(a) || this.detectUnit(b);
-      return this.rmUnit(a) / this.rmUnit(b) + unit;
-    }.bind(this)
-  };
-  this.detectUnit = function (value) {
-    var ext = void 0;
-    var valueStr = value.toString();
-    if (valueStr.match(_this.UNIT.PX)) {
-      ext = _this.UNIT.PX;
-    } else if (valueStr.match(_this.UNIT.REM)) {
-      ext = _this.UNIT.REM;
-    } else if (valueStr.match(_this.UNIT.EM)) {
-      ext = _this.UNIT.EM;
-    } else if (valueStr.match(_this.UNIT.PERCENT)) {
-      ext = _this.UNIT.PERCENT;
-    } else if (!isNaN(value)) {
-      return null;
-    } else {
-      throw new Error('detectUnit can\'t find unit for ' + value);
-    }
-    return ext;
-  };
-  this.rmUnit = function (value, unit) {
-    var valueStr = value.toString();
-    var ext = unit || _this.detectUnit(valueStr);
-    var number = valueStr.replace(ext, '');
-    return parseFloat(number);
-  };
-  this.toPercent = function (value) {
-    var total = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-    var decimal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2;
-    return '' + Math.floor(value / total * 100 * Math.pow(10, decimal)) / Math.pow(10, decimal) + _this.UNIT.PERCENT;
-  };
+var defaultShouldAsyncValidate = function defaultShouldAsyncValidate(_ref) {
+  var initialized = _ref.initialized,
+      trigger = _ref.trigger,
+      pristine = _ref.pristine,
+      syncValidationPasses = _ref.syncValidationPasses;
+  if (!syncValidationPasses) {
+    return false;
+  }
+  switch (trigger) {
+    case 'blur':
+      return true;
+    case 'submit':
+      return !pristine || !initialized;
+    default:
+      return false;
+  }
 };
-exports.default = new UnitUtils();
-module.exports = exports['default'];
+exports.default = defaultShouldAsyncValidate;
 });
-unwrapExports(unitUtils);
 
-var process = { argv: [], env: {} };
-
-var variables = createCommonjsModule(function (module, exports) {
+var defaultShouldValidate_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.assertAscending = assertAscending;
-exports.assertStartAtZero = assertStartAtZero;
-exports.comparable = comparable;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function assertAscending(map, mapName) {
-  var prevKey = void 0;
-  var prevNum = void 0;
-  var asserted = true;
-  Object.keys(map).forEach(function (key) {
-    var num = map[key];
-    if (prevNum == null) {
-    } else if (!comparable(_unitUtils2.default.rmUnit(prevNum), _unitUtils2.default.rmUnit(num))) {
-      if (process.env.NODE !== 'test') {
-        console.warn('Potentially invalid value for ' + mapName + ': This map must be in ascending order, but key \'' + key + '\' has value ' + num + ' whose unit makes it incomparable to ' + prevNum + ', the value of the previous key \'' + prevKey + '\' !');
-      }
-      asserted = false;
-    } else if (_unitUtils2.default.rmUnit(prevNum) >= _unitUtils2.default.rmUnit(num)) {
-      if (process.env.NODE !== 'test') {
-        console.warn('Invalid value for ' + mapName + ': This map must be in ascending order, but key \'' + key + '\' has value ' + num + ' which isn\'t greater than ' + prevNum + ', the value of the previous key \'' + prevKey + '\' !');
-      }
-      asserted = false;
-    }
-    prevKey = key;
-    prevNum = num;
-  });
-  return asserted;
-}
-function assertStartAtZero(map) {
-  var values = Object.keys(map).map(function (key) {
-    return map[key];
-  });
-  var firstValue = _unitUtils2.default.rmUnit(values[0]);
-  var asserted = true;
-  if (firstValue !== 0) {
-    if (process.env.NODE !== 'test') {
-      console.warn('First breakpoint in $grid-breakpoints must start at 0, but starts at ' + firstValue + '.');
-    }
-    asserted = false;
+var defaultShouldValidate = function defaultShouldValidate(_ref) {
+  var values = _ref.values,
+      nextProps = _ref.nextProps,
+      initialRender = _ref.initialRender,
+      lastFieldValidatorKeys = _ref.lastFieldValidatorKeys,
+      fieldValidatorKeys = _ref.fieldValidatorKeys,
+      structure = _ref.structure;
+  if (initialRender) {
+    return true;
   }
-  return asserted;
-}
-function comparable(a, b) {
-  return !isNaN(a + b);
-}
-exports.default = {
-  assertAscending: assertAscending,
-  assertStartAtZero: assertStartAtZero,
-  comparable: comparable
+  return !structure.deepEqual(values, nextProps && nextProps.values) || !structure.deepEqual(lastFieldValidatorKeys, fieldValidatorKeys);
 };
+exports.default = defaultShouldValidate;
 });
-unwrapExports(variables);
-
-var utils = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.allowFalseValue = allowFalseValue;
-function allowFalseValue(userValue, defaultValue) {
-  return userValue === false ? userValue : userValue || defaultValue;
-}
-});
-unwrapExports(utils);
-
-var makeOriginal_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = makeOriginal;
-var _color2 = _interopRequireDefault(color);
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var detectUnit = _unitUtils2.default.detectUnit,
-    rmUnit = _unitUtils2.default.rmUnit,
-    UNIT = _unitUtils2.default.UNIT;
-function makeOriginal() {
-  var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var v = {};
-  var u = userTheme;
-  v['$white'] = u['$white'] || '#fff';
-  v['$black'] = u['$black'] || '#000';
-  v['$red'] = u['$red'] || '#d9534f';
-  v['$orange'] = u['$orange'] || '#f0ad4e';
-  v['$yellow'] = u['$yellow'] || '#ffd500';
-  v['$green'] = u['$green'] || '#5cb85c';
-  v['$blue'] = u['$blue'] || '#0275d8';
-  v['$teal'] = u['$teal'] || '#5bc0de';
-  v['$pink'] = u['$pink'] || '#ff5b77';
-  v['$purple'] = u['$purple'] || '#613d7c';
-  v['$gray-dark'] = u['$gray-dark'] || '#292b2c';
-  v['$gray'] = u['$gray'] || '#464a4c';
-  v['$gray-light'] = u['$gray-light'] || '#636c72';
-  v['$gray-lighter'] = u['$gray-lighter'] || '#eceeef';
-  v['$gray-lightest'] = u['$gray-lightest'] || '#f7f7f9';
-  v['$brand-primary'] = u['$brand-primary'] || v['$blue'];
-  v['$brand-success'] = u['$brand-success'] || v['$green'];
-  v['$brand-info'] = u['$brand-info'] || v['$teal'];
-  v['$brand-warning'] = u['$brand-warning'] || v['$orange'];
-  v['$brand-danger'] = u['$brand-danger'] || v['$red'];
-  v['$brand-inverse'] = u['$brand-inverse'] || v['$gray-dark'];
-  v['$enable-rounded'] = (0, utils.allowFalseValue)(u['$enable-rounded'], true);
-  v['$enable-shadows'] = (0, utils.allowFalseValue)(u['$enable-shadows'], false);
-  v['$enable-gradients'] = (0, utils.allowFalseValue)(u['$enable-gradients'], false);
-  v['$enable-transitions'] = (0, utils.allowFalseValue)(u['$enable-transitions'], true);
-  v['$enable-hover-media-query'] = (0, utils.allowFalseValue)(u['$enable-hover-media-query'], false);
-  v['$enable-grid-classes'] = (0, utils.allowFalseValue)(u['$enable-grid-classes'], true);
-  v['$enable-print-styles'] = (0, utils.allowFalseValue)(u['$enable-print-styles'], true);
-  v['$spacer'] = u['$spacer'] || '1rem';
-  v['$spacer-halved'] = u['$spacer-halved'] || rmUnit(v['$spacer'], UNIT.REM) / 2 + UNIT.REM;
-  v['$spacer-x'] = u['$spacer-x'] || v['$spacer'];
-  v['$spacer-y'] = u['$spacer-y'] || v['$spacer'];
-  var detectedUnit = detectUnit(v['$spacer']);
-  v['$spacers'] = u['$spacers'] || {
-    0: {
-      x: 0,
-      y: 0
-    },
-    1: {
-      x: rmUnit(v['$spacer-x']) * 0.25 + detectedUnit,
-      y: rmUnit(v['$spacer-y']) * 0.25 + detectedUnit
-    },
-    2: {
-      x: rmUnit(v['$spacer-x']) * 0.5 + detectedUnit,
-      y: rmUnit(v['$spacer-y']) * 0.5 + detectedUnit
-    },
-    3: {
-      x: v['$spacer-x'],
-      y: v['$spacer-y']
-    },
-    4: {
-      x: rmUnit(v['$spacer-x']) * 1.5 + detectedUnit,
-      y: rmUnit(v['$spacer-y']) * 1.5 + detectedUnit
-    },
-    5: {
-      x: rmUnit(v['$spacer-x']) * 3 + detectedUnit,
-      y: rmUnit(v['$spacer-y']) * 3 + detectedUnit
-    }
-  };
-  v['$border-width'] = u['$border-width'] || '1px';
-  v['$sizes'] = u['$sizes'] || {
-    25: '25%',
-    50: '50%',
-    75: '75%',
-    100: '100%'
-  };
-  v['$body-bg'] = u['$body-bg'] || v['$white'];
-  v['$body-color'] = u['$body-color'] || v['$gray-dark'];
-  v['$link-color'] = u['$link-color'] || v['$brand-primary'];
-  v['$link-decoration'] = u['$link-decoration'] || 'none';
-  v['$link-hover-color'] = u['$link-hover-color'] || (0, _color2.default)(v['$link-color']).darken(0.35).toString();
-  v['$link-hover-decoration'] = u['$link-hover-decoration'] || 'underline';
-  v['$grid-breakpoints'] = u['$grid-breakpoints'] || {
-    xs: '0',
-    sm: '576px',
-    md: '768px',
-    lg: '992px',
-    xl: '1200px'
-  };
-  (0, variables.assertAscending)(v['$grid-breakpoints'], '$grid-breakpoints');
-  (0, variables.assertStartAtZero)(v['$grid-breakpoints']);
-  v['$container-max-widths'] = u['$container-max-widths'] || {
-    sm: '540px',
-    md: '720px',
-    lg: '960px',
-    xl: '1140px'
-  };
-  (0, variables.assertAscending)(v['$container-max-widths'], '$container-max-widths');
-  v['$grid-columns'] = u['$grid-columns'] || '12';
-  v['$grid-gutter-width-base'] = u['$grid-gutter-width-base'] || '30px';
-  v['$grid-gutter-widths'] = u['$grid-gutter-widths'] || {
-    xs: v['$grid-gutter-width-base'],
-    sm: v['$grid-gutter-width-base'],
-    md: v['$grid-gutter-width-base'],
-    lg: v['$grid-gutter-width-base'],
-    xl: v['$grid-gutter-width-base']
-  };
-  v['$font-family-sans-serif'] = u['$font-family-sans-serif'] || '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
-  v['$font-family-monospace'] = u['$font-family-monospace'] || 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
-  v['$font-family-base'] = u['$font-family-base'] || v['$font-family-sans-serif'];
-  v['$font-size-base'] = u['$font-size-base'] || '1rem';
-  v['$font-size-lg'] = u['$font-size-lg'] || '1.25rem';
-  v['$font-size-sm'] = u['$font-size-sm'] || '.875rem';
-  v['$font-size-xs'] = u['$font-size-xs'] || '.75rem';
-  v['$font-weight-normal'] = u['$font-weight-normal'] || 'normal';
-  v['$font-weight-bold'] = u['$font-weight-bold'] || 'bold';
-  v['$font-weight-base'] = u['$font-weight-base'] || v['$font-weight-normal'];
-  v['$line-height-base'] = u['$line-height-base'] || '1.5';
-  v['$font-size-h1'] = '2.5rem';
-  v['$font-size-h2'] = '2rem';
-  v['$font-size-h3'] = '1.75rem';
-  v['$font-size-h4'] = '1.5rem';
-  v['$font-size-h5'] = '1.25rem';
-  v['$font-size-h6'] = '1rem';
-  v['$headings-margin-bottom'] = u['$headings-margin-bottom'] || rmUnit(v['$spacer'], UNIT.REM) / 2 + UNIT.REM;
-  v['$headings-font-family'] = u['$headings-font-family'] || 'inherit';
-  v['$headings-font-weight'] = u['$headings-font-weight'] || '500';
-  v['$headings-line-height'] = u['$headings-line-height'] || '1.1';
-  v['$headings-color'] = u['$headings-color'] || 'inherit';
-  v['$display1-size'] = '6rem';
-  v['$display2-size'] = '5.5rem';
-  v['$display3-size'] = '4.5rem';
-  v['$display4-size'] = '3.5rem';
-  v['$display1-weight'] = '300';
-  v['$display2-weight'] = '300';
-  v['$display3-weight'] = '300';
-  v['$display4-weight'] = '300';
-  v['$display-line-height'] = u['$display-line-height'] || v['$headings-line-height'];
-  v['$lead-font-size'] = u['$lead-font-size'] || '1.25rem';
-  v['$lead-font-weight'] = u['$lead-font-weight'] || '300';
-  v['$small-font-size'] = u['$small-font-size'] || '80%';
-  v['$text-muted'] = u['$text-muted'] || v['$gray-light'];
-  v['$blockquote-small-color'] = u['$blockquote-small-color'] || v['$gray-light'];
-  v['$blockquote-font-size'] = u['$blockquote-font-size'] || rmUnit(v['$font-size-base'], UNIT.REM) * 1.25 + UNIT.REM;
-  v['$blockquote-border-color'] = u['$blockquote-border-color'] || v['$gray-lighter'];
-  v['$blockquote-border-width'] = u['$blockquote-border-width'] || '.25rem';
-  v['$hr-border-color'] = u['$hr-border-color'] || (0, _color2.default)(v['$black']).alpha(0.1).toString();
-  v['$hr-border-width'] = u['$hr-border-width'] || v['$border-width'];
-  v['$mark-padding'] = u['$mark-padding'] || '.2em';
-  v['$dt-font-weight'] = u['$dt-font-weight'] || v['$font-weight-bold'];
-  v['$kbd-box-shadow'] = u['$kbd-box-shadow'] || 'inset 0 -.1rem 0 ' + (0, _color2.default)(v['$black']).alpha(0.25).toString();
-  v['$nested-kbd-font-weight'] = u['$nested-kbd-font-weight'] || v['$font-weight-bold'];
-  v['$list-inline-padding'] = u['$list-inline-padding'] || '5px';
-  v['$line-height-lg'] = u['$line-height-lg'] || '1.3';
-  v['$line-height-sm'] = u['$line-height-sm'] || '1.5';
-  v['$border-radius'] = u['$border-radius'] || '.25rem';
-  v['$border-radius-lg'] = u['$border-radius-lg'] || '.3rem';
-  v['$border-radius-sm'] = u['$border-radius-sm'] || '.2rem';
-  v['$component-active-color'] = u['$component-active-color'] || v['$white'];
-  v['$component-active-bg'] = u['$component-active-bg'] || v['$brand-primary'];
-  v['$caret-width'] = u['$caret-width'] || '.3em';
-  v['$transition-base'] = u['$transition-base'] || 'all .2s ease-in-out';
-  v['$transition-fade'] = u['$transition-fade'] || 'opacity .15s linear';
-  v['$transition-collapse'] = u['$transition-collapse'] || 'height .35s ease';
-  v['$table-cell-padding'] = u['$table-cell-padding'] || '.75rem';
-  v['$table-sm-cell-padding'] = u['$table-sm-cell-padding'] || '.3rem';
-  v['$table-bg'] = u['$table-bg'] || 'transparent';
-  v['$table-inverse-bg'] = u['$table-inverse-bg'] || v['$gray-dark'];
-  v['$table-inverse-bg-accent'] = u['$table-inverse-bg-accent'] || (0, _color2.default)(v['$white']).alpha(0.05).toString();
-  v['$table-inverse-bg-hover'] = u['$table-inverse-bg-hover'] || (0, _color2.default)(v['$white']).alpha(0.075).toString();
-  v['$table-inverse-color'] = u['$table-inverse-color'] || v['$body-bg'];
-  v['$table-inverse-border'] = u['$table-inverse-border'] || (0, _color2.default)(v['$gray-dark']).lighten(0.075).toString();
-  v['$table-bg-accent'] = u['$table-bg-accent'] || (0, _color2.default)(v['$black']).alpha(0.05).toString();
-  v['$table-bg-hover'] = u['$table-bg-hover'] || (0, _color2.default)(v['$black']).alpha(0.075).toString();
-  v['$table-bg-active'] = u['$table-bg-active'] || v['$table-bg-hover'];
-  v['$table-head-bg'] = u['$table-head-bg'] || v['$gray-lighter'];
-  v['$table-head-color'] = u['$table-head-color'] || v['$gray'];
-  v['$table-border-width'] = u['$table-border-width'] || v['$border-width'];
-  v['$table-border-color'] = u['$table-border-color'] || v['$gray-lighter'];
-  v['$btn-padding-x'] = u['$btn-padding-x'] || '1rem';
-  v['$btn-padding-y'] = u['$btn-padding-y'] || '.5rem';
-  v['$btn-line-height'] = u['$btn-line-height'] || '1.25';
-  v['$btn-font-weight'] = u['$btn-font-weight'] || v['$font-weight-normal'];
-  v['$btn-box-shadow'] = u['$btn-box-shadow'] || 'inset 0 1px 0 ' + (0, _color2.default)(v['$white']).alpha(0.15).toString() + ', 0 1px 1px ' + (0, _color2.default)(v['$black']).alpha(0.075).toString();
-  v['$btn-focus-box-shadow'] = u['$btn-focus-box-shadow'] || '0 0 0 2px ' + (0, _color2.default)(v['$brand-primary']).alpha(0.25).toString();
-  v['$btn-active-box-shadow'] = u['$btn-active-box-shadow'] || 'inset 0 3px 5px ' + (0, _color2.default)(v['$black']).alpha(0.125).toString();
-  v['$btn-primary-color'] = u['$btn-primary-color'] || v['$white'];
-  v['$btn-primary-bg'] = u['$btn-primary-bg'] || v['$brand-primary'];
-  v['$btn-primary-border'] = u['$btn-primary-border'] || v['$btn-primary-bg'];
-  v['$btn-secondary-color'] = u['$btn-secondary-color'] || v['$gray-dark'];
-  v['$btn-secondary-bg'] = u['$btn-secondary-bg'] || v['$white'];
-  v['$btn-secondary-border'] = u['$btn-secondary-border'] || '#ccc';
-  v['$btn-info-color'] = u['$btn-info-color'] || v['$white'];
-  v['$btn-info-bg'] = u['$btn-info-bg'] || v['$brand-info'];
-  v['$btn-info-border'] = u['$btn-info-border'] || v['$btn-info-bg'];
-  v['$btn-success-color'] = u['$btn-success-color'] || v['$white'];
-  v['$btn-success-bg'] = u['$btn-success-bg'] || v['$brand-success'];
-  v['$btn-success-border'] = u['$btn-success-border'] || v['$btn-success-bg'];
-  v['$btn-warning-color'] = u['$btn-warning-color'] || v['$white'];
-  v['$btn-warning-bg'] = u['$btn-warning-bg'] || v['$brand-warning'];
-  v['$btn-warning-border'] = u['$btn-warning-border'] || v['$btn-warning-bg'];
-  v['$btn-danger-color'] = u['$btn-danger-color'] || v['$white'];
-  v['$btn-danger-bg'] = u['$btn-danger-bg'] || v['$brand-danger'];
-  v['$btn-danger-border'] = u['$btn-danger-border'] || v['$btn-danger-bg'];
-  v['$btn-link-disabled-color'] = u['$btn-link-disabled-color'] || v['$gray-light'];
-  v['$btn-padding-x-sm'] = u['$btn-padding-x-sm'] || '.5rem';
-  v['$btn-padding-y-sm'] = u['$btn-padding-y-sm'] || '.25rem';
-  v['$btn-padding-x-lg'] = u['$btn-padding-x-lg'] || '1.5rem';
-  v['$btn-padding-y-lg'] = u['$btn-padding-y-lg'] || '.75rem';
-  v['$btn-block-spacing-y'] = u['$btn-block-spacing-y'] || '.5rem';
-  v['$btn-border-radius'] = u['$btn-border-radius'] || v['$border-radius'];
-  v['$btn-border-radius-lg'] = u['$btn-border-radius-lg'] || v['$border-radius-lg'];
-  v['$btn-border-radius-sm'] = u['$btn-border-radius-sm'] || v['$border-radius-sm'];
-  v['$btn-transition'] = u['$btn-transition'] || 'all .2s ease-in-out';
-  v['$input-padding-x'] = u['$input-padding-x'] || '.75rem';
-  v['$input-padding-y'] = u['$input-padding-y'] || '.5rem';
-  v['$input-line-height'] = u['$input-line-height'] || '1.25';
-  v['$input-bg'] = u['$input-bg'] || v['$white'];
-  v['$input-bg-disabled'] = u['$input-bg-disabled'] || v['$gray-lighter'];
-  v['$input-color'] = u['$input-color'] || v['$gray'];
-  v['$input-border-color'] = u['$input-border-color'] || (0, _color2.default)(v['$black']).alpha(0.15).toString();
-  v['$input-btn-border-width'] = u['$input-btn-border-width'] || v['$border-width'];
-  v['$input-box-shadow'] = u['$input-box-shadow'] || 'inset 0 1px 1px ' + (0, _color2.default)(v['$black']).alpha(0.075).toString();
-  v['$input-border-radius'] = u['$input-border-radius'] || v['$border-radius'];
-  v['$input-border-radius-lg'] = u['$input-border-radius-lg'] || v['$border-radius-lg'];
-  v['$input-border-radius-sm'] = u['$input-border-radius-sm'] || v['$border-radius-sm'];
-  v['$input-bg-focus'] = u['$input-bg-focus'] || v['$input-bg'];
-  v['$input-border-focus'] = u['$input-border-focus'] || (0, _color2.default)(v['$brand-primary']).lighten(0.25).toString();
-  v['$input-box-shadow-focus'] = u['$input-box-shadow-focus'] || v['$input-box-shadow'] + ', 0 0 8px rgba(' + v['$input-border-focus'] + ',.6)';
-  v['$input-color-focus'] = u['$input-color-focus'] || v['$input-color'];
-  v['$input-color-placeholder'] = u['$input-color-placeholder'] || v['$gray-light'];
-  v['$input-padding-x-sm'] = u['$input-padding-x-sm'] || '.5rem';
-  v['$input-padding-y-sm'] = u['$input-padding-y-sm'] || '.25rem';
-  v['$input-padding-x-lg'] = u['$input-padding-x-lg'] || '1.5rem';
-  v['$input-padding-y-lg'] = u['$input-padding-y-lg'] || '.75rem';
-  v['$input-height'] = u['$input-height'] || rmUnit(v['$font-size-base'], UNIT.REM) * v['$line-height-base'] + rmUnit(v['$input-padding-y'], UNIT.REM) * 2 + UNIT.REM;
-  v['$input-height-sm'] = u['$input-height-sm'] || rmUnit(v['$font-size-sm'], UNIT.REM) * v['$line-height-sm'] + rmUnit(v['$input-padding-y-sm'], UNIT.REM) * 2 + UNIT.REM;
-  v['$input-height-lg'] = u['$input-height-lg'] || rmUnit(v['$font-size-lg'], UNIT.REM) * v['$line-height-lg'] + rmUnit(v['$input-padding-y-lg'], UNIT.REM) * 2 + UNIT.REM;
-  v['$input-transition'] = u['$input-transition'] || 'border-color ease-in-out .15s, box-shadow ease-in-out .15s';
-  v['$form-text-margin-top'] = u['$form-text-margin-top'] || '.25rem';
-  v['$form-feedback-margin-top'] = u['$form-feedback-margin-top'] || v['$form-text-margin-top'];
-  v['$form-check-margin-bottom'] = u['$form-check-margin-bottom'] || '.5rem';
-  v['$form-check-input-gutter'] = u['$form-check-input-gutter'] || '1.25rem';
-  v['$form-check-input-margin-y'] = u['$form-check-input-margin-y'] || '.25rem';
-  v['$form-check-input-margin-x'] = u['$form-check-input-margin-x'] || '.25rem';
-  v['$form-check-inline-margin-x'] = u['$form-check-inline-margin-x'] || '.75rem';
-  v['$form-group-margin-bottom'] = u['$form-group-margin-bottom'] || v['$spacer-y'];
-  v['$input-group-addon-bg'] = u['$input-group-addon-bg'] || v['$gray-lighter'];
-  v['$input-group-addon-border-color'] = u['$input-group-addon-border-color'] || v['$input-border-color'];
-  v['$cursor-disabled'] = u['$cursor-disabled'] || 'not-allowed';
-  v['$custom-control-gutter'] = u['$custom-control-gutter'] || '1.5rem';
-  v['$custom-control-spacer-x'] = u['$custom-control-spacer-x'] || '1rem';
-  v['$custom-control-spacer-y'] = u['$custom-control-spacer-y'] || '.25rem';
-  v['$custom-control-indicator-size'] = u['$custom-control-indicator-size'] || '1rem';
-  v['$custom-control-indicator-bg'] = u['$custom-control-indicator-bg'] || '#ddd';
-  v['$custom-control-indicator-bg-size'] = u['$custom-control-indicator-bg-size'] || '50% 50%';
-  v['$custom-control-indicator-box-shadow'] = u['$custom-control-indicator-box-shadow'] || 'inset 0 .25rem .25rem ' + (0, _color2.default)(v['$black']).alpha(0.1).toString();
-  v['$custom-control-disabled-cursor'] = u['$custom-control-disabled-cursor'] || v['$cursor-disabled'];
-  v['$custom-control-disabled-indicator-bg'] = u['$custom-control-disabled-indicator-bg'] || v['$gray-lighter'];
-  v['$custom-control-disabled-description-color'] = u['$custom-control-disabled-description-color'] || v['$gray-light'];
-  v['$custom-control-checked-indicator-color'] = u['$custom-control-checked-indicator-color'] || v['$white'];
-  v['$custom-control-checked-indicator-bg'] = u['$custom-control-checked-indicator-bg'] || v['$brand-primary'];
-  v['$custom-control-checked-indicator-box-shadow'] = u['$custom-control-checked-indicator-box-shadow'] || 'none';
-  v['$custom-control-focus-indicator-box-shadow'] = u['$custom-control-focus-indicator-box-shadow'] || '0 0 0 1px ' + v['$body-bg'] + ', 0 0 0 3px ' + v['$brand-primary'];
-  v['$custom-control-active-indicator-color'] = u['$custom-control-active-indicator-color'] || v['$white'];
-  v['$custom-control-active-indicator-bg'] = u['$custom-control-active-indicator-bg'] || (0, _color2.default)(v['$brand-primary']).lighten(0.35).toString();
-  v['$custom-control-active-indicator-box-shadow'] = u['$custom-control-active-indicator-box-shadow'] || 'none';
-  v['$custom-checkbox-radius'] = u['$custom-checkbox-radius'] || v['$border-radius'];
-  v['$custom-checkbox-checked-icon'] = u['$custom-checkbox-checked-icon'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"%3E%3Cpath fill="' + v['$custom-control-checked-indicator-color'] + '" d="M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z"/%3E%3C/svg%3E\')';
-  v['$custom-checkbox-indeterminate-bg'] = u['$custom-checkbox-indeterminate-bg'] || v['$brand-primary'];
-  v['$custom-checkbox-indeterminate-indicator-color'] = u['$custom-checkbox-indeterminate-indicator-color'] || v['$custom-control-checked-indicator-color'];
-  v['$custom-checkbox-indeterminate-icon'] = u['$custom-checkbox-indeterminate-icon'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 4"%3E%3Cpath stroke="' + v['$custom-checkbox-indeterminate-indicator-color'] + '" d="M0 2h4"/%3E%3C/svg%3E\')';
-  v['$custom-checkbox-indeterminate-box-shadow'] = u['$custom-checkbox-indeterminate-box-shadow'] || 'none';
-  v['$custom-radio-radius'] = u['$custom-radio-radius'] || '50%';
-  v['$custom-radio-checked-icon'] = u['$custom-radio-checked-icon'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 8 8"%3E%3Ccircle r="3" fill="' + v['$custom-control-checked-indicator-color'] + '"/%3E%3C/svg%3E\')';
-  v['$custom-select-padding-x'] = u['$custom-select-padding-x'] || '.75rem ';
-  v['$custom-select-padding-y'] = u['$custom-select-padding-y'] || '.375rem';
-  v['$custom-select-indicator-padding'] = u['$custom-select-indicator-padding'] || '1rem';
-  v['$custom-select-line-height'] = u['$custom-select-line-height'] || v['$input-line-height'];
-  v['$custom-select-color'] = u['$custom-select-color'] || v['$input-color'];
-  v['$custom-select-disabled-color'] = u['$custom-select-disabled-color'] || v['$gray-light'];
-  v['$custom-select-bg'] = u['$custom-select-bg'] || v['$white'];
-  v['$custom-select-disabled-bg'] = u['$custom-select-disabled-bg'] || v['$gray-lighter'];
-  v['$custom-select-bg-size'] = u['$custom-select-bg-size'] || '8px 10px';
-  v['$custom-select-indicator-color'] = u['$custom-select-indicator-color'] || '#333';
-  v['$custom-select-indicator'] = u['$custom-select-indicator'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="' + v['$custom-select-indicator-color'] + '" d="M2 0L0 2h4zm0 5L0 3h4z"/%3E%3C/svg%3E\')';
-  v['$custom-select-border-width'] = u['$custom-select-border-width'] || v['$input-btn-border-width'];
-  v['$custom-select-border-color'] = u['$custom-select-border-color'] || v['$input-border-color'];
-  v['$custom-select-border-radius'] = u['$custom-select-border-radius'] || v['$border-radius'];
-  v['$custom-select-focus-border-color'] = u['$custom-select-focus-border-color'] || (0, _color2.default)(v['$brand-primary']).lighten(0.25).toString();
-  v['$custom-select-focus-box-shadow'] = u['$custom-select-focus-box-shadow'] || 'inset 0 1px 2px ' + (0, _color2.default)(v['$black']).alpha(0.75).toString() + ', 0 0 5px rgba(' + v['$custom-select-focus-border-color'] + ', .5)';
-  v['$custom-select-sm-font-size'] = u['$custom-select-sm-font-size'] || '75%';
-  v['$custom-file-height'] = u['$custom-file-height'] || '2.5rem';
-  v['$custom-file-width'] = u['$custom-file-width'] || '14rem';
-  v['$custom-file-focus-box-shadow'] = u['$custom-file-focus-box-shadow'] || '0 0 0 .075rem ' + v['$white'] + ', 0 0 0 .2rem ' + v['$brand-primary'];
-  v['$custom-file-padding-x'] = u['$custom-file-padding-x'] || '.5rem';
-  v['$custom-file-padding-y'] = u['$custom-file-padding-y'] || '1rem';
-  v['$custom-file-line-height'] = u['$custom-file-line-height'] || '1.5';
-  v['$custom-file-color'] = u['$custom-file-color'] || v['$gray'];
-  v['$custom-file-bg'] = u['$custom-file-bg'] || v['$white'];
-  v['$custom-file-border-width'] = u['$custom-file-border-width'] || v['$border-width'];
-  v['$custom-file-border-color'] = u['$custom-file-border-color'] || v['$input-border-color'];
-  v['$custom-file-border-radius'] = u['$custom-file-border-radius'] || v['$border-radius'];
-  v['$custom-file-box-shadow'] = u['$custom-file-box-shadow'] || 'inset 0 .2rem .4rem ' + (0, _color2.default)(v['$black']).alpha(0.05).toString();
-  v['$custom-file-button-color'] = u['$custom-file-button-color'] || v['$custom-file-color'];
-  v['$custom-file-button-bg'] = u['$custom-file-button-bg'] || v['$gray-lighter'];
-  v['$custom-file-text'] = u['$custom-file-text'] || {
-    placeholder: {
-      en: 'Choose file...'
-    },
-    'button-label': {
-      en: 'Browse'
-    }
-  };
-  v['$form-icon-success-color'] = u['$form-icon-success-color'] || v['$brand-success'];
-  v['$form-icon-success'] = u['$form-icon-success'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"%3E%3Cpath fill="' + v['$form-icon-success-color'] + '" d="M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z"/%3E%3C/svg%3E\')';
-  v['$form-icon-warning-color'] = u['$form-icon-warning-color'] || v['$brand-warning'];
-  v['$form-icon-warning'] = u['$form-icon-warning'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"%3E%3Cpath fill="' + v['$form-icon-warning-color'] + '" d="M4.4 5.324h-.8v-2.46h.8zm0 1.42h-.8V5.89h.8zM3.76.63L.04 7.075c-.115.2.016.425.26.426h7.397c.242 0 .372-.226.258-.426C6.726 4.924 5.47 2.79 4.253.63c-.113-.174-.39-.174-.494 0z"/%3E%3C/svg%3E\')';
-  v['$form-icon-danger-color'] = u['$form-icon-danger-color'] || v['$brand-danger'];
-  v['$form-icon-danger'] = u['$form-icon-danger'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="' + v['$form-icon-danger-color'] + '" viewBox="-2 -2 7 7"%3E%3Cpath stroke="%23d9534f" d="M0 0l3 3m0-3L0 3"/%3E%3Ccircle r=".5"/%3E%3Ccircle cx="3" r=".5"/%3E%3Ccircle cy="3" r=".5"/%3E%3Ccircle cx="3" cy="3" r=".5"/%3E%3C/svg%3E\')';
-  v['$dropdown-min-width'] = u['$dropdown-min-width'] || '10rem';
-  v['$dropdown-padding-y'] = u['$dropdown-padding-y'] || '.5rem';
-  v['$dropdown-margin-top'] = u['$dropdown-margin-top'] || '.125rem';
-  v['$dropdown-bg'] = u['$dropdown-bg'] || v['$white'];
-  v['$dropdown-border-color'] = u['$dropdown-border-color'] || (0, _color2.default)(v['$black']).alpha(0.15).toString();
-  v['$dropdown-border-width'] = u['$dropdown-border-width'] || v['$border-width'];
-  v['$dropdown-divider-bg'] = u['$dropdown-divider-bg'] || v['$gray-lighter'];
-  v['$dropdown-box-shadow'] = u['$dropdown-box-shadow'] || '0 .5rem 1rem rgba(' + v['$black'] + ',.175)';
-  v['$dropdown-link-color'] = u['$dropdown-link-color'] || v['$gray-dark'];
-  v['$dropdown-link-hover-color'] = u['$dropdown-link-hover-color'] || (0, _color2.default)(v['$gray-dark']).darken(0.05).toString();
-  v['$dropdown-link-hover-bg'] = u['$dropdown-link-hover-bg'] || v['$gray-lightest'];
-  v['$dropdown-link-active-color'] = u['$dropdown-link-active-color'] || v['$component-active-color'];
-  v['$dropdown-link-active-bg'] = u['$dropdown-link-active-bg'] || v['$component-active-bg'];
-  v['$dropdown-link-disabled-color'] = u['$dropdown-link-disabled-color'] || v['$gray-light'];
-  v['$dropdown-item-padding-x'] = u['$dropdown-item-padding-x'] || '1.5rem';
-  v['$dropdown-header-color'] = u['$dropdown-header-color'] || v['$gray-light'];
-  v['$zindex-dropdown-backdrop'] = u['$zindex-dropdown-backdrop'] || '990';
-  v['$zindex-dropdown'] = u['$zindex-dropdown'] || '1000';
-  v['$zindex-fixed'] = u['$zindex-fixed'] || '1030';
-  v['$zindex-sticky'] = u['$zindex-sticky'] || '1030';
-  v['$zindex-modal-backdrop'] = u['$zindex-modal-backdrop'] || '1040';
-  v['$zindex-modal'] = u['$zindex-modal'] || '1050';
-  v['$zindex-popover'] = u['$zindex-popover'] || '1060';
-  v['$zindex-tooltip'] = u['$zindex-tooltip'] || '1070';
-  v['$navbar-padding-x'] = u['$navbar-padding-x'] || v['$spacer'];
-  v['$navbar-padding-y'] = u['$navbar-padding-y'] || v['$spacer-halved'];
-  v['$navbar-toggler-padding-x'] = u['$navbar-toggler-padding-x'] || '.75rem';
-  v['$navbar-toggler-padding-y'] = u['$navbar-toggler-padding-y'] || '.25rem';
-  v['$navbar-toggler-font-size'] = u['$navbar-toggler-font-size'] || v['$font-size-lg'];
-  v['$navbar-toggler-border-radius'] = u['$navbar-toggler-border-radius'] || v['$btn-border-radius'];
-  v['$navbar-inverse-color'] = u['$navbar-inverse-color'] || (0, _color2.default)(v['$white']).alpha(0.5).toString();
-  v['$navbar-inverse-hover-color'] = u['$navbar-inverse-hover-color'] || (0, _color2.default)(v['$white']).alpha(0.75).toString();
-  v['$navbar-inverse-active-color'] = u['$navbar-inverse-active-color'] || (0, _color2.default)(v['$white']).alpha(1).toString();
-  v['$navbar-inverse-disabled-color'] = u['$navbar-inverse-disabled-color'] || (0, _color2.default)(v['$white']).alpha(0.25).toString();
-  v['$navbar-inverse-toggler-bg'] = u['$navbar-inverse-toggler-bg'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="' + v['$navbar-inverse-color'] + '" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E\')';
-  v['$navbar-inverse-toggler-border'] = u['$navbar-inverse-toggler-border'] || (0, _color2.default)(v['$white']).alpha(0.1).toString();
-  v['$navbar-light-color'] = u['$navbar-light-color'] || (0, _color2.default)(v['$black']).alpha(0.5).toString();
-  v['$navbar-light-hover-color'] = u['$navbar-light-hover-color'] || (0, _color2.default)(v['$black']).alpha(0.7).toString();
-  v['$navbar-light-active-color'] = u['$navbar-light-active-color'] || (0, _color2.default)(v['$black']).alpha(0.9).toString();
-  v['$navbar-light-disabled-color'] = u['$navbar-light-disabled-color'] || (0, _color2.default)(v['$black']).alpha(0.3).toString();
-  v['$navbar-light-toggler-bg'] = u['$navbar-light-toggler-bg'] || 'url(\'data:image/svg+xml;charset=utf8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="' + v['$navbar-light-color'] + '" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E\')';
-  v['$navbar-light-toggler-border'] = u['$navbar-light-toggler-border'] || (0, _color2.default)(v['$black']).alpha(0.1).toString();
-  v['$nav-link-padding'] = u['$nav-link-padding'] || '.5em 1em';
-  v['$nav-disabled-link-color'] = u['$nav-disabled-link-color'] || v['$gray-light'];
-  v['$nav-tabs-border-color'] = u['$nav-tabs-border-color'] || '#ddd';
-  v['$nav-tabs-border-width'] = u['$nav-tabs-border-width'] || v['$border-width'];
-  v['$nav-tabs-border-radius'] = u['$nav-tabs-border-radius'] || v['$border-radius'];
-  v['$nav-tabs-link-hover-border-color'] = u['$nav-tabs-link-hover-border-color'] || v['$gray-lighter'];
-  v['$nav-tabs-active-link-hover-color'] = u['$nav-tabs-active-link-hover-color'] || v['$gray'];
-  v['$nav-tabs-active-link-hover-bg'] = u['$nav-tabs-active-link-hover-bg'] || v['$body-bg'];
-  v['$nav-tabs-active-link-hover-border-color'] = u['$nav-tabs-active-link-hover-border-color'] || '#ddd';
-  v['$nav-pills-border-radius'] = u['$nav-pills-border-radius'] || v['$border-radius'];
-  v['$nav-pills-active-link-color'] = u['$nav-pills-active-link-color'] || v['$component-active-color'];
-  v['$nav-pills-active-link-bg'] = u['$nav-pills-active-link-bg'] || v['$component-active-bg'];
-  v['$pagination-padding-x'] = u['$pagination-padding-x'] || '.75rem';
-  v['$pagination-padding-y'] = u['$pagination-padding-y'] || '.5rem';
-  v['$pagination-padding-x-sm'] = u['$pagination-padding-x-sm'] || '.5rem';
-  v['$pagination-padding-y-sm'] = u['$pagination-padding-y-sm'] || '.25rem';
-  v['$pagination-padding-x-lg'] = u['$pagination-padding-x-lg'] || '1.5rem';
-  v['$pagination-padding-y-lg'] = u['$pagination-padding-y-lg'] || '.75rem';
-  v['$pagination-line-height'] = u['$pagination-line-height'] || '1.25';
-  v['$pagination-color'] = u['$pagination-color'] || v['$link-color'];
-  v['$pagination-bg'] = u['$pagination-bg'] || v['$white'];
-  v['$pagination-border-width'] = u['$pagination-border-width'] || v['$border-width'];
-  v['$pagination-border-color'] = u['$pagination-border-color'] || '#ddd';
-  v['$pagination-hover-color'] = u['$pagination-hover-color'] || v['$link-hover-color'];
-  v['$pagination-hover-bg'] = u['$pagination-hover-bg'] || v['$gray-lighter'];
-  v['$pagination-hover-border'] = u['$pagination-hover-border'] || '#ddd';
-  v['$pagination-active-color'] = u['$pagination-active-color'] || v['$white'];
-  v['$pagination-active-bg'] = u['$pagination-active-bg'] || v['$brand-primary'];
-  v['$pagination-active-border'] = u['$pagination-active-border'] || v['$brand-primary'];
-  v['$pagination-disabled-color'] = u['$pagination-disabled-color'] || v['$gray-light'];
-  v['$pagination-disabled-bg'] = u['$pagination-disabled-bg'] || v['$white'];
-  v['$pagination-disabled-border'] = u['$pagination-disabled-border'] || '#ddd';
-  v['$jumbotron-padding'] = u['$jumbotron-padding'] || '2rem';
-  v['$jumbotron-bg'] = u['$jumbotron-bg'] || v['$gray-lighter'];
-  v['$state-success-text'] = u['$state-success-text'] || '#3c763d';
-  v['$state-success-bg'] = u['$state-success-bg'] || '#dff0d8';
-  v['$state-success-border'] = u['$state-success-border'] || (0, _color2.default)(v['$state-success-bg']).darken(0.05).toString();
-  v['$state-info-text'] = u['$state-info-text'] || '#31708f';
-  v['$state-info-bg'] = u['$state-info-bg'] || '#d9edf7';
-  v['$state-info-border'] = u['$state-info-border'] || (0, _color2.default)(v['$state-info-bg']).darken(0.07).toString();
-  v['$state-warning-text'] = u['$state-warning-text'] || '#8a6d3b';
-  v['$state-warning-bg'] = u['$state-warning-bg'] || '#fcf8e3';
-  v['$mark-bg'] = u['$mark-bg'] || v['$state-warning-bg'];
-  v['$state-warning-border'] = u['$state-warning-border'] || (0, _color2.default)(v['$state-warning-bg']).darken(0.05).toString();
-  v['$state-danger-text'] = u['$state-danger-text'] || '#a94442';
-  v['$state-danger-bg'] = u['$state-danger-bg'] || '#f2dede';
-  v['$state-danger-border'] = u['$state-danger-border'] || (0, _color2.default)(v['$state-danger-bg']).darken(0.05).toString();
-  v['$card-spacer-x'] = u['$card-spacer-x'] || '1.25rem';
-  v['$card-spacer-y'] = u['$card-spacer-y'] || '.75rem';
-  v['$card-border-width'] = u['$card-border-width'] || '1px';
-  v['$card-border-radius'] = u['$card-border-radius'] || v['$border-radius'];
-  v['$card-border-color'] = u['$card-border-color'] || (0, _color2.default)(v['$black']).alpha(0.125).toString();
-  v['$card-border-radius-inner'] = u['$card-border-radius-inner'] || 'calc(' + v['$card-border-radius'] + ' - ' + v['$card-border-width'] + ')';
-  v['$card-cap-bg'] = u['$card-cap-bg'] || v['$gray-lightest'];
-  v['$card-bg'] = u['$card-bg'] || v['$white'];
-  v['$card-link-hover-color'] = u['$card-link-hover-color'] || v['$white'];
-  v['$card-img-overlay-padding'] = u['$card-img-overlay-padding'] || '1.25rem';
-  detectedUnit = detectUnit(v['$grid-gutter-width-base']);
-  v['$card-deck-margin'] = u['$card-deck-margin'] || rmUnit(v['$grid-gutter-width-base'], detectedUnit) / 2 + detectedUnit;
-  v['$card-columns-count'] = u['$card-columns-count'] || '3';
-  v['$card-columns-gap'] = u['$card-columns-gap'] || '1.25rem';
-  v['$card-columns-margin'] = u['$card-columns-margin'] || v['$card-spacer-y'];
-  v['$tooltip-max-width'] = u['$tooltip-max-width'] || '200px';
-  v['$tooltip-color'] = u['$tooltip-color'] || v['$white'];
-  v['$tooltip-bg'] = u['$tooltip-bg'] || v['$black'];
-  v['$tooltip-opacity'] = u['$tooltip-opacity'] || '.9';
-  v['$tooltip-padding-y'] = u['$tooltip-padding-y'] || '3px';
-  v['$tooltip-padding-x'] = u['$tooltip-padding-x'] || '8px';
-  v['$tooltip-margin'] = u['$tooltip-margin'] || '3px';
-  v['$tooltip-arrow-width'] = u['$tooltip-arrow-width'] || '5px';
-  v['$tooltip-arrow-color'] = u['$tooltip-arrow-color'] || v['$tooltip-bg'];
-  v['$popover-inner-padding'] = u['$popover-inner-padding'] || '1px';
-  v['$popover-bg'] = u['$popover-bg'] || v['$white'];
-  v['$popover-max-width'] = u['$popover-max-width'] || '276px';
-  v['$popover-border-width'] = u['$popover-border-width'] || v['$border-width'];
-  v['$popover-border-color'] = u['$popover-border-color'] || (0, _color2.default)(v['$black']).alpha(0.2).toString();
-  v['$popover-box-shadow'] = u['$popover-box-shadow'] || '0 5px 10px ' + (0, _color2.default)(v['$black']).alpha(0.2).toString();
-  v['$popover-title-bg'] = u['$popover-title-bg'] || (0, _color2.default)(v['$popover-bg']).darken(0.03).toString();
-  v['$popover-title-padding-x'] = u['$popover-title-padding-x'] || '14px';
-  v['$popover-title-padding-y'] = u['$popover-title-padding-y'] || '8px';
-  v['$popover-content-padding-x'] = u['$popover-content-padding-x'] || '14px';
-  v['$popover-content-padding-y'] = u['$popover-content-padding-y'] || '9px';
-  v['$popover-arrow-width'] = u['$popover-arrow-width'] || '10px';
-  v['$popover-arrow-color'] = u['$popover-arrow-color'] || v['$popover-bg'];
-  v['$popover-arrow-outer-width'] = u['$popover-arrow-outer-width'] || rmUnit(v['$popover-arrow-width'], UNIT.PX) + 1 + UNIT.PX;
-  v['$popover-arrow-outer-color'] = u['$popover-arrow-outer-color'] || (0, _color2.default)(v['$popover-border-color']).fade(0.5).toString();
-  v['$badge-default-bg'] = u['$badge-default-bg'] || v['$gray-light'];
-  v['$badge-primary-bg'] = u['$badge-primary-bg'] || v['$brand-primary'];
-  v['$badge-success-bg'] = u['$badge-success-bg'] || v['$brand-success'];
-  v['$badge-info-bg'] = u['$badge-info-bg'] || v['$brand-info'];
-  v['$badge-warning-bg'] = u['$badge-warning-bg'] || v['$brand-warning'];
-  v['$badge-danger-bg'] = u['$badge-danger-bg'] || v['$brand-danger'];
-  v['$badge-color'] = u['$badge-color'] || v['$white'];
-  v['$badge-link-hover-color'] = u['$badge-link-hover-color'] || v['$white'];
-  v['$badge-font-size'] = u['$badge-font-size'] || '75%';
-  v['$badge-font-weight'] = u['$badge-font-weight'] || v['$font-weight-bold'];
-  v['$badge-padding-x'] = u['$badge-padding-x'] || '.4em';
-  v['$badge-padding-y'] = u['$badge-padding-y'] || '.25em';
-  v['$badge-pill-padding-x'] = u['$badge-pill-padding-x'] || '.6em';
-  v['$badge-pill-border-radius'] = u['$badge-pill-border-radius'] || '10rem';
-  v['$modal-inner-padding'] = u['$modal-inner-padding'] || '15px';
-  v['$modal-dialog-margin'] = u['$modal-dialog-margin'] || '10px';
-  v['$modal-dialog-sm-up-margin-y'] = u['$modal-dialog-sm-up-margin-y'] || '30px';
-  v['$modal-title-line-height'] = u['$modal-title-line-height'] || v['$line-height-base'];
-  v['$modal-content-bg'] = u['$modal-content-bg'] || v['$white'];
-  v['$modal-content-border-color'] = u['$modal-content-border-color'] || (0, _color2.default)(v['$black']).alpha(0.2).toString();
-  v['$modal-content-border-width'] = u['$modal-content-border-width'] || v['$border-width'];
-  v['$modal-content-xs-box-shadow'] = u['$modal-content-xs-box-shadow'] || '0 3px 9px ' + (0, _color2.default)(v['$black']).alpha(0.5).toString();
-  v['$modal-content-sm-up-box-shadow'] = u['$modal-content-sm-up-box-shadow'] || '0 5px 15px ' + (0, _color2.default)(v['$black']).alpha(0.5).toString();
-  v['$modal-backdrop-bg'] = u['$modal-backdrop-bg'] || v['$black'];
-  v['$modal-backdrop-opacity'] = u['$modal-backdrop-opacity'] || '.5';
-  v['$modal-header-border-color'] = u['$modal-header-border-color'] || v['$gray-lighter'];
-  v['$modal-footer-border-color'] = u['$modal-footer-border-color'] || v['$modal-header-border-color'];
-  v['$modal-header-border-width'] = u['$modal-header-border-width'] || v['$modal-content-border-width'];
-  v['$modal-footer-border-width'] = u['$modal-footer-border-width'] || v['$modal-header-border-width'];
-  v['$modal-header-padding'] = u['$modal-header-padding'] || '15px';
-  v['$modal-lg'] = u['$modal-lg'] || '800px';
-  v['$modal-md'] = u['$modal-md'] || '500px';
-  v['$modal-sm'] = u['$modal-sm'] || '300px';
-  v['$modal-transition'] = u['$modal-transition'] || 'transform .3s ease-out';
-  v['$alert-padding-x'] = u['$alert-padding-x'] || '1.25rem';
-  v['$alert-padding-y'] = u['$alert-padding-y'] || '.75rem';
-  v['$alert-margin-bottom'] = u['$alert-margin-bottom'] || v['$spacer-y'];
-  v['$alert-border-radius'] = u['$alert-border-radius'] || v['$border-radius'];
-  v['$alert-link-font-weight'] = u['$alert-link-font-weight'] || v['$font-weight-bold'];
-  v['$alert-border-width'] = u['$alert-border-width'] || v['$border-width'];
-  v['$alert-success-bg'] = u['$alert-success-bg'] || v['$state-success-bg'];
-  v['$alert-success-text'] = u['$alert-success-text'] || v['$state-success-text'];
-  v['$alert-success-border'] = u['$alert-success-border'] || v['$state-success-border'];
-  v['$alert-info-bg'] = u['$alert-info-bg'] || v['$state-info-bg'];
-  v['$alert-info-text'] = u['$alert-info-text'] || v['$state-info-text'];
-  v['$alert-info-border'] = u['$alert-info-border'] || v['$state-info-border'];
-  v['$alert-warning-bg'] = u['$alert-warning-bg'] || v['$state-warning-bg'];
-  v['$alert-warning-text'] = u['$alert-warning-text'] || v['$state-warning-text'];
-  v['$alert-warning-border'] = u['$alert-warning-border'] || v['$state-warning-border'];
-  v['$alert-danger-bg'] = u['$alert-danger-bg'] || v['$state-danger-bg'];
-  v['$alert-danger-text'] = u['$alert-danger-text'] || v['$state-danger-text'];
-  v['$alert-danger-border'] = u['$alert-danger-border'] || v['$state-danger-border'];
-  v['$progress-height'] = u['$progress-height'] || '1rem';
-  v['$progress-font-size'] = u['$progress-font-size'] || '.75rem';
-  v['$progress-bg'] = u['$progress-bg'] || v['$gray-lighter'];
-  v['$progress-border-radius'] = u['$progress-border-radius'] || v['$border-radius'];
-  v['$progress-box-shadow'] = u['$progress-box-shadow'] || 'inset 0 .1rem .1rem ' + (0, _color2.default)(v['$black']).alpha(0.1).toString();
-  v['$progress-bar-color'] = u['$progress-bar-color'] || v['$white'];
-  v['$progress-bar-bg'] = u['$progress-bar-bg'] || v['$brand-primary'];
-  v['$progress-bar-animation-timing'] = u['$progress-bar-animation-timing'] || '1s linear infinite';
-  v['$list-group-color'] = u['$list-group-color'] || v['$body-color'];
-  v['$list-group-bg'] = u['$list-group-bg'] || v['$white'];
-  v['$list-group-border-color'] = u['$list-group-border-color'] || (0, _color2.default)(v['$black']).alpha(0.125).toString();
-  v['$list-group-border-width'] = u['$list-group-border-width'] || v['$border-width'];
-  v['$list-group-border-radius'] = u['$list-group-border-radius'] || v['$border-radius'];
-  v['$list-group-item-padding-x'] = u['$list-group-item-padding-x'] || '1.25rem';
-  v['$list-group-item-padding-y'] = u['$list-group-item-padding-y'] || '.75rem';
-  v['$list-group-hover-bg'] = u['$list-group-hover-bg'] || v['$gray-lightest'];
-  v['$list-group-active-color'] = u['$list-group-active-color'] || v['$component-active-color'];
-  v['$list-group-active-bg'] = u['$list-group-active-bg'] || v['$component-active-bg'];
-  v['$list-group-active-border'] = u['$list-group-active-border'] || v['$list-group-active-bg'];
-  v['$list-group-disabled-color'] = u['$list-group-disabled-color'] || v['$gray-light'];
-  v['$list-group-disabled-bg'] = u['$list-group-disabled-bg'] || v['$list-group-bg'];
-  v['$list-group-link-color'] = u['$list-group-link-color'] || v['$gray'];
-  v['$list-group-link-hover-color'] = u['$list-group-link-hover-color'] || v['$list-group-link-color'];
-  v['$list-group-link-active-color'] = u['$list-group-link-active-color'] || v['$list-group-color'];
-  v['$list-group-link-active-bg'] = u['$list-group-link-active-bg'] || v['$gray-lighter'];
-  v['$thumbnail-padding'] = u['$thumbnail-padding'] || '.25rem';
-  v['$thumbnail-bg'] = u['$thumbnail-bg'] || v['$body-bg'];
-  v['$thumbnail-border-width'] = u['$thumbnail-border-width'] || v['$border-width'];
-  v['$thumbnail-border-color'] = u['$thumbnail-border-color'] || '#ddd';
-  v['$thumbnail-border-radius'] = u['$thumbnail-border-radius'] || v['$border-radius'];
-  v['$thumbnail-box-shadow'] = u['$thumbnail-box-shadow'] || '0 1px 2px ' + (0, _color2.default)(v['$black']).alpha(0.75).toString();
-  v['$thumbnail-transition'] = u['$thumbnail-transition'] || 'all .2s ease-in-out';
-  v['$figure-caption-font-size'] = u['$figure-caption-font-size'] || '90%';
-  v['$figure-caption-color'] = u['$figure-caption-color'] || v['$gray-light'];
-  v['$breadcrumb-padding-y'] = u['$breadcrumb-padding-y'] || '.75rem';
-  v['$breadcrumb-padding-x'] = u['$breadcrumb-padding-x'] || '1rem';
-  v['$breadcrumb-item-padding'] = u['$breadcrumb-item-padding'] || '.5rem';
-  v['$breadcrumb-bg'] = u['$breadcrumb-bg'] || v['$gray-lighter'];
-  v['$breadcrumb-divider-color'] = u['$breadcrumb-divider-color'] || v['$gray-light'];
-  v['$breadcrumb-active-color'] = u['$breadcrumb-active-color'] || v['$gray-light'];
-  v['$breadcrumb-divider'] = u['$breadcrumb-divider'] || '"/"';
-  v['$close-font-size'] = u['$close-font-size'] || rmUnit(v['$font-size-base']) * 1.5 + detectUnit(v['$font-size-base']);
-  v['$close-font-weight'] = u['$close-font-weight'] || v['$font-weight-bold'];
-  v['$close-color'] = u['$close-color'] || v['$black'];
-  v['$close-text-shadow'] = u['$close-text-shadow'] || '0 1px 0 ' + v['$white'];
-  v['$code-font-size'] = u['$code-font-size'] || '90%';
-  v['$code-padding-x'] = u['$code-padding-x'] || '.4rem';
-  v['$code-padding-y'] = u['$code-padding-y'] || '.2rem';
-  v['$code-color'] = u['$code-color'] || '#bd4147';
-  v['$code-bg'] = u['$code-bg'] || v['$gray-lightest'];
-  v['$kbd-color'] = u['$kbd-color'] || v['$white'];
-  v['$kbd-bg'] = u['$kbd-bg'] || v['$gray-dark'];
-  v['$pre-color'] = u['$pre-color'] || v['$gray-dark'];
-  v['$pre-scrollable-max-height'] = u['$pre-scrollable-max-height'] || '340px';
-  return Object.assign({}, u, v);
-}
-module.exports = exports['default'];
-});
-unwrapExports(makeOriginal_1);
-
-var makeExtend_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-exports.default = makeExtend;
-var _color2 = _interopRequireDefault(color);
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-var _makeOriginal2 = _interopRequireDefault(makeOriginal_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var rmUnit = _unitUtils2.default.rmUnit,
-    UNIT = _unitUtils2.default.UNIT;
-function makeExtend() {
-  var original = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _makeOriginal2.default)();
-  var userTheme = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var v = original;
-  var u = userTheme;
-  v['$header-navbar-border-color'] = u['$header-navbar-border-color'] || v['$gray-lighter'];
-  v['$header-navbar-border-width'] = u['$header-navbar-border-width'] || v['$border-width'];
-  v['$card-margin-y-halved'] = u['$card-margin-y-halved'] || rmUnit(v['$card-spacer-y'], UNIT.REM) / 2 + UNIT.REM;
-  v['$card-margin-x-halved'] = u['$card-margin-x-halved'] || rmUnit(v['$card-spacer-x'], UNIT.REM) / 2 + UNIT.REM;
-  v['$nav-link-hover-bg'] = u['$nav-link-hover-bg'] || (0, _color2.default)(v['$brand-inverse']).darken(0.03).toString();
-  v['$navbar-max-height'] = u['$navbar-max-height'] || '400px';
-  v['$navbar-height'] = u['$navbar-height'] || '70px';
-  return _extends({}, u, v);
-}
-module.exports = exports['default'];
-});
-unwrapExports(makeExtend_1);
-
-var makeTheme_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = makeTheme;
-var _makeOriginal2 = _interopRequireDefault(makeOriginal_1);
-var _makeExtend2 = _interopRequireDefault(makeExtend_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function makeTheme() {
-  var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _makeExtend2.default)((0, _makeOriginal2.default)(userTheme), userTheme);
-}
-module.exports = exports['default'];
-});
-unwrapExports(makeTheme_1);
-
-var makeTheme = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(makeTheme_1).default;
-  }
-});
-Object.defineProperty(exports, 'makeTheme', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(makeTheme_1).default;
-  }
-});
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-});
-var makeTheme$1 = unwrapExports(makeTheme);
-
-var theme$1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.makeTheme = undefined;
-exports.default = (0, makeTheme.makeTheme)();
-var makeTheme$$1 = exports.makeTheme = makeTheme.makeTheme;
-});
-unwrapExports(theme$1);
-
-var hover_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.hover = hover;
-exports.hoverFocus = hoverFocus;
-exports.plainHoverFocus = plainHoverFocus;
-exports.hoverFocusActive = hoverFocusActive;
-var defaultProps = exports.defaultProps = {
-  '$enable-hover-media-query': false
-};
-function hover(content) {
-  return '\n    &:hover { ' + content + ' }\n  ';
-}
-function hoverFocus() {
-  var enableHoverMediaQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-hover-media-query'];
-  var content = arguments[1];
-  if (enableHoverMediaQuery) {
-    return ' \n      &:focus { ' + content + ' }\n      ' + hover(content) + '\n    ';
-  }
-  return '\n    &:focus,\n    &:hover {\n      ' + content + '\n    }\n  ';
-}
-function plainHoverFocus() {
-  var enableHoverMediaQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-hover-media-query'];
-  var content = arguments[1];
-  if (enableHoverMediaQuery) {
-    return '\n      &, &:focus {\n        ' + content + '\n      }\n      ' + hover(content) + '\n    ';
-  }
-  return ' \n    &, &:focus, &:hover {\n      ' + content + '\n    }\n  ';
-}
-function hoverFocusActive() {
-  var enableHoverMediaQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-hover-media-query'];
-  var content = arguments[1];
-  if (enableHoverMediaQuery) {
-    return '\n      &:focus,\n      &:active {\n        ' + content + '\n      }\n      ' + hover(content) + '\n    ';
-  }
-  return '\n    &:focus, &:active, &:hover {\n     ' + content + '\n    }\n  ';
-}
-hover.focus = hoverFocus;
-hover.plainFocus = plainHoverFocus;
-hover.activeFocus = hoverFocusActive;
-exports.default = {
-  defaultProps: defaultProps,
-  hover: hover,
-  hoverFocus: hoverFocus,
-  plainHoverFocus: plainHoverFocus,
-  hoverFocusActive: hoverFocusActive
-};
-});
-unwrapExports(hover_1);
-
-var _mapToCssModules = ( mapToCssModules_es && mapToCssModules ) || mapToCssModules_es;
-
-var Close_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = { theme: _theme2.default };
-var CloseUnstyled = function (_React$Component) {
-  _inherits(CloseUnstyled, _React$Component);
-  function CloseUnstyled() {
-    _classCallCheck(this, CloseUnstyled);
-    return _possibleConstructorReturn(this, (CloseUnstyled.__proto__ || Object.getPrototypeOf(CloseUnstyled)).apply(this, arguments));
-  }
-  _createClass(CloseUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          srOnly = _omit['sr-only'],
-          onDismiss = _omit.onDismiss,
-          closeLabel = _omit.closeLabel,
-          cssModule = _omit.cssModule,
-          attributes = _objectWithoutProperties(_omit, ['className', 'sr-only', 'onDismiss', 'closeLabel', 'cssModule']);
-      return _react2.default.createElement(
-        'button',
-        _extends({
-          className: (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'close', {
-            'sr-only': srOnly
-          }), cssModule),
-          type: 'button',
-          onClick: onDismiss
-        }, attributes),
-        closeLabel,
-        _react2.default.createElement(
-          'span',
-          null,
-          '\xD7'
-        )
-      );
-    }
-  }]);
-  return CloseUnstyled;
-}(_react2.default.Component);
-CloseUnstyled.propTypes = {
-  theme: _propTypes2.default.object,
-  'sr-only': _propTypes2.default.bool,
-  className: _propTypes2.default.string,
-  closeLabel: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  onDismiss: _propTypes2.default.func.isRequired
-};
-var Close = (0, _styledComponents2.default)(CloseUnstyled).withConfig({
-  displayName: 'Close'
-})(['', ''], function (props) {
-  return '\n    float: right;\n    font-size: ' + props.theme['$close-font-size'] + ';\n    font-weight: ' + props.theme['$close-font-weight'] + ';\n    line-height: 1;\n    color: ' + props.theme['$close-color'] + ';\n    text-shadow: ' + props.theme['$close-text-shadow'] + ';\n    opacity: .2;\n    \n    &:focus {outline:0;}\n    \n    ' + (0, hover_1.hoverFocus)(props.theme['$enable-hover-media-query'], '\n        color: ' + props.theme['$close-color'] + ';\n        text-decoration: none;\n        cursor: pointer;\n        opacity: .5;\n      ') + '\n    \n    /* Additional properties for button version\n     iOS requires the button element instead of an anchor tag.\n     If you want the anchor version, it requires \'href="#"\'.\n     See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile\n     */\n    \n    /* scss-lint:disable QualifyingElement */\n    &button.close {\n      padding: 0;\n      cursor: pointer;\n      background: transparent;\n      border: 0;\n      -webkit-appearance: none;\n    }\n    /* scss-lint:enable QualifyingElement */\n  ';
-});
-Close.defaultProps = defaultProps;
-exports.default = Close;
-module.exports = exports['default'];
-});
-unwrapExports(Close_1);
-
-var Alert_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _CSSTransitionGroup2 = _interopRequireDefault(CSSTransitionGroup_1);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-var _Close2 = _interopRequireDefault(Close_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  color: 'success',
-  isOpen: true,
-  tag: 'div',
-  transitionAppearTimeout: 150,
-  transitionEnterTimeout: 150,
-  transitionLeaveTimeout: 150,
-  theme: _theme2.default
-};
-var FirstChild = function FirstChild(_ref) {
-  var children = _ref.children;
-  return _react2.default.Children.toArray(children)[0] || null;
-};
-var AlertUnstyled = function (_React$Component) {
-  _inherits(AlertUnstyled, _React$Component);
-  function AlertUnstyled() {
-    _classCallCheck(this, AlertUnstyled);
-    return _possibleConstructorReturn(this, (AlertUnstyled.__proto__ || Object.getPrototypeOf(AlertUnstyled)).apply(this, arguments));
-  }
-  _createClass(AlertUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          cssModule = _omit.cssModule,
-          Tag = _omit.tag,
-          color = _omit.color,
-          isOpen = _omit.isOpen,
-          toggle = _omit.toggle,
-          children = _omit.children,
-          transitionAppearTimeout = _omit.transitionAppearTimeout,
-          transitionEnterTimeout = _omit.transitionEnterTimeout,
-          transitionLeaveTimeout = _omit.transitionLeaveTimeout,
-          attributes = _objectWithoutProperties(_omit, ['className', 'cssModule', 'tag', 'color', 'isOpen', 'toggle', 'children', 'transitionAppearTimeout', 'transitionEnterTimeout', 'transitionLeaveTimeout']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'alert', 'alert-' + color, { 'alert-dismissible': toggle }), cssModule);
-      var alert$$1 = _react2.default.createElement(
-        Tag,
-        _extends({}, attributes, { className: classes, role: 'alert' }),
-        toggle && _react2.default.createElement(_Close2.default, { onDismiss: toggle }),
-        children
-      );
-      return _react2.default.createElement(
-        _CSSTransitionGroup2.default,
-        {
-          component: FirstChild,
-          transitionName: {
-            appear: 'fade',
-            appearActive: 'show',
-            enter: 'fade',
-            enterActive: 'show',
-            leave: 'fade',
-            leaveActive: 'out'
-          },
-          transitionAppear: transitionAppearTimeout > 0,
-          transitionAppearTimeout: transitionAppearTimeout,
-          transitionEnter: transitionEnterTimeout > 0,
-          transitionEnterTimeout: transitionEnterTimeout,
-          transitionLeave: transitionLeaveTimeout > 0,
-          transitionLeaveTimeout: transitionLeaveTimeout
-        },
-        isOpen ? alert$$1 : null
-      );
-    }
-  }]);
-  return AlertUnstyled;
-}(_react2.default.Component);
-AlertUnstyled.propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  color: _propTypes2.default.string,
-  isOpen: _propTypes2.default.bool,
-  toggle: _propTypes2.default.func,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  transitionAppearTimeout: _propTypes2.default.number,
-  transitionEnterTimeout: _propTypes2.default.number,
-  transitionLeaveTimeout: _propTypes2.default.number,
-  theme: _propTypes2.default.object
-};
-var Alert = (0, _styledComponents2.default)(AlertUnstyled).withConfig({
-  displayName: 'Alert'
-})(['', ''], function (props) {
-  return '\n    /*\n    Base styles\n    */\n    \n    &.alert {\n      padding: ' + props.theme['$alert-padding-y'] + ' ' + props.theme['$alert-padding-x'] + ';\n      margin-bottom: ' + props.theme['$alert-margin-bottom'] + ';\n      border: ' + props.theme['$alert-border-width'] + ' solid transparent;\n      ' + (0, borderRadius_1.borderRadius)(props.theme['$enable-rounded'], props.theme['$alert-border-radius']) + '\n    }\n    \n    /* Headings for larger alerts */\n    &.alert-heading {\n      /* Specified to prevent conflicts of changing $headings-color */\n      color: inherit;\n    }\n    \n    /* Provide class for links that match alerts */\n    & .alert-link { \n      font-weight: ' + props.theme['$alert-link-font-weight'] + ';\n    }\n    \n    /* Dismissible alerts Expand the right padding and account for the close buttons positioning. */\n    \n    &.alert-dismissible {    \n      /* Adjust close link position */\n      & .close {\n        position: relative;\n        top: -' + props.theme['$alert-padding-y'] + ';\n        right: -' + props.theme['$alert-padding-x'] + ';\n        padding: ' + props.theme['$alert-padding-y'] + ' ' + props.theme['$alert-padding-x'] + ';\n        color: inherit;\n      }\n    }\n    /* Alternate styles Generate contextual modifier classes for colorizing the alert. */\n\n    &.alert-success {\n      ' + (0, alert.alertVariant)(props.theme['$alert-success-bg'], props.theme['$alert-success-border'], props.theme['$alert-success-text']) + '    \n    }\n    &.alert-info {\n      ' + (0, alert.alertVariant)(props.theme['$alert-info-bg'], props.theme['$alert-info-border'], props.theme['$alert-info-text']) + '\n    } \n    &.alert-warning {\n      ' + (0, alert.alertVariant)(props.theme['$alert-warning-bg'], props.theme['$alert-warning-border'], props.theme['$alert-warning-text']) + ' \n    }\n    &.alert-danger {\n      ' + (0, alert.alertVariant)(props.theme['$alert-danger-bg'], props.theme['$alert-danger-border'], props.theme['$alert-danger-text']) + ' \n    }\n  ';
-});
-Alert.defaultProps = defaultProps;
-exports.default = (0, _styledComponents.withTheme)(Alert);
-module.exports = exports['default'];
-});
-var Alert = unwrapExports(Alert_1);
-
-var Small_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = { theme: _theme2.default };
-var SmallUnstyled = function (_React$Component) {
-  _inherits(SmallUnstyled, _React$Component);
-  function SmallUnstyled() {
-    _classCallCheck(this, SmallUnstyled);
-    return _possibleConstructorReturn(this, (SmallUnstyled.__proto__ || Object.getPrototypeOf(SmallUnstyled)).apply(this, arguments));
-  }
-  _createClass(SmallUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          color = _omit.color,
-          children = _omit.children,
-          cssModule = _omit.cssModule,
-          attributes = _objectWithoutProperties(_omit, ['className', 'color', 'children', 'cssModule']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, color ? 'text-' + color : false), cssModule);
-      return _react2.default.createElement(
-        'small',
-        _extends({ className: classes }, attributes),
-        children
-      );
-    }
-  }]);
-  return SmallUnstyled;
-}(_react2.default.Component);
-SmallUnstyled.propTypes = {
-  className: _propTypes2.default.string,
-  children: _propTypes2.default.node,
-  theme: _propTypes2.default.object,
-  color: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-var Small = (0, _styledComponents2.default)(SmallUnstyled).withConfig({
-  displayName: 'Small'
-})(['', ''], function (props) {
-  return '\n    /* Reboot Scss */\n    font-size: ' + props.theme['$small-font-size'] + ';\n    font-weight: normal;\n  ';
-});
-Small.defaultProps = defaultProps;
-exports.default = Small;
-module.exports = exports['default'];
-});
-var Small = unwrapExports(Small_1);
-
-var boxShadow_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.boxShadow = boxShadow;
-var defaultProps = exports.defaultProps = {
-  '$enable-shadows': false
-};
-function boxShadow() {
-  var enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  if (enableShadows) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    return '\n      box-shadow: ' + args.join(' ') + ';\n    ';
-  }
-  return '';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  boxShadow: boxShadow
-};
-});
-unwrapExports(boxShadow_1);
-var boxShadow_2 = boxShadow_1.boxShadow;
-
-var transition_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.transition = transition;
-var defaultProps = exports.defaultProps = {
-  '$enable-transitions': true
-};
-function transition() {
-  var enableTransitions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-transitions'];
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  if (enableTransitions && args.length) {
-    return '\n      transition: ' + args.join(' ') + ';\n    ';
-  }
-  return '';
-}
-exports.default = {
-  transition: transition
-};
-});
-unwrapExports(transition_1);
-
-var forms = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.formControl = formControl;
-exports.formControlValidation = formControlValidation;
-exports.formControlFocus = formControlFocus;
-exports.inputSize = inputSize;
-var _color2 = _interopRequireDefault(color);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$enable-rounded': true,
-  '$enable-transitions': true,
-  '$enable-shadows': false,
-  '$input-height': '2.5rem',
-  '$input-padding-y': '.5rem',
-  '$input-padding-x': '.75rem',
-  '$font-size-base': '1rem',
-  '$input-line-height': '1.25',
-  '$input-color': '#464a4c',
-  '$input-bg': '#fff',
-  '$input-border-radius': '.25rem',
-  '$input-btn-border-width': '1px',
-  '$input-border-color': 'rgba(0, 0, 0, 0.15)',
-  '$input-transition': 'border-color ease-in-out .15s, box-shadow ease-in-out .15s',
-  '$input-box-shadow': 'inset 0 1px 1px rgba(0, 0, 0, 0.075)',
-  '$input-color-focus': '#464a4c',
-  '$input-bg-focus': '#fff',
-  '$input-border-focus': 'hsl(207.79999999999995, 98.2%, 53.4%)',
-  '$input-box-shadow-focus': 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(hsl(207.79999999999995, 98.2%, 53.4%),.6)',
-  '$input-color-placeholder': '#636c72',
-  '$input-bg-disabled': '#eceeef',
-  '$cursor-disabled': 'not-allowed'
-};
-function formControl() {
-  var $enableRounded = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-rounded'];
-  var $enableTransitions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$enable-transitions'];
-  var $enableShadows = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$enable-shadows'];
-  var $inputHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$input-height'];
-  var $inputPaddingY = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$input-padding-y'];
-  var $inputPaddingX = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$input-padding-x'];
-  var $fontSizeBase = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : defaultProps['$font-size-base'];
-  var $inputLineHeight = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$input-line-height'];
-  var $inputColor = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : defaultProps['$input-color'];
-  var $inputBg = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : defaultProps['$input-bg'];
-  var $inputBorderRadius = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : defaultProps['$input-border-radius'];
-  var $inputBtnBorderWidth = arguments.length > 11 && arguments[11] !== undefined ? arguments[11] : defaultProps['$input-btn-border-width'];
-  var $inputBorderColor = arguments.length > 12 && arguments[12] !== undefined ? arguments[12] : defaultProps['$input-border-color'];
-  var $inputTransition = arguments.length > 13 && arguments[13] !== undefined ? arguments[13] : defaultProps['$input-transition'];
-  var $inputBoxShadow = arguments.length > 14 && arguments[14] !== undefined ? arguments[14] : defaultProps['$input-box-shadow'];
-  var $inputColorFocus = arguments.length > 15 && arguments[15] !== undefined ? arguments[15] : defaultProps['$input-color-focus'];
-  var $inputBgFocus = arguments.length > 16 && arguments[16] !== undefined ? arguments[16] : defaultProps['$input-bg-focus'];
-  var $inputBorderFocus = arguments.length > 17 && arguments[17] !== undefined ? arguments[17] : defaultProps['$input-border-focus'];
-  var $inputBoxShadowFocus = arguments.length > 18 && arguments[18] !== undefined ? arguments[18] : defaultProps['$input-box-shadow-focus'];
-  var $inputColorPlaceholder = arguments.length > 19 && arguments[19] !== undefined ? arguments[19] : defaultProps['$input-color-placeholder'];
-  var $inputBgDisabled = arguments.length > 20 && arguments[20] !== undefined ? arguments[20] : defaultProps['$input-bg-disabled'];
-  var $cursorDisabled = arguments.length > 21 && arguments[21] !== undefined ? arguments[21] : defaultProps['$cursor-disabled'];
-  return '\n      & .form-control {\n        display: block;\n        width: 100%;\n  \n        /* Make inputs at least the height of their button counterpart (base line-height + padding + border) */\n        /* height: ' + $inputHeight + '; */\n  \n        padding: ' + $inputPaddingY + ' ' + $inputPaddingX + ';\n        font-size: ' + $fontSizeBase + ';\n        line-height: ' + $inputLineHeight + ';\n        color: ' + $inputColor + ';\n        background-color: ' + $inputBg + ';\n  \n        /* Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214. */\n        background-image: none;\n        background-clip: padding-box;\n        /* Note: This has no effect on selects in some browsers, due to the limited stylability of selects in CSS. */\n        ' + ($enableRounded ? 'border-radius: ' + $inputBorderRadius + ';' : 'border-radius: 0;') + ' /* Manually use the if/else instead of the mixin to account for iOS override */\n        border: ' + $inputBtnBorderWidth + ' solid ' + $inputBorderColor + ';\n        ' + (0, transition_1.transition)($enableTransitions, $inputTransition) + '\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $inputBoxShadow) + '\n  \n        /* Unstyle the caret on selects in IE10+. */\n        &::-ms-expand {\n          background-color: transparent;\n          border: 0;\n        }\n  \n        /* Customize the :focus state to imitate native WebKit styles. */\n        ' + formControlFocus($enableShadows, $inputColorFocus, $inputBgFocus, $inputBorderFocus, $inputBoxShadowFocus) + '\n  \n        /* Placeholder */\n        &::placeholder {\n          color: ' + $inputColorPlaceholder + ';\n          /* Override Firefox unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526. */\n          opacity: 1;\n        }\n  \n        /* Disabled and read-only inputs\n         HTML5 says that controls under a fieldset > legend:first-child will not be\n         disabled if the fieldset is disabled. Due to implementation difficulty, we\n         do not honor that edge case; we style them as disabled anyway.\n         */\n  \n        &:disabled,\n        &[readonly] {\n          background-color:' + $inputBgDisabled + ';\n          /* iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655. */\n          opacity: 1;\n        }\n  \n        &:disabled {\n          cursor: ' + $cursorDisabled + ';\n        }\n      }\n  ';
-}
-function formControlValidation() {
-  var enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  var formColor = arguments[1];
-  var inputBoxShadow = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$input-box-shadow'];
-  return '\n    /* Color the label and help text */\n    & .form-control-feedback,\n    & .form-control-label,\n    & .col-form-label,\n    & .form-check-label,\n    & .custom-control {\n      color: ' + formColor + ';\n    }\n  \n    /* Set the border and box shadow on specific inputs to match */\n      \n    & .form-control,\n    & .custom-select,\n    & .custom-file-control {\n      border-color: ' + formColor + ';\n  \n      &:focus {\n        ' + (0, boxShadow_1.boxShadow)(enableShadows, inputBoxShadow + ', 0 0 6px ' + (0, _color2.default)(formColor).lighten(0.2).toString()) + '\n      }\n    }\n  \n    /* Set validation states also for addons */\n    .input-group-addon {\n      color: ' + formColor + ';\n      border-color: ' + formColor + ';\n      background-color: ' + (0, _color2.default)(formColor).lighten(0.40).toString() + ';\n    }\n  ';
-}
-function formControlFocus() {
-  var enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  var inputColorFocus = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$input-color-focus'];
-  var inputBgFocus = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$input-bg-focus'];
-  var inputBorderFocus = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$input-border-focus'];
-  var inputBoxShadowFocus = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$input-box-shadow-focus'];
-  return '\n    &:focus {\n      color: ' + inputColorFocus + ';\n      background-color: ' + inputBgFocus + ';\n      border-color: ' + inputBorderFocus + ';\n      outline: none;\n      ' + (0, boxShadow_1.boxShadow)(enableShadows, inputBoxShadowFocus) + '\n    }\n  ';
-}
-function inputSize() {
-  var enableRounded = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-rounded'];
-  var parent = arguments[1];
-  var inputHeight = arguments[2];
-  var paddingY = arguments[3];
-  var paddingX = arguments[4];
-  var fontSize = arguments[5];
-  var lineHeight = arguments[6];
-  var inputBorderRadius = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$input-border-radius'];
-  return '\n    ' + parent + ' {\n      height: ' + inputHeight + ';\n      padding: ' + paddingY + ' ' + paddingX + ';\n      font-size: ' + fontSize + ';\n      line-height: ' + lineHeight + ';\n      ' + (0, borderRadius_1.borderRadius)(enableRounded, inputBorderRadius) + '\n    }\n  \n    select' + parent + ' {\n      height: ' + inputHeight + ';\n      line-height: ' + inputHeight + ';\n    }\n  \n    textarea' + parent + ',\n      select[multiple]' + parent + ' {\n      height: auto;\n    }\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  formControl: formControl,
-  formControlValidation: formControlValidation,
-  formControlFocus: formControlFocus,
-  inputSize: inputSize
-};
-});
-unwrapExports(forms);
-
-var breakpoints = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.breakpointNext = breakpointNext;
-exports.breakpointMin = breakpointMin;
-exports.breakpointMax = breakpointMax;
-exports.breakpointInfix = breakpointInfix;
-exports.mediaBreakpointUp = mediaBreakpointUp;
-exports.mediaBreakpointDown = mediaBreakpointDown;
-exports.mediaBreakpointBetween = mediaBreakpointBetween;
-exports.mediaBreakpointOnly = mediaBreakpointOnly;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$grid-breakpoints': {
-    xs: '0',
-    sm: '576px',
-    md: '768px',
-    lg: '992px',
-    xl: '1200px'
-  }
-};
-function breakpointNext(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var breakpointNames = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Object.keys(breakpoints);
-  var n = breakpointNames.indexOf(name);
-  if (n !== -1 && n + 1 < breakpointNames.length) {
-    return breakpointNames[n + 1];
-  }
-  return null;
-}
-function breakpointMin(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var min = breakpoints[name];
-  return min !== '0' ? min : null;
-}
-function breakpointMax(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var next = breakpointNext(name, breakpoints);
-  if (next) {
-    var min = _unitUtils2.default.rmUnit(breakpointMin(next, breakpoints), _unitUtils2.default.UNIT.PX);
-    return (min - 1).toString() + _unitUtils2.default.UNIT.PX;
-  }
-  return null;
-}
-function breakpointInfix(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  return breakpointMin(name, breakpoints) == null ? '' : '-' + name;
-}
-function mediaBreakpointUp(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var content = arguments[2];
-  var min = breakpointMin(name, breakpoints);
-  if (min) {
-    return '\n      @media (min-width: ' + min + ') {\n        ' + content + '\n      }\n    ';
-  }
-  return '\n    ' + content + '\n  ';
-}
-function mediaBreakpointDown(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var content = arguments[2];
-  var max = breakpointMax(name, breakpoints);
-  if (max) {
-    return '\n      @media (max-width: ' + max + ') {\n        ' + content + '\n      }\n    ';
-  }
-  return '\n    ' + content + '\n  ';
-}
-function mediaBreakpointBetween(lower, upper) {
-  var breakpoints = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$grid-breakpoints'];
-  var content = arguments[3];
-  var min = breakpointMin(lower, breakpoints);
-  var max = breakpointMax(upper, breakpoints);
-  if (min && max) {
-    return '\n      @media (min-width: ' + min + ') and (max-width: ' + max + ') {\n        ' + content + '\n      }\n    ';
-  } else if (min) {
-    return '\n      @media (min-width: ' + min + ') {\n        ' + content + '\n      }\n    ';
-  } else if (max) {
-    return '\n      @media (max-width: ' + max + ') {\n        ' + content + '\n      }\n    ';
-  }
-  return '\n    ' + content + '\n  ';
-}
-function mediaBreakpointOnly(name) {
-  var breakpoints = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var content = arguments[2];
-  return mediaBreakpointBetween(name, name, breakpoints, content);
-}
-exports.default = {
-  defaultProps: defaultProps,
-  up: mediaBreakpointUp,
-  down: mediaBreakpointDown,
-  between: mediaBreakpointBetween,
-  only: mediaBreakpointOnly
-};
-});
-unwrapExports(breakpoints);
-
-var customForms_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.customForms = customForms;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$enable-rounded': true,
-  '$enable-shadows': false,
-  '$custom-control-checked-indicator-box-shadow': 'none',
-  '$custom-control-active-indicator-box-shadow': 'none',
-  '$custom-control-indicator-box-shadow': 'inset 0 .25rem .25rem rgba(0, 0, 0, 0.1)',
-  '$custom-checkbox-indeterminate-box-shadow': 'none',
-  '$custom-select-focus-box-shadow': 'inset 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 5px rgba(hsl(207.79999999999995, 98.2%, 53.4%), .5)',
-  '$custom-file-focus-box-shadow': '0 0 0 .075rem #fff, 0 0 0 .2rem #0275d8',
-  '$custom-file-box-shadow': 'inset 0 .2rem .4rem rgba(0, 0, 0, 0.05)',
-  '$custom-select-border-radius': '.25rem',
-  '$custom-file-border-radius': '.25rem',
-  '$input-bg': '#fff',
-  '$custom-select-line-height': '1.25px',
-  '$line-height-base': '1.5',
-  '$custom-control-gutter': '1.5rem',
-  '$custom-control-spacer-x': '1rem',
-  '$custom-control-checked-indicator-color': '#fff',
-  '$custom-control-checked-indicator-bg': '#0275d8',
-  '$custom-control-focus-indicator-box-shadow': '0 0 0 1px #fff, 0 0 0 3px #0275d8',
-  '$custom-control-active-indicator-color': '#fff',
-  '$custom-control-active-indicator-bg': 'hsl(207.79999999999995, 98.2%, 57.7%)',
-  '$custom-control-disabled-cursor': 'not-allowed',
-  '$custom-control-disabled-indicator-bg': '#eceeef',
-  '$custom-control-disabled-description-color': '#636c72',
-  '$custom-control-indicator-size': '1rem',
-  '$custom-control-indicator-bg': '#ddd',
-  '$custom-control-indicator-bg-size': '50% 50%',
-  '$custom-checkbox-checked-icon': 'url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 8 8\'%3E%3Cpath fill=\'#fff\' d=\'M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z\'/%3E%3C/svg%3E")',
-  '$custom-checkbox-indeterminate-bg': '#0275d8',
-  '$custom-checkbox-indeterminate-icon': 'url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 4 4\'%3E%3Cpath stroke=\'#fff\' d=\'M0 2h4\'/%3E%3C/svg%3E")',
-  '$custom-radio-radius': '50%',
-  '$custom-radio-checked-icon': 'url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'-4 -4 8 8\'%3E%3Ccircle r=\'3\' fill=\'#fff\'/%3E%3C/svg%3E")',
-  '$custom-control-spacer-y': '.25rem',
-  '$border-width': '1px',
-  '$input-height': '2.5rem',
-  '$custom-select-padding-y': '.375rem',
-  '$custom-select-padding-x': '.75rem ',
-  '$custom-select-indicator-padding': '1rem',
-  '$custom-select-color': '#464a4c',
-  '$custom-select-bg': '#fff',
-  '$custom-select-indicator': 'url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 4 5\'%3E%3Cpath fill=\'#333\' d=\'M2 0L0 2h4zm0 5L0 3h4z\'/%3E%3C/svg%3E")',
-  '$custom-select-bg-size': '8px 10px',
-  '$custom-select-border-width': '1px',
-  '$custom-select-border-color': 'rgba(0, 0, 0, 0.15)',
-  '$custom-select-focus-border-color': 'hsl(207.79999999999995, 98.2%, 53.4%)',
-  '$input-color': '#464a4c',
-  '$custom-select-disabled-color': '#636c72',
-  '$cursor-disabled': 'not-allowed',
-  '$custom-select-disabled-bg': '#eceeef',
-  '$custom-select-sm-font-size': '75%',
-  '$custom-file-width': '14rem',
-  '$custom-file-height': '2.5rem',
-  '$custom-file-padding-x': '.5rem',
-  '$custom-file-padding-y': '1rem',
-  '$custom-file-line-height': '1.5',
-  '$custom-file-color': '#464a4c',
-  '$custom-file-bg': '#fff',
-  '$custom-file-border-width': '1px',
-  '$custom-file-border-color': 'rgba(0, 0, 0, 0.15)',
-  '$custom-file-button-color': '#464a4c',
-  '$custom-file-button-bg': '#eceeef',
-  '$custom-checkbox-radius': '.25rem',
-  '$custom-file-text': {
-    'placeholder': {
-      'en': 'Choose file...'
-    },
-    'button-label': {
-      'en': 'Browse'
-    }
-  }
-};
-function customForms() {
-  var $enableRounded = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-rounded'];
-  var $enableShadows = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$enable-shadows'];
-  var $customControlCheckedIndicatorBoxShadow = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$custom-control-checked-indicator-box-shadow'];
-  var $customControlActiveIndicatorBoxShadow = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$custom-control-active-indicator-box-shadow'];
-  var $customControlIndicatorBoxShadow = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$custom-control-indicator-box-shadow'];
-  var $customCheckboxIndeterminateBoxShadow = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$custom-checkbox-indeterminate-box-shadow'];
-  var $customSelectFocusBoxShadow = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : defaultProps['$custom-select-focus-box-shadow'];
-  var $customFileFocusBoxShadow = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$custom-file-focus-box-shadow'];
-  var $customFileBoxShadow = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : defaultProps['$custom-file-box-shadow'];
-  var $customSelectBorderRadius = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : defaultProps['$custom-select-border-radius'];
-  var $customFileBorderRadius = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : defaultProps['$custom-file-border-radius'];
-  var $customCheckboxRadius = arguments.length > 11 && arguments[11] !== undefined ? arguments[11] : defaultProps['$custom-checkbox-radius'];
-  var $inputBg = arguments.length > 12 && arguments[12] !== undefined ? arguments[12] : defaultProps['$input-bg'];
-  var $customSelectLineHeight = arguments.length > 13 && arguments[13] !== undefined ? arguments[13] : defaultProps['$custom-select-line-height'];
-  var $lineHeightBase = arguments.length > 14 && arguments[14] !== undefined ? arguments[14] : defaultProps['$line-height-base'];
-  var $customControlGutter = arguments.length > 15 && arguments[15] !== undefined ? arguments[15] : defaultProps['$custom-control-gutter'];
-  var $customControlSpacerX = arguments.length > 16 && arguments[16] !== undefined ? arguments[16] : defaultProps['$custom-control-spacer-x'];
-  var $customControlCheckedIndicatorColor = arguments.length > 17 && arguments[17] !== undefined ? arguments[17] : defaultProps['$custom-control-checked-indicator-color'];
-  var $customControlCheckedIndicatorBg = arguments.length > 18 && arguments[18] !== undefined ? arguments[18] : defaultProps['$custom-control-checked-indicator-bg'];
-  var $customControlFocusIndicatorBoxShadow = arguments.length > 19 && arguments[19] !== undefined ? arguments[19] : defaultProps['$custom-control-focus-indicator-box-shadow'];
-  var $customControlActiveIndicatorColor = arguments.length > 20 && arguments[20] !== undefined ? arguments[20] : defaultProps['$custom-control-active-indicator-color'];
-  var $customControlActiveIndicatorBg = arguments.length > 21 && arguments[21] !== undefined ? arguments[21] : defaultProps['$custom-control-active-indicator-bg'];
-  var $customControlDisabledCursor = arguments.length > 22 && arguments[22] !== undefined ? arguments[22] : defaultProps['$custom-control-disabled-cursor'];
-  var $customControlDisabledIndicatorBg = arguments.length > 23 && arguments[23] !== undefined ? arguments[23] : defaultProps['$custom-control-disabled-indicator-bg'];
-  var $customControlDisabledDescriptionColor = arguments.length > 24 && arguments[24] !== undefined ? arguments[24] : defaultProps['$custom-control-disabled-description-color'];
-  var $customControlIndicatorSize = arguments.length > 25 && arguments[25] !== undefined ? arguments[25] : defaultProps['$custom-control-indicator-size'];
-  var $customControlIndicatorBg = arguments.length > 26 && arguments[26] !== undefined ? arguments[26] : defaultProps['$custom-control-indicator-bg'];
-  var $customControlIndicatorBgSize = arguments.length > 27 && arguments[27] !== undefined ? arguments[27] : defaultProps['$custom-control-indicator-bg-size'];
-  var $customCheckboxCheckedIcon = arguments.length > 28 && arguments[28] !== undefined ? arguments[28] : defaultProps['$custom-checkbox-checked-icon'];
-  var $customCheckboxIndeterminateBg = arguments.length > 29 && arguments[29] !== undefined ? arguments[29] : defaultProps['$custom-checkbox-indeterminate-bg'];
-  var $customCheckboxIndeterminateIcon = arguments.length > 30 && arguments[30] !== undefined ? arguments[30] : defaultProps['$custom-checkbox-indeterminate-icon'];
-  var $customRadioRadius = arguments.length > 31 && arguments[31] !== undefined ? arguments[31] : defaultProps['$custom-radio-radius'];
-  var $customRadioCheckedIcon = arguments.length > 32 && arguments[32] !== undefined ? arguments[32] : defaultProps['$custom-radio-checked-icon'];
-  var $customControlSpacerY = arguments.length > 33 && arguments[33] !== undefined ? arguments[33] : defaultProps['$custom-control-spacer-y'];
-  var $borderWidth = arguments.length > 34 && arguments[34] !== undefined ? arguments[34] : defaultProps['$border-width'];
-  var $inputHeight = arguments.length > 35 && arguments[35] !== undefined ? arguments[35] : defaultProps['$input-height'];
-  var $customSelectPaddingY = arguments.length > 36 && arguments[36] !== undefined ? arguments[36] : defaultProps['$custom-select-padding-y'];
-  var $customSelectPaddingX = arguments.length > 37 && arguments[37] !== undefined ? arguments[37] : defaultProps['$custom-select-padding-x'];
-  var $customSelectIndicatorPadding = arguments.length > 38 && arguments[38] !== undefined ? arguments[38] : defaultProps['$custom-select-indicator-padding'];
-  var $customSelectColor = arguments.length > 39 && arguments[39] !== undefined ? arguments[39] : defaultProps['$custom-select-color'];
-  var $customSelectBg = arguments.length > 40 && arguments[40] !== undefined ? arguments[40] : defaultProps['$custom-select-bg'];
-  var $customSelectIndicator = arguments.length > 41 && arguments[41] !== undefined ? arguments[41] : defaultProps['$custom-select-indicator'];
-  var $customSelectBgSize = arguments.length > 42 && arguments[42] !== undefined ? arguments[42] : defaultProps['$custom-select-bg-size'];
-  var $customSelectBorderWidth = arguments.length > 43 && arguments[43] !== undefined ? arguments[43] : defaultProps['$custom-select-border-width'];
-  var $customSelectBorderColor = arguments.length > 44 && arguments[44] !== undefined ? arguments[44] : defaultProps['$custom-select-border-color'];
-  var $customSelectFocusBorderColor = arguments.length > 45 && arguments[45] !== undefined ? arguments[45] : defaultProps['$custom-select-focus-border-color'];
-  var $inputColor = arguments.length > 46 && arguments[46] !== undefined ? arguments[46] : defaultProps['$input-color'];
-  var $customSelectDisabledColor = arguments.length > 47 && arguments[47] !== undefined ? arguments[47] : defaultProps['$custom-select-disabled-color'];
-  var $cursorDisabled = arguments.length > 48 && arguments[48] !== undefined ? arguments[48] : defaultProps['$cursor-disabled'];
-  var $customSelectDisabledBg = arguments.length > 49 && arguments[49] !== undefined ? arguments[49] : defaultProps['$custom-select-disabled-bg'];
-  var $customSelectSmFontSize = arguments.length > 50 && arguments[50] !== undefined ? arguments[50] : defaultProps['$custom-select-sm-font-size'];
-  var $customFileWidth = arguments.length > 51 && arguments[51] !== undefined ? arguments[51] : defaultProps['$custom-file-width'];
-  var $customFileHeight = arguments.length > 52 && arguments[52] !== undefined ? arguments[52] : defaultProps['$custom-file-height'];
-  var $customFilePaddingX = arguments.length > 53 && arguments[53] !== undefined ? arguments[53] : defaultProps['$custom-file-padding-x'];
-  var $customFilePaddingY = arguments.length > 54 && arguments[54] !== undefined ? arguments[54] : defaultProps['$custom-file-padding-y'];
-  var $customFileLineHeight = arguments.length > 55 && arguments[55] !== undefined ? arguments[55] : defaultProps['$custom-file-line-height'];
-  var $customFileColor = arguments.length > 56 && arguments[56] !== undefined ? arguments[56] : defaultProps['$custom-file-color'];
-  var $customFileBg = arguments.length > 57 && arguments[57] !== undefined ? arguments[57] : defaultProps['$custom-file-bg'];
-  var $customFileBorderWidth = arguments.length > 58 && arguments[58] !== undefined ? arguments[58] : defaultProps['$custom-file-border-width'];
-  var $customFileBorderColor = arguments.length > 59 && arguments[59] !== undefined ? arguments[59] : defaultProps['$custom-file-border-color'];
-  var $customFileButtonColor = arguments.length > 60 && arguments[60] !== undefined ? arguments[60] : defaultProps['$custom-file-button-color'];
-  var $customFileButtonBg = arguments.length > 61 && arguments[61] !== undefined ? arguments[61] : defaultProps['$custom-file-button-bg'];
-  var $customFileText = arguments.length > 62 && arguments[62] !== undefined ? arguments[62] : defaultProps['$custom-file-text'];
-  var customFileControlBeforeList = [];
-  Object.keys($customFileText.placeholder).forEach(function ($lang) {
-    customFileControlBeforeList.push('\n      &:lang(' + $lang + ')::after {\n        content: "' + $customFileText.placeholder[$lang] + '";\n      }   \n    ');
-  });
-  var customFileControlAfterList = [];
-  Object.keys($customFileText['button-label']).forEach(function ($lang) {
-    customFileControlAfterList.push('\n      &:lang(' + $lang + ')::before {\n        content: "' + $customFileText['button-label'][$lang] + '";\n      }\n    ');
-  });
-  var selectBorderWidth = _unitUtils2.default.math.multiply($borderWidth, 2);
-  var customSelectPaddingRight = _unitUtils2.default.math.addition($customSelectPaddingY, $customSelectIndicatorPadding);
-  var lineHeightBaseMinusCustomControlIndicatorSize = _unitUtils2.default.math.subtract($lineHeightBase, $customControlIndicatorSize);
-  return '\n    /* Embedded icons from Open Iconic. */\n    /* Released under MIT and copyright 2014 Waybury. */\n    /* https://useiconic.com/open */\n    \n    \n    /* Checkboxes and radios */\n    /* Base class takes care of all the key behavioral aspects. */\n    \n    & .custom-control {\n      position: relative;\n      display: inline-flex;\n      min-height: calc(1rem * ' + $lineHeightBase + ');\n      padding-left: ' + $customControlGutter + ';\n      margin-right: ' + $customControlSpacerX + ';\n    }\n    \n    & .custom-control-input {\n      position: absolute;\n      z-index: -1; /* Put the input behind the label so it does not overlay text */\n      opacity: 0;\n    \n      &:checked ~ .custom-control-indicator {\n        color: ' + $customControlCheckedIndicatorColor + ';\n        background-color: ' + $customControlCheckedIndicatorBg + ';\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $customControlCheckedIndicatorBoxShadow) + '\n      }\n    \n      &:focus ~ .custom-control-indicator {\n        /* the mixin is not used here to make sure there is feedback */\n        box-shadow: ' + $customControlFocusIndicatorBoxShadow + ';\n      }\n    \n      &:active ~ .custom-control-indicator {\n        color: ' + $customControlActiveIndicatorColor + ';\n        background-color: ' + $customControlActiveIndicatorBg + ';\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $customControlActiveIndicatorBoxShadow) + '\n      }\n    \n      &:disabled {\n        ~ .custom-control-indicator {\n          cursor: ' + $customControlDisabledCursor + ';\n          background-color: ' + $customControlDisabledIndicatorBg + ';\n        }\n    \n        ~ .custom-control-description {\n          color: ' + $customControlDisabledDescriptionColor + ';\n          cursor: ' + $customControlDisabledCursor + ';\n        }\n      }\n    }\n    \n    /* Custom indicator */\n    /* Generates a shadow element to create our makeshift checkbox/radio background. */\n    \n    & .custom-control-indicator {\n      position: absolute;\n      top: calc(' + lineHeightBaseMinusCustomControlIndicatorSize + ' / 2);\n      left: 0;\n      display: block;\n      width: ' + $customControlIndicatorSize + ';\n      height: ' + $customControlIndicatorSize + ';\n      pointer-events: none;\n      user-select: none;\n      background-color: ' + $customControlIndicatorBg + ';\n      background-repeat: no-repeat;\n      background-position: center center;\n      background-size: ' + $customControlIndicatorBgSize + ';\n      ' + (0, boxShadow_1.boxShadow)($enableShadows, $customControlIndicatorBoxShadow) + '\n    }\n    \n    /* Checkboxes */\n    /* Tweak just a few things for checkboxes.  */\n    \n    & .custom-checkbox {\n      & .custom-control-indicator {\n        ' + (0, borderRadius_1.borderRadius)($enableRounded, $customCheckboxRadius) + '\n      }\n    \n      & .custom-control-input:checked ~ .custom-control-indicator {\n        background-image: ' + $customCheckboxCheckedIcon + ';\n      }\n    \n      & .custom-control-input.indeterminate ~ .custom-control-indicator {\n        background-color: ' + $customCheckboxIndeterminateBg + ';\n        background-image: ' + $customCheckboxIndeterminateIcon + ';\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $customCheckboxIndeterminateBoxShadow) + '\n      }\n    }\n    \n    /* Radios */\n    /* Tweak just a few things for radios. */\n    \n    & .custom-radio {\n      & .custom-control-indicator {\n        border-radius: ' + $customRadioRadius + ';\n      }\n    \n      & .custom-control-input:checked ~ .custom-control-indicator {\n        background-image: ' + $customRadioCheckedIcon + ';\n      }\n    }\n    \n    \n    /* Layout options */\n    /* By default radios and checkboxes are inline-block with no additional spacing */\n    /* set. Use these optional classes to tweak the layout. */\n    \n    & .custom-controls-stacked {\n      display: flex;\n      flex-direction: column;\n    \n      & .custom-control {\n        margin-bottom: ' + $customControlSpacerY + ';\n    \n        + & .custom-control {\n          margin-left: 0;\n        }\n      }\n    }\n    \n    \n    /* Select */\n    /* Replaces the browser default select with a custom one, mostly pulled from */\n    /* http://primercss.io. */\n    \n    & .custom-select {\n      display: inline-block;\n      max-width: 100%;\n      height: calc(' + $inputHeight + ' + ' + selectBorderWidth + ');\n      padding: ' + $customSelectPaddingY + ' ' + customSelectPaddingRight + ' ' + $customSelectPaddingY + ' ' + $customSelectPaddingX + ';\n      line-height: ' + $customSelectLineHeight + ';\n      color: ' + $customSelectColor + ';\n      vertical-align: middle;\n      background: ' + $customSelectBg + ' ' + $customSelectIndicator + ' no-repeat right ' + $customSelectPaddingX + ' center;\n      background-size: ' + $customSelectBgSize + ';\n      border: ' + $customSelectBorderWidth + ' solid ' + $customSelectBorderColor + ';\n      ' + (0, borderRadius_1.borderRadius)($enableRounded, $customSelectBorderRadius) + '\n      /* Use vendor prefixes as appearance is not part of the CSS spec.  */\n      -moz-appearance: none;\n      -webkit-appearance: none;\n    \n      &:focus {\n        border-color: ' + $customSelectFocusBorderColor + ';\n        outline: none;\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $customSelectFocusBoxShadow) + '\n    \n        ::-ms-value {\n          /* For visual consistency with other platforms/browsers, */\n          /* supress the default white text on blue background highlight given to */\n          /* the selected option text when the (still closed) <select> receives focus */\n          /* in IE and (under certain conditions) Edge. */\n          /* See https://github.com/twbs/bootstrap/issues/19398. */\n          color: ' + $inputColor + ';\n          background-color: ' + $inputBg + ';\n        }\n      }\n    \n      &:disabled {\n        color: ' + $customSelectDisabledColor + ';\n        cursor: ' + $cursorDisabled + ';\n        background-color: ' + $customSelectDisabledBg + ';\n      }\n    \n      /* Hides the default caret in IE11 */\n      ::-ms-expand {\n        opacity: 0;\n      }\n    }\n    \n    & .custom-select-sm {\n      padding-top: ' + $customSelectPaddingY + ';\n      padding-bottom: ' + $customSelectPaddingY + ';\n      font-size: ' + $customSelectSmFontSize + ';\n    \n      /* &:not([multiple]) { */\n      /*   height: 26px; */\n      /*   min-height: 26px; */\n      /* } */\n    }\n    \n    \n    /* File */\n    /* Custom file input. */\n    \n    & .custom-file {\n      position: relative;\n      display: inline-block;\n      max-width: 100%;\n      height: ' + $customFileHeight + ';\n      margin-bottom: 0;\n    }\n    \n    & .custom-file-input {\n      min-width: ' + $customFileWidth + ';\n      max-width: 100%;\n      height: ' + $customFileHeight + ';\n      margin: 0;\n      opacity: 0;\n    \n      &:focus ~ .custom-file-control {\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $customFileFocusBoxShadow) + '\n      }\n    }\n    \n    & .custom-file-control {\n      position: absolute;\n      top: 0;\n      right: 0;\n      left: 0;\n      z-index: 5;\n      height: ' + $customFileHeight + ';\n      padding: ' + $customFilePaddingX + ' ' + $customFilePaddingY + ';\n      line-height: ' + $customFileLineHeight + ';\n      color: ' + $customFileColor + ';\n      pointer-events: none;\n      user-select: none;\n      background-color: ' + $customFileBg + ';\n      border: ' + $customFileBorderWidth + ' solid ' + $customFileBorderColor + ';\n      ' + (0, borderRadius_1.borderRadius)($enableRounded, $customFileBorderRadius) + '\n      ' + (0, boxShadow_1.boxShadow)($enableShadows, $customFileBoxShadow) + '\n      \n      ' + customFileControlBeforeList.join('\n') + '\n    \n      &::before {\n        position: absolute;\n        top: ' + $customFileBorderWidth + ';\n        right: ' + $customFileBorderWidth + ';\n        bottom: ' + $customFileBorderWidth + ';\n        z-index: 6;\n        display: block;\n        height: ' + $customFileHeight + ';\n        padding: ' + $customFilePaddingX + ' ' + $customFilePaddingY + ';\n        line-height: ' + $customFileLineHeight + ';\n        color: ' + $customFileButtonColor + ';\n        background-color: ' + $customFileButtonBg + ';\n        border: ' + $customFileBorderWidth + ' solid ' + $customFileBorderColor + ';\n        ' + (0, borderRadius_1.borderRadius)(0, $enableRounded, $customFileBorderRadius, $customFileBorderRadius, 0) + '\n      }\n\n      ' + customFileControlAfterList.join('\n') + '\n    }\n  ';
-}
-exports.default = {
-  customForms: customForms
-};
-});
-unwrapExports(customForms_1);
-
-var grid = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.makeContainer = makeContainer;
-exports.makeContainerMaxWidths = makeContainerMaxWidths;
-exports.makeGutters = makeGutters;
-exports.makeRow = makeRow;
-exports.makeColReady = makeColReady;
-exports.makeCol = makeCol;
-exports.makeColOffset = makeColOffset;
-exports.makeColPush = makeColPush;
-exports.makeColPull = makeColPull;
-exports.makeColModifier = makeColModifier;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$grid-gutter-widths': {
-    xs: '30px',
-    sm: '30px',
-    md: '30px',
-    lg: '30px',
-    xl: '30px'
-  },
-  '$container-max-widths': {
-    sm: '540px',
-    md: '720px',
-    lg: '960px',
-    xl: '1140px'
-  },
-  '$grid-breakpoints': {
-    xs: '0',
-    sm: '576px',
-    md: '768px',
-    lg: '992px',
-    xl: '1200px'
-  },
-  '$grid-columns': 12,
-  '$enable-grid-classes': true
-};
-function makeContainer() {
-  var enableGridClasses = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-grid-classes'];
-  var gridGutterWidths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-gutter-widths'];
-  if (enableGridClasses) {
-    var columns = [];
-    Object.keys(gridGutterWidths).forEach(function (breakpoint) {
-      var gutter = gridGutterWidths[breakpoint];
-      var column = (0, breakpoints.mediaBreakpointUp)(breakpoint, gutter, '\n        padding-right: ' + _unitUtils2.default.rmUnit(gutter) / 2 + _unitUtils2.default.detectUnit(gutter) + ';\n        padding-left:  ' + _unitUtils2.default.rmUnit(gutter) / 2 + _unitUtils2.default.detectUnit(gutter) + ';\n      ');
-      columns.push(column);
-    });
-    return '\n      position: relative;\n      margin-left: auto;\n      margin-right: auto;    \n      ' + columns.join('\n') + '\n    ';
-  }
-  return '';
-}
-function makeContainerMaxWidths() {
-  var enableGridClasses = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-grid-classes'];
-  var containerMaxWidths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$container-max-widths'];
-  var gridBreakpoints = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$grid-breakpoints'];
-  if (enableGridClasses) {
-    var maximumWidthList = [];
-    Object.keys(containerMaxWidths).forEach(function (breakpoint) {
-      var maximumWidth = (0, breakpoints.mediaBreakpointUp)(breakpoint, gridBreakpoints, '\n        width: ' + containerMaxWidths[breakpoint] + ';\n        max-width: 100%;\n      ');
-      maximumWidthList.push(maximumWidth);
-    });
-    return '\n      ' + maximumWidthList.join('\n') + '\n    ';
-  }
-  return '';
-}
-function makeGutters() {
-  var gridGutterWidths = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$grid-gutter-widths'];
-  var breakpoints$$1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-breakpoints'];
-  var gutterList = [];
-  Object.keys(gridGutterWidths).forEach(function (breakpoint) {
-    var gutterValue = gridGutterWidths[breakpoint];
-    gutterValue = '' + _unitUtils2.default.rmUnit(gutterValue) / 2 + _unitUtils2.default.detectUnit(gutterValue);
-    var gutter = (0, breakpoints.mediaBreakpointUp)(breakpoint, breakpoints$$1, '\n      padding-right: ' + gutterValue + ';\n      padding-left:  ' + gutterValue + ';\n    ');
-    gutterList.push(gutter);
-  });
-  return '\n    ' + gutterList.join('\n') + '\n  ';
-}
-function makeRow() {
-  var enableGridClasses = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-grid-classes'];
-  var gridGutterWidths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-gutter-widths'];
-  if (enableGridClasses) {
-    var rowList = [];
-    Object.keys(gridGutterWidths).forEach(function (breakpoint) {
-      var gutter = gridGutterWidths[breakpoint];
-      gutter = '' + _unitUtils2.default.rmUnit(gutter) / -2 + _unitUtils2.default.detectUnit(gutter);
-      var row = '\n        margin-right: ' + gutter + ';\n        margin-left:  ' + gutter + ';\n      ';
-      rowList.push(row);
-    });
-    return '\n      display: flex;\n      flex-wrap: wrap;\n      ' + rowList.join('\n') + '\n    ';
-  }
-  return '';
-}
-function makeColReady() {
-  var gridGutterWidths = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$grid-gutter-widths'];
-  var colReadyList = [];
-  Object.keys(gridGutterWidths).forEach(function (breakpoint) {
-    var gutter = gridGutterWidths[breakpoint];
-    gutter = '' + _unitUtils2.default.rmUnit(gutter) / 2 + _unitUtils2.default.detectUnit(gutter);
-    var colReady = (0, breakpoints.mediaBreakpointUp)(breakpoint, gridGutterWidths, '\n      padding-right: ' + gutter + ';\n      padding-left:  ' + gutter + ';\n    ');
-    colReadyList.push(colReady);
-  });
-  return '\n    position: relative;\n    /* Prevent columns from becoming too narrow when at smaller grid tiers by */\n    /* always setting \'width: 100%;\'. This works because we use \'flex\' values */\n    /* later on to override this initial width. */\n    min-height: 1px; /* Prevent collapsing */\n    width: 100%;\n    ' + colReadyList.join('\n') + '\n  ';
-}
-function makeCol(size) {
-  var columns = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-columns'];
-  return '\n    flex: 0 0 ' + _unitUtils2.default.toPercent(size, columns) + ';\n    /* Add a \'max-width\' to ensure content within each column does not blow out */\n    /* the width of the column. Applies to IE10+ and Firefox. Chrome and Safari */\n    /* do not appear to require this. */\n    max-width: ' + _unitUtils2.default.toPercent(size, columns) + ';\n  ';
-}
-function makeColOffset($size) {
-  var columns = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-columns'];
-  return '\n    margin-left: ' + _unitUtils2.default.toPercent($size, columns) + ';\n  ';
-}
-function makeColPush(size) {
-  var columns = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-columns'];
-  return '\n    left: ' + (size > 0 ? _unitUtils2.default.toPercent(size, columns) : 'auto') + ';\n  ';
-}
-function makeColPull(size) {
-  var columns = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$grid-columns'];
-  return '\n    right: ' + (size > 0 ? _unitUtils2.default.toPercent(size, columns) : 'auto') + ';\n  ';
-}
-function makeColModifier(type, size, columns) {
-  var TYPE = {
-    PUSH: 'push',
-    PULL: 'pull',
-    OFFSET: 'offset'
-  };
-  var modifier = '';
-  if (type === TYPE.PUSH) {
-    modifier = makeColPush(size, columns);
-  } else if (type === TYPE.PULL) {
-    modifier = makeColPull(size, columns);
-  } else if (type === TYPE.OFFSET) {
-    modifier = makeColOffset(size, columns);
-  }
-  return '\n    ' + modifier + '\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  makeContainer: makeContainer,
-  makeContainerMaxWidths: makeContainerMaxWidths,
-  makeGutters: makeGutters,
-  makeRow: makeRow,
-  makeColReady: makeColReady,
-  makeCol: makeCol,
-  makeColOffset: makeColOffset,
-  makeColPush: makeColPush,
-  makeColPull: makeColPull,
-  makeColModifier: makeColModifier
-};
-});
-unwrapExports(grid);
 
 var Form_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  theme: _theme2.default,
-  tag: 'form'
-};
-var selectBorderWidth = _unitUtils2.default.math.multiply(_theme2.default['$border-width'], 2);
-var FormUnstyled = function (_React$Component) {
-  _inherits(FormUnstyled, _React$Component);
-  function FormUnstyled() {
-    _classCallCheck(this, FormUnstyled);
-    return _possibleConstructorReturn(this, (FormUnstyled.__proto__ || Object.getPrototypeOf(FormUnstyled)).apply(this, arguments));
+var Form$$1 = function (_Component) {
+  _inherits(Form$$1, _Component);
+  function Form$$1(props, context) {
+    _classCallCheck(this, Form$$1);
+    var _this = _possibleConstructorReturn(this, (Form$$1.__proto__ || Object.getPrototypeOf(Form$$1)).call(this, props, context));
+    if (!context._reduxForm) {
+      throw new Error('Form must be inside a component decorated with reduxForm()');
+    }
+    return _this;
   }
-  _createClass(FormUnstyled, [{
+  _createClass(Form$$1, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.context._reduxForm.registerInnerOnSubmit(this.props.onSubmit);
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          cssModule = _omit.cssModule,
-          inline = _omit.inline,
-          Tag = _omit.tag,
-          getRef = _omit.getRef,
-          rest = _objectWithoutProperties(_omit, ['className', 'cssModule', 'inline', 'tag', 'getRef']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, inline ? 'form-inline' : false), cssModule);
-      return _react2.default.createElement(Tag, _extends({ ref: getRef, className: classes }, rest));
+      return _react2.default.createElement('form', this.props);
     }
   }]);
-  return FormUnstyled;
-}(_react2.default.Component);
-FormUnstyled.propTypes = {
-  children: _propTypes2.default.node,
-  theme: _propTypes2.default.object,
-  inline: _propTypes2.default.bool,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  getRef: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
+  return Form$$1;
+}(React.Component);
+Form$$1.propTypes = {
+  onSubmit: _propTypes2.default.func.isRequired
 };
-var Form = (0, _styledComponents2.default)(FormUnstyled).withConfig({
-  displayName: 'Form'
-})(['  ', ''], function (props) {
-  return '\n    /*\n     Textual form controls\n    */\n\n    ' + (0, forms.formControl)(props.theme['$enable-rounded'], props.theme['$enable-transitions'], props.theme['$enable-shadows'], props.theme['$input-height'], props.theme['$input-padding-y'], props.theme['$input-padding-x'], props.theme['$font-size-base'], props.theme['$input-line-height'], props.theme['$input-color'], props.theme['$input-bg'], props.theme['$input-border-radius'], props.theme['$input-btn-border-width'], props.theme['$input-border-color'], props.theme['$input-transition'], props.theme['$input-box-shadow'], props.theme['$input-color-focus'], props.theme['$input-bg-focus'], props.theme['$input-border-focus'], props.theme['$input-box-shadow-focus'], props.theme['$input-color-placeholder'], props.theme['$input-bg-disabled'], props.theme['$cursor-disabled']) + '\n    \n    select.form-control {\n      &:not([size]):not([multiple]) {\n        height: calc(' + props.theme['$input-height'] + ' + ' + selectBorderWidth + ');\n      }\n\n      &:focus::-ms-value {\n        /* Suppress the nested default white text on blue background highlight given to\n         the selected option text when the (still closed) <select> receives focus\n         in IE and (under certain conditions) Edge, as it looks bad and cannot be made to\n         match the appearance of the native widget.\n         See https://github.com/twbs/bootstrap/issues/19398.\n         */\n        color: ' + props.theme['$input-color'] + ';\n        background-color: ' + props.theme['$input-bg'] + ';\n      }\n    }\n\n    /* Make file inputs better match text inputs by forcing them to new lines. */\n    & .form-control-file,\n    .form-control-range {\n      display: block;\n    }\n\n    /*\n     Labels\n    */\n\n    /* For use with horizontal and inline forms, when you need the label text to */\n    /* align with the form controls. */\n    & .col-form-label {\n      padding-top: calc(' + props.theme['$input-padding-y'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      padding-bottom: calc(' + props.theme['$input-padding-y'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      margin-bottom: 0; /* Override the \'<label>\' default */\n    }\n\n    & .col-form-label-lg {\n      padding-top: calc(' + props.theme['$input-padding-y-lg'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      padding-bottom: calc(' + props.theme['$input-padding-y-lg'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      font-size: ' + props.theme['$font-size-lg'] + ';\n    }\n\n    & .col-form-label-sm {\n      padding-top: calc(' + props.theme['$input-padding-y-sm'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      padding-bottom: calc(' + props.theme['$input-padding-y-sm'] + ' - ' + props.theme['$input-btn-border-width'] + ' *2);\n      font-size: ' + props.theme['$font-size-sm'] + ';\n    }\n\n    /*\n     Legends\n    */\n\n    /* For use with horizontal and inline forms, when you need the legend text to */\n    /* be the same size as regular labels, and to align with the form controls. */\n    & .col-form-legend {\n      padding-top: ' + props.theme['$input-padding-y'] + ';\n      padding-bottom: ' + props.theme['$input-padding-y'] + ';\n      margin-bottom: 0;\n      font-size: ' + props.theme['$font-size-base'] + ';\n    }\n\n\n    /* Static form control text\n\n     Apply class to an element to make any string of text align with labels in a\n     horizontal form layout.\n    */\n\n    & .form-control-static {\n      padding-top: ' + props.theme['$input-padding-y'] + ';\n      padding-bottom: ' + props.theme['$input-padding-y'] + ';\n      margin-bottom: 0; /* match inputs if this class comes on inputs with default margins */\n      line-height: ' + props.theme['$input-line-height'] + ';\n      border: solid transparent;\n      border-width: ' + props.theme['$input-btn-border-width'] + ' 0;\n\n      &.form-control-sm,\n      &.form-control-lg {\n        padding-right: 0;\n        padding-left: 0;\n      }\n    }\n\n\n    /* Form control sizing\n\n     Build on .form-control with modifier classes to decrease or increase the\n     height and font-size of form controls.\n\n     The .form-group-* form-control variations are sadly duplicated to avoid the\n     issue documented in https://github.com/twbs/bootstrap/issues/15074.\n    */\n\n    & .form-control-sm {\n      padding: ' + props.theme['$input-padding-y-sm'] + ' ' + props.theme['$input-padding-x-sm'] + ';\n      font-size: ' + props.theme['$font-size-sm'] + ';\n      ' + (0, borderRadius_1.borderRadius)(props.theme['$enable-rounded'], props.theme['$input-border-radius-sm']) + '\n    }\n\n    select.form-control-sm {\n      &:not([size]):not([multiple]) {\n        height: ' + props.theme['$input-height-sm'] + ';\n      }\n    }\n\n    & .form-control-lg {\n      padding: ' + props.theme['$input-padding-y-lg'] + ' ' + props.theme['$input-padding-x-lg'] + ';\n      font-size: ' + props.theme['$font-size-lg'] + ';\n      ' + (0, borderRadius_1.borderRadius)(props.theme['$enable-rounded'], props.theme['$input-border-radius-lg']) + '\n    }\n\n    select.form-control-lg {\n      &:not([size]):not([multiple]) {\n        height: ' + props.theme['$input-height-lg'] + ';\n      }\n    }\n\n\n    /* Form groups Designed to help with the organization and spacing of vertical forms. For horizontal forms, use the predefined grid classes. */\n\n    &.form-group,\n     & .form-group {\n      margin-bottom: ' + props.theme['$form-group-margin-bottom'] + ';\n    }\n\n    & .form-text {\n      display: block;\n      margin-top: ' + props.theme['$form-text-margin-top'] + '\n    }\n\n\n    /* Checkboxes and radios Indent the labels to position radios/checkboxes as hanging controls. */\n\n    & .form-check {\n      position: relative;\n      display: block;\n      margin-bottom: ' + props.theme['$form-check-margin-bottom'] + ';\n\n      &.disabled {\n        .form-check-label {\n          color: ' + props.theme['$text-muted'] + ';\n          cursor: ' + props.theme['$cursor-disabled'] + ';\n        }\n      }\n    }\n\n    & .form-check-label {\n      padding-left: ' + props.theme['$form-check-input-gutter'] + ';\n      margin-bottom: 0; /* Override default <label> bottom margin */\n      cursor: pointer;\n    }\n\n    & .form-check-input {\n      position: absolute;\n      margin-top: ' + props.theme['$form-check-input-margin-y'] + ';\n      margin-left: -' + props.theme['$form-check-input-gutter'] + ';\n\n      &:only-child {\n        position: static;\n      }\n    }\n\n    /* Radios and checkboxes on same line */\n    & .form-check-inline {\n      display: inline-block;\n      .form-check-label {\n        vertical-align: middle;\n      }\n\n      + .form-check-inline {\n        margin-left: ' + props.theme['$form-check-inline-margin-x'] + ';\n      }\n\n      &.disabled {\n        color: ' + props.theme['$text-muted'] + ';\n        cursor: ' + props.theme['$cursor-disabled'] + ';\n      }\n    }\n\n\n    /* Form control feedback states Apply contextual and semantic states to individual form controls. */\n    & .form-control-feedback {\n      margin-top: ' + props.theme['$form-feedback-margin-top'] + ';\n    }\n\n    & .form-control-success,\n    & .form-control-warning,\n    & .form-control-danger {\n      padding-right: ' + _unitUtils2.default.math.multiply(props.theme['$input-padding-x'], 3) + ';\n      background-repeat: no-repeat;\n      background-position: center right ' + _unitUtils2.default.math.divide(props.theme['$input-height'], 4) + ';\n      background-size: ' + _unitUtils2.default.math.divide(props.theme['$input-height'], 2) + ' ' + _unitUtils2.default.math.divide(props.theme['$input-height'], 2) + ';\n    }\n\n    /* Form validation states */\n    & .has-success {\n      ' + (0, forms.formControlValidation)(props.theme['$enable-shadows'], props.theme['$brand-success'], props.theme['$box-shadow']) + '\n\n      .form-control-success {\n        background-image: ' + props.theme['$form-icon-success'] + ';\n      }\n    }\n\n    & .has-warning {\n      ' + (0, forms.formControlValidation)(props.theme['$enable-shadows'], props.theme['$brand-warning'], props.theme['$box-shadow']) + '\n\n      .form-control-warning {\n        background-image: ' + props.theme['$form-icon-warning'] + ';\n      }\n    }\n\n    & .has-danger {\n      ' + (0, forms.formControlValidation)(props.theme['$enable-shadows'], props.theme['$brand-danger'], props.theme['$box-shadow']) + '\n\n      .form-control-danger {\n        background-image: ' + props.theme['$form-icon-danger'] + ';\n      }\n    }\n\n\n    /* Inline forms\n\n     Make forms appear inline(-block) by adding the .form-inline class. Inline\n     forms begin stacked on extra small (mobile) devices and then go inline when\n     viewports reach <768px.\n\n     Requires wrapping inputs and labels with .form-group for proper display of\n     default HTML form controls and our custom form controls (e.g., input groups).\n    */\n\n    &.form-inline {\n      display: flex;\n      flex-flow: row wrap;\n      align-items: center; /* Prevent shorter elements from growing to same height as others (e.g., small buttons growing to normal sized button height) */\n\n      & .form-check {\n         width: 100%;\n      }\n\n      /* Kick in the inline */\n      ' + (0, breakpoints.mediaBreakpointUp)('sm', props.theme['$grid-breakpoints'], '\n          label {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            margin-bottom: 0;\n          }\n          \n          /* Inline-block all the things for inline */\n          & .form-group {\n            display: flex;\n            flex: 0 0 auto;\n            flex-flow: row wrap;\n            margin-bottom: 0;\n          }\n      \n          /* Allow folks to *not* use .form-group */\n          & .form-control {\n            display: inline-block;\n            width: auto; /* Prevent labels from stacking above inputs in .form-group */\n            vertical-align: middle;\n          }\n      \n          /* Make static controls behave like regular ones */\n          & .form-control-static {\n            display: inline-block;\n          }\n      \n          & .input-group {\n            width: auto;\n          }\n          \n          & .form-control-label {\n             margin-bottom: 0;\n            vertical-align: middle;\n          }\n      \n          /* Remove default margin on radios/checkboxes that were used for stacking, and */\n          /*  then undo the floating of radios and checkboxes to match. */\n          & .form-check {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            width: auto;\n            margin-top: 0;\n            margin-bottom: 0;\n          }\n          & .form-check-label {\n            padding-left: 0;\n          }\n          & .form-check-input {\n            position: relative;\n            margin-left: 0;\n            margin-top: 0;\n            margin-right: ' + props.theme['$form-check-input-margin-x'] + ';\n          }\n          \n          /* Custom form controls */\n          & .custom-control {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            padding-left: 0;\n          }\n          \n          & .custom-control-indicator {\n            position: static;\n            display: inline-block;\n            margin-right: ' + props.theme['$form-check-input-margin-x'] + '; /* Flexbox alignment means we lose our HTML space here, so we compensate. */\n            vertical-align: text-bottom;\n          }\n          \n          /* Re-override the feedback icon. */\n          & .has-feedback .form-control-feedback {\n            top: 0;\n          }\n        ') + '\n    }\n    ' + (0, customForms_1.customForms)(props.theme['$enable-rounded'], props.theme['$enable-shadows'], props.theme['$custom-control-checked-indicator-box-shadow'], props.theme['$custom-control-active-indicator-box-shadow'], props.theme['$custom-control-indicator-box-shadow'], props.theme['$custom-checkbox-indeterminate-box-shadow'], props.theme['$custom-select-focus-box-shadow'], props.theme['$custom-file-focus-box-shadow'], props.theme['$custom-file-box-shadow'], props.theme['$custom-select-border-radius'], props.theme['$custom-file-border-radius'], props.theme['$custom-checkbox-radius'], props.theme['$input-bg'], props.theme['$custom-select-line-height'], props.theme['$line-height-base'], props.theme['$custom-control-gutter'], props.theme['$custom-control-spacer-x'], props.theme['$custom-control-checked-indicator-color'], props.theme['$custom-control-checked-indicator-bg'], props.theme['$custom-control-focus-indicator-box-shadow'], props.theme['$custom-control-active-indicator-color'], props.theme['$custom-control-active-indicator-bg'], props.theme['$custom-control-disabled-cursor'], props.theme['$custom-control-disabled-indicator-bg'], props.theme['$custom-control-disabled-description-color'], props.theme['$custom-control-indicator-size'], props.theme['$custom-control-indicator-bg'], props.theme['$custom-control-indicator-bg-size'], props.theme['$custom-checkbox-checked-icon'], props.theme['$custom-checkbox-indeterminate-bg'], props.theme['$custom-checkbox-indeterminate-icon'], props.theme['$custom-radio-radius'], props.theme['$custom-radio-checked-icon'], props.theme['$custom-control-spacer-y'], props.theme['$border-width'], props.theme['$input-height'], props.theme['$custom-select-padding-y'], props.theme['$custom-select-padding-x'], props.theme['$custom-select-indicator-padding'], props.theme['$custom-select-color'], props.theme['$custom-select-bg'], props.theme['$custom-select-indicator'], props.theme['$custom-select-bg-size'], props.theme['$custom-select-border-width'], props.theme['$custom-select-border-color'], props.theme['$custom-select-focus-border-color'], props.theme['$input-color'], props.theme['$custom-select-disabled-color'], props.theme['$cursor-disabled'], props.theme['$custom-select-disabled-bg'], props.theme['$custom-select-sm-font-size'], props.theme['$custom-file-width'], props.theme['$custom-file-height'], props.theme['$custom-file-padding-x'], props.theme['$custom-file-padding-y'], props.theme['$custom-file-line-height'], props.theme['$custom-file-color'], props.theme['$custom-file-bg'], props.theme['$custom-file-border-width'], props.theme['$custom-file-border-color'], props.theme['$custom-file-button-color'], props.theme['$custom-file-button-bg'], props.theme['$custom-file-text']) + '\n    & .row {\n      ' + (0, grid.makeRow)(props.theme['$enable-grid-classes'], props.theme['$grid-gutter-widths']) + '\n    }\n  ';
+Form$$1.contextTypes = {
+  _reduxForm: _propTypes2.default.object
+};
+exports.default = Form$$1;
 });
-Form.defaultProps = defaultProps;
-exports.default = Form;
-module.exports = exports['default'];
-});
-unwrapExports(Form_1);
 
-var FormGroup_1 = createCommonjsModule(function (module, exports) {
+var prefixName = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var formatName = function formatName(_ref, name) {
+  var sectionPrefix = _ref._reduxForm.sectionPrefix;
+  return sectionPrefix ? sectionPrefix + '.' + name : name;
+};
+exports.default = formatName;
+});
+
+var FormSection_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _prefixName2 = _interopRequireDefault(prefixName);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  tag: 'div'
-};
-var FormGroup = function (_React$Component) {
-  _inherits(FormGroup, _React$Component);
-  function FormGroup() {
-    _classCallCheck(this, FormGroup);
-    return _possibleConstructorReturn(this, (FormGroup.__proto__ || Object.getPrototypeOf(FormGroup)).apply(this, arguments));
-  }
-  _createClass(FormGroup, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          row = _props.row,
-          disabled = _props.disabled,
-          inline = _props.inline,
-          color = _props.color,
-          check = _props.check,
-          Tag = _props.tag,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'row', 'disabled', 'inline', 'color', 'check', 'tag']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, color ? 'has-' + color : false, row ? 'row' : false, check ? 'form-check' : 'form-group', check && disabled ? 'disabled' : false, inline ? 'form-check-inline' : false), cssModule);
-      return _react2.default.createElement(Tag, _extends({}, attributes, { className: classes }));
+var FormSection = function (_Component) {
+  _inherits(FormSection, _Component);
+  function FormSection(props, context) {
+    _classCallCheck(this, FormSection);
+    var _this = _possibleConstructorReturn(this, (FormSection.__proto__ || Object.getPrototypeOf(FormSection)).call(this, props, context));
+    if (!context._reduxForm) {
+      throw new Error('FormSection must be inside a component decorated with reduxForm()');
     }
-  }]);
-  return FormGroup;
-}(_react2.default.Component);
-FormGroup.propTypes = {
-  inline: _propTypes2.default.bool,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  getRef: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  disabled: _propTypes2.default.bool,
-  check: _propTypes2.default.bool,
-  color: _propTypes2.default.string,
-  row: _propTypes2.default.bool
-};
-FormGroup.defaultProps = defaultProps;
-exports.default = FormGroup;
-module.exports = exports['default'];
-});
-unwrapExports(FormGroup_1);
-
-var FormText_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  tag: 'small'
-};
-var FormText = function (_React$Component) {
-  _inherits(FormText, _React$Component);
-  function FormText() {
-    _classCallCheck(this, FormText);
-    return _possibleConstructorReturn(this, (FormText.__proto__ || Object.getPrototypeOf(FormText)).apply(this, arguments));
+    return _this;
   }
-  _createClass(FormText, [{
+  _createClass(FormSection, [{
+    key: 'getChildContext',
+    value: function getChildContext() {
+      var context = this.context,
+          name = this.props.name;
+      return {
+        _reduxForm: _extends({}, context._reduxForm, {
+          sectionPrefix: (0, _prefixName2.default)(context, name)
+        })
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          inline = _props.inline,
-          color = _props.color,
-          Tag = _props.tag,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'inline', 'color', 'tag']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, !inline ? 'form-text' : false, color ? 'text-' + color : false), cssModule);
-      return _react2.default.createElement(Tag, _extends({}, attributes, { className: classes }));
+          children = _props.children,
+          name = _props.name,
+          component = _props.component,
+          rest = _objectWithoutProperties(_props, ['children', 'name', 'component']);
+      if (_react2.default.isValidElement(children)) {
+        return children;
+      }
+      return (0, React.createElement)(component, _extends({}, rest, {
+        children: children
+      }));
     }
   }]);
-  return FormText;
-}(_react2.default.Component);
-FormText.propTypes = {
-  children: _propTypes2.default.node,
-  inline: _propTypes2.default.bool,
-  tag: _propTypes2.default.string,
-  color: _propTypes2.default.string,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
+  return FormSection;
+}(React.Component);
+FormSection.propTypes = {
+  name: _propTypes2.default.string.isRequired,
+  component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string])
 };
-FormText.defaultProps = defaultProps;
-exports.default = FormText;
-module.exports = exports['default'];
+FormSection.defaultProps = {
+  component: 'div'
+};
+FormSection.childContextTypes = {
+  _reduxForm: _propTypes2.default.object.isRequired
+};
+FormSection.contextTypes = {
+  _reduxForm: _propTypes2.default.object
+};
+exports.default = FormSection;
 });
-unwrapExports(FormText_1);
 
-var FormFeedback_1 = createCommonjsModule(function (module, exports) {
+var lib = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  tag: 'div'
-};
-var FormFeedback = function (_React$Component) {
-  _inherits(FormFeedback, _React$Component);
-  function FormFeedback() {
-    _classCallCheck(this, FormFeedback);
-    return _possibleConstructorReturn(this, (FormFeedback.__proto__ || Object.getPrototypeOf(FormFeedback)).apply(this, arguments));
+function _extendableBuiltin(cls) {
+  function ExtendableBuiltin() {
+    cls.apply(this, arguments);
   }
-  _createClass(FormFeedback, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          Tag = _props.tag,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'tag']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'form-control-feedback'), cssModule);
-      return _react2.default.createElement(Tag, _extends({}, attributes, { className: classes }));
-    }
-  }]);
-  return FormFeedback;
-}(_react2.default.Component);
-FormFeedback.propTypes = {
-  children: _propTypes2.default.node,
-  tag: _propTypes2.default.string,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-FormFeedback.defaultProps = defaultProps;
-exports.default = FormFeedback;
-module.exports = exports['default'];
-});
-unwrapExports(FormFeedback_1);
-
-var conditional = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ifThen = ifThen;
-exports.ifElse = ifElse;
-function ifThen(conditions, returnTrue) {
-  return ifElse(conditions, returnTrue, '');
-}
-function ifElse(conditions, returnTrue, returnFalse) {
-  return conditions ? returnTrue : returnFalse;
-}
-exports.default = {
-  ifThen: ifThen,
-  ifElse: ifElse
-};
-});
-unwrapExports(conditional);
-
-var buttons = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.buttonVariant = buttonVariant;
-exports.buttonOutlineVariant = buttonOutlineVariant;
-exports.buttonSize = buttonSize;
-exports.button = button;
-var _color2 = _interopRequireDefault(color);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$enable-shadows': true,
-  '$enable-hover-media-query': false,
-  '$enable-transitions': true,
-  '$enable-rounded': true,
-  '$font-weight-normal': 'normal',
-  '$btn-font-weight': 'normal',
-  '$btn-line-height': '1.25',
-  '$btn-transition': 'all .2s ease-in-out',
-  '$input-btn-border-width': '1px',
-  '$btn-padding-x': '1rem',
-  '$btn-padding-y': '.5rem',
-  '$font-size-base': '1rem',
-  '$btn-border-radius': '.25rem',
-  '$btn-box-shadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075)',
-  '$btn-focus-box-shadow': '0 0 0 2px rgba(2, 117, 216, 0.25)',
-  '$btn-active-box-shadow': 'inset 0 3px 5px rgba(0, 0, 0, 0.125)',
-  '$cursor-disabled': 'not-allowed',
-  '$link-color': '#0275d8',
-  '$link-hover-color': 'hsl(207.79999999999995, 98.2%, 27.8%)',
-  '$link-hover-decoration': 'underline',
-  '$btn-link-disabled-color': '#636c72',
-  '$btn-padding-x-lg': '1.5rem',
-  '$btn-padding-y-lg': '.75rem',
-  '$font-size-lg': '1.25rem',
-  '$btn-border-radius-lg': '.3rem',
-  '$btn-padding-x-sm': '.5rem',
-  '$btn-padding-y-sm': '.25rem',
-  '$font-size-sm': '.875rem',
-  '$btn-border-radius-sm': '.2rem',
-  '$btn-block-spacing-y': '.5rem',
-  '$btn-primary-color': '#fff',
-  '$btn-primary-bg': '#0275d8',
-  '$btn-primary-border': '#0275d8',
-  '$btn-secondary-color': '#292b2c',
-  '$btn-secondary-bg': '#fff',
-  '$btn-secondary-border': '#ccc',
-  '$btn-info-color': '#fff',
-  '$btn-info-bg': '#5bc0de',
-  '$btn-info-border': '#5bc0de',
-  '$btn-success-color': '#fff',
-  '$btn-success-bg': '#5cb85c',
-  '$btn-success-border': '#5cb85c',
-  '$btn-warning-color': '#fff',
-  '$btn-warning-bg': '#f0ad4e',
-  '$btn-warning-border': '#f0ad4e',
-  '$btn-danger-color': '#fff',
-  '$btn-danger-bg': '#d9534f',
-  '$btn-danger-border': '#d9534f'
-};
-function buttonVariant() {
-  var enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  var buttonColor = arguments[1];
-  var background = arguments[2];
-  var border = arguments[3];
-  var btnActiveBoxShadow = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$btn-active-box-shadow'];
-  var btnBoxShadow = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$btn-box-shadow'];
-  var activeBackground = (0, _color2.default)(background).darken(0.2).toString();
-  var activeBorder = (0, _color2.default)(border).darken(0.12).toString();
-  return '\n    color: ' + buttonColor + ';\n    background-color: ' + background + ';\n    border-color: ' + border + ';\n    ' + (0, boxShadow_1.boxShadow)(enableShadows, btnBoxShadow) + '\n  \n    ' + (0, hover_1.hover)('\n      color: ' + buttonColor + ';\n      background-color: ' + activeBackground + ';\n      border-color: ' + activeBorder + ';\n    ') + '\n  \n    &:focus,\n    &.focus {\n      ' + (0, conditional.ifElse)('\n        box-shadow: ' + btnBoxShadow + ', 0 0 0 2px ' + (0, _color2.default)(border).alpha(0.5).toString() + ';\n      ', '\n        box-shadow: 0 0 0 2px ' + (0, _color2.default)(border).alpha(0.5).toString() + ';\n      ') + '\n    }\n  \n    /* Disabled comes first so active can properly restyle */\n    &.disabled,\n    &:disabled {\n      background-color: ' + background + ';\n      border-color: ' + border + ';\n    }\n    \n    &:active,\n    &.active,\n    .show > &.dropdown-toggle {\n      color: ' + buttonColor + ';\n      background-color: ' + activeBackground + ';\n      background-image: none;\n      border-color: ' + activeBorder + ';\n      ' + (0, boxShadow_1.boxShadow)(enableShadows, btnActiveBoxShadow) + '\n    }\n  ';
-}
-function buttonOutlineVariant(buttonColor) {
-  var buttonColorHover = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '#fff';
-  return '\n    color: ' + buttonColor + ';\n    background-image: none;\n    background-color: transparent;\n    border-color: ' + buttonColor + ';\n  \n    ' + (0, hover_1.hover)('\n      color: ' + buttonColorHover + ';\n      background-color: ' + buttonColor + ';\n      border-color: ' + buttonColor + ';\n    ') + '\n  \n    &:focus,\n    &.focus {\n      box-shadow: 0 0 0 2px ' + (0, _color2.default)(buttonColor).alpha(0.5).toString() + ';\n    }\n  \n    &.disabled,\n    &:disabled {\n      color: ' + buttonColor + ';\n      border-color: transparent;\n    }\n    \n    &:active,\n    &.active,\n    & .open > &.dropdown-toggle {\n      color: ' + buttonColorHover + ';\n      background-color: ' + buttonColor + ';\n      border-color: ' + buttonColor + ';\n    }\n  ';
-}
-function buttonSize() {
-  var enableRounded = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-rounded'];
-  var paddingY = arguments[1];
-  var paddingX = arguments[2];
-  var fontSize = arguments[3];
-  var btnBorderRadius = arguments[4];
-  return '\n    padding: ' + paddingY + ' ' + paddingX + ';\n    font-size: ' + fontSize + ';\n    ' + (0, borderRadius_1.borderRadius)(enableRounded, btnBorderRadius) + '\n  ';
-}
-function button() {
-  var $enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  var $enableHoverMediaQuery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$enable-hover-media-query'];
-  var $enableTransitions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$enable-transitions'];
-  var $enableRounded = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$enable-rounded'];
-  var $fontWeightNormal = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$font-weight-normal'];
-  var $btnFontWeight = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$btn-font-weight'];
-  var $btnLineHeight = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : defaultProps['$btn-line-height'];
-  var $btnTransition = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$btn-transition'];
-  var $inputBtnBorderWidth = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : defaultProps['$input-btn-border-width'];
-  var $btnPaddingX = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : defaultProps['$btn-padding-x'];
-  var $btnPaddingY = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : defaultProps['$btn-padding-y'];
-  var $fontSizeBase = arguments.length > 11 && arguments[11] !== undefined ? arguments[11] : defaultProps['$font-size-base'];
-  var $btnBorderRadius = arguments.length > 12 && arguments[12] !== undefined ? arguments[12] : defaultProps['$btn-border-radius'];
-  var $btnBoxShadow = arguments.length > 13 && arguments[13] !== undefined ? arguments[13] : defaultProps['$btn-box-shadow'];
-  var $btnFocusBoxShadow = arguments.length > 14 && arguments[14] !== undefined ? arguments[14] : defaultProps['$btn-focus-box-shadow'];
-  var $btnActiveBoxShadow = arguments.length > 15 && arguments[15] !== undefined ? arguments[15] : defaultProps['$btn-active-box-shadow'];
-  var $cursorDisabled = arguments.length > 16 && arguments[16] !== undefined ? arguments[16] : defaultProps['$cursor-disabled'];
-  var $linkColor = arguments.length > 17 && arguments[17] !== undefined ? arguments[17] : defaultProps['$link-color'];
-  var $linkHoverColor = arguments.length > 18 && arguments[18] !== undefined ? arguments[18] : defaultProps['$link-hover-color'];
-  var $linkHoverDecoration = arguments.length > 19 && arguments[19] !== undefined ? arguments[19] : defaultProps['$link-hover-decoration'];
-  var $btnLinkDisabledColor = arguments.length > 20 && arguments[20] !== undefined ? arguments[20] : defaultProps['$btn-link-disabled-color'];
-  var $btnPaddingXLg = arguments.length > 21 && arguments[21] !== undefined ? arguments[21] : defaultProps['$btn-padding-x-lg'];
-  var $btnPaddingYLg = arguments.length > 22 && arguments[22] !== undefined ? arguments[22] : defaultProps['$btn-padding-y-lg'];
-  var $fontSizeLg = arguments.length > 23 && arguments[23] !== undefined ? arguments[23] : defaultProps['$font-size-lg'];
-  var $btnBorderRadiusLg = arguments.length > 24 && arguments[24] !== undefined ? arguments[24] : defaultProps['$btn-border-radius-lg'];
-  var $btnPaddingXSm = arguments.length > 25 && arguments[25] !== undefined ? arguments[25] : defaultProps['$btn-padding-x-sm'];
-  var $btnPaddingYSm = arguments.length > 26 && arguments[26] !== undefined ? arguments[26] : defaultProps['$btn-padding-y-sm'];
-  var $fontSizeSm = arguments.length > 27 && arguments[27] !== undefined ? arguments[27] : defaultProps['$font-size-sm'];
-  var $btnBorderRadiusSm = arguments.length > 28 && arguments[28] !== undefined ? arguments[28] : defaultProps['$btn-border-radius-sm'];
-  var $btnBlockSpacingY = arguments.length > 29 && arguments[29] !== undefined ? arguments[29] : defaultProps['$btn-block-spacing-y'];
-  var $btnPrimaryColor = arguments.length > 30 && arguments[30] !== undefined ? arguments[30] : defaultProps['$btn-primary-color'];
-  var $btnPrimaryBg = arguments.length > 31 && arguments[31] !== undefined ? arguments[31] : defaultProps['$btn-primary-bg'];
-  var $btnPrimaryBorder = arguments.length > 32 && arguments[32] !== undefined ? arguments[32] : defaultProps['$btn-primary-border'];
-  var $btnSecondaryColor = arguments.length > 33 && arguments[33] !== undefined ? arguments[33] : defaultProps['$btn-secondary-color'];
-  var $btnSecondaryBg = arguments.length > 34 && arguments[34] !== undefined ? arguments[34] : defaultProps['$btn-secondary-bg'];
-  var $btnSecondaryBorder = arguments.length > 35 && arguments[35] !== undefined ? arguments[35] : defaultProps['$btn-secondary-border'];
-  var $btnInfoColor = arguments.length > 36 && arguments[36] !== undefined ? arguments[36] : defaultProps['$btn-info-color'];
-  var $btnInfoBg = arguments.length > 37 && arguments[37] !== undefined ? arguments[37] : defaultProps['$btn-info-bg'];
-  var $btnInfoBorder = arguments.length > 38 && arguments[38] !== undefined ? arguments[38] : defaultProps['$btn-info-border'];
-  var $btnSuccessColor = arguments.length > 39 && arguments[39] !== undefined ? arguments[39] : defaultProps['$btn-success-color'];
-  var $btnSuccessBg = arguments.length > 40 && arguments[40] !== undefined ? arguments[40] : defaultProps['$btn-success-bg'];
-  var $btnSuccessBorder = arguments.length > 41 && arguments[41] !== undefined ? arguments[41] : defaultProps['$btn-success-border'];
-  var $btnWarningColor = arguments.length > 42 && arguments[42] !== undefined ? arguments[42] : defaultProps['$btn-warning-color'];
-  var $btnWarningBg = arguments.length > 43 && arguments[43] !== undefined ? arguments[43] : defaultProps['$btn-warning-bg'];
-  var $btnWarningBorder = arguments.length > 44 && arguments[44] !== undefined ? arguments[44] : defaultProps['$btn-warning-border'];
-  var $btnDangerColor = arguments.length > 45 && arguments[45] !== undefined ? arguments[45] : defaultProps['$btn-danger-color'];
-  var $btnDangerBg = arguments.length > 46 && arguments[46] !== undefined ? arguments[46] : defaultProps['$btn-danger-bg'];
-  var $btnDangerBorder = arguments.length > 47 && arguments[47] !== undefined ? arguments[47] : defaultProps['$btn-danger-border'];
-  return '\n  \n    font-family: inherit;\n    \n    &.btn {\n      display: inline-block;\n      font-weight: ' + $btnFontWeight + ';\n      line-height: ' + $btnLineHeight + ';\n      text-align: center;\n      white-space: nowrap;\n      vertical-align: middle;\n      user-select: none;\n      border: ' + $inputBtnBorderWidth + ' solid transparent;\n      ' + buttonSize($enableRounded, $btnPaddingY, $btnPaddingX, $fontSizeBase, $btnBorderRadius) + '\n      ' + (0, transition_1.transition)($enableTransitions, $btnTransition) + '\n      ' + (0, hover_1.hoverFocus)($enableHoverMediaQuery, 'text-decoration: none;') + '\n\n      &:focus,\n      &.focus {\n        outline: 0;\n        box-shadow: ' + $btnFocusBoxShadow + ';\n      }\n\n      &.disabled,\n      &:disabled {\n        cursor: ' + $cursorDisabled + ';\n        opacity: .65;\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, 'none') + '\n      }  \n\n      &:active,\n      &.active {\n        background-image: none;\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, $btnFocusBoxShadow, $btnActiveBoxShadow) + '\n      }\n    }\n    \n    a.btn.disabled,\n    fieldset[disabled] a.btn {\n      pointer-events: none;\n    }\n   \n   \n    /* Alternate buttons */\n   \n    &.btn-primary {\n      ' + buttonVariant($enableShadows, $btnPrimaryColor, $btnPrimaryBg, $btnPrimaryBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n    &.btn-secondary {\n      ' + buttonVariant($enableShadows, $btnSecondaryColor, $btnSecondaryBg, $btnSecondaryBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n    &.btn-info {\n      ' + buttonVariant($enableShadows, $btnInfoColor, $btnInfoBg, $btnInfoBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n    &.btn-success {\n      ' + buttonVariant($enableShadows, $btnSuccessColor, $btnSuccessBg, $btnSuccessBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n    &.btn-warning {\n      ' + buttonVariant($enableShadows, $btnWarningColor, $btnWarningBg, $btnWarningBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n    &.btn-danger {\n      ' + buttonVariant($enableShadows, $btnDangerColor, $btnDangerBg, $btnDangerBorder, $btnActiveBoxShadow, $btnBoxShadow) + '\n    }\n   \n    &.btn-outline-primary {\n      ' + buttonOutlineVariant($btnPrimaryBg, $btnPrimaryColor) + '\n    }    \n    &.btn-outline-secondary {\n      ' + buttonOutlineVariant($btnSecondaryBorder, $btnSecondaryColor) + '\n    }    \n    &.btn-outline-info {\n      ' + buttonOutlineVariant($btnInfoBg, $btnInfoColor) + '\n    }    \n    &.btn-outline-success {\n      ' + buttonOutlineVariant($btnSuccessBg, $btnSuccessColor) + '\n    }\n    &.btn-outline-warning {\n      ' + buttonOutlineVariant($btnWarningBg, $btnWarningColor) + '\n    }\n    &.btn-outline-danger {\n      ' + buttonOutlineVariant($btnDangerBg, $btnDangerColor) + '\n    }\n   \n    /*\n     Link buttons\n    */\n   \n    &.btn-link {\n      font-weight: ' + $fontWeightNormal + ';\n      color: ' + $linkColor + ';\n      border-radius: 0;\n   \n      &,\n      &:active,\n      &.active,\n      &:disabled {\n        background-color: transparent;\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, 'none') + '\n      }\n     \n      &,\n      &:focus,\n      &:active {\n        border-color: transparent;\n      }\n     \n      ' + (0, hover_1.hover)('border-color: transparent;') + '\n     \n      ' + (0, hover_1.hoverFocus)($enableHoverMediaQuery, '\n        color: ' + $linkHoverColor + ';\n        text-decoration: ' + $linkHoverDecoration + ';\n        background-color: transparent;\n      ') + '\n     \n      &:disabled {\n        color: ' + $btnLinkDisabledColor + ';\n        ' + (0, hover_1.hoverFocus)($enableHoverMediaQuery, '\n          text-decoration: none;\n        ') + '\n      }\n    }\n  \n  \n    /*\n     Button Sizes\n    */\n   \n    &.btn-lg {\n      /* line-height: ensure even-numbered height of button next to large input */\n      ' + buttonSize($enableRounded, $btnPaddingYLg, $btnPaddingXLg, $fontSizeLg, $btnBorderRadiusLg) + '\n    }\n   \n    &.btn-sm {\n      /* line-height: ensure proper height of button next to small input */\n      ' + buttonSize($enableRounded, $btnPaddingYSm, $btnPaddingXSm, $fontSizeSm, $btnBorderRadiusSm) + '\n    }\n   \n   \n    /*\n     Block button\n    */\n   \n    &.btn-block {\n      display: block;\n      width: 100%;\n    }\n   \n    /* Vertically space out multiple block buttons */\n    &.btn-block + .btn-block {\n      margin-top: ' + $btnBlockSpacingY + ';\n    }\n   \n    /* Specificity overrides */\n    input[type="submit"],\n    input[type="reset"],\n    input[type="button"] {\n      &.btn-block {\n        width: 100%;\n      }\n    }\n   \n    /* Reboot Scss */\n    touch-action: manipulation;\n    line-height: inherit;\n    &:focus{\n      outline: 1px dotted;\n      outline: 5px auto -webkit-focus-ring-color;\n    }\n    \n    &[type="button"],\n    &[type="reset"],\n    &[type="submit"] {\n      -webkit-appearance: button;\n    }\n    \n    &::-moz-focus-inner,\n    &[type="button"]::-moz-focus-inner,\n    &[type="reset"]::-moz-focus-inner,\n    &[type="submit"]::-moz-focus-inner {\n      padding: 0;\n      border-style: none;\n    }\n\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  buttonVariant: buttonVariant,
-  buttonOutlineVariant: buttonOutlineVariant,
-  buttonSize: buttonSize,
-  button: button
-};
-});
-unwrapExports(buttons);
-
-var Label_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
-var stringOrNumberProp = _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]);
-var columnProps = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number, _propTypes2.default.shape({
-  size: stringOrNumberProp,
-  push: stringOrNumberProp,
-  pull: stringOrNumberProp,
-  offset: stringOrNumberProp
-})]);
-var propTypes = {
-  children: _propTypes2.default.node,
-  hidden: _propTypes2.default.bool,
-  check: _propTypes2.default.bool,
-  inline: _propTypes2.default.bool,
-  disabled: _propTypes2.default.bool,
-  size: _propTypes2.default.string,
-  for: _propTypes2.default.string,
-  tag: _propTypes2.default.string,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  xs: columnProps,
-  sm: columnProps,
-  md: columnProps,
-  lg: columnProps,
-  xl: columnProps,
-  theme: _propTypes2.default.object
-};
-var defaultProps = {
-  tag: 'label',
-  theme: _theme2.default
-};
-var LabelUnstyled = function LabelUnstyled(props) {
-  var _omit = (0, _lodash2.default)(props, ['theme']),
-      className = _omit.className,
-      cssModule = _omit.cssModule,
-      hidden = _omit.hidden,
-      Tag = _omit.tag,
-      check = _omit.check,
-      inline = _omit.inline,
-      disabled = _omit.disabled,
-      size = _omit.size,
-      htmlFor = _omit.for,
-      attributes = _objectWithoutProperties(_omit, ['className', 'cssModule', 'hidden', 'tag', 'check', 'inline', 'disabled', 'size', 'for']);
-  var colClasses = [];
-  colSizes.forEach(function (colSize) {
-    var columnProp = props[colSize];
-    delete attributes[colSize];
-    if (columnProp && columnProp.size) {
-      var _cn;
-      colClasses.push((0, _mapToCssModules2.default)((0, _classnames2.default)((_cn = {}, _defineProperty(_cn, 'col-' + colSize + '-' + columnProp.size, columnProp.size), _defineProperty(_cn, 'push-' + colSize + '-' + columnProp.push, columnProp.push), _defineProperty(_cn, 'pull-' + colSize + '-' + columnProp.pull, columnProp.pull), _defineProperty(_cn, 'offset-' + colSize + '-' + columnProp.offset, columnProp.offset), _cn))), cssModule);
-    } else if (columnProp) {
-      colClasses.push('col-' + colSize + '-' + columnProp);
+  ExtendableBuiltin.prototype = Object.create(cls.prototype, {
+    constructor: {
+      value: cls,
+      enumerable: false,
+      writable: true,
+      configurable: true
     }
   });
-  var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, hidden ? 'sr-only' : false, check ? 'form-check-' + (inline ? 'inline' : 'label') : false, check && inline && disabled ? 'disabled' : false, size ? 'col-form-label-' + size : false, colClasses, colClasses.length ? 'col-form-label' : false), cssModule);
-  return _react2.default.createElement(Tag, _extends({ htmlFor: htmlFor }, attributes, { className: classes }));
-};
-var Label = (0, _styledComponents2.default)(LabelUnstyled).withConfig({
-  displayName: 'Label'
-})(['', ''], function (props) {
-  return '\n    /* Reboot Scss */\n    touch-action: manipulation;\n    /* Allow labels to use margin for spacing. */\n    display: inline-block;\n    margin-bottom: .5rem;\n\n    ' + (0, buttons.button)(props.theme['$enable-shadows'], props.theme['$enable-hover-media-query'], props.theme['$enable-transitions'], props.theme['$enable-rounded'], props.theme['$font-weight-normal'], props.theme['$btn-font-weight'], props.theme['$btn-line-height'], props.theme['$btn-transition'], props.theme['$input-btn-border-width'], props.theme['$btn-padding-x'], props.theme['$btn-padding-y'], props.theme['$font-size-base'], props.theme['$btn-border-radius'], props.theme['$btn-box-shadow'], props.theme['$btn-focus-box-shadow'], props.theme['$btn-active-box-shadow'], props.theme['$cursor-disabled'], props.theme['$link-color'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$btn-link-disabled-color'], props.theme['$btn-padding-x-lg'], props.theme['$btn-padding-y-lg'], props.theme['$font-size-lg'], props.theme['$btn-border-radius-lg'], props.theme['$btn-padding-x-sm'], props.theme['$btn-padding-y-sm'], props.theme['$font-size-sm'], props.theme['$btn-border-radius-sm'], props.theme['$btn-block-spacing-y'], props.theme['$btn-primary-color'], props.theme['$btn-primary-bg'], props.theme['$btn-primary-border'], props.theme['$btn-secondary-color'], props.theme['$btn-secondary-bg'], props.theme['$btn-secondary-border'], props.theme['$btn-info-color'], props.theme['$btn-info-bg'], props.theme['$btn-info-border'], props.theme['$btn-success-color'], props.theme['$btn-success-bg'], props.theme['$btn-success-border'], props.theme['$btn-warning-color'], props.theme['$btn-warning-bg'], props.theme['$btn-warning-border'], props.theme['$btn-danger-color'], props.theme['$btn-danger-bg'], props.theme['$btn-danger-border']) + '\n ';
-});
-Label.propTypes = propTypes;
-Label.defaultProps = defaultProps;
-exports.default = Label;
+  if (Object.setPrototypeOf) {
+    Object.setPrototypeOf(ExtendableBuiltin, cls);
+  } else {
+    ExtendableBuiltin.__proto__ = cls;
+  }
+  return ExtendableBuiltin;
+}
+var ExtendableError = function (_extendableBuiltin2) {
+  _inherits(ExtendableError, _extendableBuiltin2);
+  function ExtendableError() {
+    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    _classCallCheck(this, ExtendableError);
+    var _this = _possibleConstructorReturn(this, (ExtendableError.__proto__ || Object.getPrototypeOf(ExtendableError)).call(this, message));
+    Object.defineProperty(_this, 'message', {
+      configurable: true,
+      enumerable: false,
+      value: message,
+      writable: true
+    });
+    Object.defineProperty(_this, 'name', {
+      configurable: true,
+      enumerable: false,
+      value: _this.constructor.name,
+      writable: true
+    });
+    if (Error.hasOwnProperty('captureStackTrace')) {
+      Error.captureStackTrace(_this, _this.constructor);
+      return _possibleConstructorReturn(_this);
+    }
+    Object.defineProperty(_this, 'stack', {
+      configurable: true,
+      enumerable: false,
+      value: new Error(message).stack,
+      writable: true
+    });
+    return _this;
+  }
+  return ExtendableError;
+}(_extendableBuiltin(Error));
+exports.default = ExtendableError;
 module.exports = exports['default'];
 });
-unwrapExports(Label_1);
 
-var Input_1 = createCommonjsModule(function (module, exports) {
+var SubmissionError_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
+var _es6Error2 = _interopRequireDefault(lib);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  theme: _theme2.default,
-  type: 'text',
-  tag: 'p'
-};
-var InputUnstyled = function (_React$Component) {
-  _inherits(InputUnstyled, _React$Component);
-  function InputUnstyled() {
-    _classCallCheck(this, InputUnstyled);
-    return _possibleConstructorReturn(this, (InputUnstyled.__proto__ || Object.getPrototypeOf(InputUnstyled)).apply(this, arguments));
+var SubmissionError = function (_ExtendableError) {
+  _inherits(SubmissionError, _ExtendableError);
+  function SubmissionError(errors) {
+    _classCallCheck(this, SubmissionError);
+    var _this = _possibleConstructorReturn(this, (SubmissionError.__proto__ || Object.getPrototypeOf(SubmissionError)).call(this, 'Submit Validation Failed'));
+    _this.errors = errors;
+    return _this;
   }
-  _createClass(InputUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          cssModule = _omit.cssModule,
-          type = _omit.type,
-          size = _omit.size,
-          state = _omit.state,
-          tag = _omit.tag,
-          addon = _omit.addon,
-          staticInput = _omit.static,
-          getRef = _omit.getRef,
-          attributes = _objectWithoutProperties(_omit, ['className', 'cssModule', 'type', 'size', 'state', 'tag', 'addon', 'static', 'getRef']);
-      var checkInput = ['radio', 'checkbox'].indexOf(type) > -1;
-      var fileInput = type === 'file';
-      var textareaInput = type === 'textarea';
-      var selectInput = type === 'select';
-      var Tag = selectInput || textareaInput ? type : 'input';
-      var formControlClass = 'form-control';
-      if (staticInput) {
-        formControlClass = formControlClass + '-static';
-        Tag = tag;
-      } else if (fileInput) {
-        formControlClass = formControlClass + '-file';
-      } else if (checkInput) {
-        if (addon) {
-          formControlClass = null;
-        } else {
-          formControlClass = 'form-check-input';
-        }
-      }
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, state ? 'form-control-' + state : false, size ? 'form-control-' + size : false, formControlClass), cssModule);
-      if (Tag === 'input') {
-        attributes.type = type;
-      }
-      return _react2.default.createElement(Tag, _extends({}, attributes, { ref: getRef, className: classes }));
-    }
-  }]);
-  return InputUnstyled;
-}(_react2.default.Component);
-InputUnstyled.propTypes = {
-  children: _propTypes2.default.node,
-  type: _propTypes2.default.string,
-  size: _propTypes2.default.string,
-  state: _propTypes2.default.string,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  getRef: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  static: _propTypes2.default.bool,
-  addon: _propTypes2.default.bool,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  theme: _propTypes2.default.object,
-  onChange: _propTypes2.default.func,
-  indeterminate: _propTypes2.default.bool
-};
-var Input = (0, _styledComponents2.default)(InputUnstyled).withConfig({
-  displayName: 'Input'
-})(['', ''], function (props) {
-  return '\n    /* Reboot Scss */\n    touch-action: manipulation;\n    \n    &[type="radio"],\n    &[type="checkbox"] {\n      box-sizing: border-box; /* 1. Add the correct box sizing in IE 10- */\n      padding: 0; /* 2. Remove the padding in IE 10- */\n      /*\n       Apply a disabled cursor for radios and checkboxes.\n       Note: Neither radios nor checkboxes can be readonly.\n      */\n   \n      &:disabled {\n        cursor: ' + props.theme['$cursor-disabled'] + ';\n      }\n    }\n    \n    /* Normalize includes font: inherit;, so font-family. font-size, etc are */\n    /* properly inherited. However, line-height is not inherited there. */\n    line-height: inherit;\n   \n    &.disabled {\n      cursor: ' + props.theme['$cursor-disabled'] + ';\n    }\n   \n    &[type="date"],\n    &[type="time"],\n    &[type="datetime-local"],\n    &[type="month"] {\n    /* Remove the default appearance of temporal inputs to avoid a Mobile Safari\n       bug where setting a custom line-height prevents text from being vertically\n       centered within the input.\n       Bug report: https://github.com/twbs/bootstrap/issues/11266\n     */\n      -webkit-appearance: listbox;\n    }\n      \n    /* Correct the cursor style of increment and decrement buttons in Chrome. */\n    &[type="number"]::-webkit-inner-spin-button,\n    &[type="number"]::-webkit-outer-spin-button {\n      height: auto;\n    }\n    \n    &[type="search"] {\n      /* This overrides the extra rounded corners on search inputs in iOS so that our\n      .form-control class can properly style them. Note that this cannot simply\n       be added to .form-control as it is not specific enough. For details, see\n       https://github.com/twbs/bootstrap/issues/11586.\n       */\n      outline-offset: -2px; /* 2. Correct the outline style in Safari. */\n      -webkit-appearance: none;\n    }\n    \n    /* Remove the inner padding and cancel buttons in Chrome and Safari on macOS. */\n    &[type="search"]::-webkit-search-cancel-button,\n    &[type="search"]::-webkit-search-decoration {\n      -webkit-appearance: none;\n    }\n    \n    ' + (0, buttons.button)(props.theme['$enable-shadows'], props.theme['$enable-hover-media-query'], props.theme['$enable-transitions'], props.theme['$enable-rounded'], props.theme['$font-weight-normal'], props.theme['$btn-font-weight'], props.theme['$btn-line-height'], props.theme['$btn-transition'], props.theme['$input-btn-border-width'], props.theme['$btn-padding-x'], props.theme['$btn-padding-y'], props.theme['$font-size-base'], props.theme['$btn-border-radius'], props.theme['$btn-box-shadow'], props.theme['$btn-focus-box-shadow'], props.theme['$btn-active-box-shadow'], props.theme['$cursor-disabled'], props.theme['$link-color'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$btn-link-disabled-color'], props.theme['$btn-padding-x-lg'], props.theme['$btn-padding-y-lg'], props.theme['$font-size-lg'], props.theme['$btn-border-radius-lg'], props.theme['$btn-padding-x-sm'], props.theme['$btn-padding-y-sm'], props.theme['$font-size-sm'], props.theme['$btn-border-radius-sm'], props.theme['$btn-block-spacing-y'], props.theme['$btn-primary-color'], props.theme['$btn-primary-bg'], props.theme['$btn-primary-border'], props.theme['$btn-secondary-color'], props.theme['$btn-secondary-bg'], props.theme['$btn-secondary-border'], props.theme['$btn-info-color'], props.theme['$btn-info-bg'], props.theme['$btn-info-border'], props.theme['$btn-success-color'], props.theme['$btn-success-bg'], props.theme['$btn-success-border'], props.theme['$btn-warning-color'], props.theme['$btn-warning-bg'], props.theme['$btn-warning-border'], props.theme['$btn-danger-color'], props.theme['$btn-danger-bg'], props.theme['$btn-danger-border']) + '\n ';
+  return SubmissionError;
+}(_es6Error2.default);
+exports.default = SubmissionError;
 });
-Input.defaultProps = defaultProps;
-exports.default = Input;
-module.exports = exports['default'];
-});
-unwrapExports(Input_1);
 
-var FormCustom_1 = createCommonjsModule(function (module, exports) {
+var propTypes$1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _Label2 = _interopRequireDefault(Label_1);
-var _Input2 = _interopRequireDefault(Input_1);
+exports.fieldPropTypes = exports.fieldMetaPropTypes = exports.fieldInputPropTypes = exports.formPropTypes = undefined;
+var _propTypes2 = _interopRequireDefault(PropTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var FormCustom = function (_React$Component) {
-  _inherits(FormCustom, _React$Component);
-  function FormCustom() {
-    _classCallCheck(this, FormCustom);
-    return _possibleConstructorReturn(this, (FormCustom.__proto__ || Object.getPrototypeOf(FormCustom)).apply(this, arguments));
-  }
-  _createClass(FormCustom, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          radio = _props.radio,
-          children = _props.children,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'radio', 'children']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'custom-control', radio ? 'custom-radio' : 'custom-checkbox'), cssModule);
-      var CustomInput = radio ? _react2.default.createElement(_Input2.default, { type: 'radio', id: radio.id, name: radio.name, className: 'custom-control-input' }) : _react2.default.createElement(_Input2.default, { type: 'checkbox', className: 'custom-control-input' });
-      return _react2.default.createElement(
-        _Label2.default,
-        _extends({ className: classes }, attributes),
-        CustomInput,
-        _react2.default.createElement('span', { className: 'custom-control-indicator' }),
-        _react2.default.createElement(
-          'span',
-          { className: 'custom-control-description' },
-          children
-        )
-      );
-    }
-  }]);
-  return FormCustom;
-}(_react2.default.Component);
-FormCustom.propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  radio: _propTypes2.default.shape({
-    id: _propTypes2.default.string,
-    name: _propTypes2.default.string
-  })
+var any = _propTypes2.default.any,
+    bool = _propTypes2.default.bool,
+    func = _propTypes2.default.func,
+    shape = _propTypes2.default.shape,
+    string = _propTypes2.default.string,
+    oneOfType = _propTypes2.default.oneOfType,
+    object = _propTypes2.default.object;
+var formPropTypes = exports.formPropTypes = {
+  anyTouched: bool.isRequired,
+  asyncValidating: oneOfType([bool, string]).isRequired,
+  dirty: bool.isRequired,
+  error: any,
+  form: string.isRequired,
+  invalid: bool.isRequired,
+  initialized: bool.isRequired,
+  initialValues: object,
+  pristine: bool.isRequired,
+  pure: bool.isRequired,
+  submitting: bool.isRequired,
+  submitFailed: bool.isRequired,
+  submitSucceeded: bool.isRequired,
+  valid: bool.isRequired,
+  warning: any,
+  array: shape({
+    insert: func.isRequired,
+    move: func.isRequired,
+    pop: func.isRequired,
+    push: func.isRequired,
+    remove: func.isRequired,
+    removeAll: func.isRequired,
+    shift: func.isRequired,
+    splice: func.isRequired,
+    swap: func.isRequired,
+    unshift: func.isRequired
+  }),
+  asyncValidate: func.isRequired,
+  autofill: func.isRequired,
+  blur: func.isRequired,
+  change: func.isRequired,
+  clearAsyncError: func.isRequired,
+  destroy: func.isRequired,
+  dispatch: func.isRequired,
+  handleSubmit: func.isRequired,
+  initialize: func.isRequired,
+  reset: func.isRequired,
+  touch: func.isRequired,
+  submit: func.isRequired,
+  untouch: func.isRequired,
+  triggerSubmit: bool,
+  clearSubmit: func.isRequired
 };
-exports.default = FormCustom;
-module.exports = exports['default'];
+var fieldInputPropTypes = exports.fieldInputPropTypes = {
+  checked: bool,
+  name: string.isRequired,
+  onBlur: func.isRequired,
+  onChange: func.isRequired,
+  onDragStart: func.isRequired,
+  onDrop: func.isRequired,
+  onFocus: func.isRequired,
+  value: any
+};
+var fieldMetaPropTypes = exports.fieldMetaPropTypes = {
+  active: bool.isRequired,
+  asyncValidating: bool.isRequired,
+  autofilled: bool.isRequired,
+  dirty: bool.isRequired,
+  dispatch: func.isRequired,
+  error: string,
+  form: string.isRequired,
+  invalid: bool.isRequired,
+  pristine: bool.isRequired,
+  submitting: bool.isRequired,
+  submitFailed: bool.isRequired,
+  touched: bool.isRequired,
+  valid: bool.isRequired,
+  visited: bool.isRequired,
+  warning: string
+};
+var fieldPropTypes = exports.fieldPropTypes = {
+  input: shape(fieldInputPropTypes).isRequired,
+  meta: shape(fieldMetaPropTypes).isRequired
+};
+exports.default = formPropTypes;
 });
-unwrapExports(FormCustom_1);
-
-var Form = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(Form_1).default;
-  }
-});
-Object.defineProperty(exports, 'FormGroup', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FormGroup_1).default;
-  }
-});
-Object.defineProperty(exports, 'FormText', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FormText_1).default;
-  }
-});
-Object.defineProperty(exports, 'FormFeedback', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FormFeedback_1).default;
-  }
-});
-Object.defineProperty(exports, 'FormCustom', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FormCustom_1).default;
-  }
-});
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-});
-var Form$1 = unwrapExports(Form);
 
 'use strict';
 var NODE_ENV = "development";
@@ -5388,7 +594,6 @@ var createFieldProps = function createFieldProps(_ref2, name, _ref) {
 };
 exports.default = createFieldProps;
 });
-unwrapExports(createFieldProps_1);
 
 var isEvent_1 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -5400,7 +605,6 @@ var isEvent = function isEvent(candidate) {
 };
 exports.default = isEvent;
 });
-unwrapExports(isEvent_1);
 
 var getValue_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -5451,7 +655,6 @@ var getValue = function getValue(event, isReactNative) {
 };
 exports.default = getValue;
 });
-unwrapExports(getValue_1);
 
 var isReactNative_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -5461,7 +664,6 @@ Object.defineProperty(exports, "__esModule", {
 var isReactNative = typeof window !== 'undefined' && window.navigator && window.navigator.product && window.navigator.product === 'ReactNative';
 exports.default = isReactNative;
 });
-unwrapExports(isReactNative_1);
 
 var onChangeValue_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -5486,7 +688,6 @@ var onChangeValue = function onChangeValue(event, _ref) {
 };
 exports.default = onChangeValue;
 });
-unwrapExports(onChangeValue_1);
 
 var eventConsts = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -5495,7 +696,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 var dataKey = exports.dataKey = 'text';
 });
-unwrapExports(eventConsts);
 
 var splice_1 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -5530,9 +730,8 @@ var splice = function splice(array, index, removeNum, value) {
 };
 exports.default = splice;
 });
-unwrapExports(splice_1);
 
-function arrayMap$1(array, iteratee) {
+function arrayMap(array, iteratee) {
   var index = -1,
       length = array == null ? 0 : array.length,
       result = Array(length);
@@ -5541,7 +740,7 @@ function arrayMap$1(array, iteratee) {
   }
   return result;
 }
-var _arrayMap = arrayMap$1;
+var _arrayMap = arrayMap;
 
 function copyArray(source, array) {
   var index = -1,
@@ -5554,25 +753,25 @@ function copyArray(source, array) {
 }
 var _copyArray = copyArray;
 
-var isArray$1 = Array.isArray;
-var isArray_1 = isArray$1;
+var isArray = Array.isArray;
+var isArray_1 = isArray;
 
-var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-var _freeGlobal = freeGlobal$1;
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var _freeGlobal = freeGlobal;
 
-var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
-var root$1 = _freeGlobal || freeSelf$1 || Function('return this')();
-var _root = root$1;
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+var root = _freeGlobal || freeSelf || Function('return this')();
+var _root = root;
 
-var Symbol$2 = _root.Symbol;
-var _Symbol = Symbol$2;
+var Symbol$1 = _root.Symbol;
+var _Symbol = Symbol$1;
 
-var objectProto$1 = Object.prototype;
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
-var nativeObjectToString = objectProto$1.toString;
+var objectProto = Object.prototype;
+var hasOwnProperty = objectProto.hasOwnProperty;
+var nativeObjectToString = objectProto.toString;
 var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 function getRawTag(value) {
-  var isOwn = hasOwnProperty$1.call(value, symToStringTag$1),
+  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
       tag = value[symToStringTag$1];
   try {
     value[symToStringTag$1] = undefined;
@@ -5590,12 +789,12 @@ function getRawTag(value) {
 }
 var _getRawTag = getRawTag;
 
-var objectProto$2 = Object.prototype;
-var nativeObjectToString$1 = objectProto$2.toString;
-function objectToString$1(value) {
+var objectProto$1 = Object.prototype;
+var nativeObjectToString$1 = objectProto$1.toString;
+function objectToString(value) {
   return nativeObjectToString$1.call(value);
 }
-var _objectToString = objectToString$1;
+var _objectToString = objectToString;
 
 var nullTag = '[object Null]';
 var undefinedTag = '[object Undefined]';
@@ -5610,55 +809,55 @@ function baseGetTag(value) {
 }
 var _baseGetTag = baseGetTag;
 
-function isObjectLike$1(value) {
+function isObjectLike(value) {
   return value != null && typeof value == 'object';
 }
-var isObjectLike_1 = isObjectLike$1;
+var isObjectLike_1 = isObjectLike;
 
-var symbolTag$1 = '[object Symbol]';
-function isSymbol$1(value) {
+var symbolTag = '[object Symbol]';
+function isSymbol(value) {
   return typeof value == 'symbol' ||
-    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag$1);
+    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
 }
-var isSymbol_1 = isSymbol$1;
+var isSymbol_1 = isSymbol;
 
-function isObject$1(value) {
+function isObject(value) {
   var type = typeof value;
   return value != null && (type == 'object' || type == 'function');
 }
-var isObject_1 = isObject$1;
+var isObject_1 = isObject;
 
 var asyncTag = '[object AsyncFunction]';
-var funcTag$1 = '[object Function]';
-var genTag$1 = '[object GeneratorFunction]';
+var funcTag = '[object Function]';
+var genTag = '[object GeneratorFunction]';
 var proxyTag = '[object Proxy]';
-function isFunction$1(value) {
+function isFunction(value) {
   if (!isObject_1(value)) {
     return false;
   }
   var tag = _baseGetTag(value);
-  return tag == funcTag$1 || tag == genTag$1 || tag == asyncTag || tag == proxyTag;
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
 }
-var isFunction_1 = isFunction$1;
+var isFunction_1 = isFunction;
 
-var coreJsData$1 = _root['__core-js_shared__'];
-var _coreJsData = coreJsData$1;
+var coreJsData = _root['__core-js_shared__'];
+var _coreJsData = coreJsData;
 
-var maskSrcKey$1 = (function() {
+var maskSrcKey = (function() {
   var uid = /[^.]+$/.exec(_coreJsData && _coreJsData.keys && _coreJsData.keys.IE_PROTO || '');
   return uid ? ('Symbol(src)_1.' + uid) : '';
 }());
-function isMasked$1(func) {
-  return !!maskSrcKey$1 && (maskSrcKey$1 in func);
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
 }
-var _isMasked = isMasked$1;
+var _isMasked = isMasked;
 
-var funcProto$2 = Function.prototype;
-var funcToString$2 = funcProto$2.toString;
-function toSource$1(func) {
+var funcProto$1 = Function.prototype;
+var funcToString$1 = funcProto$1.toString;
+function toSource(func) {
   if (func != null) {
     try {
-      return funcToString$2.call(func);
+      return funcToString$1.call(func);
     } catch (e) {}
     try {
       return (func + '');
@@ -5666,85 +865,85 @@ function toSource$1(func) {
   }
   return '';
 }
-var _toSource = toSource$1;
+var _toSource = toSource;
 
-var reRegExpChar$1 = /[\\^$.*+?()[\]{}|]/g;
-var reIsHostCtor$1 = /^\[object .+?Constructor\]$/;
-var funcProto$1 = Function.prototype;
-var objectProto$3 = Object.prototype;
-var funcToString$1 = funcProto$1.toString;
-var hasOwnProperty$2 = objectProto$3.hasOwnProperty;
-var reIsNative$1 = RegExp('^' +
-  funcToString$1.call(hasOwnProperty$2).replace(reRegExpChar$1, '\\$&')
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+var funcProto = Function.prototype;
+var objectProto$2 = Object.prototype;
+var funcToString = funcProto.toString;
+var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&')
   .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 );
-function baseIsNative$1(value) {
+function baseIsNative(value) {
   if (!isObject_1(value) || _isMasked(value)) {
     return false;
   }
-  var pattern = isFunction_1(value) ? reIsNative$1 : reIsHostCtor$1;
+  var pattern = isFunction_1(value) ? reIsNative : reIsHostCtor;
   return pattern.test(_toSource(value));
 }
-var _baseIsNative = baseIsNative$1;
+var _baseIsNative = baseIsNative;
 
-function getValue$2(object, key) {
+function getValue$1(object, key) {
   return object == null ? undefined : object[key];
 }
-var _getValue$1 = getValue$2;
+var _getValue$1 = getValue$1;
 
-function getNative$1(object, key) {
+function getNative(object, key) {
   var value = _getValue$1(object, key);
   return _baseIsNative(value) ? value : undefined;
 }
-var _getNative = getNative$1;
+var _getNative = getNative;
 
-var nativeCreate$1 = _getNative(Object, 'create');
-var _nativeCreate = nativeCreate$1;
+var nativeCreate = _getNative(Object, 'create');
+var _nativeCreate = nativeCreate;
 
-function hashClear$1() {
+function hashClear() {
   this.__data__ = _nativeCreate ? _nativeCreate(null) : {};
   this.size = 0;
 }
-var _hashClear = hashClear$1;
+var _hashClear = hashClear;
 
-function hashDelete$1(key) {
+function hashDelete(key) {
   var result = this.has(key) && delete this.__data__[key];
   this.size -= result ? 1 : 0;
   return result;
 }
-var _hashDelete = hashDelete$1;
+var _hashDelete = hashDelete;
 
-var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
-var objectProto$4 = Object.prototype;
-var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
-function hashGet$1(key) {
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+var objectProto$3 = Object.prototype;
+var hasOwnProperty$2 = objectProto$3.hasOwnProperty;
+function hashGet(key) {
   var data = this.__data__;
   if (_nativeCreate) {
     var result = data[key];
-    return result === HASH_UNDEFINED$1 ? undefined : result;
+    return result === HASH_UNDEFINED ? undefined : result;
   }
-  return hasOwnProperty$3.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
 }
-var _hashGet = hashGet$1;
+var _hashGet = hashGet;
 
-var objectProto$5 = Object.prototype;
-var hasOwnProperty$4 = objectProto$5.hasOwnProperty;
-function hashHas$1(key) {
+var objectProto$4 = Object.prototype;
+var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
+function hashHas(key) {
   var data = this.__data__;
-  return _nativeCreate ? (data[key] !== undefined) : hasOwnProperty$4.call(data, key);
+  return _nativeCreate ? (data[key] !== undefined) : hasOwnProperty$3.call(data, key);
 }
-var _hashHas = hashHas$1;
+var _hashHas = hashHas;
 
-var HASH_UNDEFINED$2 = '__lodash_hash_undefined__';
-function hashSet$1(key, value) {
+var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
+function hashSet(key, value) {
   var data = this.__data__;
   this.size += this.has(key) ? 0 : 1;
-  data[key] = (_nativeCreate && value === undefined) ? HASH_UNDEFINED$2 : value;
+  data[key] = (_nativeCreate && value === undefined) ? HASH_UNDEFINED$1 : value;
   return this;
 }
-var _hashSet = hashSet$1;
+var _hashSet = hashSet;
 
-function Hash$1(entries) {
+function Hash(entries) {
   var index = -1,
       length = entries == null ? 0 : entries.length;
   this.clear();
@@ -5753,25 +952,25 @@ function Hash$1(entries) {
     this.set(entry[0], entry[1]);
   }
 }
-Hash$1.prototype.clear = _hashClear;
-Hash$1.prototype['delete'] = _hashDelete;
-Hash$1.prototype.get = _hashGet;
-Hash$1.prototype.has = _hashHas;
-Hash$1.prototype.set = _hashSet;
-var _Hash = Hash$1;
+Hash.prototype.clear = _hashClear;
+Hash.prototype['delete'] = _hashDelete;
+Hash.prototype.get = _hashGet;
+Hash.prototype.has = _hashHas;
+Hash.prototype.set = _hashSet;
+var _Hash = Hash;
 
-function listCacheClear$1() {
+function listCacheClear() {
   this.__data__ = [];
   this.size = 0;
 }
-var _listCacheClear = listCacheClear$1;
+var _listCacheClear = listCacheClear;
 
-function eq$1(value, other) {
+function eq(value, other) {
   return value === other || (value !== value && other !== other);
 }
-var eq_1 = eq$1;
+var eq_1 = eq;
 
-function assocIndexOf$1(array, key) {
+function assocIndexOf(array, key) {
   var length = array.length;
   while (length--) {
     if (eq_1(array[length][0], key)) {
@@ -5780,11 +979,11 @@ function assocIndexOf$1(array, key) {
   }
   return -1;
 }
-var _assocIndexOf = assocIndexOf$1;
+var _assocIndexOf = assocIndexOf;
 
-var arrayProto$1 = Array.prototype;
-var splice$2 = arrayProto$1.splice;
-function listCacheDelete$1(key) {
+var arrayProto = Array.prototype;
+var splice$1 = arrayProto.splice;
+function listCacheDelete(key) {
   var data = this.__data__,
       index = _assocIndexOf(data, key);
   if (index < 0) {
@@ -5794,26 +993,26 @@ function listCacheDelete$1(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$2.call(data, index, 1);
+    splice$1.call(data, index, 1);
   }
   --this.size;
   return true;
 }
-var _listCacheDelete = listCacheDelete$1;
+var _listCacheDelete = listCacheDelete;
 
-function listCacheGet$1(key) {
+function listCacheGet(key) {
   var data = this.__data__,
       index = _assocIndexOf(data, key);
   return index < 0 ? undefined : data[index][1];
 }
-var _listCacheGet = listCacheGet$1;
+var _listCacheGet = listCacheGet;
 
-function listCacheHas$1(key) {
+function listCacheHas(key) {
   return _assocIndexOf(this.__data__, key) > -1;
 }
-var _listCacheHas = listCacheHas$1;
+var _listCacheHas = listCacheHas;
 
-function listCacheSet$1(key, value) {
+function listCacheSet(key, value) {
   var data = this.__data__,
       index = _assocIndexOf(data, key);
   if (index < 0) {
@@ -5824,9 +1023,9 @@ function listCacheSet$1(key, value) {
   }
   return this;
 }
-var _listCacheSet = listCacheSet$1;
+var _listCacheSet = listCacheSet;
 
-function ListCache$1(entries) {
+function ListCache(entries) {
   var index = -1,
       length = entries == null ? 0 : entries.length;
   this.clear();
@@ -5835,17 +1034,17 @@ function ListCache$1(entries) {
     this.set(entry[0], entry[1]);
   }
 }
-ListCache$1.prototype.clear = _listCacheClear;
-ListCache$1.prototype['delete'] = _listCacheDelete;
-ListCache$1.prototype.get = _listCacheGet;
-ListCache$1.prototype.has = _listCacheHas;
-ListCache$1.prototype.set = _listCacheSet;
-var _ListCache = ListCache$1;
+ListCache.prototype.clear = _listCacheClear;
+ListCache.prototype['delete'] = _listCacheDelete;
+ListCache.prototype.get = _listCacheGet;
+ListCache.prototype.has = _listCacheHas;
+ListCache.prototype.set = _listCacheSet;
+var _ListCache = ListCache;
 
-var Map$1 = _getNative(_root, 'Map');
-var _Map = Map$1;
+var Map = _getNative(_root, 'Map');
+var _Map = Map;
 
-function mapCacheClear$1() {
+function mapCacheClear() {
   this.size = 0;
   this.__data__ = {
     'hash': new _Hash,
@@ -5853,51 +1052,51 @@ function mapCacheClear$1() {
     'string': new _Hash
   };
 }
-var _mapCacheClear = mapCacheClear$1;
+var _mapCacheClear = mapCacheClear;
 
-function isKeyable$1(value) {
+function isKeyable(value) {
   var type = typeof value;
   return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
     ? (value !== '__proto__')
     : (value === null);
 }
-var _isKeyable = isKeyable$1;
+var _isKeyable = isKeyable;
 
-function getMapData$1(map, key) {
+function getMapData(map, key) {
   var data = map.__data__;
   return _isKeyable(key)
     ? data[typeof key == 'string' ? 'string' : 'hash']
     : data.map;
 }
-var _getMapData = getMapData$1;
+var _getMapData = getMapData;
 
-function mapCacheDelete$1(key) {
+function mapCacheDelete(key) {
   var result = _getMapData(this, key)['delete'](key);
   this.size -= result ? 1 : 0;
   return result;
 }
-var _mapCacheDelete = mapCacheDelete$1;
+var _mapCacheDelete = mapCacheDelete;
 
-function mapCacheGet$1(key) {
+function mapCacheGet(key) {
   return _getMapData(this, key).get(key);
 }
-var _mapCacheGet = mapCacheGet$1;
+var _mapCacheGet = mapCacheGet;
 
-function mapCacheHas$1(key) {
+function mapCacheHas(key) {
   return _getMapData(this, key).has(key);
 }
-var _mapCacheHas = mapCacheHas$1;
+var _mapCacheHas = mapCacheHas;
 
-function mapCacheSet$1(key, value) {
+function mapCacheSet(key, value) {
   var data = _getMapData(this, key),
       size = data.size;
   data.set(key, value);
   this.size += data.size == size ? 0 : 1;
   return this;
 }
-var _mapCacheSet = mapCacheSet$1;
+var _mapCacheSet = mapCacheSet;
 
-function MapCache$1(entries) {
+function MapCache(entries) {
   var index = -1,
       length = entries == null ? 0 : entries.length;
   this.clear();
@@ -5906,12 +1105,12 @@ function MapCache$1(entries) {
     this.set(entry[0], entry[1]);
   }
 }
-MapCache$1.prototype.clear = _mapCacheClear;
-MapCache$1.prototype['delete'] = _mapCacheDelete;
-MapCache$1.prototype.get = _mapCacheGet;
-MapCache$1.prototype.has = _mapCacheHas;
-MapCache$1.prototype.set = _mapCacheSet;
-var _MapCache = MapCache$1;
+MapCache.prototype.clear = _mapCacheClear;
+MapCache.prototype['delete'] = _mapCacheDelete;
+MapCache.prototype.get = _mapCacheGet;
+MapCache.prototype.has = _mapCacheHas;
+MapCache.prototype.set = _mapCacheSet;
+var _MapCache = MapCache;
 
 var FUNC_ERROR_TEXT = 'Expected a function';
 function memoize(func, resolver) {
@@ -5963,17 +1162,17 @@ var stringToPath = _memoizeCapped(function(string) {
 });
 var _stringToPath = stringToPath;
 
-var INFINITY$1 = 1 / 0;
-function toKey$1(value) {
+var INFINITY = 1 / 0;
+function toKey(value) {
   if (typeof value == 'string' || isSymbol_1(value)) {
     return value;
   }
   var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY$1) ? '-0' : result;
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
 }
-var _toKey = toKey$1;
+var _toKey = toKey;
 
-var INFINITY$2 = 1 / 0;
+var INFINITY$1 = 1 / 0;
 var symbolProto = _Symbol ? _Symbol.prototype : undefined;
 var symbolToString = symbolProto ? symbolProto.toString : undefined;
 function baseToString(value) {
@@ -5987,7 +1186,7 @@ function baseToString(value) {
     return symbolToString ? symbolToString.call(value) : '';
   }
   var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY$2) ? '-0' : result;
+  return (result == '0' && (1 / value) == -INFINITY$1) ? '-0' : result;
 }
 var _baseToString = baseToString;
 
@@ -6028,7 +1227,6 @@ var getIn = function getIn(state, field) {
 };
 exports.default = getIn;
 });
-unwrapExports(getIn_1);
 
 var setIn_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6066,7 +1264,6 @@ var setIn = function setIn(state, field, value) {
 };
 exports.default = setIn;
 });
-unwrapExports(setIn_1);
 
 function stackClear() {
   this.__data__ = new _ListCache;
@@ -6092,12 +1289,12 @@ function stackHas(key) {
 }
 var _stackHas = stackHas;
 
-var LARGE_ARRAY_SIZE$1 = 200;
+var LARGE_ARRAY_SIZE = 200;
 function stackSet(key, value) {
   var data = this.__data__;
   if (data instanceof _ListCache) {
     var pairs = data.__data__;
-    if (!_Map || (pairs.length < LARGE_ARRAY_SIZE$1 - 1)) {
+    if (!_Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
       pairs.push([key, value]);
       this.size = ++data.size;
       return this;
@@ -6121,19 +1318,19 @@ Stack.prototype.has = _stackHas;
 Stack.prototype.set = _stackSet;
 var _Stack = Stack;
 
-var HASH_UNDEFINED$3 = '__lodash_hash_undefined__';
-function setCacheAdd$1(value) {
-  this.__data__.set(value, HASH_UNDEFINED$3);
+var HASH_UNDEFINED$2 = '__lodash_hash_undefined__';
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED$2);
   return this;
 }
-var _setCacheAdd = setCacheAdd$1;
+var _setCacheAdd = setCacheAdd;
 
-function setCacheHas$1(value) {
+function setCacheHas(value) {
   return this.__data__.has(value);
 }
-var _setCacheHas = setCacheHas$1;
+var _setCacheHas = setCacheHas;
 
-function SetCache$1(values) {
+function SetCache(values) {
   var index = -1,
       length = values == null ? 0 : values.length;
   this.__data__ = new _MapCache;
@@ -6141,9 +1338,9 @@ function SetCache$1(values) {
     this.add(values[index]);
   }
 }
-SetCache$1.prototype.add = SetCache$1.prototype.push = _setCacheAdd;
-SetCache$1.prototype.has = _setCacheHas;
-var _SetCache = SetCache$1;
+SetCache.prototype.add = SetCache.prototype.push = _setCacheAdd;
+SetCache.prototype.has = _setCacheHas;
+var _SetCache = SetCache;
 
 function arraySome(array, predicate) {
   var index = -1,
@@ -6157,10 +1354,10 @@ function arraySome(array, predicate) {
 }
 var _arraySome = arraySome;
 
-function cacheHas$1(cache, key) {
+function cacheHas(cache, key) {
   return cache.has(key);
 }
-var _cacheHas = cacheHas$1;
+var _cacheHas = cacheHas;
 
 var COMPARE_PARTIAL_FLAG$1 = 1;
 var COMPARE_UNORDERED_FLAG = 2;
@@ -6252,7 +1449,7 @@ var numberTag = '[object Number]';
 var regexpTag = '[object RegExp]';
 var setTag = '[object Set]';
 var stringTag = '[object String]';
-var symbolTag$2 = '[object Symbol]';
+var symbolTag$1 = '[object Symbol]';
 var arrayBufferTag = '[object ArrayBuffer]';
 var dataViewTag = '[object DataView]';
 var symbolProto$1 = _Symbol ? _Symbol.prototype : undefined;
@@ -6298,7 +1495,7 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
       var result = _equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
       stack['delete'](object);
       return result;
-    case symbolTag$2:
+    case symbolTag$1:
       if (symbolValueOf) {
         return symbolValueOf.call(object) == symbolValueOf.call(other);
       }
@@ -6307,7 +1504,7 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
 }
 var _equalByTag = equalByTag;
 
-function arrayPush$1(array, values) {
+function arrayPush(array, values) {
   var index = -1,
       length = values.length,
       offset = array.length;
@@ -6316,13 +1513,13 @@ function arrayPush$1(array, values) {
   }
   return array;
 }
-var _arrayPush = arrayPush$1;
+var _arrayPush = arrayPush;
 
-function baseGetAllKeys$1(object, keysFunc, symbolsFunc) {
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
   var result = keysFunc(object);
   return isArray_1(object) ? result : _arrayPush(result, symbolsFunc(object));
 }
-var _baseGetAllKeys = baseGetAllKeys$1;
+var _baseGetAllKeys = baseGetAllKeys;
 
 function arrayFilter(array, predicate) {
   var index = -1,
@@ -6339,26 +1536,26 @@ function arrayFilter(array, predicate) {
 }
 var _arrayFilter = arrayFilter;
 
-function stubArray$1() {
+function stubArray() {
   return [];
 }
-var stubArray_1 = stubArray$1;
+var stubArray_1 = stubArray;
 
-var objectProto$8 = Object.prototype;
-var propertyIsEnumerable$1 = objectProto$8.propertyIsEnumerable;
-var nativeGetSymbols$1 = Object.getOwnPropertySymbols;
-var getSymbols$1 = !nativeGetSymbols$1 ? stubArray_1 : function(object) {
+var objectProto$7 = Object.prototype;
+var propertyIsEnumerable = objectProto$7.propertyIsEnumerable;
+var nativeGetSymbols = Object.getOwnPropertySymbols;
+var getSymbols = !nativeGetSymbols ? stubArray_1 : function(object) {
   if (object == null) {
     return [];
   }
   object = Object(object);
-  return _arrayFilter(nativeGetSymbols$1(object), function(symbol) {
-    return propertyIsEnumerable$1.call(object, symbol);
+  return _arrayFilter(nativeGetSymbols(object), function(symbol) {
+    return propertyIsEnumerable.call(object, symbol);
   });
 };
-var _getSymbols = getSymbols$1;
+var _getSymbols = getSymbols;
 
-function baseTimes$1(n, iteratee) {
+function baseTimes(n, iteratee) {
   var index = -1,
       result = Array(n);
   while (++index < n) {
@@ -6366,22 +1563,22 @@ function baseTimes$1(n, iteratee) {
   }
   return result;
 }
-var _baseTimes = baseTimes$1;
+var _baseTimes = baseTimes;
 
-var argsTag$2 = '[object Arguments]';
+var argsTag$1 = '[object Arguments]';
 function baseIsArguments(value) {
-  return isObjectLike_1(value) && _baseGetTag(value) == argsTag$2;
+  return isObjectLike_1(value) && _baseGetTag(value) == argsTag$1;
 }
 var _baseIsArguments = baseIsArguments;
 
-var objectProto$10 = Object.prototype;
-var hasOwnProperty$8 = objectProto$10.hasOwnProperty;
-var propertyIsEnumerable$2 = objectProto$10.propertyIsEnumerable;
-var isArguments$1 = _baseIsArguments(function() { return arguments; }()) ? _baseIsArguments : function(value) {
-  return isObjectLike_1(value) && hasOwnProperty$8.call(value, 'callee') &&
-    !propertyIsEnumerable$2.call(value, 'callee');
+var objectProto$9 = Object.prototype;
+var hasOwnProperty$7 = objectProto$9.hasOwnProperty;
+var propertyIsEnumerable$1 = objectProto$9.propertyIsEnumerable;
+var isArguments = _baseIsArguments(function() { return arguments; }()) ? _baseIsArguments : function(value) {
+  return isObjectLike_1(value) && hasOwnProperty$7.call(value, 'callee') &&
+    !propertyIsEnumerable$1.call(value, 'callee');
 };
-var isArguments_1 = isArguments$1;
+var isArguments_1 = isArguments;
 
 function stubFalse() {
   return false;
@@ -6398,29 +1595,29 @@ var isBuffer = nativeIsBuffer || stubFalse_1;
 module.exports = isBuffer;
 });
 
-var MAX_SAFE_INTEGER$1 = 9007199254740991;
-var reIsUint$1 = /^(?:0|[1-9]\d*)$/;
-function isIndex$1(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER$1 : length;
+var MAX_SAFE_INTEGER = 9007199254740991;
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
   return !!length &&
-    (typeof value == 'number' || reIsUint$1.test(value)) &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
     (value > -1 && value % 1 == 0 && value < length);
 }
-var _isIndex = isIndex$1;
+var _isIndex = isIndex;
 
-var MAX_SAFE_INTEGER$2 = 9007199254740991;
-function isLength$1(value) {
+var MAX_SAFE_INTEGER$1 = 9007199254740991;
+function isLength(value) {
   return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER$2;
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER$1;
 }
-var isLength_1 = isLength$1;
+var isLength_1 = isLength;
 
-var argsTag$3 = '[object Arguments]';
+var argsTag$2 = '[object Arguments]';
 var arrayTag$1 = '[object Array]';
 var boolTag$1 = '[object Boolean]';
 var dateTag$1 = '[object Date]';
 var errorTag$1 = '[object Error]';
-var funcTag$2 = '[object Function]';
+var funcTag$1 = '[object Function]';
 var mapTag$1 = '[object Map]';
 var numberTag$1 = '[object Number]';
 var objectTag$1 = '[object Object]';
@@ -6445,10 +1642,10 @@ typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
 typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
 typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
 typedArrayTags[uint32Tag] = true;
-typedArrayTags[argsTag$3] = typedArrayTags[arrayTag$1] =
+typedArrayTags[argsTag$2] = typedArrayTags[arrayTag$1] =
 typedArrayTags[arrayBufferTag$1] = typedArrayTags[boolTag$1] =
 typedArrayTags[dataViewTag$1] = typedArrayTags[dateTag$1] =
-typedArrayTags[errorTag$1] = typedArrayTags[funcTag$2] =
+typedArrayTags[errorTag$1] = typedArrayTags[funcTag$1] =
 typedArrayTags[mapTag$1] = typedArrayTags[numberTag$1] =
 typedArrayTags[objectTag$1] = typedArrayTags[regexpTag$1] =
 typedArrayTags[setTag$1] = typedArrayTags[stringTag$1] =
@@ -6459,12 +1656,12 @@ function baseIsTypedArray(value) {
 }
 var _baseIsTypedArray = baseIsTypedArray;
 
-function baseUnary$1(func) {
+function baseUnary(func) {
   return function(value) {
     return func(value);
   };
 }
-var _baseUnary = baseUnary$1;
+var _baseUnary = baseUnary;
 
 var _nodeUtil = createCommonjsModule(function (module, exports) {
 var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
@@ -6483,9 +1680,9 @@ var nodeIsTypedArray = _nodeUtil && _nodeUtil.isTypedArray;
 var isTypedArray = nodeIsTypedArray ? _baseUnary(nodeIsTypedArray) : _baseIsTypedArray;
 var isTypedArray_1 = isTypedArray;
 
-var objectProto$9 = Object.prototype;
-var hasOwnProperty$7 = objectProto$9.hasOwnProperty;
-function arrayLikeKeys$1(value, inherited) {
+var objectProto$8 = Object.prototype;
+var hasOwnProperty$6 = objectProto$8.hasOwnProperty;
+function arrayLikeKeys(value, inherited) {
   var isArr = isArray_1(value),
       isArg = !isArr && isArguments_1(value),
       isBuff = !isArr && !isArg && isBuffer_1(value),
@@ -6494,7 +1691,7 @@ function arrayLikeKeys$1(value, inherited) {
       result = skipIndexes ? _baseTimes(value.length, String) : [],
       length = result.length;
   for (var key in value) {
-    if ((inherited || hasOwnProperty$7.call(value, key)) &&
+    if ((inherited || hasOwnProperty$6.call(value, key)) &&
         !(skipIndexes && (
            key == 'length' ||
            (isBuff && (key == 'offset' || key == 'parent')) ||
@@ -6506,35 +1703,35 @@ function arrayLikeKeys$1(value, inherited) {
   }
   return result;
 }
-var _arrayLikeKeys = arrayLikeKeys$1;
+var _arrayLikeKeys = arrayLikeKeys;
 
-var objectProto$12 = Object.prototype;
-function isPrototype$1(value) {
+var objectProto$11 = Object.prototype;
+function isPrototype(value) {
   var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto$12;
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto$11;
   return value === proto;
 }
-var _isPrototype = isPrototype$1;
+var _isPrototype = isPrototype;
 
-function overArg$1(func, transform) {
+function overArg(func, transform) {
   return function(arg) {
     return func(transform(arg));
   };
 }
-var _overArg = overArg$1;
+var _overArg = overArg;
 
 var nativeKeys = _overArg(Object.keys, Object);
 var _nativeKeys = nativeKeys;
 
-var objectProto$11 = Object.prototype;
-var hasOwnProperty$9 = objectProto$11.hasOwnProperty;
+var objectProto$10 = Object.prototype;
+var hasOwnProperty$8 = objectProto$10.hasOwnProperty;
 function baseKeys(object) {
   if (!_isPrototype(object)) {
     return _nativeKeys(object);
   }
   var result = [];
   for (var key in Object(object)) {
-    if (hasOwnProperty$9.call(object, key) && key != 'constructor') {
+    if (hasOwnProperty$8.call(object, key) && key != 'constructor') {
       result.push(key);
     }
   }
@@ -6542,10 +1739,10 @@ function baseKeys(object) {
 }
 var _baseKeys = baseKeys;
 
-function isArrayLike$1(value) {
+function isArrayLike(value) {
   return value != null && isLength_1(value.length) && !isFunction_1(value);
 }
-var isArrayLike_1 = isArrayLike$1;
+var isArrayLike_1 = isArrayLike;
 
 function keys(object) {
   return isArrayLike_1(object) ? _arrayLikeKeys(object) : _baseKeys(object);
@@ -6558,8 +1755,8 @@ function getAllKeys(object) {
 var _getAllKeys = getAllKeys;
 
 var COMPARE_PARTIAL_FLAG$3 = 1;
-var objectProto$7 = Object.prototype;
-var hasOwnProperty$6 = objectProto$7.hasOwnProperty;
+var objectProto$6 = Object.prototype;
+var hasOwnProperty$5 = objectProto$6.hasOwnProperty;
 function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
   var isPartial = bitmask & COMPARE_PARTIAL_FLAG$3,
       objProps = _getAllKeys(object),
@@ -6572,7 +1769,7 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
   var index = objLength;
   while (index--) {
     var key = objProps[index];
-    if (!(isPartial ? key in other : hasOwnProperty$6.call(other, key))) {
+    if (!(isPartial ? key in other : hasOwnProperty$5.call(other, key))) {
       return false;
     }
   }
@@ -6666,18 +1863,18 @@ if ((_DataView && getTag(new _DataView(new ArrayBuffer(1))) != dataViewTag$2) ||
 var _getTag = getTag;
 
 var COMPARE_PARTIAL_FLAG = 1;
-var argsTag$1 = '[object Arguments]';
+var argsTag = '[object Arguments]';
 var arrayTag = '[object Array]';
 var objectTag = '[object Object]';
-var objectProto$6 = Object.prototype;
-var hasOwnProperty$5 = objectProto$6.hasOwnProperty;
+var objectProto$5 = Object.prototype;
+var hasOwnProperty$4 = objectProto$5.hasOwnProperty;
 function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
   var objIsArr = isArray_1(object),
       othIsArr = isArray_1(other),
       objTag = objIsArr ? arrayTag : _getTag(object),
       othTag = othIsArr ? arrayTag : _getTag(other);
-  objTag = objTag == argsTag$1 ? objectTag : objTag;
-  othTag = othTag == argsTag$1 ? objectTag : othTag;
+  objTag = objTag == argsTag ? objectTag : objTag;
+  othTag = othTag == argsTag ? objectTag : othTag;
   var objIsObj = objTag == objectTag,
       othIsObj = othTag == objectTag,
       isSameTag = objTag == othTag;
@@ -6695,8 +1892,8 @@ function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
       : _equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
   }
   if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
-    var objIsWrapped = objIsObj && hasOwnProperty$5.call(object, '__wrapped__'),
-        othIsWrapped = othIsObj && hasOwnProperty$5.call(other, '__wrapped__');
+    var objIsWrapped = objIsObj && hasOwnProperty$4.call(object, '__wrapped__'),
+        othIsWrapped = othIsObj && hasOwnProperty$4.call(other, '__wrapped__');
     if (objIsWrapped || othIsWrapped) {
       var objUnwrapped = objIsWrapped ? object.value() : object,
           othUnwrapped = othIsWrapped ? other.value() : other;
@@ -6750,7 +1947,6 @@ var deepEqual = function deepEqual(a, b) {
 };
 exports.default = deepEqual;
 });
-unwrapExports(deepEqual_1);
 
 var deleteIn_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6815,7 +2011,6 @@ var deleteIn = function deleteIn(state, field) {
 };
 exports.default = deleteIn;
 });
-unwrapExports(deleteIn_1);
 
 var keys_1$2 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -6835,7 +2030,6 @@ function keys(value) {
 }
 exports.default = keys;
 });
-unwrapExports(keys_1$2);
 
 var plain = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6877,7 +2071,6 @@ var structure = {
 };
 exports.default = structure;
 });
-unwrapExports(plain);
 
 var ConnectedField = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6887,8 +2080,8 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
 var _createFieldProps3 = _interopRequireDefault(createFieldProps_1);
 var _onChangeValue2 = _interopRequireDefault(onChangeValue_1);
 var _plain2 = _interopRequireDefault(plain);
@@ -7090,19 +2283,19 @@ var createConnectedField = function createConnectedField(structure) {
         }
         if (typeof component === 'string') {
           var input = props.input;
-          return (0, _react.createElement)(component, _extends({}, input, custom));
+          return (0, React.createElement)(component, _extends({}, input, custom));
         } else {
-          return (0, _react.createElement)(component, _extends({}, props, custom));
+          return (0, React.createElement)(component, _extends({}, props, custom));
         }
       }
     }]);
     return ConnectedField;
-  }(_react.Component);
+  }(React.Component);
   ConnectedField.propTypes = {
     component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
     props: _propTypes2.default.object
   };
-  var connector = (0, reactRedux.connect)(function (state, ownProps) {
+  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
     var name = ownProps.name,
         _ownProps$_reduxForm = ownProps._reduxForm,
         initialValues = _ownProps$_reduxForm.initialValues,
@@ -7135,7 +2328,6 @@ var createConnectedField = function createConnectedField(structure) {
 };
 exports.default = createConnectedField;
 });
-unwrapExports(ConnectedField);
 
 var shallowCompare_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -7154,20 +2346,6 @@ var shallowCompare = function shallowCompare(instance, nextProps, nextState) {
 };
 exports.default = shallowCompare;
 });
-unwrapExports(shallowCompare_1);
-
-var prefixName = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var formatName = function formatName(_ref, name) {
-  var sectionPrefix = _ref._reduxForm.sectionPrefix;
-  return sectionPrefix ? sectionPrefix + '.' + name : name;
-};
-exports.default = formatName;
-});
-unwrapExports(prefixName);
 
 var createField_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -7176,8 +2354,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
 var _invariant2 = _interopRequireDefault(invariant_1);
 var _ConnectedField2 = _interopRequireDefault(ConnectedField);
 var _shallowCompare2 = _interopRequireDefault(shallowCompare_1);
@@ -7255,7 +2433,7 @@ var createField = function createField(structure) {
     }, {
       key: 'render',
       value: function render() {
-        return (0, _react.createElement)(ConnectedField$$1, _extends({}, this.props, {
+        return (0, React.createElement)(ConnectedField$$1, _extends({}, this.props, {
           name: this.name,
           normalize: this.normalize,
           _reduxForm: this.context._reduxForm,
@@ -7284,7 +2462,7 @@ var createField = function createField(structure) {
       }
     }]);
     return Field;
-  }(_react.Component);
+  }(React.Component);
   Field.propTypes = {
     name: _propTypes2.default.string.isRequired,
     component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
@@ -7308,9 +2486,8 @@ var createField = function createField(structure) {
 };
 exports.default = createField;
 });
-unwrapExports(createField_1);
 
-var immutable$1 = createCommonjsModule(function (module, exports) {
+var immutable$5 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
   module.exports = factory();
 }(commonjsGlobal, function () { 'use strict';var SLICE$0 = Array.prototype.slice;
@@ -11291,7 +6468,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var customizer = function customizer(obj, other) {
   if (obj == other) return true;
   if ((obj == null || obj === '' || obj === false) && (other == null || other === '' || other === false)) return true;
-  if (immutable$1.Iterable.isIterable(obj) && immutable$1.Iterable.isIterable(other)) {
+  if (immutable$5.Iterable.isIterable(obj) && immutable$5.Iterable.isIterable(other)) {
     return obj.count() === other.count() && obj.every(function (value, key) {
       return other.has(key) && (0, _isEqualWith3.default)(value, other.get(key), customizer);
     });
@@ -11303,7 +6480,6 @@ var deepEqual = function deepEqual(a, b) {
 };
 exports.default = deepEqual;
 });
-unwrapExports(deepEqual_1$1);
 
 var keys_1$3 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -11312,21 +6488,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _keys2 = _interopRequireDefault(keys_1$2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var empty = (0, immutable$1.List)();
+var empty = (0, immutable$5.List)();
 var keys = function keys(value) {
-  if (immutable$1.List.isList(value)) {
+  if (immutable$5.List.isList(value)) {
     return value.map(function (i) {
       return i.name;
     });
   }
-  if (immutable$1.Iterable.isIterable(value)) {
+  if (immutable$5.Iterable.isIterable(value)) {
     return value.keySeq();
   }
-  return value ? (0, immutable$1.List)((0, _keys2.default)(value)) : empty;
+  return value ? (0, immutable$5.List)((0, _keys2.default)(value)) : empty;
 };
 exports.default = keys;
 });
-unwrapExports(keys_1$3);
 
 var setIn_1$1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -11341,7 +6516,7 @@ var undefinedArrayMerge = function undefinedArrayMerge(previous, next) {
   return next !== undefined ? next : previous;
 };
 var mergeLists = function mergeLists(original, value) {
-  return original && immutable$1.List.isList(original) ? original.mergeDeepWith(undefinedArrayMerge, value) : value;
+  return original && immutable$5.List.isList(original) ? original.mergeDeepWith(undefinedArrayMerge, value) : value;
 };
 function setIn(state, field, value) {
   var path = (0, _toPath3.default)(field);
@@ -11355,7 +6530,7 @@ function setIn(state, field, value) {
         return 'continue';
       }
       mutable = mutable.updateIn(path.slice(0, pathIndex + 1), function (value) {
-        return mergeLists(value, new immutable$1.List().set(parseInt(nextPart, 10), new immutable$1.Map()));
+        return mergeLists(value, new immutable$5.List().set(parseInt(nextPart, 10), new immutable$5.Map()));
       });
     };
     for (var pathIndex = 0; pathIndex < path.length - 1; ++pathIndex) {
@@ -11366,15 +6541,14 @@ function setIn(state, field, value) {
   });
 }
 });
-unwrapExports(setIn_1$1);
 
-var splice$3 = createCommonjsModule(function (module, exports) {
+var splice$2 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = function (list, index, removeNum, value) {
-  list = immutable$1.List.isList(list) ? list : (0, immutable$1.List)();
+  list = immutable$5.List.isList(list) ? list : (0, immutable$5.List)();
   if (index < list.count()) {
     if (value === undefined && !removeNum) {
       return list.splice(index, 0, true)
@@ -11392,9 +6566,8 @@ exports.default = function (list, index, removeNum, value) {
   return list.set(index, value);
 };
 });
-unwrapExports(splice$3);
 
-var immutable = createCommonjsModule(function (module, exports) {
+var immutable$4 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -11403,16 +6576,16 @@ var _toPath3 = _interopRequireDefault(toPath_1);
 var _deepEqual2 = _interopRequireDefault(deepEqual_1$1);
 var _keys2 = _interopRequireDefault(keys_1$3);
 var _setIn2 = _interopRequireDefault(setIn_1$1);
-var _splice2 = _interopRequireDefault(splice$3);
+var _splice2 = _interopRequireDefault(splice$2);
 var _getIn2 = _interopRequireDefault(getIn_1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var emptyList = (0, immutable$1.List)();
+var emptyList = (0, immutable$5.List)();
 var structure = {
   allowsArrayErrors: false,
-  empty: (0, immutable$1.Map)(),
+  empty: (0, immutable$5.Map)(),
   emptyList: emptyList,
   getIn: function getIn(state, field) {
-    return immutable$1.Iterable.isIterable(state) ? state.getIn((0, _toPath3.default)(field)) : (0, _getIn2.default)(state, field);
+    return immutable$5.Iterable.isIterable(state) ? state.getIn((0, _toPath3.default)(field)) : (0, _getIn2.default)(state, field);
   },
   setIn: _setIn2.default,
   deepEqual: _deepEqual2.default,
@@ -11423,8 +6596,8 @@ var structure = {
     items.forEach(callback);
   },
   fromJS: function fromJS(jsValue) {
-    return (0, immutable$1.fromJS)(jsValue, function (key, value) {
-      return immutable$1.Iterable.isIndexed(value) ? value.toList() : value.toMap();
+    return (0, immutable$5.fromJS)(jsValue, function (key, value) {
+      return immutable$5.Iterable.isIndexed(value) ? value.toList() : value.toMap();
     });
   },
   keys: _keys2.default,
@@ -11436,12 +6609,11 @@ var structure = {
   },
   splice: _splice2.default,
   toJS: function toJS(value) {
-    return immutable$1.Iterable.isIterable(value) ? value.toJS() : value;
+    return immutable$5.Iterable.isIterable(value) ? value.toJS() : value;
   }
 };
 exports.default = structure;
 });
-unwrapExports(immutable);
 
 var Field = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -11449,11 +6621,362 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _createField2 = _interopRequireDefault(createField_1);
-var _immutable2 = _interopRequireDefault(immutable);
+var _immutable2 = _interopRequireDefault(immutable$4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 exports.default = (0, _createField2.default)(_immutable2.default);
 });
-var Field$1 = unwrapExports(Field);
+
+var ConnectedFields = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _createFieldProps3 = _interopRequireDefault(createFieldProps_1);
+var _plain2 = _interopRequireDefault(plain);
+var _onChangeValue2 = _interopRequireDefault(onChangeValue_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var propsToNotUpdateFor = ['_reduxForm'];
+var createConnectedFields = function createConnectedFields(structure) {
+  var deepEqual = structure.deepEqual,
+      getIn = structure.getIn,
+      size = structure.size;
+  var getSyncError = function getSyncError(syncErrors, name) {
+    return _plain2.default.getIn(syncErrors, name + '._error') || _plain2.default.getIn(syncErrors, name);
+  };
+  var getSyncWarning = function getSyncWarning(syncWarnings, name) {
+    var warning = getIn(syncWarnings, name);
+    return warning && warning._warning ? warning._warning : warning;
+  };
+  var ConnectedFields = function (_Component) {
+    _inherits(ConnectedFields, _Component);
+    function ConnectedFields(props) {
+      _classCallCheck(this, ConnectedFields);
+      var _this = _possibleConstructorReturn(this, (ConnectedFields.__proto__ || Object.getPrototypeOf(ConnectedFields)).call(this, props));
+      _this.onChangeFns = {};
+      _this.onFocusFns = {};
+      _this.onBlurFns = {};
+      _this.prepareEventHandlers = function (_ref) {
+        var names = _ref.names;
+        return names.forEach(function (name) {
+          _this.onChangeFns[name] = function (event) {
+            return _this.handleChange(name, event);
+          };
+          _this.onFocusFns[name] = function () {
+            return _this.handleFocus(name);
+          };
+          _this.onBlurFns[name] = function (event) {
+            return _this.handleBlur(name, event);
+          };
+        });
+      };
+      _this.handleChange = function (name, event) {
+        var _this$props = _this.props,
+            dispatch = _this$props.dispatch,
+            parse = _this$props.parse,
+            _reduxForm = _this$props._reduxForm;
+        var value = (0, _onChangeValue2.default)(event, { name: name, parse: parse });
+        dispatch(_reduxForm.change(name, value));
+      };
+      _this.handleFocus = function (name) {
+        var _this$props2 = _this.props,
+            dispatch = _this$props2.dispatch,
+            _reduxForm = _this$props2._reduxForm;
+        dispatch(_reduxForm.focus(name));
+      };
+      _this.handleBlur = function (name, event) {
+        var _this$props3 = _this.props,
+            dispatch = _this$props3.dispatch,
+            parse = _this$props3.parse,
+            _reduxForm = _this$props3._reduxForm;
+        var value = (0, _onChangeValue2.default)(event, { name: name, parse: parse });
+        dispatch(_reduxForm.blur(name, value));
+        if (_reduxForm.asyncValidate) {
+          _reduxForm.asyncValidate(name, value);
+        }
+      };
+      _this.prepareEventHandlers(props);
+      return _this;
+    }
+    _createClass(ConnectedFields, [{
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(nextProps) {
+        var _this2 = this;
+        if (this.props.names !== nextProps.names && (size(this.props.names) !== size(nextProps.names) || nextProps.names.some(function (nextName) {
+          return !_this2.props._fields[nextName];
+        }))) {
+          this.prepareEventHandlers(nextProps);
+        }
+      }
+    }, {
+      key: 'shouldComponentUpdate',
+      value: function shouldComponentUpdate(nextProps) {
+        var _this3 = this;
+        var nextPropsKeys = Object.keys(nextProps);
+        var thisPropsKeys = Object.keys(this.props);
+        return nextPropsKeys.length !== thisPropsKeys.length || nextPropsKeys.some(function (prop) {
+          return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this3.props[prop], nextProps[prop]);
+        });
+      }
+    }, {
+      key: 'isDirty',
+      value: function isDirty() {
+        var _fields = this.props._fields;
+        return Object.keys(_fields).some(function (name) {
+          return _fields[name].dirty;
+        });
+      }
+    }, {
+      key: 'getValues',
+      value: function getValues() {
+        var _fields = this.props._fields;
+        return Object.keys(_fields).reduce(function (accumulator, name) {
+          return _plain2.default.setIn(accumulator, name, _fields[name].value);
+        }, {});
+      }
+    }, {
+      key: 'getRenderedComponent',
+      value: function getRenderedComponent() {
+        return this.refs.renderedComponent;
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _this4 = this;
+        var _props = this.props,
+            component = _props.component,
+            withRef = _props.withRef,
+            _fields = _props._fields,
+            _reduxForm = _props._reduxForm,
+            rest = _objectWithoutProperties(_props, ['component', 'withRef', '_fields', '_reduxForm']);
+        var sectionPrefix = _reduxForm.sectionPrefix,
+            form = _reduxForm.form;
+        var _Object$keys$reduce = Object.keys(_fields).reduce(function (accumulator, name) {
+          var connectedProps = _fields[name];
+          var _createFieldProps = (0, _createFieldProps3.default)(structure, name, _extends({}, connectedProps, rest, {
+            form: form,
+            onBlur: _this4.onBlurFns[name],
+            onChange: _this4.onChangeFns[name],
+            onFocus: _this4.onFocusFns[name]
+          })),
+              custom = _createFieldProps.custom,
+              fieldProps = _objectWithoutProperties(_createFieldProps, ['custom']);
+          accumulator.custom = custom;
+          var fieldName = sectionPrefix ? name.replace(sectionPrefix + '.', '') : name;
+          return _plain2.default.setIn(accumulator, fieldName, fieldProps);
+        }, {}),
+            custom = _Object$keys$reduce.custom,
+            props = _objectWithoutProperties(_Object$keys$reduce, ['custom']);
+        if (withRef) {
+          props.ref = 'renderedComponent';
+        }
+        return (0, React.createElement)(component, _extends({}, props, custom));
+      }
+    }]);
+    return ConnectedFields;
+  }(React.Component);
+  ConnectedFields.propTypes = {
+    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
+    _fields: _propTypes2.default.object.isRequired,
+    props: _propTypes2.default.object
+  };
+  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
+    var names = ownProps.names,
+        _ownProps$_reduxForm = ownProps._reduxForm,
+        initialValues = _ownProps$_reduxForm.initialValues,
+        getFormState = _ownProps$_reduxForm.getFormState;
+    var formState = getFormState(state);
+    return {
+      _fields: names.reduce(function (accumulator, name) {
+        var initialState = getIn(formState, 'initial.' + name);
+        var initial = initialState !== undefined ? initialState : initialValues && getIn(initialValues, name);
+        var value = getIn(formState, 'values.' + name);
+        var syncError = getSyncError(getIn(formState, 'syncErrors'), name);
+        var syncWarning = getSyncWarning(getIn(formState, 'syncWarnings'), name);
+        var submitting = getIn(formState, 'submitting');
+        var pristine = value === initial;
+        accumulator[name] = {
+          asyncError: getIn(formState, 'asyncErrors.' + name),
+          asyncValidating: getIn(formState, 'asyncValidating') === name,
+          dirty: !pristine,
+          initial: initial,
+          pristine: pristine,
+          state: getIn(formState, 'fields.' + name),
+          submitError: getIn(formState, 'submitErrors.' + name),
+          submitFailed: getIn(formState, 'submitFailed'),
+          submitting: submitting,
+          syncError: syncError,
+          syncWarning: syncWarning,
+          value: value,
+          _value: ownProps.value
+        };
+        return accumulator;
+      }, {})
+    };
+  }, undefined, undefined, { withRef: true });
+  return connector(ConnectedFields);
+};
+exports.default = createConnectedFields;
+});
+
+var createFields_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _invariant2 = _interopRequireDefault(invariant_1);
+var _ConnectedFields2 = _interopRequireDefault(ConnectedFields);
+var _shallowCompare2 = _interopRequireDefault(shallowCompare_1);
+var _plain2 = _interopRequireDefault(plain);
+var _prefixName2 = _interopRequireDefault(prefixName);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var validateNameProp = function validateNameProp(prop) {
+  if (!prop) {
+    return new Error('No "names" prop was specified <Fields/>');
+  }
+  if (!Array.isArray(prop) && !prop._isFieldArray) {
+    return new Error('Invalid prop "names" supplied to <Fields/>. Must be either an array of strings or the fields array generated by FieldArray.');
+  }
+};
+var createFields = function createFields(structure) {
+  var ConnectedFields$$1 = (0, _ConnectedFields2.default)(structure);
+  var Fields = function (_Component) {
+    _inherits(Fields, _Component);
+    function Fields(props, context) {
+      _classCallCheck(this, Fields);
+      var _this = _possibleConstructorReturn(this, (Fields.__proto__ || Object.getPrototypeOf(Fields)).call(this, props, context));
+      if (!context._reduxForm) {
+        throw new Error('Fields must be inside a component decorated with reduxForm()');
+      }
+      return _this;
+    }
+    _createClass(Fields, [{
+      key: 'shouldComponentUpdate',
+      value: function shouldComponentUpdate(nextProps) {
+        return (0, _shallowCompare2.default)(this, nextProps);
+      }
+    }, {
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        var error = validateNameProp(this.props.names);
+        if (error) {
+          throw error;
+        }
+        var context = this.context;
+        var register = context._reduxForm.register;
+        this.names.forEach(function (name) {
+          return register(name, 'Field');
+        });
+      }
+    }, {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(nextProps) {
+        if (!_plain2.default.deepEqual(this.props.names, nextProps.names)) {
+          var context = this.context;
+          var _context$_reduxForm = context._reduxForm,
+              register = _context$_reduxForm.register,
+              unregister = _context$_reduxForm.unregister;
+          this.props.names.forEach(function (name) {
+            return unregister((0, _prefixName2.default)(context, name));
+          });
+          nextProps.names.forEach(function (name) {
+            return register((0, _prefixName2.default)(context, name), 'Field');
+          });
+        }
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        var context = this.context;
+        var unregister = context._reduxForm.unregister;
+        this.props.names.forEach(function (name) {
+          return unregister((0, _prefixName2.default)(context, name));
+        });
+      }
+    }, {
+      key: 'getRenderedComponent',
+      value: function getRenderedComponent() {
+        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to Fields');
+        return this.refs.connected.getWrappedInstance().getRenderedComponent();
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var context = this.context;
+        return (0, React.createElement)(ConnectedFields$$1, _extends({}, this.props, {
+          names: this.props.names.map(function (name) {
+            return (0, _prefixName2.default)(context, name);
+          }),
+          _reduxForm: this.context._reduxForm,
+          ref: 'connected'
+        }));
+      }
+    }, {
+      key: 'names',
+      get: function get() {
+        var context = this.context;
+        return this.props.names.map(function (name) {
+          return (0, _prefixName2.default)(context, name);
+        });
+      }
+    }, {
+      key: 'dirty',
+      get: function get() {
+        return this.refs.connected.getWrappedInstance().isDirty();
+      }
+    }, {
+      key: 'pristine',
+      get: function get() {
+        return !this.dirty;
+      }
+    }, {
+      key: 'values',
+      get: function get() {
+        return this.refs.connected && this.refs.connected.getWrappedInstance().getValues();
+      }
+    }]);
+    return Fields;
+  }(React.Component);
+  Fields.propTypes = {
+    names: function names(props, propName) {
+      return validateNameProp(props[propName]);
+    },
+    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
+    format: _propTypes2.default.func,
+    parse: _propTypes2.default.func,
+    props: _propTypes2.default.object,
+    withRef: _propTypes2.default.bool
+  };
+  Fields.contextTypes = {
+    _reduxForm: _propTypes2.default.object
+  };
+  return Fields;
+};
+exports.default = createFields;
+});
+
+var Fields = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _createFields2 = _interopRequireDefault(createFields_1);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createFields2.default)(_immutable2.default);
+});
 
 var defineProperty = (function() {
   try {
@@ -11478,14 +7001,6 @@ function baseAssignValue(object, key, value) {
 }
 var _baseAssignValue = baseAssignValue;
 
-function assignMergeValue(object, key, value) {
-  if ((value !== undefined && !eq_1(object[key], value)) ||
-      (value === undefined && !(key in object))) {
-    _baseAssignValue(object, key, value);
-  }
-}
-var _assignMergeValue = assignMergeValue;
-
 function createBaseFor(fromRight) {
   return function(object, iteratee, keysFunc) {
     var index = -1,
@@ -11505,372 +7020,6 @@ var _createBaseFor = createBaseFor;
 
 var baseFor = _createBaseFor();
 var _baseFor = baseFor;
-
-var _cloneBuffer = createCommonjsModule(function (module, exports) {
-var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
-var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-var moduleExports = freeModule && freeModule.exports === freeExports;
-var Buffer = moduleExports ? _root.Buffer : undefined,
-    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
-function cloneBuffer(buffer, isDeep) {
-  if (isDeep) {
-    return buffer.slice();
-  }
-  var length = buffer.length,
-      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
-  buffer.copy(result);
-  return result;
-}
-module.exports = cloneBuffer;
-});
-
-function cloneArrayBuffer(arrayBuffer) {
-  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
-  return result;
-}
-var _cloneArrayBuffer = cloneArrayBuffer;
-
-function cloneTypedArray(typedArray, isDeep) {
-  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-}
-var _cloneTypedArray = cloneTypedArray;
-
-var objectCreate = Object.create;
-var baseCreate = (function() {
-  function object() {}
-  return function(proto) {
-    if (!isObject_1(proto)) {
-      return {};
-    }
-    if (objectCreate) {
-      return objectCreate(proto);
-    }
-    object.prototype = proto;
-    var result = new object;
-    object.prototype = undefined;
-    return result;
-  };
-}());
-var _baseCreate = baseCreate;
-
-var getPrototype$1 = _overArg(Object.getPrototypeOf, Object);
-var _getPrototype = getPrototype$1;
-
-function initCloneObject(object) {
-  return (typeof object.constructor == 'function' && !_isPrototype(object))
-    ? _baseCreate(_getPrototype(object))
-    : {};
-}
-var _initCloneObject = initCloneObject;
-
-function isArrayLikeObject$1(value) {
-  return isObjectLike_1(value) && isArrayLike_1(value);
-}
-var isArrayLikeObject_1 = isArrayLikeObject$1;
-
-var objectTag$3 = '[object Object]';
-var funcProto$3 = Function.prototype;
-var objectProto$13 = Object.prototype;
-var funcToString$3 = funcProto$3.toString;
-var hasOwnProperty$10 = objectProto$13.hasOwnProperty;
-var objectCtorString = funcToString$3.call(Object);
-function isPlainObject(value) {
-  if (!isObjectLike_1(value) || _baseGetTag(value) != objectTag$3) {
-    return false;
-  }
-  var proto = _getPrototype(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = hasOwnProperty$10.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-    funcToString$3.call(Ctor) == objectCtorString;
-}
-var isPlainObject_1 = isPlainObject;
-
-var objectProto$14 = Object.prototype;
-var hasOwnProperty$11 = objectProto$14.hasOwnProperty;
-function assignValue(object, key, value) {
-  var objValue = object[key];
-  if (!(hasOwnProperty$11.call(object, key) && eq_1(objValue, value)) ||
-      (value === undefined && !(key in object))) {
-    _baseAssignValue(object, key, value);
-  }
-}
-var _assignValue = assignValue;
-
-function copyObject(source, props, object, customizer) {
-  var isNew = !object;
-  object || (object = {});
-  var index = -1,
-      length = props.length;
-  while (++index < length) {
-    var key = props[index];
-    var newValue = customizer
-      ? customizer(object[key], source[key], key, object, source)
-      : undefined;
-    if (newValue === undefined) {
-      newValue = source[key];
-    }
-    if (isNew) {
-      _baseAssignValue(object, key, newValue);
-    } else {
-      _assignValue(object, key, newValue);
-    }
-  }
-  return object;
-}
-var _copyObject = copyObject;
-
-function nativeKeysIn$1(object) {
-  var result = [];
-  if (object != null) {
-    for (var key in Object(object)) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _nativeKeysIn = nativeKeysIn$1;
-
-var objectProto$15 = Object.prototype;
-var hasOwnProperty$12 = objectProto$15.hasOwnProperty;
-function baseKeysIn$1(object) {
-  if (!isObject_1(object)) {
-    return _nativeKeysIn(object);
-  }
-  var isProto = _isPrototype(object),
-      result = [];
-  for (var key in object) {
-    if (!(key == 'constructor' && (isProto || !hasOwnProperty$12.call(object, key)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _baseKeysIn = baseKeysIn$1;
-
-function keysIn$1(object) {
-  return isArrayLike_1(object) ? _arrayLikeKeys(object, true) : _baseKeysIn(object);
-}
-var keysIn_1 = keysIn$1;
-
-function toPlainObject(value) {
-  return _copyObject(value, keysIn_1(value));
-}
-var toPlainObject_1 = toPlainObject;
-
-function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
-  var objValue = object[key],
-      srcValue = source[key],
-      stacked = stack.get(srcValue);
-  if (stacked) {
-    _assignMergeValue(object, key, stacked);
-    return;
-  }
-  var newValue = customizer
-    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
-    : undefined;
-  var isCommon = newValue === undefined;
-  if (isCommon) {
-    var isArr = isArray_1(srcValue),
-        isBuff = !isArr && isBuffer_1(srcValue),
-        isTyped = !isArr && !isBuff && isTypedArray_1(srcValue);
-    newValue = srcValue;
-    if (isArr || isBuff || isTyped) {
-      if (isArray_1(objValue)) {
-        newValue = objValue;
-      }
-      else if (isArrayLikeObject_1(objValue)) {
-        newValue = _copyArray(objValue);
-      }
-      else if (isBuff) {
-        isCommon = false;
-        newValue = _cloneBuffer(srcValue, true);
-      }
-      else if (isTyped) {
-        isCommon = false;
-        newValue = _cloneTypedArray(srcValue, true);
-      }
-      else {
-        newValue = [];
-      }
-    }
-    else if (isPlainObject_1(srcValue) || isArguments_1(srcValue)) {
-      newValue = objValue;
-      if (isArguments_1(objValue)) {
-        newValue = toPlainObject_1(objValue);
-      }
-      else if (!isObject_1(objValue) || (srcIndex && isFunction_1(objValue))) {
-        newValue = _initCloneObject(srcValue);
-      }
-    }
-    else {
-      isCommon = false;
-    }
-  }
-  if (isCommon) {
-    stack.set(srcValue, newValue);
-    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
-    stack['delete'](srcValue);
-  }
-  _assignMergeValue(object, key, newValue);
-}
-var _baseMergeDeep = baseMergeDeep;
-
-function baseMerge(object, source, srcIndex, customizer, stack) {
-  if (object === source) {
-    return;
-  }
-  _baseFor(source, function(srcValue, key) {
-    if (isObject_1(srcValue)) {
-      stack || (stack = new _Stack);
-      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
-    }
-    else {
-      var newValue = customizer
-        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
-        : undefined;
-      if (newValue === undefined) {
-        newValue = srcValue;
-      }
-      _assignMergeValue(object, key, newValue);
-    }
-  }, keysIn_1);
-}
-var _baseMerge = baseMerge;
-
-function identity(value) {
-  return value;
-}
-var identity_1 = identity;
-
-function apply$1(func, thisArg, args) {
-  switch (args.length) {
-    case 0: return func.call(thisArg);
-    case 1: return func.call(thisArg, args[0]);
-    case 2: return func.call(thisArg, args[0], args[1]);
-    case 3: return func.call(thisArg, args[0], args[1], args[2]);
-  }
-  return func.apply(thisArg, args);
-}
-var _apply = apply$1;
-
-var nativeMax$1 = Math.max;
-function overRest(func, start, transform) {
-  start = nativeMax$1(start === undefined ? (func.length - 1) : start, 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax$1(args.length - start, 0),
-        array = Array(length);
-    while (++index < length) {
-      array[index] = args[start + index];
-    }
-    index = -1;
-    var otherArgs = Array(start + 1);
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = transform(array);
-    return _apply(func, this, otherArgs);
-  };
-}
-var _overRest = overRest;
-
-function constant(value) {
-  return function() {
-    return value;
-  };
-}
-var constant_1 = constant;
-
-var baseSetToString = !_defineProperty ? identity_1 : function(func, string) {
-  return _defineProperty(func, 'toString', {
-    'configurable': true,
-    'enumerable': false,
-    'value': constant_1(string),
-    'writable': true
-  });
-};
-var _baseSetToString = baseSetToString;
-
-var HOT_COUNT = 800;
-var HOT_SPAN = 16;
-var nativeNow = Date.now;
-function shortOut(func) {
-  var count = 0,
-      lastCalled = 0;
-  return function() {
-    var stamp = nativeNow(),
-        remaining = HOT_SPAN - (stamp - lastCalled);
-    lastCalled = stamp;
-    if (remaining > 0) {
-      if (++count >= HOT_COUNT) {
-        return arguments[0];
-      }
-    } else {
-      count = 0;
-    }
-    return func.apply(undefined, arguments);
-  };
-}
-var _shortOut = shortOut;
-
-var setToString = _shortOut(_baseSetToString);
-var _setToString = setToString;
-
-function baseRest$1(func, start) {
-  return _setToString(_overRest(func, start, identity_1), func + '');
-}
-var _baseRest = baseRest$1;
-
-function isIterateeCall(value, index, object) {
-  if (!isObject_1(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-        ? (isArrayLike_1(object) && _isIndex(index, object.length))
-        : (type == 'string' && index in object)
-      ) {
-    return eq_1(object[index], value);
-  }
-  return false;
-}
-var _isIterateeCall = isIterateeCall;
-
-function createAssigner(assigner) {
-  return _baseRest(function(object, sources) {
-    var index = -1,
-        length = sources.length,
-        customizer = length > 1 ? sources[length - 1] : undefined,
-        guard = length > 2 ? sources[2] : undefined;
-    customizer = (assigner.length > 3 && typeof customizer == 'function')
-      ? (length--, customizer)
-      : undefined;
-    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
-      customizer = length < 3 ? undefined : customizer;
-      length = 1;
-    }
-    object = Object(object);
-    while (++index < length) {
-      var source = sources[index];
-      if (source) {
-        assigner(object, source, index, customizer);
-      }
-    }
-    return object;
-  });
-}
-var _createAssigner = createAssigner;
-
-var merge = _createAssigner(function(object, source, srcIndex) {
-  _baseMerge(object, source, srcIndex);
-});
-var merge_1 = merge;
 
 function baseForOwn(object, iteratee) {
   return object && _baseFor(object, iteratee, keys_1);
@@ -12048,6 +7197,11 @@ function baseMatchesProperty(path, srcValue) {
 }
 var _baseMatchesProperty = baseMatchesProperty;
 
+function identity(value) {
+  return value;
+}
+var identity_1 = identity;
+
 function baseProperty(key) {
   return function(object) {
     return object == null ? undefined : object[key];
@@ -12092,6 +7246,1436 @@ function mapValues(object, iteratee) {
   return result;
 }
 var mapValues_1 = mapValues;
+
+var createFieldArrayProps_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+var createFieldArrayProps = function createFieldArrayProps(_ref2, name, form, sectionPrefix, getValue, _ref) {
+  var getIn = _ref2.getIn;
+  var arrayInsert = _ref.arrayInsert,
+      arrayMove = _ref.arrayMove,
+      arrayPop = _ref.arrayPop,
+      arrayPush = _ref.arrayPush,
+      arrayRemove = _ref.arrayRemove,
+      arrayRemoveAll = _ref.arrayRemoveAll,
+      arrayShift = _ref.arrayShift,
+      arraySplice = _ref.arraySplice,
+      arraySwap = _ref.arraySwap,
+      arrayUnshift = _ref.arrayUnshift,
+      asyncError = _ref.asyncError,
+      dirty = _ref.dirty,
+      length = _ref.length,
+      pristine = _ref.pristine,
+      submitError = _ref.submitError,
+      state = _ref.state,
+      submitFailed = _ref.submitFailed,
+      submitting = _ref.submitting,
+      syncError = _ref.syncError,
+      syncWarning = _ref.syncWarning,
+      value = _ref.value,
+      props = _ref.props,
+      rest = _objectWithoutProperties(_ref, ['arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'asyncError', 'dirty', 'length', 'pristine', 'submitError', 'state', 'submitFailed', 'submitting', 'syncError', 'syncWarning', 'value', 'props']);
+  var error = syncError || asyncError || submitError;
+  var warning = syncWarning;
+  var fieldName = sectionPrefix ? name.replace(sectionPrefix + '.', '') : name;
+  var finalProps = _extends({
+    fields: {
+      _isFieldArray: true,
+      forEach: function forEach(callback) {
+        return (value || []).forEach(function (item, index) {
+          return callback(fieldName + '[' + index + ']', index, finalProps.fields);
+        });
+      },
+      get: getValue,
+      getAll: function getAll() {
+        return value;
+      },
+      insert: arrayInsert,
+      length: length,
+      map: function map(callback) {
+        return (value || []).map(function (item, index) {
+          return callback(fieldName + '[' + index + ']', index, finalProps.fields);
+        });
+      },
+      move: arrayMove,
+      name: name,
+      pop: function pop() {
+        arrayPop();
+        return getIn(value, String(length - 1));
+      },
+      push: arrayPush,
+      reduce: function reduce(callback, initial) {
+        return (value || []).reduce(function (accumulator, item, index) {
+          return callback(accumulator, fieldName + '[' + index + ']', index, finalProps.fields);
+        }, initial);
+      },
+      remove: arrayRemove,
+      removeAll: arrayRemoveAll,
+      shift: function shift() {
+        arrayShift();
+        return getIn(value, '0');
+      },
+      swap: arraySwap,
+      unshift: arrayUnshift
+    },
+    meta: {
+      dirty: dirty,
+      error: error,
+      form: form,
+      warning: warning,
+      invalid: !!error,
+      pristine: pristine,
+      submitting: submitting,
+      submitFailed: submitFailed,
+      valid: !error
+    }
+  }, props, rest);
+  return finalProps;
+};
+exports.default = createFieldArrayProps;
+});
+
+var ConnectedFieldArray = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _mapValues3 = _interopRequireDefault(mapValues_1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _createFieldArrayProps2 = _interopRequireDefault(createFieldArrayProps_1);
+var _plain2 = _interopRequireDefault(plain);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var propsToNotUpdateFor = ['_reduxForm', 'value'];
+var createConnectedFieldArray = function createConnectedFieldArray(structure) {
+  var deepEqual = structure.deepEqual,
+      getIn = structure.getIn,
+      size = structure.size;
+  var getSyncError = function getSyncError(syncErrors, name) {
+    return _plain2.default.getIn(syncErrors, name + '._error');
+  };
+  var getSyncWarning = function getSyncWarning(syncWarnings, name) {
+    return getIn(syncWarnings, name + '._warning');
+  };
+  var ConnectedFieldArray = function (_Component) {
+    _inherits(ConnectedFieldArray, _Component);
+    function ConnectedFieldArray() {
+      var _ref;
+      var _temp, _this, _ret;
+      _classCallCheck(this, ConnectedFieldArray);
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ConnectedFieldArray.__proto__ || Object.getPrototypeOf(ConnectedFieldArray)).call.apply(_ref, [this].concat(args))), _this), _this.saveRef = function (ref) {
+        _this.ref = ref;
+      }, _this.getValue = function (index) {
+        return _this.props.value && getIn(_this.props.value, String(index));
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+    _createClass(ConnectedFieldArray, [{
+      key: 'shouldComponentUpdate',
+      value: function shouldComponentUpdate(nextProps) {
+        var _this2 = this;
+        var thisValue = this.props.value;
+        var nextValue = nextProps.value;
+        if (thisValue && nextValue) {
+          if (thisValue.length !== nextValue.length || nextProps.rerenderOnEveryChange && thisValue.some(function (val, index) {
+            return !deepEqual(val, nextValue[index]);
+          })) {
+            return true;
+          }
+        }
+        var nextPropsKeys = Object.keys(nextProps);
+        var thisPropsKeys = Object.keys(this.props);
+        return nextPropsKeys.length !== thisPropsKeys.length || nextPropsKeys.some(function (prop) {
+          return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this2.props[prop], nextProps[prop]);
+        });
+      }
+    }, {
+      key: 'getRenderedComponent',
+      value: function getRenderedComponent() {
+        return this.ref;
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _props = this.props,
+            component = _props.component,
+            withRef = _props.withRef,
+            name = _props.name,
+            _reduxForm = _props._reduxForm,
+            validate = _props.validate,
+            warn = _props.warn,
+            rerenderOnEveryChange = _props.rerenderOnEveryChange,
+            rest = _objectWithoutProperties(_props, ['component', 'withRef', 'name', '_reduxForm', 'validate', 'warn', 'rerenderOnEveryChange']);
+        var props = (0, _createFieldArrayProps2.default)(structure, name, _reduxForm.form, _reduxForm.sectionPrefix, this.getValue, rest);
+        if (withRef) {
+          props.ref = this.saveRef;
+        }
+        return (0, React.createElement)(component, props);
+      }
+    }, {
+      key: 'dirty',
+      get: function get() {
+        return this.props.dirty;
+      }
+    }, {
+      key: 'pristine',
+      get: function get() {
+        return this.props.pristine;
+      }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.props.value;
+      }
+    }]);
+    return ConnectedFieldArray;
+  }(React.Component);
+  ConnectedFieldArray.propTypes = {
+    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
+    props: _propTypes2.default.object,
+    rerenderOnEveryChange: _propTypes2.default.bool
+  };
+  ConnectedFieldArray.defaultProps = {
+    rerenderOnEveryChange: false
+  };
+  ConnectedFieldArray.contextTypes = {
+    _reduxForm: _propTypes2.default.object
+  };
+  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
+    var name = ownProps.name,
+        _ownProps$_reduxForm = ownProps._reduxForm,
+        initialValues = _ownProps$_reduxForm.initialValues,
+        getFormState = _ownProps$_reduxForm.getFormState;
+    var formState = getFormState(state);
+    var initial = getIn(formState, 'initial.' + name) || initialValues && getIn(initialValues, name);
+    var value = getIn(formState, 'values.' + name);
+    var submitting = getIn(formState, 'submitting');
+    var syncError = getSyncError(getIn(formState, 'syncErrors'), name);
+    var syncWarning = getSyncWarning(getIn(formState, 'syncWarnings'), name);
+    var pristine = deepEqual(value, initial);
+    return {
+      asyncError: getIn(formState, 'asyncErrors.' + name + '._error'),
+      dirty: !pristine,
+      pristine: pristine,
+      state: getIn(formState, 'fields.' + name),
+      submitError: getIn(formState, 'submitErrors.' + name + '._error'),
+      submitFailed: getIn(formState, 'submitFailed'),
+      submitting: submitting,
+      syncError: syncError,
+      syncWarning: syncWarning,
+      value: value,
+      length: size(value)
+    };
+  }, function (dispatch, ownProps) {
+    var name = ownProps.name,
+        _reduxForm = ownProps._reduxForm;
+    var arrayInsert = _reduxForm.arrayInsert,
+        arrayMove = _reduxForm.arrayMove,
+        arrayPop = _reduxForm.arrayPop,
+        arrayPush = _reduxForm.arrayPush,
+        arrayRemove = _reduxForm.arrayRemove,
+        arrayRemoveAll = _reduxForm.arrayRemoveAll,
+        arrayShift = _reduxForm.arrayShift,
+        arraySplice = _reduxForm.arraySplice,
+        arraySwap = _reduxForm.arraySwap,
+        arrayUnshift = _reduxForm.arrayUnshift;
+    return (0, _mapValues3.default)({
+      arrayInsert: arrayInsert,
+      arrayMove: arrayMove,
+      arrayPop: arrayPop,
+      arrayPush: arrayPush,
+      arrayRemove: arrayRemove,
+      arrayRemoveAll: arrayRemoveAll,
+      arrayShift: arrayShift,
+      arraySplice: arraySplice,
+      arraySwap: arraySwap,
+      arrayUnshift: arrayUnshift
+    }, function (actionCreator) {
+      return (0, _redux.bindActionCreators)(actionCreator.bind(null, name), dispatch);
+    });
+  }, undefined, { withRef: true });
+  return connector(ConnectedFieldArray);
+};
+exports.default = createConnectedFieldArray;
+});
+
+var createFieldArray_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _react2 = _interopRequireDefault(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _invariant2 = _interopRequireDefault(invariant_1);
+var _ConnectedFieldArray2 = _interopRequireDefault(ConnectedFieldArray);
+var _prefixName2 = _interopRequireDefault(prefixName);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var toArray = function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+};
+var wrapError = function wrapError(fn, key) {
+  return fn && function () {
+    var validators = toArray(fn);
+    for (var i = 0; i < validators.length; i++) {
+      var result = validators[i].apply(validators, arguments);
+      if (result) {
+        return _defineProperty({}, key, result);
+      }
+    }
+  };
+};
+var createFieldArray = function createFieldArray(structure) {
+  var ConnectedFieldArray$$1 = (0, _ConnectedFieldArray2.default)(structure);
+  var FieldArray = function (_Component) {
+    _inherits(FieldArray, _Component);
+    function FieldArray(props, context) {
+      _classCallCheck(this, FieldArray);
+      var _this = _possibleConstructorReturn(this, (FieldArray.__proto__ || Object.getPrototypeOf(FieldArray)).call(this, props, context));
+      _this.saveRef = function (ref) {
+        _this.ref = ref;
+      };
+      if (!context._reduxForm) {
+        throw new Error('FieldArray must be inside a component decorated with reduxForm()');
+      }
+      return _this;
+    }
+    _createClass(FieldArray, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        var _this2 = this;
+        this.context._reduxForm.register(this.name, 'FieldArray', function () {
+          return wrapError(_this2.props.validate, '_error');
+        }, function () {
+          return wrapError(_this2.props.warn, '_warning');
+        });
+      }
+    }, {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(nextProps) {
+        if (this.props.name !== nextProps.name) {
+          this.context._reduxForm.unregister(this.name);
+          this.context._reduxForm.register((0, _prefixName2.default)(this.context, nextProps.name), 'FieldArray');
+        }
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        this.context._reduxForm.unregister(this.name);
+      }
+    }, {
+      key: 'getRenderedComponent',
+      value: function getRenderedComponent() {
+        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to FieldArray');
+        return this.ref && this.ref.getWrappedInstance().getRenderedComponent();
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return (0, React.createElement)(ConnectedFieldArray$$1, _extends({}, this.props, {
+          name: this.name,
+          _reduxForm: this.context._reduxForm,
+          ref: this.saveRef
+        }));
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return (0, _prefixName2.default)(this.context, this.props.name);
+      }
+    }, {
+      key: 'dirty',
+      get: function get() {
+        return !this.ref || this.ref.getWrappedInstance().dirty;
+      }
+    }, {
+      key: 'pristine',
+      get: function get() {
+        return !!(this.ref && this.ref.getWrappedInstance().pristine);
+      }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.ref ? this.ref.getWrappedInstance().value : undefined;
+      }
+    }]);
+    return FieldArray;
+  }(React.Component);
+  FieldArray.propTypes = {
+    name: _propTypes2.default.string.isRequired,
+    component: _propTypes2.default.func.isRequired,
+    props: _propTypes2.default.object,
+    validate: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
+    warn: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
+    withRef: _propTypes2.default.bool
+  };
+  FieldArray.contextTypes = {
+    _reduxForm: _propTypes2.default.object
+  };
+  return FieldArray;
+};
+exports.default = createFieldArray;
+});
+
+var FieldArray = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _createFieldArray2 = _interopRequireDefault(createFieldArray_1);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createFieldArray2.default)(_immutable2.default);
+});
+
+var createFormValueSelector_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _invariant2 = _interopRequireDefault(invariant_1);
+var _plain2 = _interopRequireDefault(plain);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var createFormValueSelector = function createFormValueSelector(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    (0, _invariant2.default)(form, 'Form value must be specified');
+    var nonNullGetFormState = getFormState || function (state) {
+      return getIn(state, 'form');
+    };
+    return function (state) {
+      for (var _len = arguments.length, fields = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        fields[_key - 1] = arguments[_key];
+      }
+      (0, _invariant2.default)(fields.length, 'No fields specified');
+      return fields.length === 1 ?
+      getIn(nonNullGetFormState(state), form + '.values.' + fields[0]) :
+      fields.reduce(function (accumulator, field) {
+        var value = getIn(nonNullGetFormState(state), form + '.values.' + field);
+        return value === undefined ? accumulator : _plain2.default.setIn(accumulator, field, value);
+      }, {});
+    };
+  };
+};
+exports.default = createFormValueSelector;
+});
+
+var formValueSelector = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _createFormValueSelector2 = _interopRequireDefault(createFormValueSelector_1);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createFormValueSelector2.default)(_immutable2.default);
+});
+
+var createFormValues = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var React$$2 = _interopRequireWildcard(React);
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _prefixName2 = _interopRequireDefault(prefixName);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var createValues = function createValues(_ref) {
+  var getIn = _ref.getIn;
+  return function (firstArg) {
+    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      rest[_key - 1] = arguments[_key];
+    }
+    var valuesMap = void 0;
+    if (typeof firstArg === 'string') {
+      valuesMap = [firstArg].concat(_toConsumableArray(rest)).map(function (k) {
+        return {
+          prop: k,
+          path: k
+        };
+      });
+    } else {
+      var config = firstArg;
+      valuesMap = Object.keys(config).map(function (k) {
+        return {
+          prop: k,
+          path: config[k]
+        };
+      });
+    }
+    if (!valuesMap.length) {
+      throw new Error('formValues(): You must specify values to get as formValues(name1, name2, ...) or formValues({propName1: propPath1, ...})');
+    }
+    return function (Component) {
+      var FormValues = function (_React$Component) {
+        _inherits(FormValues, _React$Component);
+        function FormValues(props, context) {
+          _classCallCheck(this, FormValues);
+          var _this = _possibleConstructorReturn(this, (FormValues.__proto__ || Object.getPrototypeOf(FormValues)).call(this, props, context));
+          if (!context._reduxForm) {
+            throw new Error('formValues() must be used inside a React tree decorated with reduxForm()');
+          }
+          var formValuesSelector = function formValuesSelector(_, _ref2) {
+            var getValues = _this.context._reduxForm.getValues;
+            var props = {};
+            var values = getValues();
+            valuesMap.forEach(function (_ref3) {
+              var prop = _ref3.prop,
+                  path = _ref3.path;
+              return props[prop] = getIn(values, (0, _prefixName2.default)(_this.context, path));
+            });
+            return props;
+          };
+          _this.Component = (0, _reactRedux.connect)(formValuesSelector, function () {
+            return {};
+          }
+          )(function (_ref4) {
+            var sectionPrefix = _ref4.sectionPrefix,
+                otherProps = _objectWithoutProperties(_ref4, ['sectionPrefix']);
+            return React$$2.createElement(Component, otherProps);
+          });
+          return _this;
+        }
+        _createClass(FormValues, [{
+          key: 'render',
+          value: function render() {
+            var Component = this.Component;
+            return React$$2.createElement(Component
+            , _extends({ sectionPrefix: this.context._reduxForm.sectionPrefix
+            }, this.props));
+          }
+        }]);
+        return FormValues;
+      }(React$$2.Component);
+      FormValues.contextTypes = {
+        _reduxForm: _propTypes2.default.object
+      };
+      return FormValues;
+    };
+  };
+};
+exports.default = createValues;
+});
+
+var formValues = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _createFormValues2 = _interopRequireDefault(createFormValues);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createFormValues2.default)(_immutable2.default);
+});
+
+var getFormNames$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormNames = function createGetFormNames(_ref) {
+  var getIn = _ref.getIn,
+      keys = _ref.keys;
+  return function (getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return keys(nonNullGetFormState(state));
+    };
+  };
+};
+exports.default = createGetFormNames;
+});
+
+var getFormNames = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormNames2 = _interopRequireDefault(getFormNames$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormNames2.default)(_immutable2.default);
+});
+
+var getFormValues$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormValues = function createGetFormValues(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.values');
+    };
+  };
+};
+exports.default = createGetFormValues;
+});
+
+var getFormValues = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormValues2 = _interopRequireDefault(getFormValues$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormValues2.default)(_immutable2.default);
+});
+
+var getFormInitialValues$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormInitialValues = function createGetFormInitialValues(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.initial');
+    };
+  };
+};
+exports.default = createGetFormInitialValues;
+});
+
+var getFormInitialValues = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormInitialValues2 = _interopRequireDefault(getFormInitialValues$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormInitialValues2.default)(_immutable2.default);
+});
+
+var getFormSyncErrors$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormSyncErrors = function createGetFormSyncErrors(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.syncErrors');
+    };
+  };
+};
+exports.default = createGetFormSyncErrors;
+});
+
+var getFormSyncErrors = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormSyncErrors2 = _interopRequireDefault(getFormSyncErrors$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormSyncErrors2.default)(_immutable2.default);
+});
+
+var getFormMeta$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormMeta = function createGetFormMeta(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.fields');
+    };
+  };
+};
+exports.default = createGetFormMeta;
+});
+
+var getFormMeta = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormMeta2 = _interopRequireDefault(getFormMeta$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormMeta2.default)(_immutable2.default);
+});
+
+var getFormAsyncErrors$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormAsyncErrors = function createGetFormAsyncErrors(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.asyncErrors');
+    };
+  };
+};
+exports.default = createGetFormAsyncErrors;
+});
+
+var getFormAsyncErrors = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormAsyncErrors2 = _interopRequireDefault(getFormAsyncErrors$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormAsyncErrors2.default)(_immutable2.default);
+});
+
+var getFormSyncWarnings$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormSyncWarnings = function createGetFormSyncWarnings(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.syncWarnings');
+    };
+  };
+};
+exports.default = createGetFormSyncWarnings;
+});
+
+var getFormSyncWarnings = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormSyncWarnings2 = _interopRequireDefault(getFormSyncWarnings$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormSyncWarnings2.default)(_immutable2.default);
+});
+
+var getFormSubmitErrors$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createGetFormSubmitErrors = function createGetFormSubmitErrors(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return getIn(nonNullGetFormState(state), form + '.submitErrors');
+    };
+  };
+};
+exports.default = createGetFormSubmitErrors;
+});
+
+var getFormSubmitErrors = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getFormSubmitErrors2 = _interopRequireDefault(getFormSubmitErrors$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _getFormSubmitErrors2.default)(_immutable2.default);
+});
+
+var isPristine = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createIsPristine = function createIsPristine(_ref) {
+  var deepEqual = _ref.deepEqual,
+      empty = _ref.empty,
+      getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      var formState = nonNullGetFormState(state);
+      var initial = getIn(formState, form + '.initial') || empty;
+      var values = getIn(formState, form + '.values') || initial;
+      return deepEqual(initial, values);
+    };
+  };
+};
+exports.default = createIsPristine;
+});
+
+var isDirty$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isPristine2 = _interopRequireDefault(isPristine);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var createIsDirty = function createIsDirty(structure) {
+  return function (form, getFormState) {
+    var isPristine$$1 = (0, _isPristine2.default)(structure)(form, getFormState);
+    return function (state) {
+      return !isPristine$$1(state);
+    };
+  };
+};
+exports.default = createIsDirty;
+});
+
+var isDirty = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isDirty2 = _interopRequireDefault(isDirty$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _isDirty2.default)(_immutable2.default);
+});
+
+var hasError = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getErrorKeys = function getErrorKeys(name, type) {
+  switch (type) {
+    case 'Field':
+      return [name, name + '._error'];
+    case 'FieldArray':
+      return [name + '._error'];
+    default:
+      throw new Error('Unknown field type');
+  }
+};
+var createHasError = function createHasError(_ref) {
+  var getIn = _ref.getIn;
+  var hasError = function hasError(field, syncErrors, asyncErrors, submitErrors) {
+    if (!syncErrors && !asyncErrors && !submitErrors) {
+      return false;
+    }
+    var name = getIn(field, 'name');
+    var type = getIn(field, 'type');
+    return getErrorKeys(name, type).some(function (key) {
+      return getIn(syncErrors, key) || getIn(asyncErrors, key) || getIn(submitErrors, key);
+    });
+  };
+  return hasError;
+};
+exports.default = createHasError;
+});
+
+var isValid = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _hasError2 = _interopRequireDefault(hasError);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var createIsValid = function createIsValid(structure) {
+  var getIn = structure.getIn,
+      keys = structure.keys;
+  var hasError$$1 = (0, _hasError2.default)(structure);
+  return function (form, getFormState) {
+    var ignoreSubmitErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      var formState = nonNullGetFormState(state);
+      var syncError = getIn(formState, form + '.syncError');
+      if (syncError) {
+        return false;
+      }
+      if (!ignoreSubmitErrors) {
+        var error = getIn(formState, form + '.error');
+        if (error) {
+          return false;
+        }
+      }
+      var syncErrors = getIn(formState, form + '.syncErrors');
+      var asyncErrors = getIn(formState, form + '.asyncErrors');
+      var submitErrors = ignoreSubmitErrors ? undefined : getIn(formState, form + '.submitErrors');
+      if (!syncErrors && !asyncErrors && !submitErrors) {
+        return true;
+      }
+      var registeredFields = getIn(formState, form + '.registeredFields');
+      if (!registeredFields) {
+        return true;
+      }
+      return !keys(registeredFields).filter(function (name) {
+        return getIn(registeredFields, '[\'' + name + '\'].count') > 0;
+      }).some(function (name) {
+        return hasError$$1(getIn(registeredFields, '[\'' + name + '\']'), syncErrors, asyncErrors, submitErrors);
+      });
+    };
+  };
+};
+exports.default = createIsValid;
+});
+
+var isInvalid$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isValid2 = _interopRequireDefault(isValid);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var createIsInvalid = function createIsInvalid(structure) {
+  return function (form, getFormState) {
+    var isValid$$1 = (0, _isValid2.default)(structure)(form, getFormState);
+    return function (state) {
+      return !isValid$$1(state);
+    };
+  };
+};
+exports.default = createIsInvalid;
+});
+
+var isInvalid = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isInvalid2 = _interopRequireDefault(isInvalid$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _isInvalid2.default)(_immutable2.default);
+});
+
+var isPristine$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isPristine2 = _interopRequireDefault(isPristine);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _isPristine2.default)(_immutable2.default);
+});
+
+var isValid$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isValid2 = _interopRequireDefault(isValid);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _isValid2.default)(_immutable2.default);
+});
+
+var isSubmitting$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createIsSubmitting = function createIsSubmitting(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return !!getIn(nonNullGetFormState(state), form + '.submitting');
+    };
+  };
+};
+exports.default = createIsSubmitting;
+});
+
+var isSubmitting = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isSubmitting2 = _interopRequireDefault(isSubmitting$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _isSubmitting2.default)(_immutable2.default);
+});
+
+var hasSubmitSucceeded$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createHasSubmitSucceeded = function createHasSubmitSucceeded(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return !!getIn(nonNullGetFormState(state), form + '.submitSucceeded');
+    };
+  };
+};
+exports.default = createHasSubmitSucceeded;
+});
+
+var hasSubmitSucceeded = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _hasSubmitSucceeded2 = _interopRequireDefault(hasSubmitSucceeded$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _hasSubmitSucceeded2.default)(_immutable2.default);
+});
+
+var hasSubmitFailed$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createHasSubmitFailed = function createHasSubmitFailed(_ref) {
+  var getIn = _ref.getIn;
+  return function (form, getFormState) {
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      return !!getIn(nonNullGetFormState(state), form + '.submitFailed');
+    };
+  };
+};
+exports.default = createHasSubmitFailed;
+});
+
+var hasSubmitFailed = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _hasSubmitFailed2 = _interopRequireDefault(hasSubmitFailed$2);
+var _immutable2 = _interopRequireDefault(immutable$4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _hasSubmitFailed2.default)(_immutable2.default);
+});
+
+function assignMergeValue(object, key, value) {
+  if ((value !== undefined && !eq_1(object[key], value)) ||
+      (value === undefined && !(key in object))) {
+    _baseAssignValue(object, key, value);
+  }
+}
+var _assignMergeValue = assignMergeValue;
+
+var _cloneBuffer = createCommonjsModule(function (module, exports) {
+var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+var moduleExports = freeModule && freeModule.exports === freeExports;
+var Buffer = moduleExports ? _root.Buffer : undefined,
+    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var length = buffer.length,
+      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+  buffer.copy(result);
+  return result;
+}
+module.exports = cloneBuffer;
+});
+
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
+  return result;
+}
+var _cloneArrayBuffer = cloneArrayBuffer;
+
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+var _cloneTypedArray = cloneTypedArray;
+
+var objectCreate = Object.create;
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!isObject_1(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = proto;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
+var _baseCreate = baseCreate;
+
+var getPrototype = _overArg(Object.getPrototypeOf, Object);
+var _getPrototype = getPrototype;
+
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !_isPrototype(object))
+    ? _baseCreate(_getPrototype(object))
+    : {};
+}
+var _initCloneObject = initCloneObject;
+
+function isArrayLikeObject(value) {
+  return isObjectLike_1(value) && isArrayLike_1(value);
+}
+var isArrayLikeObject_1 = isArrayLikeObject;
+
+var objectTag$3 = '[object Object]';
+var funcProto$2 = Function.prototype;
+var objectProto$12 = Object.prototype;
+var funcToString$2 = funcProto$2.toString;
+var hasOwnProperty$9 = objectProto$12.hasOwnProperty;
+var objectCtorString = funcToString$2.call(Object);
+function isPlainObject(value) {
+  if (!isObjectLike_1(value) || _baseGetTag(value) != objectTag$3) {
+    return false;
+  }
+  var proto = _getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = hasOwnProperty$9.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+    funcToString$2.call(Ctor) == objectCtorString;
+}
+var isPlainObject_1 = isPlainObject;
+
+var objectProto$13 = Object.prototype;
+var hasOwnProperty$10 = objectProto$13.hasOwnProperty;
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty$10.call(object, key) && eq_1(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    _baseAssignValue(object, key, value);
+  }
+}
+var _assignValue = assignValue;
+
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+  var index = -1,
+      length = props.length;
+  while (++index < length) {
+    var key = props[index];
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+    if (newValue === undefined) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      _baseAssignValue(object, key, newValue);
+    } else {
+      _assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
+var _copyObject = copyObject;
+
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _nativeKeysIn = nativeKeysIn;
+
+var objectProto$14 = Object.prototype;
+var hasOwnProperty$11 = objectProto$14.hasOwnProperty;
+function baseKeysIn(object) {
+  if (!isObject_1(object)) {
+    return _nativeKeysIn(object);
+  }
+  var isProto = _isPrototype(object),
+      result = [];
+  for (var key in object) {
+    if (!(key == 'constructor' && (isProto || !hasOwnProperty$11.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _baseKeysIn = baseKeysIn;
+
+function keysIn(object) {
+  return isArrayLike_1(object) ? _arrayLikeKeys(object, true) : _baseKeysIn(object);
+}
+var keysIn_1 = keysIn;
+
+function toPlainObject(value) {
+  return _copyObject(value, keysIn_1(value));
+}
+var toPlainObject_1 = toPlainObject;
+
+function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
+  var objValue = object[key],
+      srcValue = source[key],
+      stacked = stack.get(srcValue);
+  if (stacked) {
+    _assignMergeValue(object, key, stacked);
+    return;
+  }
+  var newValue = customizer
+    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
+    : undefined;
+  var isCommon = newValue === undefined;
+  if (isCommon) {
+    var isArr = isArray_1(srcValue),
+        isBuff = !isArr && isBuffer_1(srcValue),
+        isTyped = !isArr && !isBuff && isTypedArray_1(srcValue);
+    newValue = srcValue;
+    if (isArr || isBuff || isTyped) {
+      if (isArray_1(objValue)) {
+        newValue = objValue;
+      }
+      else if (isArrayLikeObject_1(objValue)) {
+        newValue = _copyArray(objValue);
+      }
+      else if (isBuff) {
+        isCommon = false;
+        newValue = _cloneBuffer(srcValue, true);
+      }
+      else if (isTyped) {
+        isCommon = false;
+        newValue = _cloneTypedArray(srcValue, true);
+      }
+      else {
+        newValue = [];
+      }
+    }
+    else if (isPlainObject_1(srcValue) || isArguments_1(srcValue)) {
+      newValue = objValue;
+      if (isArguments_1(objValue)) {
+        newValue = toPlainObject_1(objValue);
+      }
+      else if (!isObject_1(objValue) || (srcIndex && isFunction_1(objValue))) {
+        newValue = _initCloneObject(srcValue);
+      }
+    }
+    else {
+      isCommon = false;
+    }
+  }
+  if (isCommon) {
+    stack.set(srcValue, newValue);
+    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
+    stack['delete'](srcValue);
+  }
+  _assignMergeValue(object, key, newValue);
+}
+var _baseMergeDeep = baseMergeDeep;
+
+function baseMerge(object, source, srcIndex, customizer, stack) {
+  if (object === source) {
+    return;
+  }
+  _baseFor(source, function(srcValue, key) {
+    if (isObject_1(srcValue)) {
+      stack || (stack = new _Stack);
+      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
+    }
+    else {
+      var newValue = customizer
+        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+        : undefined;
+      if (newValue === undefined) {
+        newValue = srcValue;
+      }
+      _assignMergeValue(object, key, newValue);
+    }
+  }, keysIn_1);
+}
+var _baseMerge = baseMerge;
+
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+var _apply = apply;
+
+var nativeMax = Math.max;
+function overRest(func, start, transform) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = transform(array);
+    return _apply(func, this, otherArgs);
+  };
+}
+var _overRest = overRest;
+
+function constant(value) {
+  return function() {
+    return value;
+  };
+}
+var constant_1 = constant;
+
+var baseSetToString = !_defineProperty ? identity_1 : function(func, string) {
+  return _defineProperty(func, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': constant_1(string),
+    'writable': true
+  });
+};
+var _baseSetToString = baseSetToString;
+
+var HOT_COUNT = 800;
+var HOT_SPAN = 16;
+var nativeNow = Date.now;
+function shortOut(func) {
+  var count = 0,
+      lastCalled = 0;
+  return function() {
+    var stamp = nativeNow(),
+        remaining = HOT_SPAN - (stamp - lastCalled);
+    lastCalled = stamp;
+    if (remaining > 0) {
+      if (++count >= HOT_COUNT) {
+        return arguments[0];
+      }
+    } else {
+      count = 0;
+    }
+    return func.apply(undefined, arguments);
+  };
+}
+var _shortOut = shortOut;
+
+var setToString = _shortOut(_baseSetToString);
+var _setToString = setToString;
+
+function baseRest(func, start) {
+  return _setToString(_overRest(func, start, identity_1), func + '');
+}
+var _baseRest = baseRest;
+
+function isIterateeCall(value, index, object) {
+  if (!isObject_1(object)) {
+    return false;
+  }
+  var type = typeof index;
+  if (type == 'number'
+        ? (isArrayLike_1(object) && _isIndex(index, object.length))
+        : (type == 'string' && index in object)
+      ) {
+    return eq_1(object[index], value);
+  }
+  return false;
+}
+var _isIterateeCall = isIterateeCall;
+
+function createAssigner(assigner) {
+  return _baseRest(function(object, sources) {
+    var index = -1,
+        length = sources.length,
+        customizer = length > 1 ? sources[length - 1] : undefined,
+        guard = length > 2 ? sources[2] : undefined;
+    customizer = (assigner.length > 3 && typeof customizer == 'function')
+      ? (length--, customizer)
+      : undefined;
+    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
+      customizer = length < 3 ? undefined : customizer;
+      length = 1;
+    }
+    object = Object(object);
+    while (++index < length) {
+      var source = sources[index];
+      if (source) {
+        assigner(object, source, index, customizer);
+      }
+    }
+    return object;
+  });
+}
+var _createAssigner = createAssigner;
+
+var merge = _createAssigner(function(object, source, srcIndex) {
+  _baseMerge(object, source, srcIndex);
+});
+var merge_1 = merge;
 
 'use strict';
 var REACT_STATICS = {
@@ -12190,7 +8774,6 @@ var UNTOUCH = exports.UNTOUCH = prefix + 'UNTOUCH';
 var UPDATE_SYNC_ERRORS = exports.UPDATE_SYNC_ERRORS = prefix + 'UPDATE_SYNC_ERRORS';
 var UPDATE_SYNC_WARNINGS = exports.UPDATE_SYNC_WARNINGS = prefix + 'UPDATE_SYNC_WARNINGS';
 });
-unwrapExports(actionTypes);
 
 var actions_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12482,7 +9065,6 @@ var actions = {
 };
 exports.default = actions;
 });
-unwrapExports(actions_1);
 
 var asyncValidation_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12514,54 +9096,6 @@ var asyncValidation = function asyncValidation(fn, start, stop, field) {
 };
 exports.default = asyncValidation;
 });
-unwrapExports(asyncValidation_1);
-
-var defaultShouldAsyncValidate_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var defaultShouldAsyncValidate = function defaultShouldAsyncValidate(_ref) {
-  var initialized = _ref.initialized,
-      trigger = _ref.trigger,
-      pristine = _ref.pristine,
-      syncValidationPasses = _ref.syncValidationPasses;
-  if (!syncValidationPasses) {
-    return false;
-  }
-  switch (trigger) {
-    case 'blur':
-      return true;
-    case 'submit':
-      return !pristine || !initialized;
-    default:
-      return false;
-  }
-};
-exports.default = defaultShouldAsyncValidate;
-});
-unwrapExports(defaultShouldAsyncValidate_1);
-
-var defaultShouldValidate_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var defaultShouldValidate = function defaultShouldValidate(_ref) {
-  var values = _ref.values,
-      nextProps = _ref.nextProps,
-      initialRender = _ref.initialRender,
-      lastFieldValidatorKeys = _ref.lastFieldValidatorKeys,
-      fieldValidatorKeys = _ref.fieldValidatorKeys,
-      structure = _ref.structure;
-  if (initialRender) {
-    return true;
-  }
-  return !structure.deepEqual(values, nextProps && nextProps.values) || !structure.deepEqual(lastFieldValidatorKeys, fieldValidatorKeys);
-};
-exports.default = defaultShouldValidate;
-});
-unwrapExports(defaultShouldValidate_1);
 
 var silenceEvent_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12579,7 +9113,6 @@ var silenceEvent = function silenceEvent(event) {
 };
 exports.default = silenceEvent;
 });
-unwrapExports(silenceEvent_1);
 
 var silenceEvents_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12598,7 +9131,6 @@ var silenceEvents = function silenceEvents(fn) {
 };
 exports.default = silenceEvents;
 });
-unwrapExports(silenceEvents_1);
 
 var generateValidator_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12635,95 +9167,6 @@ var generateValidator = function generateValidator(validators, _ref) {
 };
 exports.default = generateValidator;
 });
-unwrapExports(generateValidator_1);
-
-var lib = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _extendableBuiltin(cls) {
-  function ExtendableBuiltin() {
-    cls.apply(this, arguments);
-  }
-  ExtendableBuiltin.prototype = Object.create(cls.prototype, {
-    constructor: {
-      value: cls,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (Object.setPrototypeOf) {
-    Object.setPrototypeOf(ExtendableBuiltin, cls);
-  } else {
-    ExtendableBuiltin.__proto__ = cls;
-  }
-  return ExtendableBuiltin;
-}
-var ExtendableError = function (_extendableBuiltin2) {
-  _inherits(ExtendableError, _extendableBuiltin2);
-  function ExtendableError() {
-    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    _classCallCheck(this, ExtendableError);
-    var _this = _possibleConstructorReturn(this, (ExtendableError.__proto__ || Object.getPrototypeOf(ExtendableError)).call(this, message));
-    Object.defineProperty(_this, 'message', {
-      configurable: true,
-      enumerable: false,
-      value: message,
-      writable: true
-    });
-    Object.defineProperty(_this, 'name', {
-      configurable: true,
-      enumerable: false,
-      value: _this.constructor.name,
-      writable: true
-    });
-    if (Error.hasOwnProperty('captureStackTrace')) {
-      Error.captureStackTrace(_this, _this.constructor);
-      return _possibleConstructorReturn(_this);
-    }
-    Object.defineProperty(_this, 'stack', {
-      configurable: true,
-      enumerable: false,
-      value: new Error(message).stack,
-      writable: true
-    });
-    return _this;
-  }
-  return ExtendableError;
-}(_extendableBuiltin(Error));
-exports.default = ExtendableError;
-module.exports = exports['default'];
-});
-unwrapExports(lib);
-
-var SubmissionError_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _es6Error2 = _interopRequireDefault(lib);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var SubmissionError = function (_ExtendableError) {
-  _inherits(SubmissionError, _ExtendableError);
-  function SubmissionError(errors) {
-    _classCallCheck(this, SubmissionError);
-    var _this = _possibleConstructorReturn(this, (SubmissionError.__proto__ || Object.getPrototypeOf(SubmissionError)).call(this, 'Submit Validation Failed'));
-    _this.errors = errors;
-    return _this;
-  }
-  return SubmissionError;
-}(_es6Error2.default);
-exports.default = SubmissionError;
-});
-unwrapExports(SubmissionError_1);
 
 var handleSubmit_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12825,104 +9268,19 @@ var handleSubmit = function handleSubmit(submit, props, valid, asyncValidate, fi
 };
 exports.default = handleSubmit;
 });
-unwrapExports(handleSubmit_1);
-
-var hasError = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var getErrorKeys = function getErrorKeys(name, type) {
-  switch (type) {
-    case 'Field':
-      return [name, name + '._error'];
-    case 'FieldArray':
-      return [name + '._error'];
-    default:
-      throw new Error('Unknown field type');
-  }
-};
-var createHasError = function createHasError(_ref) {
-  var getIn = _ref.getIn;
-  var hasError = function hasError(field, syncErrors, asyncErrors, submitErrors) {
-    if (!syncErrors && !asyncErrors && !submitErrors) {
-      return false;
-    }
-    var name = getIn(field, 'name');
-    var type = getIn(field, 'type');
-    return getErrorKeys(name, type).some(function (key) {
-      return getIn(syncErrors, key) || getIn(asyncErrors, key) || getIn(submitErrors, key);
-    });
-  };
-  return hasError;
-};
-exports.default = createHasError;
-});
-unwrapExports(hasError);
-
-var isValid = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _hasError2 = _interopRequireDefault(hasError);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var createIsValid = function createIsValid(structure) {
-  var getIn = structure.getIn,
-      keys = structure.keys;
-  var hasError$$1 = (0, _hasError2.default)(structure);
-  return function (form, getFormState) {
-    var ignoreSubmitErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      var formState = nonNullGetFormState(state);
-      var syncError = getIn(formState, form + '.syncError');
-      if (syncError) {
-        return false;
-      }
-      if (!ignoreSubmitErrors) {
-        var error = getIn(formState, form + '.error');
-        if (error) {
-          return false;
-        }
-      }
-      var syncErrors = getIn(formState, form + '.syncErrors');
-      var asyncErrors = getIn(formState, form + '.asyncErrors');
-      var submitErrors = ignoreSubmitErrors ? undefined : getIn(formState, form + '.submitErrors');
-      if (!syncErrors && !asyncErrors && !submitErrors) {
-        return true;
-      }
-      var registeredFields = getIn(formState, form + '.registeredFields');
-      if (!registeredFields) {
-        return true;
-      }
-      return !keys(registeredFields).filter(function (name) {
-        return getIn(registeredFields, '[\'' + name + '\'].count') > 0;
-      }).some(function (name) {
-        return hasError$$1(getIn(registeredFields, '[\'' + name + '\']'), syncErrors, asyncErrors, submitErrors);
-      });
-    };
-  };
-};
-exports.default = createIsValid;
-});
-unwrapExports(isValid);
 
 var getDisplayName_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var React = _interopRequireWildcard(_react);
+var React$$2 = _interopRequireWildcard(React);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 var getDisplayName = function getDisplayName(Comp) {
   return Comp.displayName || Comp.name || 'Component';
 };
 exports.default = getDisplayName;
 });
-unwrapExports(getDisplayName_1);
 
 var createReduxForm_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -12934,10 +9292,10 @@ var _mapValues3 = _interopRequireDefault(mapValues_1);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var React = _interopRequireWildcard(_react);
+var React$$2 = _interopRequireWildcard(React);
 var _hoistNonReactStatics2 = _interopRequireDefault(hoistNonReactStatics);
 var _isPromise2 = _interopRequireDefault(isPromise_1);
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _propTypes2 = _interopRequireDefault(PropTypes);
 var _actions2 = _interopRequireDefault(actions_1);
 var _asyncValidation2 = _interopRequireDefault(asyncValidation_1);
 var _defaultShouldAsyncValidate2 = _interopRequireDefault(defaultShouldAsyncValidate_1);
@@ -13000,7 +9358,7 @@ var createReduxForm = function createReduxForm(structure) {
       setIn = structure.setIn,
       keys = structure.keys,
       fromJS = structure.fromJS;
-  var isValid$$1 = (0, _isValid2.default)(structure);
+  var isValid$$2 = (0, _isValid2.default)(structure);
   return function (initialConfig) {
     var config = _extends({
       touchOnBlur: true,
@@ -13018,16 +9376,16 @@ var createReduxForm = function createReduxForm(structure) {
       forceUnregisterOnUnmount: false
     }, initialConfig);
     return function (WrappedComponent) {
-      var Form = function (_Component) {
-        _inherits(Form, _Component);
-        function Form() {
+      var Form$$1 = function (_Component) {
+        _inherits(Form$$1, _Component);
+        function Form$$1() {
           var _ref;
           var _temp, _this, _ret;
-          _classCallCheck(this, Form);
+          _classCallCheck(this, Form$$1);
           for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
           }
-          return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Form.__proto__ || Object.getPrototypeOf(Form)).call.apply(_ref, [this].concat(args))), _this), _this.destroyed = false, _this.fieldValidators = {}, _this.lastFieldValidatorKeys = [], _this.fieldWarners = {}, _this.lastFieldWarnerKeys = [], _this.innerOnSubmit = undefined, _this.submitPromise = undefined, _this.getValues = function () {
+          return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Form$$1.__proto__ || Object.getPrototypeOf(Form$$1)).call.apply(_ref, [this].concat(args))), _this), _this.destroyed = false, _this.fieldValidators = {}, _this.lastFieldValidatorKeys = [], _this.fieldWarners = {}, _this.lastFieldWarnerKeys = [], _this.innerOnSubmit = undefined, _this.submitPromise = undefined, _this.getValues = function () {
             return _this.props.values;
           }, _this.isValid = function () {
             return _this.props.valid;
@@ -13145,19 +9503,19 @@ var createReduxForm = function createReduxForm(structure) {
                 if (_this.innerOnSubmit && _this.innerOnSubmit !== _this.submit) {
                   return _this.innerOnSubmit();
                 } else {
-                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
                 }
               }
             } else {
               return (0, _silenceEvents2.default)(function () {
-                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
               });
             }
           }, _this.reset = function () {
             return _this.props.reset();
           }, _temp), _possibleConstructorReturn(_this, _ret);
         }
-        _createClass(Form, [{
+        _createClass(Form$$1, [{
           key: 'getChildContext',
           value: function getChildContext() {
             var _this2 = this;
@@ -13414,7 +9772,7 @@ var createReduxForm = function createReduxForm(structure) {
               anyTouched: anyTouched,
               asyncValidate: this.asyncValidate,
               asyncValidating: asyncValidating
-            }, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch), {
+            }, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch), {
               clearSubmit: clearSubmit,
               destroy: destroy,
               dirty: dirty,
@@ -13440,17 +9798,17 @@ var createReduxForm = function createReduxForm(structure) {
             if (isClassComponent(WrappedComponent)) {
               propsToPass.ref = 'wrapped';
             }
-            return (0, _react.createElement)(WrappedComponent, propsToPass);
+            return (0, React.createElement)(WrappedComponent, propsToPass);
           }
         }]);
-        return Form;
-      }(_react.Component);
-      Form.displayName = 'Form(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
-      Form.WrappedComponent = WrappedComponent;
-      Form.childContextTypes = {
+        return Form$$1;
+      }(React.Component);
+      Form$$1.displayName = 'Form(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
+      Form$$1.WrappedComponent = WrappedComponent;
+      Form$$1.childContextTypes = {
         _reduxForm: _propTypes2.default.object.isRequired
       };
-      Form.propTypes = {
+      Form$$1.propTypes = {
         destroyOnUnmount: _propTypes2.default.bool,
         forceUnregisterOnUnmount: _propTypes2.default.bool,
         form: _propTypes2.default.string.isRequired,
@@ -13467,7 +9825,7 @@ var createReduxForm = function createReduxForm(structure) {
         persistentSubmitErrors: _propTypes2.default.bool,
         registeredFields: _propTypes2.default.any
       };
-      var connector = (0, reactRedux.connect)(function (state, props) {
+      var connector = (0, _reactRedux.connect)(function (state, props) {
         var form = props.form,
             getFormState = props.getFormState,
             initialValues = props.initialValues,
@@ -13491,8 +9849,8 @@ var createReduxForm = function createReduxForm(structure) {
         var syncErrors = getIn(formState, 'syncErrors') || {};
         var syncWarnings = getIn(formState, 'syncWarnings') || {};
         var registeredFields = getIn(formState, 'registeredFields');
-        var valid = isValid$$1(form, getFormState, false)(state);
-        var validExceptSubmit = isValid$$1(form, getFormState, true)(state);
+        var valid = isValid$$2(form, getFormState, false)(state);
+        var validExceptSubmit = isValid$$2(form, getFormState, true)(state);
         var anyTouched = !!getIn(formState, 'anyTouched');
         var submitting = !!getIn(formState, 'submitting');
         var submitFailed = !!getIn(formState, 'submitFailed');
@@ -13534,18 +9892,18 @@ var createReduxForm = function createReduxForm(structure) {
           return change(initialProps.form, field, value, !!initialProps.touchOnChange, !!initialProps.persistentSubmitErrors);
         };
         var boundFocus = bindForm(focus);
-        var connectedFormACs = (0, redux.bindActionCreators)(boundFormACs, dispatch);
+        var connectedFormACs = (0, _redux.bindActionCreators)(boundFormACs, dispatch);
         var connectedArrayACs = {
-          insert: (0, redux.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
-          move: (0, redux.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
-          pop: (0, redux.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
-          push: (0, redux.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
-          remove: (0, redux.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
-          removeAll: (0, redux.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
-          shift: (0, redux.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
-          splice: (0, redux.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
-          swap: (0, redux.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
-          unshift: (0, redux.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
+          insert: (0, _redux.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
+          move: (0, _redux.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
+          pop: (0, _redux.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
+          push: (0, _redux.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
+          remove: (0, _redux.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
+          removeAll: (0, _redux.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
+          shift: (0, _redux.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
+          splice: (0, _redux.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
+          swap: (0, _redux.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
+          unshift: (0, _redux.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
         };
         var computedActions = _extends({}, connectedFormACs, boundArrayACs, {
           blur: boundBlur,
@@ -13558,7 +9916,7 @@ var createReduxForm = function createReduxForm(structure) {
           return computedActions;
         };
       }, undefined, { withRef: true });
-      var ConnectedForm = (0, _hoistNonReactStatics2.default)(connector(Form), WrappedComponent);
+      var ConnectedForm = (0, _hoistNonReactStatics2.default)(connector(Form$$1), WrappedComponent);
       ConnectedForm.defaultProps = config;
       return function (_Component2) {
         _inherits(ReduxForm, _Component2);
@@ -13585,7 +9943,7 @@ var createReduxForm = function createReduxForm(structure) {
             var _props8 = this.props,
                 initialValues = _props8.initialValues,
                 rest = _objectWithoutProperties(_props8, ['initialValues']);
-            return (0, _react.createElement)(ConnectedForm, _extends({}, rest, {
+            return (0, React.createElement)(ConnectedForm, _extends({}, rest, {
               ref: function ref(_ref3) {
                 return _this5.ref = _ref3;
               },
@@ -13629,13 +9987,12 @@ var createReduxForm = function createReduxForm(structure) {
           }
         }]);
         return ReduxForm;
-      }(_react.Component);
+      }(React.Component);
     };
   };
 };
 exports.default = createReduxForm;
 });
-unwrapExports(createReduxForm_1);
 
 var reduxForm = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -13643,2581 +10000,836 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _createReduxForm2 = _interopRequireDefault(createReduxForm_1);
-var _immutable2 = _interopRequireDefault(immutable);
+var _immutable2 = _interopRequireDefault(immutable$4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 exports.default = (0, _createReduxForm2.default)(_immutable2.default);
 });
-var reduxForm$1 = unwrapExports(reduxForm);
 
-var Button_1 = createCommonjsModule(function (module, exports) {
+var deleteInWithCleanUp = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
+var _toPath3 = _interopRequireDefault(toPath_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function createDeleteInWithCleanUp(_ref) {
+  var deepEqual = _ref.deepEqual,
+      empty = _ref.empty,
+      getIn = _ref.getIn,
+      deleteIn = _ref.deleteIn,
+      setIn = _ref.setIn;
+  var deleteInWithCleanUp = function deleteInWithCleanUp(state, path) {
+    if (path[path.length - 1] === ']') {
+      var pathTokens = (0, _toPath3.default)(path);
+      pathTokens.pop();
+      var parent = getIn(state, pathTokens.join('.'));
+      return parent ? setIn(state, path) : state;
+    }
+    var result = state;
+    if (getIn(state, path) !== undefined) {
+      result = deleteIn(state, path);
+    }
+    var dotIndex = path.lastIndexOf('.');
+    if (dotIndex > 0) {
+      var parentPath = path.substring(0, dotIndex);
+      if (parentPath[parentPath.length - 1] !== ']') {
+        var _parent = getIn(result, parentPath);
+        if (deepEqual(_parent, empty)) {
+          return deleteInWithCleanUp(result, parentPath);
+        }
+      }
+    }
+    return result;
+  };
+  return deleteInWithCleanUp;
+}
+exports.default = createDeleteInWithCleanUp;
+});
+
+var createReducer_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _deleteInWithCleanUp2 = _interopRequireDefault(deleteInWithCleanUp);
+var _plain2 = _interopRequireDefault(plain);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  theme: _theme2.default,
-  tag: 'button',
-  color: 'secondary'
+var isReduxFormAction = function isReduxFormAction(action) {
+  return action && action.type && action.type.length > actionTypes.prefix.length && action.type.substring(0, actionTypes.prefix.length) === actionTypes.prefix;
 };
-var ButtonUnstyled = function (_React$Component) {
-  _inherits(ButtonUnstyled, _React$Component);
-  function ButtonUnstyled() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, ButtonUnstyled);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ButtonUnstyled.__proto__ || Object.getPrototypeOf(ButtonUnstyled)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (e) {
-      if (_this.props.disabled) {
-        e.preventDefault();
-        return;
-      }
-      if (_this.props.onClick) {
-        _this.props.onClick(e);
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(ButtonUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _cn;
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          active = _omit.active,
-          disabled = _omit.disabled,
-          block = _omit.block,
-          className = _omit.className,
-          cssModule = _omit.cssModule,
-          dropup = _omit.dropup,
-          color = _omit.color,
-          outline = _omit.outline,
-          size = _omit.size,
-          getRef = _omit.getRef,
-          Tag = _omit.tag,
-          attributes = _objectWithoutProperties(_omit, ['active', 'disabled', 'block', 'className', 'cssModule', 'dropup', 'color', 'outline', 'size', 'getRef', 'tag']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'btn', (_cn = {
-        dropup: dropup,
-        active: active,
-        disabled: disabled
-      }, _defineProperty(_cn, 'btn-' + size, size), _defineProperty(_cn, 'btn-block', block), _cn), 'btn' + (outline ? '-outline' : '') + '-' + color), cssModule);
-      if (attributes.href && Tag === 'button') {
-        Tag = 'a';
-      }
-      return _react2.default.createElement(Tag, _extends({
-        type: Tag === 'button' && attributes.onClick ? 'button' : undefined,
-        className: classes,
-        ref: getRef
-      }, attributes, {
-        onClick: this.onClick
-      }));
-    }
-  }]);
-  return ButtonUnstyled;
-}(_react2.default.Component);
-ButtonUnstyled.propTypes = {
-  active: _propTypes2.default.bool,
-  block: _propTypes2.default.bool,
-  color: _propTypes2.default.string,
-  disabled: _propTypes2.default.bool,
-  outline: _propTypes2.default.bool,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  getRef: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  onClick: _propTypes2.default.func,
-  size: _propTypes2.default.string,
-  dropup: _propTypes2.default.bool,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  theme: _propTypes2.default.object
-};
-var Button = (0, _styledComponents2.default)(ButtonUnstyled).withConfig({
-  displayName: 'Button'
-})(['', ' '], function (props) {
-  return '\n    ' + (0, buttons.button)(props.theme['$enable-shadows'], props.theme['$enable-hover-media-query'], props.theme['$enable-transitions'], props.theme['$enable-rounded'], props.theme['$font-weight-normal'], props.theme['$btn-font-weight'], props.theme['$btn-line-height'], props.theme['$btn-transition'], props.theme['$input-btn-border-width'], props.theme['$btn-padding-x'], props.theme['$btn-padding-y'], props.theme['$font-size-base'], props.theme['$btn-border-radius'], props.theme['$btn-box-shadow'], props.theme['$btn-focus-box-shadow'], props.theme['$btn-active-box-shadow'], props.theme['$cursor-disabled'], props.theme['$link-color'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$btn-link-disabled-color'], props.theme['$btn-padding-x-lg'], props.theme['$btn-padding-y-lg'], props.theme['$font-size-lg'], props.theme['$btn-border-radius-lg'], props.theme['$btn-padding-x-sm'], props.theme['$btn-padding-y-sm'], props.theme['$font-size-sm'], props.theme['$btn-border-radius-sm'], props.theme['$btn-block-spacing-y'], props.theme['$btn-primary-color'], props.theme['$btn-primary-bg'], props.theme['$btn-primary-border'], props.theme['$btn-secondary-color'], props.theme['$btn-secondary-bg'], props.theme['$btn-secondary-border'], props.theme['$btn-info-color'], props.theme['$btn-info-bg'], props.theme['$btn-info-border'], props.theme['$btn-success-color'], props.theme['$btn-success-bg'], props.theme['$btn-success-border'], props.theme['$btn-warning-color'], props.theme['$btn-warning-bg'], props.theme['$btn-warning-border'], props.theme['$btn-danger-color'], props.theme['$btn-danger-bg'], props.theme['$btn-danger-border']) + '\n ';
-});
-Button.defaultProps = defaultProps;
-exports.default = Button;
-module.exports = exports['default'];
-});
-unwrapExports(Button_1);
-
-var navDivider_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.navDivider = navDivider;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$spacer-y': '1rem'
-};
-function navDivider() {
-  var spacerY = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$spacer-y'];
-  var dividerColor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '#e5e5e5';
-  var marginY = '' + _unitUtils2.default.rmUnit(spacerY, _unitUtils2.default.UNIT.REM) / 2 + _unitUtils2.default.UNIT.REM;
-  return '\n    height: 1px;\n    margin: calc(' + marginY + ' / 2) 0;\n    overflow: hidden;\n    background-color: ' + dividerColor + ';\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  navDivider: navDivider
-};
-});
-unwrapExports(navDivider_1);
-
-var buttonGroup_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.buttonGroup = buttonGroup;
-var _unitUtils2 = _interopRequireDefault(unitUtils);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var defaultProps = exports.defaultProps = {
-  '$enable-shadows': true,
-  '$enable-rounded': true,
-  '$input-btn-border-width': '1px',
-  '$btn-padding-x': '1rem',
-  '$btn-active-box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)',
-  '$btn-padding-x-lg': '1.5rem',
-  '$btn-padding-y-lg': '.75rem',
-  '$font-size-lg': '1.25rem',
-  '$btn-border-radius-lg': '.3rem',
-  '$btn-padding-y-sm': '.25rem',
-  '$btn-padding-x-sm': '.5rem',
-  '$font-size-sm': '.875rem',
-  '$btn-border-radius-sm': '.2rem',
-  '$btn-border-width': '1px'
-};
-function buttonGroup() {
-  var $enableShadows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$enable-shadows'];
-  var $enableRounded = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$enable-rounded'];
-  var $inputBtnBorderWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$input-btn-border-width'];
-  var $btnPaddingX = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$btn-padding-x'];
-  var $btnActiveBoxShadow = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$btn-active-box-shadow'];
-  var $btnPaddingXLg = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$btn-padding-x-lg'];
-  var $btnPaddingYLg = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : defaultProps['$btn-padding-y-lg'];
-  var $fontSizeLg = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$font-size-lg'];
-  var $btnBorderRadiusLg = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : defaultProps['$btn-border-radius-lg'];
-  var $btnPaddingXSm = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : defaultProps['$btn-padding-x-sm'];
-  var $btnPaddingYSm = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : defaultProps['$btn-padding-y-sm'];
-  var $fontSizeSm = arguments.length > 11 && arguments[11] !== undefined ? arguments[11] : defaultProps['$font-size-sm'];
-  var $btnBorderRadiusSm = arguments.length > 12 && arguments[12] !== undefined ? arguments[12] : defaultProps['$btn-border-radius-sm'];
-  return ' \n    /*  Make the div behave like a button */\n    &.btn-group,\n    & .btn-group,\n    &.btn-group-vertical,\n    & .btn-group-vertical {\n      position: relative;\n      display: inline-flex;\n      vertical-align: middle; /* match .btn alignment given font-size hack above */\n    \n      > .btn {\n        position: relative;\n        flex: 0 1 auto;\n        margin-bottom: 0;\n    \n        /* Bring the "active" button to the front */\n        &:focus,\n        &:active,\n        &.active {\n          z-index: 2;\n        }\n        ' + (0, hover_1.hover)('\n          z-index: 2;\n        ') + '\n      }\n    }\n    \n    /*  Prevent double borders when buttons are next to each other */\n    &.btn-group,\n    & .btn-group {\n      .btn + .btn,\n      .btn + .btn-group,\n      .btn-group + .btn,\n      .btn-group + .btn-group {\n        margin-left: -' + $inputBtnBorderWidth + ';\n      }\n    }\n    \n    /* Optional: Group multiple button groups together for a toolbar */\n    &.btn-toolbar,\n    & .btn-toolbar {\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: flex-start;\n    \n      .input-group {\n        width: auto;\n      }\n    }\n     \n    &.btn-group,\n    & .btn-group {\n      > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {\n        border-radius: 0;\n      }\n    }\n    \n    /* Set corners individual because sometimes a single button can be in a .btn-group and we need :first-child and :last-child to both match */\n    &.btn-group,\n    & .btn-group {\n      > .btn:first-child {\n        margin-left: 0;\n    \n        &:not(:last-child):not(.dropdown-toggle) {\n          ' + (0, borderRadius_1.borderRightRadius)($enableRounded, '0') + '\n        }\n      }\n    }\n    /* Need .dropdown-toggle since :last-child does not apply given a .dropdown-menu immediately after it */\n    &.btn-group > .btn:last-child:not(:first-child),\n    & .btn-group > .btn:last-child:not(:first-child),\n    &.btn-group > .dropdown-toggle:not(:first-child),\n    & .btn-group > .dropdown-toggle:not(:first-child) {\n      ' + (0, borderRadius_1.borderLeftRadius)($enableRounded, '0') + '\n    }\n    \n    /* Custom edits for including btn-groups within btn-groups (useful for including dropdown buttons within a btn-group) */\n    &.btn-group > .btn-group,\n    & .btn-group > .btn-group {\n      float: left;\n    }\n    &.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn,\n    & .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {\n      border-radius: 0;\n    }\n    &.btn-group > .btn-group:first-child:not(:last-child),\n    & .btn-group > .btn-group:first-child:not(:last-child) {\n      > .btn:last-child,\n      > .dropdown-toggle {\n        ' + (0, borderRadius_1.borderRightRadius)($enableRounded, '0') + '\n      }\n    }\n    &.btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child,\n    & .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child {\n      ' + (0, borderRadius_1.borderLeftRadius)($enableRounded, '0') + '\n    }\n    \n    /* On active and open, do not show outline */\n    &.btn-group .dropdown-toggle:active,\n    & .btn-group .dropdown-toggle:active,\n    &.btn-group.open .dropdown-toggle,\n    & .btn-group.open .dropdown-toggle {\n      outline: 0;\n    }\n    \n    \n    /* \n    Sizing Remix the default button sizing classes into new ones for easier manipulation.\n    */\n    \n    &.btn-group-sm > .btn,\n    & .btn-group-sm > .btn { \n      ' + (0, buttons.buttonSize)($enableRounded, $btnPaddingYSm, $btnPaddingXSm, $fontSizeSm, $btnBorderRadiusSm) + '\n    }\n    &.btn-group-lg > .btn,\n    & .btn-group-lg > .btn {\n      ' + (0, buttons.buttonSize)($enableRounded, $btnPaddingYLg, $btnPaddingXLg, $fontSizeLg, $btnBorderRadiusLg) + '\n    }\n    \n    /*\n     Split button dropdowns\n    */\n    \n    & .btn + .dropdown-toggle-split {\n      padding-right: ' + _unitUtils2.default.math.multiply($btnPaddingX, 0.75) + ';\n      padding-left: ' + _unitUtils2.default.math.multiply($btnPaddingX, 0.75) + ';\n    \n      &::after {\n        margin-left: 0;\n      }\n    }\n    \n    & .btn-sm + .dropdown-toggle-split {\n      padding-right: ' + _unitUtils2.default.math.multiply($btnPaddingXSm, 0.75) + ';\n      padding-left: ' + _unitUtils2.default.math.multiply($btnPaddingXSm, 0.75) + ';\n    }\n    \n    & .btn-lg + .dropdown-toggle-split {\n      padding-right: ' + _unitUtils2.default.math.multiply($btnPaddingXLg, 0.75) + ';\n      padding-left: ' + _unitUtils2.default.math.multiply($btnPaddingXLg, 0.75) + ';\n    }\n    \n    \n    /* The clickable button for toggling the menu */\n    /* Remove the gradient and set the same inset shadow as the :active state */\n    &.btn-group.open .dropdown-toggle {\n      ' + (0, boxShadow_1.boxShadow)($enableShadows, $btnActiveBoxShadow) + '\n    \n      /* Show no shadow for .btn-link since it has no other button styles. */\n      &.btn-link {\n        ' + (0, boxShadow_1.boxShadow)($enableShadows, 'none') + '\n      }\n    }\n\n    /*\n     Vertical button groups\n    */\n    \n    &.btn-group-vertical,\n    & .btn-group-vertical {\n      display: inline-flex;\n      flex-direction: column;\n      align-items: flex-start;\n      justify-content: center;\n    \n      .btn,\n      .btn-group {\n        width: 100%;\n      }\n      \n      > .btn + .btn,\n      > .btn + .btn-group,\n      > .btn-group + .btn,\n      > .btn-group + .btn-group {\n        margin-top: -' + $inputBtnBorderWidth + ';\n        margin-left: 0;\n      }\n    }\n    \n    &.btn-group-vertical > .btn,\n    & .btn-group-vertical > .btn {\n      &:not(:first-child):not(:last-child) {\n        border-radius: 0;\n      }\n      &:first-child:not(:last-child) {\n        ' + (0, borderRadius_1.borderBottomRadius)($enableRounded, '0') + '\n      }\n      &:last-child:not(:first-child) {\n        ' + (0, borderRadius_1.borderTopRadius)($enableRounded, '0') + '\n      }\n    }\n    \n    &.btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn,\n    & .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {\n      border-radius: 0;\n    }\n    \n    &.btn-group-vertical > .btn-group:first-child:not(:last-child),\n    & .btn-group-vertical > .btn-group:first-child:not(:last-child) {\n      > .btn:last-child,\n      > .dropdown-toggle {\n        ' + (0, borderRadius_1.borderBottomRadius)($enableRounded, '0') + '      \n      }\n    }\n    &.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child,\n    & .btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {\n      ' + (0, borderRadius_1.borderTopRadius)($enableRounded, '0') + '\n    }\n    \n    &.btn-group {\n      > .btn,\n      > .btn-group > .btn {\n        input[type="radio"],\n        input[type="checkbox"] {\n          position: absolute;\n          clip: rect(0,0,0,0);\n          pointer-events: none;\n        }\n      }\n    }\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  buttonGroup: buttonGroup
-};
-});
-unwrapExports(buttonGroup_1);
-
-var DropdownMenu_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var propTypes = {
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  children: _propTypes2.default.node.isRequired,
-  right: _propTypes2.default.bool,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-var defaultProps = {
-  tag: 'div'
-};
-var contextTypes = {
-  isOpen: _propTypes2.default.bool.isRequired
-};
-var DropdownMenu = function DropdownMenu(props, context) {
-  var className = props.className,
-      cssModule = props.cssModule,
-      right = props.right,
-      Tag = props.tag,
-      attributes = _objectWithoutProperties(props, ['className', 'cssModule', 'right', 'tag']);
-  var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, 'dropdown-menu', { 'dropdown-menu-right': right }), cssModule);
-  return _react2.default.createElement(Tag, _extends({}, attributes, { tabIndex: '-1', 'aria-hidden': !context.isOpen, role: 'menu', className: classes }));
-};
-DropdownMenu.propTypes = propTypes;
-DropdownMenu.defaultProps = defaultProps;
-DropdownMenu.contextTypes = contextTypes;
-exports.default = DropdownMenu;
-module.exports = exports['default'];
-});
-unwrapExports(DropdownMenu_1);
-
-var tether = createCommonjsModule(function (module, exports) {
-(function(root, factory) {
-  if (typeof undefined === 'function' && undefined.amd) {
-    undefined(factory);
-  } else {
-    module.exports = factory(commonjsRequire, exports, module);
-  }
-}(commonjsGlobal, function(require, exports, module) {
-'use strict';
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-var _get = function get(_x8, _x9, _x10) { var _again = true; _function: while (_again) { var object = _x8, property = _x9, receiver = _x10; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x8 = parent; _x9 = property; _x10 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-var TetherBase = { modules: [] };
-var zeroElement = null;
-var deferred = [];
-var defer = function defer(fn) {
-  deferred.push(fn);
-};
-var flush = function flush() {
-  var fn = undefined;
-  while (fn = deferred.pop()) {
-    fn();
-  }
-};
-function extend() {
-  var out = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  args.forEach(function (obj) {
-    if (obj) {
-      for (var key in obj) {
-        if (({}).hasOwnProperty.call(obj, key)) {
-          out[key] = obj[key];
-        }
-      }
-    }
-  });
-  return out;
-}
-function getClassName(el) {
-  if (el.className instanceof el.ownerDocument.defaultView.SVGAnimatedString) {
-    return el.className.baseVal;
-  }
-  return el.className;
-}
-function setClassName(el, className) {
-  el.setAttribute('class', className);
-}
-function getActualBoundingClientRect(node) {
-  var boundingRect = node.getBoundingClientRect();
-  var rect = {};
-  for (var k in boundingRect) {
-    rect[k] = boundingRect[k];
-  }
-  if (node.ownerDocument !== document) {
-    var _frameElement = node.ownerDocument.defaultView.frameElement;
-    if (_frameElement) {
-      var frameRect = getActualBoundingClientRect(_frameElement);
-      rect.top += frameRect.top;
-      rect.bottom += frameRect.top;
-      rect.left += frameRect.left;
-      rect.right += frameRect.left;
-    }
-  }
-  return rect;
-}
-function getScrollParents(el) {
-  var computedStyle = getComputedStyle(el) || {};
-  var position = computedStyle.position;
-  var parents = [];
-  if (position === 'fixed') {
-    return [el];
-  }
-  var parent = el;
-  while ((parent = parent.parentNode) && parent && parent.nodeType === 1) {
-    var style = undefined;
-    try {
-      style = getComputedStyle(parent);
-    } catch (err) {}
-    if (typeof style === 'undefined' || style === null) {
-      parents.push(parent);
-      return parents;
-    }
-    var _style = style;
-    var overflow = _style.overflow;
-    var overflowX = _style.overflowX;
-    var overflowY = _style.overflowY;
-    if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) {
-      if (position !== 'absolute' || ['relative', 'absolute', 'fixed'].indexOf(style.position) >= 0) {
-        parents.push(parent);
-      }
-    }
-  }
-  parents.push(el.ownerDocument.body);
-  if (el.ownerDocument !== document) {
-    parents.push(el.ownerDocument.defaultView);
-  }
-  return parents;
-}
-var uniqueId = (function () {
-  var id = 0;
-  return function () {
-    return ++id;
+function createReducer(structure) {
+  var _behaviors;
+  var deepEqual = structure.deepEqual,
+      empty = structure.empty,
+      forEach = structure.forEach,
+      getIn = structure.getIn,
+      setIn = structure.setIn,
+      deleteIn = structure.deleteIn,
+      fromJS = structure.fromJS,
+      keys = structure.keys,
+      size = structure.size,
+      some = structure.some,
+      splice = structure.splice;
+  var deleteInWithCleanUp$$1 = (0, _deleteInWithCleanUp2.default)(structure);
+  var plainDeleteInWithCleanUp = (0, _deleteInWithCleanUp2.default)(_plain2.default);
+  var doSplice = function doSplice(state, key, field, index, removeNum, value, force) {
+    var existing = getIn(state, key + '.' + field);
+    return existing || force ? setIn(state, key + '.' + field, splice(existing, index, removeNum, value)) : state;
   };
-})();
-var zeroPosCache = {};
-var getOrigin = function getOrigin() {
-  var node = zeroElement;
-  if (!node || !document.body.contains(node)) {
-    node = document.createElement('div');
-    node.setAttribute('data-tether-id', uniqueId());
-    extend(node.style, {
-      top: 0,
-      left: 0,
-      position: 'absolute'
-    });
-    document.body.appendChild(node);
-    zeroElement = node;
-  }
-  var id = node.getAttribute('data-tether-id');
-  if (typeof zeroPosCache[id] === 'undefined') {
-    zeroPosCache[id] = getActualBoundingClientRect(node);
-    defer(function () {
-      delete zeroPosCache[id];
-    });
-  }
-  return zeroPosCache[id];
-};
-function removeUtilElements() {
-  if (zeroElement) {
-    document.body.removeChild(zeroElement);
-  }
-  zeroElement = null;
-}
-function getBounds(el) {
-  var doc = undefined;
-  if (el === document) {
-    doc = document;
-    el = document.documentElement;
-  } else {
-    doc = el.ownerDocument;
-  }
-  var docEl = doc.documentElement;
-  var box = getActualBoundingClientRect(el);
-  var origin = getOrigin();
-  box.top -= origin.top;
-  box.left -= origin.left;
-  if (typeof box.width === 'undefined') {
-    box.width = document.body.scrollWidth - box.left - box.right;
-  }
-  if (typeof box.height === 'undefined') {
-    box.height = document.body.scrollHeight - box.top - box.bottom;
-  }
-  box.top -= docEl.clientTop;
-  box.left -= docEl.clientLeft;
-  box.right = doc.body.clientWidth - box.width - box.left;
-  box.bottom = doc.body.clientHeight - box.height - box.top;
-  return box;
-}
-function getOffsetParent(el) {
-  return el.offsetParent || document.documentElement;
-}
-var _scrollBarSize = null;
-function getScrollBarSize() {
-  if (_scrollBarSize) {
-    return _scrollBarSize;
-  }
-  var inner = document.createElement('div');
-  inner.style.width = '100%';
-  inner.style.height = '200px';
-  var outer = document.createElement('div');
-  extend(outer.style, {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    pointerEvents: 'none',
-    visibility: 'hidden',
-    width: '200px',
-    height: '150px',
-    overflow: 'hidden'
-  });
-  outer.appendChild(inner);
-  document.body.appendChild(outer);
-  var widthContained = inner.offsetWidth;
-  outer.style.overflow = 'scroll';
-  var widthScroll = inner.offsetWidth;
-  if (widthContained === widthScroll) {
-    widthScroll = outer.clientWidth;
-  }
-  document.body.removeChild(outer);
-  var width = widthContained - widthScroll;
-  _scrollBarSize = { width: width, height: width };
-  return _scrollBarSize;
-}
-function removeClass(el, name) {
-  if (typeof el.classList !== 'undefined') {
-    name.split(' ').forEach(function (cls) {
-      if (cls.trim()) {
-        el.classList.remove(cls);
-      }
-    });
-  } else {
-    var regex = new RegExp('(^| )' + name.split(' ').join('|') + '( |$)', 'gi');
-    var className = getClassName(el).replace(regex, ' ');
-    setClassName(el, className);
-  }
-}
-function addClass(el, name) {
-  if (typeof el.classList !== 'undefined') {
-    name.split(' ').forEach(function (cls) {
-      if (cls.trim()) {
-        el.classList.add(cls);
-      }
-    });
-  } else {
-    removeClass(el, name);
-    var cls = getClassName(el) + (' ' + name);
-    setClassName(el, cls);
-  }
-}
-function hasClass(el, name) {
-  if (typeof el.classList !== 'undefined') {
-    return el.classList.contains(name);
-  }
-  var className = getClassName(el);
-  return new RegExp('(^| )' + name + '( |$)', 'gi').test(className);
-}
-function updateClasses(el, add, all) {
-  all.forEach(function (cls) {
-    if (add.indexOf(cls) === -1 && hasClass(el, cls)) {
-      removeClass(el, cls);
-    }
-  });
-  add.forEach(function (cls) {
-    if (!hasClass(el, cls)) {
-      addClass(el, cls);
-    }
-  });
-}
-var Evented = (function () {
-  function Evented() {
-    _classCallCheck(this, Evented);
-  }
-  _createClass(Evented, [{
-    key: 'on',
-    value: function on(event, handler, ctx) {
-      var once = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
-      if (typeof this.bindings === 'undefined') {
-        this.bindings = {};
-      }
-      if (typeof this.bindings[event] === 'undefined') {
-        this.bindings[event] = [];
-      }
-      this.bindings[event].push({ handler: handler, ctx: ctx, once: once });
-    }
-  }, {
-    key: 'once',
-    value: function once(event, handler, ctx) {
-      this.on(event, handler, ctx, true);
-    }
-  }, {
-    key: 'off',
-    value: function off(event, handler) {
-      if (typeof this.bindings === 'undefined' || typeof this.bindings[event] === 'undefined') {
-        return;
-      }
-      if (typeof handler === 'undefined') {
-        delete this.bindings[event];
-      } else {
-        var i = 0;
-        while (i < this.bindings[event].length) {
-          if (this.bindings[event][i].handler === handler) {
-            this.bindings[event].splice(i, 1);
-          } else {
-            ++i;
-          }
-        }
-      }
-    }
-  }, {
-    key: 'trigger',
-    value: function trigger(event) {
-      if (typeof this.bindings !== 'undefined' && this.bindings[event]) {
-        var i = 0;
-        for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-          args[_key2 - 1] = arguments[_key2];
-        }
-        while (i < this.bindings[event].length) {
-          var _bindings$event$i = this.bindings[event][i];
-          var handler = _bindings$event$i.handler;
-          var ctx = _bindings$event$i.ctx;
-          var once = _bindings$event$i.once;
-          var context = ctx;
-          if (typeof context === 'undefined') {
-            context = this;
-          }
-          handler.apply(context, args);
-          if (once) {
-            this.bindings[event].splice(i, 1);
-          } else {
-            ++i;
-          }
-        }
-      }
-    }
-  }]);
-  return Evented;
-})();
-function within(a, b) {
-  var diff = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
-  return a + diff >= b && b >= a - diff;
-}
-var transformKey = (function () {
-  if (typeof document === 'undefined') {
-    return '';
-  }
-  var el = document.createElement('div');
-  var transforms = ['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform'];
-  for (var i = 0; i < transforms.length; ++i) {
-    var key = transforms[i];
-    if (el.style[key] !== undefined) {
-      return key;
-    }
-  }
-  return '';
-})();
-var tethers = [];
-var position = function position() {
-  tethers.forEach(function (tether) {
-    tether.position(false);
-  });
-  flush();
-};
-function now() {
-  if (typeof performance !== 'undefined' && typeof performance.now !== 'undefined') {
-    return performance.now();
-  }
-  return +new Date();
-}
-(function () {
-  var lastCall = null;
-  var lastDuration = null;
-  var pendingTimeout = null;
-  var tick = function tick() {
-    if (typeof lastDuration !== 'undefined' && lastDuration > 16) {
-      lastDuration = Math.min(lastDuration - 16, 250);
-      pendingTimeout = setTimeout(tick, 250);
-      return;
-    }
-    if (typeof lastCall !== 'undefined' && now() - lastCall < 10) {
-      return;
-    }
-    if (pendingTimeout != null) {
-      clearTimeout(pendingTimeout);
-      pendingTimeout = null;
-    }
-    lastCall = now();
-    position();
-    lastDuration = now() - lastCall;
+  var doPlainSplice = function doPlainSplice(state, key, field, index, removeNum, value, force) {
+    var slice = getIn(state, key);
+    var existing = _plain2.default.getIn(slice, field);
+    return existing || force ? setIn(state, key, _plain2.default.setIn(slice, field, _plain2.default.splice(existing, index, removeNum, value))) : state;
   };
-  if (typeof window !== 'undefined' && typeof window.addEventListener !== 'undefined') {
-    ['resize', 'scroll', 'touchmove'].forEach(function (event) {
-      window.addEventListener(event, tick);
-    });
-  }
-})();
-var MIRROR_LR = {
-  center: 'center',
-  left: 'right',
-  right: 'left'
-};
-var MIRROR_TB = {
-  middle: 'middle',
-  top: 'bottom',
-  bottom: 'top'
-};
-var OFFSET_MAP = {
-  top: 0,
-  left: 0,
-  middle: '50%',
-  center: '50%',
-  bottom: '100%',
-  right: '100%'
-};
-var autoToFixedAttachment = function autoToFixedAttachment(attachment, relativeToAttachment) {
-  var left = attachment.left;
-  var top = attachment.top;
-  if (left === 'auto') {
-    left = MIRROR_LR[relativeToAttachment.left];
-  }
-  if (top === 'auto') {
-    top = MIRROR_TB[relativeToAttachment.top];
-  }
-  return { left: left, top: top };
-};
-var attachmentToOffset = function attachmentToOffset(attachment) {
-  var left = attachment.left;
-  var top = attachment.top;
-  if (typeof OFFSET_MAP[attachment.left] !== 'undefined') {
-    left = OFFSET_MAP[attachment.left];
-  }
-  if (typeof OFFSET_MAP[attachment.top] !== 'undefined') {
-    top = OFFSET_MAP[attachment.top];
-  }
-  return { left: left, top: top };
-};
-function addOffset() {
-  var out = { top: 0, left: 0 };
-  for (var _len3 = arguments.length, offsets = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-    offsets[_key3] = arguments[_key3];
-  }
-  offsets.forEach(function (_ref) {
-    var top = _ref.top;
-    var left = _ref.left;
-    if (typeof top === 'string') {
-      top = parseFloat(top, 10);
+  var rootKeys = ['values', 'fields', 'submitErrors', 'asyncErrors'];
+  var arraySplice = function arraySplice(state, field, index, removeNum, value) {
+    var result = state;
+    var nonValuesValue = value != null ? empty : undefined;
+    result = doSplice(result, 'values', field, index, removeNum, value, true);
+    result = doSplice(result, 'fields', field, index, removeNum, nonValuesValue);
+    result = doPlainSplice(result, 'syncErrors', field, index, removeNum, undefined);
+    result = doPlainSplice(result, 'syncWarnings', field, index, removeNum, undefined);
+    result = doSplice(result, 'submitErrors', field, index, removeNum, undefined);
+    result = doSplice(result, 'asyncErrors', field, index, removeNum, undefined);
+    return result;
+  };
+  var behaviors = (_behaviors = {}, _defineProperty(_behaviors, actionTypes.ARRAY_INSERT, function (state, _ref) {
+    var _ref$meta = _ref.meta,
+        field = _ref$meta.field,
+        index = _ref$meta.index,
+        payload = _ref.payload;
+    return arraySplice(state, field, index, 0, payload);
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_MOVE, function (state, _ref2) {
+    var _ref2$meta = _ref2.meta,
+        field = _ref2$meta.field,
+        from = _ref2$meta.from,
+        to = _ref2$meta.to;
+    var array = getIn(state, 'values.' + field);
+    var length = array ? size(array) : 0;
+    var result = state;
+    if (length) {
+      rootKeys.forEach(function (key) {
+        var path = key + '.' + field;
+        if (getIn(result, path)) {
+          var value = getIn(result, path + '[' + from + ']');
+          result = setIn(result, path, splice(getIn(result, path), from, 1));
+          result = setIn(result, path, splice(getIn(result, path), to, 0, value));
+        }
+      });
     }
-    if (typeof left === 'string') {
-      left = parseFloat(left, 10);
-    }
-    out.top += top;
-    out.left += left;
-  });
-  return out;
-}
-function offsetToPx(offset, size) {
-  if (typeof offset.left === 'string' && offset.left.indexOf('%') !== -1) {
-    offset.left = parseFloat(offset.left, 10) / 100 * size.width;
-  }
-  if (typeof offset.top === 'string' && offset.top.indexOf('%') !== -1) {
-    offset.top = parseFloat(offset.top, 10) / 100 * size.height;
-  }
-  return offset;
-}
-var parseOffset = function parseOffset(value) {
-  var _value$split = value.split(' ');
-  var _value$split2 = _slicedToArray(_value$split, 2);
-  var top = _value$split2[0];
-  var left = _value$split2[1];
-  return { top: top, left: left };
-};
-var parseAttachment = parseOffset;
-var TetherClass = (function (_Evented) {
-  _inherits(TetherClass, _Evented);
-  function TetherClass(options) {
-    var _this = this;
-    _classCallCheck(this, TetherClass);
-    _get(Object.getPrototypeOf(TetherClass.prototype), 'constructor', this).call(this);
-    this.position = this.position.bind(this);
-    tethers.push(this);
-    this.history = [];
-    this.setOptions(options, false);
-    TetherBase.modules.forEach(function (module) {
-      if (typeof module.initialize !== 'undefined') {
-        module.initialize.call(_this);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_POP, function (state, _ref3) {
+    var field = _ref3.meta.field;
+    var array = getIn(state, 'values.' + field);
+    var length = array ? size(array) : 0;
+    return length ? arraySplice(state, field, length - 1, 1) : state;
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_PUSH, function (state, _ref4) {
+    var field = _ref4.meta.field,
+        payload = _ref4.payload;
+    var array = getIn(state, 'values.' + field);
+    var length = array ? size(array) : 0;
+    return arraySplice(state, field, length, 0, payload);
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_REMOVE, function (state, _ref5) {
+    var _ref5$meta = _ref5.meta,
+        field = _ref5$meta.field,
+        index = _ref5$meta.index;
+    return arraySplice(state, field, index, 1);
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_REMOVE_ALL, function (state, _ref6) {
+    var field = _ref6.meta.field;
+    var array = getIn(state, 'values.' + field);
+    var length = array ? size(array) : 0;
+    return length ? arraySplice(state, field, 0, length) : state;
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_SHIFT, function (state, _ref7) {
+    var field = _ref7.meta.field;
+    return arraySplice(state, field, 0, 1);
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_SPLICE, function (state, _ref8) {
+    var _ref8$meta = _ref8.meta,
+        field = _ref8$meta.field,
+        index = _ref8$meta.index,
+        removeNum = _ref8$meta.removeNum,
+        payload = _ref8.payload;
+    return arraySplice(state, field, index, removeNum, payload);
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_SWAP, function (state, _ref9) {
+    var _ref9$meta = _ref9.meta,
+        field = _ref9$meta.field,
+        indexA = _ref9$meta.indexA,
+        indexB = _ref9$meta.indexB;
+    var result = state;
+    rootKeys.forEach(function (key) {
+      var valueA = getIn(result, key + '.' + field + '[' + indexA + ']');
+      var valueB = getIn(result, key + '.' + field + '[' + indexB + ']');
+      if (valueA !== undefined || valueB !== undefined) {
+        result = setIn(result, key + '.' + field + '[' + indexA + ']', valueB);
+        result = setIn(result, key + '.' + field + '[' + indexB + ']', valueA);
       }
     });
-    this.position();
-  }
-  _createClass(TetherClass, [{
-    key: 'getClass',
-    value: function getClass() {
-      var key = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-      var classes = this.options.classes;
-      if (typeof classes !== 'undefined' && classes[key]) {
-        return this.options.classes[key];
-      }
-      if (this.options.classPrefix) {
-        return this.options.classPrefix + '-' + key;
-      }
-      return key;
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.ARRAY_UNSHIFT, function (state, _ref10) {
+    var field = _ref10.meta.field,
+        payload = _ref10.payload;
+    return arraySplice(state, field, 0, 0, payload);
+  }), _defineProperty(_behaviors, actionTypes.AUTOFILL, function (state, _ref11) {
+    var field = _ref11.meta.field,
+        payload = _ref11.payload;
+    var result = state;
+    result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + field);
+    result = deleteInWithCleanUp$$1(result, 'submitErrors.' + field);
+    result = setIn(result, 'fields.' + field + '.autofilled', true);
+    result = setIn(result, 'values.' + field, payload);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.BLUR, function (state, _ref12) {
+    var _ref12$meta = _ref12.meta,
+        field = _ref12$meta.field,
+        touch = _ref12$meta.touch,
+        payload = _ref12.payload;
+    var result = state;
+    var initial = getIn(result, 'initial.' + field);
+    if (initial === undefined && payload === '') {
+      result = deleteInWithCleanUp$$1(result, 'values.' + field);
+    } else if (payload !== undefined) {
+      result = setIn(result, 'values.' + field, payload);
     }
-  }, {
-    key: 'setOptions',
-    value: function setOptions(options) {
-      var _this2 = this;
-      var pos = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
-      var defaults = {
-        offset: '0 0',
-        targetOffset: '0 0',
-        targetAttachment: 'auto auto',
-        classPrefix: 'tether'
-      };
-      this.options = extend(defaults, options);
-      var _options = this.options;
-      var element = _options.element;
-      var target = _options.target;
-      var targetModifier = _options.targetModifier;
-      this.element = element;
-      this.target = target;
-      this.targetModifier = targetModifier;
-      if (this.target === 'viewport') {
-        this.target = document.body;
-        this.targetModifier = 'visible';
-      } else if (this.target === 'scroll-handle') {
-        this.target = document.body;
-        this.targetModifier = 'scroll-handle';
-      }
-      ['element', 'target'].forEach(function (key) {
-        if (typeof _this2[key] === 'undefined') {
-          throw new Error('Tether Error: Both element and target must be defined');
-        }
-        if (typeof _this2[key].jquery !== 'undefined') {
-          _this2[key] = _this2[key][0];
-        } else if (typeof _this2[key] === 'string') {
-          _this2[key] = document.querySelector(_this2[key]);
-        }
-      });
-      addClass(this.element, this.getClass('element'));
-      if (this.options.addTargetClasses !== false) {
-        addClass(this.target, this.getClass('target'));
-      }
-      if (!this.options.attachment) {
-        throw new Error('Tether Error: You must provide an attachment');
-      }
-      this.targetAttachment = parseAttachment(this.options.targetAttachment);
-      this.attachment = parseAttachment(this.options.attachment);
-      this.offset = parseOffset(this.options.offset);
-      this.targetOffset = parseOffset(this.options.targetOffset);
-      if (typeof this.scrollParents !== 'undefined') {
-        this.disable();
-      }
-      if (this.targetModifier === 'scroll-handle') {
-        this.scrollParents = [this.target];
-      } else {
-        this.scrollParents = getScrollParents(this.target);
-      }
-      if (this.options.enabled !== false) {
-        this.enable(pos);
-      }
+    if (field === getIn(result, 'active')) {
+      result = deleteIn(result, 'active');
     }
-  }, {
-    key: 'getTargetBounds',
-    value: function getTargetBounds() {
-      if (typeof this.targetModifier !== 'undefined') {
-        if (this.targetModifier === 'visible') {
-          if (this.target === document.body) {
-            return { top: pageYOffset, left: pageXOffset, height: innerHeight, width: innerWidth };
-          }
-          var bounds = getBounds(this.target);
-          var out = {
-            height: bounds.height,
-            width: bounds.width,
-            top: bounds.top,
-            left: bounds.left
-          };
-          out.height = Math.min(out.height, bounds.height - (pageYOffset - bounds.top));
-          out.height = Math.min(out.height, bounds.height - (bounds.top + bounds.height - (pageYOffset + innerHeight)));
-          out.height = Math.min(innerHeight, out.height);
-          out.height -= 2;
-          out.width = Math.min(out.width, bounds.width - (pageXOffset - bounds.left));
-          out.width = Math.min(out.width, bounds.width - (bounds.left + bounds.width - (pageXOffset + innerWidth)));
-          out.width = Math.min(innerWidth, out.width);
-          out.width -= 2;
-          if (out.top < pageYOffset) {
-            out.top = pageYOffset;
-          }
-          if (out.left < pageXOffset) {
-            out.left = pageXOffset;
-          }
-          return out;
-        }
-        if (this.targetModifier === 'scroll-handle') {
-          var bounds = undefined;
-          var target = this.target;
-          if (target === document.body) {
-            target = document.documentElement;
-            bounds = {
-              left: pageXOffset,
-              top: pageYOffset,
-              height: innerHeight,
-              width: innerWidth
-            };
-          } else {
-            bounds = getBounds(target);
-          }
-          var style = getComputedStyle(target);
-          var hasBottomScroll = target.scrollWidth > target.clientWidth || [style.overflow, style.overflowX].indexOf('scroll') >= 0 || this.target !== document.body;
-          var scrollBottom = 0;
-          if (hasBottomScroll) {
-            scrollBottom = 15;
-          }
-          var height = bounds.height - parseFloat(style.borderTopWidth) - parseFloat(style.borderBottomWidth) - scrollBottom;
-          var out = {
-            width: 15,
-            height: height * 0.975 * (height / target.scrollHeight),
-            left: bounds.left + bounds.width - parseFloat(style.borderLeftWidth) - 15
-          };
-          var fitAdj = 0;
-          if (height < 408 && this.target === document.body) {
-            fitAdj = -0.00011 * Math.pow(height, 2) - 0.00727 * height + 22.58;
-          }
-          if (this.target !== document.body) {
-            out.height = Math.max(out.height, 24);
-          }
-          var scrollPercentage = this.target.scrollTop / (target.scrollHeight - height);
-          out.top = scrollPercentage * (height - out.height - fitAdj) + bounds.top + parseFloat(style.borderTopWidth);
-          if (this.target === document.body) {
-            out.height = Math.max(out.height, 24);
-          }
-          return out;
-        }
-      }
-      return getBounds(this.target);
+    result = deleteIn(result, 'fields.' + field + '.active');
+    if (touch) {
+      result = setIn(result, 'fields.' + field + '.touched', true);
+      result = setIn(result, 'anyTouched', true);
     }
-  }, {
-    key: 'clearCache',
-    value: function clearCache() {
-      this._cache = {};
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.CHANGE, function (state, _ref13) {
+    var _ref13$meta = _ref13.meta,
+        field = _ref13$meta.field,
+        touch = _ref13$meta.touch,
+        persistentSubmitErrors = _ref13$meta.persistentSubmitErrors,
+        payload = _ref13.payload;
+    var result = state;
+    var initial = getIn(result, 'initial.' + field);
+    if (initial === undefined && payload === '') {
+      result = deleteInWithCleanUp$$1(result, 'values.' + field);
+    } else if (payload !== undefined) {
+      result = setIn(result, 'values.' + field, payload);
     }
-  }, {
-    key: 'cache',
-    value: function cache(k, getter) {
-      if (typeof this._cache === 'undefined') {
-        this._cache = {};
-      }
-      if (typeof this._cache[k] === 'undefined') {
-        this._cache[k] = getter.call(this);
-      }
-      return this._cache[k];
+    result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + field);
+    if (!persistentSubmitErrors) {
+      result = deleteInWithCleanUp$$1(result, 'submitErrors.' + field);
     }
-  }, {
-    key: 'enable',
-    value: function enable() {
-      var _this3 = this;
-      var pos = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-      if (this.options.addTargetClasses !== false) {
-        addClass(this.target, this.getClass('enabled'));
-      }
-      addClass(this.element, this.getClass('enabled'));
-      this.enabled = true;
-      this.scrollParents.forEach(function (parent) {
-        if (parent !== _this3.target.ownerDocument) {
-          parent.addEventListener('scroll', _this3.position);
-        }
-      });
-      if (pos) {
-        this.position();
-      }
+    result = deleteInWithCleanUp$$1(result, 'fields.' + field + '.autofilled');
+    if (touch) {
+      result = setIn(result, 'fields.' + field + '.touched', true);
+      result = setIn(result, 'anyTouched', true);
     }
-  }, {
-    key: 'disable',
-    value: function disable() {
-      var _this4 = this;
-      removeClass(this.target, this.getClass('enabled'));
-      removeClass(this.element, this.getClass('enabled'));
-      this.enabled = false;
-      if (typeof this.scrollParents !== 'undefined') {
-        this.scrollParents.forEach(function (parent) {
-          parent.removeEventListener('scroll', _this4.position);
-        });
-      }
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.CLEAR_SUBMIT, function (state) {
+    return deleteIn(state, 'triggerSubmit');
+  }), _defineProperty(_behaviors, actionTypes.CLEAR_SUBMIT_ERRORS, function (state) {
+    var result = state;
+    result = deleteInWithCleanUp$$1(result, 'submitErrors');
+    result = deleteIn(result, 'error');
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.CLEAR_ASYNC_ERROR, function (state, _ref14) {
+    var field = _ref14.meta.field;
+    return deleteIn(state, 'asyncErrors.' + field);
+  }), _defineProperty(_behaviors, actionTypes.FOCUS, function (state, _ref15) {
+    var field = _ref15.meta.field;
+    var result = state;
+    var previouslyActive = getIn(state, 'active');
+    result = deleteIn(result, 'fields.' + previouslyActive + '.active');
+    result = setIn(result, 'fields.' + field + '.visited', true);
+    result = setIn(result, 'fields.' + field + '.active', true);
+    result = setIn(result, 'active', field);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.INITIALIZE, function (state, _ref16) {
+    var payload = _ref16.payload,
+        _ref16$meta = _ref16.meta,
+        keepDirty = _ref16$meta.keepDirty,
+        keepSubmitSucceeded = _ref16$meta.keepSubmitSucceeded;
+    var mapData = fromJS(payload);
+    var result = empty;
+    var warning = getIn(state, 'warning');
+    if (warning) {
+      result = setIn(result, 'warning', warning);
     }
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      var _this5 = this;
-      this.disable();
-      tethers.forEach(function (tether, i) {
-        if (tether === _this5) {
-          tethers.splice(i, 1);
-        }
-      });
-      if (tethers.length === 0) {
-        removeUtilElements();
-      }
+    var syncWarnings = getIn(state, 'syncWarnings');
+    if (syncWarnings) {
+      result = setIn(result, 'syncWarnings', syncWarnings);
     }
-  }, {
-    key: 'updateAttachClasses',
-    value: function updateAttachClasses(elementAttach, targetAttach) {
-      var _this6 = this;
-      elementAttach = elementAttach || this.attachment;
-      targetAttach = targetAttach || this.targetAttachment;
-      var sides = ['left', 'top', 'bottom', 'right', 'middle', 'center'];
-      if (typeof this._addAttachClasses !== 'undefined' && this._addAttachClasses.length) {
-        this._addAttachClasses.splice(0, this._addAttachClasses.length);
-      }
-      if (typeof this._addAttachClasses === 'undefined') {
-        this._addAttachClasses = [];
-      }
-      var add = this._addAttachClasses;
-      if (elementAttach.top) {
-        add.push(this.getClass('element-attached') + '-' + elementAttach.top);
-      }
-      if (elementAttach.left) {
-        add.push(this.getClass('element-attached') + '-' + elementAttach.left);
-      }
-      if (targetAttach.top) {
-        add.push(this.getClass('target-attached') + '-' + targetAttach.top);
-      }
-      if (targetAttach.left) {
-        add.push(this.getClass('target-attached') + '-' + targetAttach.left);
-      }
-      var all = [];
-      sides.forEach(function (side) {
-        all.push(_this6.getClass('element-attached') + '-' + side);
-        all.push(_this6.getClass('target-attached') + '-' + side);
-      });
-      defer(function () {
-        if (typeof _this6._addAttachClasses === 'undefined') {
-          return;
-        }
-        updateClasses(_this6.element, _this6._addAttachClasses, all);
-        if (_this6.options.addTargetClasses !== false) {
-          updateClasses(_this6.target, _this6._addAttachClasses, all);
-        }
-        delete _this6._addAttachClasses;
-      });
+    var error = getIn(state, 'error');
+    if (error) {
+      result = setIn(result, 'error', error);
     }
-  }, {
-    key: 'position',
-    value: function position() {
-      var _this7 = this;
-      var flushChanges = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-      if (!this.enabled) {
-        return undefined;
-      }
-      this.clearCache();
-      var targetAttachment = autoToFixedAttachment(this.targetAttachment, this.attachment);
-      this.updateAttachClasses(this.attachment, targetAttachment);
-      var elementPos = this.cache('element-bounds', function () {
-        return getBounds(_this7.element);
-      });
-      var width = elementPos.width;
-      var height = elementPos.height;
-      if (width === 0 && height === 0 && typeof this.lastSize !== 'undefined') {
-        var _lastSize = this.lastSize;
-        width = _lastSize.width;
-        height = _lastSize.height;
-      } else {
-        this.lastSize = { width: width, height: height };
-      }
-      var targetPos = this.cache('target-bounds', function () {
-        return _this7.getTargetBounds();
-      });
-      var targetSize = targetPos;
-      var offset = offsetToPx(attachmentToOffset(this.attachment), { width: width, height: height });
-      var targetOffset = offsetToPx(attachmentToOffset(targetAttachment), targetSize);
-      var scrollbarSize = undefined;
-      var manualOffset = offsetToPx(this.offset, { width: width, height: height });
-      var manualTargetOffset = offsetToPx(this.targetOffset, targetSize);
-      offset = addOffset(offset, manualOffset);
-      targetOffset = addOffset(targetOffset, manualTargetOffset);
-      var left = targetPos.left + targetOffset.left - offset.left;
-      var top = targetPos.top + targetOffset.top - offset.top;
-      for (var i = 0; i < TetherBase.modules.length; ++i) {
-        var _module2 = TetherBase.modules[i];
-        var ret = _module2.position.call(this, {
-          left: left,
-          top: top,
-          targetAttachment: targetAttachment,
-          targetPos: targetPos,
-          elementPos: elementPos,
-          offset: offset,
-          targetOffset: targetOffset,
-          manualOffset: manualOffset,
-          manualTargetOffset: manualTargetOffset,
-          scrollbarSize: scrollbarSize,
-          attachment: this.attachment
-        });
-        if (ret === false) {
-          return false;
-        }
-        if (typeof ret === 'undefined' || typeof ret !== 'object') {
-          continue;
-        }
-        top = ret.top;
-        left = ret.left;
-      }
-      var next = {
-        page: { top: top, left: left },
-        viewport: {
-          top: top - pageYOffset,
-          bottom: pageYOffset - top - height + innerHeight,
-          left: left - pageXOffset,
-          right: pageXOffset - left - width + innerWidth
-        }
-      };
-      var doc = this.target.ownerDocument;
-      var win = doc.defaultView;
-      if (win.innerHeight > doc.documentElement.clientHeight) {
-        scrollbarSize = this.cache('scrollbar-size', getScrollBarSize);
-        next.viewport.bottom -= scrollbarSize.height;
-      }
-      if (win.innerWidth > doc.documentElement.clientWidth) {
-        scrollbarSize = this.cache('scrollbar-size', getScrollBarSize);
-        next.viewport.right -= scrollbarSize.width;
-      }
-      if (['', 'static'].indexOf(doc.body.style.position) === -1 || ['', 'static'].indexOf(doc.body.parentElement.style.position) === -1) {
-        next.page.bottom = doc.body.scrollHeight - top - height;
-        next.page.right = doc.body.scrollWidth - left - width;
-      }
-      if (typeof this.options.optimizations !== 'undefined' && this.options.optimizations.moveElement !== false && !(typeof this.targetModifier !== 'undefined')) {
-        (function () {
-          var offsetParent = _this7.cache('target-offsetparent', function () {
-            return getOffsetParent(_this7.target);
-          });
-          var offsetPosition = _this7.cache('target-offsetparent-bounds', function () {
-            return getBounds(offsetParent);
-          });
-          var offsetParentStyle = getComputedStyle(offsetParent);
-          var offsetParentSize = offsetPosition;
-          var offsetBorder = {};
-          ['Top', 'Left', 'Bottom', 'Right'].forEach(function (side) {
-            offsetBorder[side.toLowerCase()] = parseFloat(offsetParentStyle['border' + side + 'Width']);
-          });
-          offsetPosition.right = doc.body.scrollWidth - offsetPosition.left - offsetParentSize.width + offsetBorder.right;
-          offsetPosition.bottom = doc.body.scrollHeight - offsetPosition.top - offsetParentSize.height + offsetBorder.bottom;
-          if (next.page.top >= offsetPosition.top + offsetBorder.top && next.page.bottom >= offsetPosition.bottom) {
-            if (next.page.left >= offsetPosition.left + offsetBorder.left && next.page.right >= offsetPosition.right) {
-              var scrollTop = offsetParent.scrollTop;
-              var scrollLeft = offsetParent.scrollLeft;
-              next.offset = {
-                top: next.page.top - offsetPosition.top + scrollTop - offsetBorder.top,
-                left: next.page.left - offsetPosition.left + scrollLeft - offsetBorder.left
-              };
+    var syncErrors = getIn(state, 'syncErrors');
+    if (syncErrors) {
+      result = setIn(result, 'syncErrors', syncErrors);
+    }
+    var registeredFields = getIn(state, 'registeredFields');
+    if (registeredFields) {
+      result = setIn(result, 'registeredFields', registeredFields);
+    }
+    var previousValues = getIn(state, 'values');
+    var previousInitialValues = getIn(state, 'initial');
+    var newInitialValues = mapData;
+    var newValues = previousValues;
+    if (keepDirty && registeredFields) {
+      if (!deepEqual(newInitialValues, previousInitialValues)) {
+        forEach(keys(registeredFields), function (name) {
+          var previousInitialValue = getIn(previousInitialValues, name);
+          var previousValue = getIn(previousValues, name);
+          if (deepEqual(previousValue, previousInitialValue)) {
+            var newInitialValue = getIn(newInitialValues, name);
+            if (getIn(newValues, name) !== newInitialValue) {
+              newValues = setIn(newValues, name, newInitialValue);
             }
           }
-        })();
-      }
-      this.move(next);
-      this.history.unshift(next);
-      if (this.history.length > 3) {
-        this.history.pop();
-      }
-      if (flushChanges) {
-        flush();
-      }
-      return true;
-    }
-  }, {
-    key: 'move',
-    value: function move(pos) {
-      var _this8 = this;
-      if (typeof this.element.parentNode === 'undefined') {
-        return;
-      }
-      var same = {};
-      for (var type in pos) {
-        same[type] = {};
-        for (var key in pos[type]) {
-          var found = false;
-          for (var i = 0; i < this.history.length; ++i) {
-            var point = this.history[i];
-            if (typeof point[type] !== 'undefined' && !within(point[type][key], pos[type][key])) {
-              found = true;
-              break;
-            }
+        });
+        forEach(keys(newInitialValues), function (name) {
+          var previousInitialValue = getIn(previousInitialValues, name);
+          if (typeof previousInitialValue === 'undefined') {
+            var newInitialValue = getIn(newInitialValues, name);
+            newValues = setIn(newValues, name, newInitialValue);
           }
-          if (!found) {
-            same[type][key] = true;
-          }
-        }
-      }
-      var css = { top: '', left: '', right: '', bottom: '' };
-      var transcribe = function transcribe(_same, _pos) {
-        var hasOptimizations = typeof _this8.options.optimizations !== 'undefined';
-        var gpu = hasOptimizations ? _this8.options.optimizations.gpu : null;
-        if (gpu !== false) {
-          var yPos = undefined,
-              xPos = undefined;
-          if (_same.top) {
-            css.top = 0;
-            yPos = _pos.top;
-          } else {
-            css.bottom = 0;
-            yPos = -_pos.bottom;
-          }
-          if (_same.left) {
-            css.left = 0;
-            xPos = _pos.left;
-          } else {
-            css.right = 0;
-            xPos = -_pos.right;
-          }
-          if (window.matchMedia) {
-            var retina = window.matchMedia('only screen and (min-resolution: 1.3dppx)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3)').matches;
-            if (!retina) {
-              xPos = Math.round(xPos);
-              yPos = Math.round(yPos);
-            }
-          }
-          css[transformKey] = 'translateX(' + xPos + 'px) translateY(' + yPos + 'px)';
-          if (transformKey !== 'msTransform') {
-            css[transformKey] += ' translateZ(0)';
-          }
-        } else {
-          if (_same.top) {
-            css.top = _pos.top + 'px';
-          } else {
-            css.bottom = _pos.bottom + 'px';
-          }
-          if (_same.left) {
-            css.left = _pos.left + 'px';
-          } else {
-            css.right = _pos.right + 'px';
-          }
-        }
-      };
-      var moved = false;
-      if ((same.page.top || same.page.bottom) && (same.page.left || same.page.right)) {
-        css.position = 'absolute';
-        transcribe(same.page, pos.page);
-      } else if ((same.viewport.top || same.viewport.bottom) && (same.viewport.left || same.viewport.right)) {
-        css.position = 'fixed';
-        transcribe(same.viewport, pos.viewport);
-      } else if (typeof same.offset !== 'undefined' && same.offset.top && same.offset.left) {
-        (function () {
-          css.position = 'absolute';
-          var offsetParent = _this8.cache('target-offsetparent', function () {
-            return getOffsetParent(_this8.target);
-          });
-          if (getOffsetParent(_this8.element) !== offsetParent) {
-            defer(function () {
-              _this8.element.parentNode.removeChild(_this8.element);
-              offsetParent.appendChild(_this8.element);
-            });
-          }
-          transcribe(same.offset, pos.offset);
-          moved = true;
-        })();
-      } else {
-        css.position = 'absolute';
-        transcribe({ top: true, left: true }, pos.page);
-      }
-      if (!moved) {
-        if (this.options.bodyElement) {
-          this.options.bodyElement.appendChild(this.element);
-        } else {
-          var offsetParentIsBody = true;
-          var currentNode = this.element.parentNode;
-          while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
-            if (getComputedStyle(currentNode).position !== 'static') {
-              offsetParentIsBody = false;
-              break;
-            }
-            currentNode = currentNode.parentNode;
-          }
-          if (!offsetParentIsBody) {
-            this.element.parentNode.removeChild(this.element);
-            this.element.ownerDocument.body.appendChild(this.element);
-          }
-        }
-      }
-      var writeCSS = {};
-      var write = false;
-      for (var key in css) {
-        var val = css[key];
-        var elVal = this.element.style[key];
-        if (elVal !== val) {
-          write = true;
-          writeCSS[key] = val;
-        }
-      }
-      if (write) {
-        defer(function () {
-          extend(_this8.element.style, writeCSS);
-          _this8.trigger('repositioned');
         });
       }
-    }
-  }]);
-  return TetherClass;
-})(Evented);
-TetherClass.modules = [];
-TetherBase.position = position;
-var Tether = extend(TetherClass, TetherBase);
-var BOUNDS_FORMAT = ['left', 'top', 'right', 'bottom'];
-function getBoundingRect(tether, to) {
-  if (to === 'scrollParent') {
-    to = tether.scrollParents[0];
-  } else if (to === 'window') {
-    to = [pageXOffset, pageYOffset, innerWidth + pageXOffset, innerHeight + pageYOffset];
-  }
-  if (to === document) {
-    to = to.documentElement;
-  }
-  if (typeof to.nodeType !== 'undefined') {
-    (function () {
-      var node = to;
-      var size = getBounds(to);
-      var pos = size;
-      var style = getComputedStyle(to);
-      to = [pos.left, pos.top, size.width + pos.left, size.height + pos.top];
-      if (node.ownerDocument !== document) {
-        var win = node.ownerDocument.defaultView;
-        to[0] += win.pageXOffset;
-        to[1] += win.pageYOffset;
-        to[2] += win.pageXOffset;
-        to[3] += win.pageYOffset;
-      }
-      BOUNDS_FORMAT.forEach(function (side, i) {
-        side = side[0].toUpperCase() + side.substr(1);
-        if (side === 'Top' || side === 'Left') {
-          to[i] += parseFloat(style['border' + side + 'Width']);
-        } else {
-          to[i] -= parseFloat(style['border' + side + 'Width']);
-        }
-      });
-    })();
-  }
-  return to;
-}
-TetherBase.modules.push({
-  position: function position(_ref2) {
-    var _this9 = this;
-    var top = _ref2.top;
-    var left = _ref2.left;
-    var targetAttachment = _ref2.targetAttachment;
-    if (!this.options.constraints) {
-      return true;
-    }
-    var _cache = this.cache('element-bounds', function () {
-      return getBounds(_this9.element);
-    });
-    var height = _cache.height;
-    var width = _cache.width;
-    if (width === 0 && height === 0 && typeof this.lastSize !== 'undefined') {
-      var _lastSize2 = this.lastSize;
-      width = _lastSize2.width;
-      height = _lastSize2.height;
-    }
-    var targetSize = this.cache('target-bounds', function () {
-      return _this9.getTargetBounds();
-    });
-    var targetHeight = targetSize.height;
-    var targetWidth = targetSize.width;
-    var allClasses = [this.getClass('pinned'), this.getClass('out-of-bounds')];
-    this.options.constraints.forEach(function (constraint) {
-      var outOfBoundsClass = constraint.outOfBoundsClass;
-      var pinnedClass = constraint.pinnedClass;
-      if (outOfBoundsClass) {
-        allClasses.push(outOfBoundsClass);
-      }
-      if (pinnedClass) {
-        allClasses.push(pinnedClass);
-      }
-    });
-    allClasses.forEach(function (cls) {
-      ['left', 'top', 'right', 'bottom'].forEach(function (side) {
-        allClasses.push(cls + '-' + side);
-      });
-    });
-    var addClasses = [];
-    var tAttachment = extend({}, targetAttachment);
-    var eAttachment = extend({}, this.attachment);
-    this.options.constraints.forEach(function (constraint) {
-      var to = constraint.to;
-      var attachment = constraint.attachment;
-      var pin = constraint.pin;
-      if (typeof attachment === 'undefined') {
-        attachment = '';
-      }
-      var changeAttachX = undefined,
-          changeAttachY = undefined;
-      if (attachment.indexOf(' ') >= 0) {
-        var _attachment$split = attachment.split(' ');
-        var _attachment$split2 = _slicedToArray(_attachment$split, 2);
-        changeAttachY = _attachment$split2[0];
-        changeAttachX = _attachment$split2[1];
-      } else {
-        changeAttachX = changeAttachY = attachment;
-      }
-      var bounds = getBoundingRect(_this9, to);
-      if (changeAttachY === 'target' || changeAttachY === 'both') {
-        if (top < bounds[1] && tAttachment.top === 'top') {
-          top += targetHeight;
-          tAttachment.top = 'bottom';
-        }
-        if (top + height > bounds[3] && tAttachment.top === 'bottom') {
-          top -= targetHeight;
-          tAttachment.top = 'top';
-        }
-      }
-      if (changeAttachY === 'together') {
-        if (tAttachment.top === 'top') {
-          if (eAttachment.top === 'bottom' && top < bounds[1]) {
-            top += targetHeight;
-            tAttachment.top = 'bottom';
-            top += height;
-            eAttachment.top = 'top';
-          } else if (eAttachment.top === 'top' && top + height > bounds[3] && top - (height - targetHeight) >= bounds[1]) {
-            top -= height - targetHeight;
-            tAttachment.top = 'bottom';
-            eAttachment.top = 'bottom';
-          }
-        }
-        if (tAttachment.top === 'bottom') {
-          if (eAttachment.top === 'top' && top + height > bounds[3]) {
-            top -= targetHeight;
-            tAttachment.top = 'top';
-            top -= height;
-            eAttachment.top = 'bottom';
-          } else if (eAttachment.top === 'bottom' && top < bounds[1] && top + (height * 2 - targetHeight) <= bounds[3]) {
-            top += height - targetHeight;
-            tAttachment.top = 'top';
-            eAttachment.top = 'top';
-          }
-        }
-        if (tAttachment.top === 'middle') {
-          if (top + height > bounds[3] && eAttachment.top === 'top') {
-            top -= height;
-            eAttachment.top = 'bottom';
-          } else if (top < bounds[1] && eAttachment.top === 'bottom') {
-            top += height;
-            eAttachment.top = 'top';
-          }
-        }
-      }
-      if (changeAttachX === 'target' || changeAttachX === 'both') {
-        if (left < bounds[0] && tAttachment.left === 'left') {
-          left += targetWidth;
-          tAttachment.left = 'right';
-        }
-        if (left + width > bounds[2] && tAttachment.left === 'right') {
-          left -= targetWidth;
-          tAttachment.left = 'left';
-        }
-      }
-      if (changeAttachX === 'together') {
-        if (left < bounds[0] && tAttachment.left === 'left') {
-          if (eAttachment.left === 'right') {
-            left += targetWidth;
-            tAttachment.left = 'right';
-            left += width;
-            eAttachment.left = 'left';
-          } else if (eAttachment.left === 'left') {
-            left += targetWidth;
-            tAttachment.left = 'right';
-            left -= width;
-            eAttachment.left = 'right';
-          }
-        } else if (left + width > bounds[2] && tAttachment.left === 'right') {
-          if (eAttachment.left === 'left') {
-            left -= targetWidth;
-            tAttachment.left = 'left';
-            left -= width;
-            eAttachment.left = 'right';
-          } else if (eAttachment.left === 'right') {
-            left -= targetWidth;
-            tAttachment.left = 'left';
-            left += width;
-            eAttachment.left = 'left';
-          }
-        } else if (tAttachment.left === 'center') {
-          if (left + width > bounds[2] && eAttachment.left === 'left') {
-            left -= width;
-            eAttachment.left = 'right';
-          } else if (left < bounds[0] && eAttachment.left === 'right') {
-            left += width;
-            eAttachment.left = 'left';
-          }
-        }
-      }
-      if (changeAttachY === 'element' || changeAttachY === 'both') {
-        if (top < bounds[1] && eAttachment.top === 'bottom') {
-          top += height;
-          eAttachment.top = 'top';
-        }
-        if (top + height > bounds[3] && eAttachment.top === 'top') {
-          top -= height;
-          eAttachment.top = 'bottom';
-        }
-      }
-      if (changeAttachX === 'element' || changeAttachX === 'both') {
-        if (left < bounds[0]) {
-          if (eAttachment.left === 'right') {
-            left += width;
-            eAttachment.left = 'left';
-          } else if (eAttachment.left === 'center') {
-            left += width / 2;
-            eAttachment.left = 'left';
-          }
-        }
-        if (left + width > bounds[2]) {
-          if (eAttachment.left === 'left') {
-            left -= width;
-            eAttachment.left = 'right';
-          } else if (eAttachment.left === 'center') {
-            left -= width / 2;
-            eAttachment.left = 'right';
-          }
-        }
-      }
-      if (typeof pin === 'string') {
-        pin = pin.split(',').map(function (p) {
-          return p.trim();
-        });
-      } else if (pin === true) {
-        pin = ['top', 'left', 'right', 'bottom'];
-      }
-      pin = pin || [];
-      var pinned = [];
-      var oob = [];
-      if (top < bounds[1]) {
-        if (pin.indexOf('top') >= 0) {
-          top = bounds[1];
-          pinned.push('top');
-        } else {
-          oob.push('top');
-        }
-      }
-      if (top + height > bounds[3]) {
-        if (pin.indexOf('bottom') >= 0) {
-          top = bounds[3] - height;
-          pinned.push('bottom');
-        } else {
-          oob.push('bottom');
-        }
-      }
-      if (left < bounds[0]) {
-        if (pin.indexOf('left') >= 0) {
-          left = bounds[0];
-          pinned.push('left');
-        } else {
-          oob.push('left');
-        }
-      }
-      if (left + width > bounds[2]) {
-        if (pin.indexOf('right') >= 0) {
-          left = bounds[2] - width;
-          pinned.push('right');
-        } else {
-          oob.push('right');
-        }
-      }
-      if (pinned.length) {
-        (function () {
-          var pinnedClass = undefined;
-          if (typeof _this9.options.pinnedClass !== 'undefined') {
-            pinnedClass = _this9.options.pinnedClass;
-          } else {
-            pinnedClass = _this9.getClass('pinned');
-          }
-          addClasses.push(pinnedClass);
-          pinned.forEach(function (side) {
-            addClasses.push(pinnedClass + '-' + side);
-          });
-        })();
-      }
-      if (oob.length) {
-        (function () {
-          var oobClass = undefined;
-          if (typeof _this9.options.outOfBoundsClass !== 'undefined') {
-            oobClass = _this9.options.outOfBoundsClass;
-          } else {
-            oobClass = _this9.getClass('out-of-bounds');
-          }
-          addClasses.push(oobClass);
-          oob.forEach(function (side) {
-            addClasses.push(oobClass + '-' + side);
-          });
-        })();
-      }
-      if (pinned.indexOf('left') >= 0 || pinned.indexOf('right') >= 0) {
-        eAttachment.left = tAttachment.left = false;
-      }
-      if (pinned.indexOf('top') >= 0 || pinned.indexOf('bottom') >= 0) {
-        eAttachment.top = tAttachment.top = false;
-      }
-      if (tAttachment.top !== targetAttachment.top || tAttachment.left !== targetAttachment.left || eAttachment.top !== _this9.attachment.top || eAttachment.left !== _this9.attachment.left) {
-        _this9.updateAttachClasses(eAttachment, tAttachment);
-        _this9.trigger('update', {
-          attachment: eAttachment,
-          targetAttachment: tAttachment
-        });
-      }
-    });
-    defer(function () {
-      if (_this9.options.addTargetClasses !== false) {
-        updateClasses(_this9.target, addClasses, allClasses);
-      }
-      updateClasses(_this9.element, addClasses, allClasses);
-    });
-    return { top: top, left: left };
-  }
-});
-TetherBase.modules.push({
-  position: function position(_ref3) {
-    var _this10 = this;
-    var top = _ref3.top;
-    var left = _ref3.left;
-    var _cache2 = this.cache('element-bounds', function () {
-      return getBounds(_this10.element);
-    });
-    var height = _cache2.height;
-    var width = _cache2.width;
-    var targetPos = this.getTargetBounds();
-    var bottom = top + height;
-    var right = left + width;
-    var abutted = [];
-    if (top <= targetPos.bottom && bottom >= targetPos.top) {
-      ['left', 'right'].forEach(function (side) {
-        var targetPosSide = targetPos[side];
-        if (targetPosSide === left || targetPosSide === right) {
-          abutted.push(side);
-        }
-      });
-    }
-    if (left <= targetPos.right && right >= targetPos.left) {
-      ['top', 'bottom'].forEach(function (side) {
-        var targetPosSide = targetPos[side];
-        if (targetPosSide === top || targetPosSide === bottom) {
-          abutted.push(side);
-        }
-      });
-    }
-    var allClasses = [];
-    var addClasses = [];
-    var sides = ['left', 'top', 'right', 'bottom'];
-    allClasses.push(this.getClass('abutted'));
-    sides.forEach(function (side) {
-      allClasses.push(_this10.getClass('abutted') + '-' + side);
-    });
-    if (abutted.length) {
-      addClasses.push(this.getClass('abutted'));
-    }
-    abutted.forEach(function (side) {
-      addClasses.push(_this10.getClass('abutted') + '-' + side);
-    });
-    defer(function () {
-      if (_this10.options.addTargetClasses !== false) {
-        updateClasses(_this10.target, addClasses, allClasses);
-      }
-      updateClasses(_this10.element, addClasses, allClasses);
-    });
-    return true;
-  }
-});
-TetherBase.modules.push({
-  position: function position(_ref4) {
-    var top = _ref4.top;
-    var left = _ref4.left;
-    if (!this.options.shift) {
-      return undefined;
-    }
-    var shift = this.options.shift;
-    if (typeof this.options.shift === 'function') {
-      shift = this.options.shift.call(this, { top: top, left: left });
-    }
-    var shiftTop = undefined,
-        shiftLeft = undefined;
-    if (typeof shift === 'string') {
-      shift = shift.split(' ');
-      shift[1] = shift[1] || shift[0];
-      var _shift = shift;
-      var _shift2 = _slicedToArray(_shift, 2);
-      shiftTop = _shift2[0];
-      shiftLeft = _shift2[1];
-      shiftTop = parseFloat(shiftTop, 10);
-      shiftLeft = parseFloat(shiftLeft, 10);
     } else {
-      shiftTop = shift.top;
-      shiftLeft = shift.left;
+      newValues = newInitialValues;
     }
-    top += shiftTop;
-    left += shiftLeft;
-    return { top: top, left: left };
-  }
-});
-return Tether;
-}));
-});
-
-var TetherContent_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _reactDom2 = _interopRequireDefault(_reactDom);
-var _tetherFix2 = _interopRequireDefault(tether);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  isOpen: false,
-  tetherRef: function tetherRef() {}
-};
-var TetherContent = function (_React$Component) {
-  _inherits(TetherContent, _React$Component);
-  function TetherContent() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, TetherContent);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
+    if (keepSubmitSucceeded && getIn(state, 'submitSucceeded')) {
+      result = setIn(result, 'submitSucceeded', true);
     }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TetherContent.__proto__ || Object.getPrototypeOf(TetherContent)).call.apply(_ref, [this].concat(args))), _this), _this.componentDidMount = function () {
-      _this.handleProps();
-    }, _this.componentDidUpdate = function (prevProps) {
-      if (_this.props.isOpen !== prevProps.isOpen) {
-        _this.handleProps();
-      } else if (_this.element) {
-        _this.renderIntoSubtree();
+    result = setIn(result, 'values', newValues);
+    result = setIn(result, 'initial', newInitialValues);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.REGISTER_FIELD, function (state, _ref17) {
+    var _ref17$payload = _ref17.payload,
+        name = _ref17$payload.name,
+        type = _ref17$payload.type;
+    var key = 'registeredFields[\'' + name + '\']';
+    var field = getIn(state, key);
+    if (field) {
+      var count = getIn(field, 'count') + 1;
+      field = setIn(field, 'count', count);
+    } else {
+      field = fromJS({ name: name, type: type, count: 1 });
+    }
+    return setIn(state, key, field);
+  }), _defineProperty(_behaviors, actionTypes.RESET, function (state) {
+    var result = empty;
+    var registeredFields = getIn(state, 'registeredFields');
+    if (registeredFields) {
+      result = setIn(result, 'registeredFields', registeredFields);
+    }
+    var values = getIn(state, 'initial');
+    if (values) {
+      result = setIn(result, 'values', values);
+      result = setIn(result, 'initial', values);
+    }
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.SUBMIT, function (state) {
+    return setIn(state, 'triggerSubmit', true);
+  }), _defineProperty(_behaviors, actionTypes.START_ASYNC_VALIDATION, function (state, _ref18) {
+    var field = _ref18.meta.field;
+    return setIn(state, 'asyncValidating', field || true);
+  }), _defineProperty(_behaviors, actionTypes.START_SUBMIT, function (state) {
+    return setIn(state, 'submitting', true);
+  }), _defineProperty(_behaviors, actionTypes.STOP_ASYNC_VALIDATION, function (state, _ref19) {
+    var payload = _ref19.payload;
+    var result = state;
+    result = deleteIn(result, 'asyncValidating');
+    if (payload && Object.keys(payload).length) {
+      var _error = payload._error,
+          fieldErrors = _objectWithoutProperties(payload, ['_error']);
+      if (_error) {
+        result = setIn(result, 'error', _error);
       }
-    }, _this.componentWillUnmount = function () {
-      _this.hide();
-    }, _this.getTarget = function () {
-      var target = _this.props.tether.target;
-      if ((0, _lodash2.default)(target)) {
-        return target();
+      if (Object.keys(fieldErrors).length) {
+        result = setIn(result, 'asyncErrors', fromJS(fieldErrors));
       }
-      return target;
-    }, _this.getTetherConfig = function () {
-      var config = _extends({}, _this.props.tether);
-      config.element = _this.element;
-      config.target = _this.getTarget();
-      return config;
-    }, _this.handleDocumentClick = function (e) {
-      var container = _this.element;
-      if (e.target === container || !container.contains(e.target)) {
-        _this.toggle();
-      }
-    }, _this.handleProps = function () {
-      if (_this.props.isOpen) {
-        _this.show();
+    } else {
+      result = deleteIn(result, 'error');
+    }
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.STOP_SUBMIT, function (state, _ref20) {
+    var payload = _ref20.payload;
+    var result = state;
+    result = deleteIn(result, 'submitting');
+    result = deleteIn(result, 'submitFailed');
+    result = deleteIn(result, 'submitSucceeded');
+    if (payload && Object.keys(payload).length) {
+      var _error = payload._error,
+          fieldErrors = _objectWithoutProperties(payload, ['_error']);
+      if (_error) {
+        result = setIn(result, 'error', _error);
       } else {
-        _this.hide();
+        result = deleteIn(result, 'error');
       }
-    }, _this.hide = function () {
-      document.removeEventListener('click', _this.handleDocumentClick, true);
-      if (_this.element) {
-        document.body.removeChild(_this.element);
-        _reactDom2.default.unmountComponentAtNode(_this.element);
-        _this.element = null;
-      }
-      if (_this.tether) {
-        _this.tether.destroy();
-        _this.tether = null;
-        _this.props.tetherRef(_this.tether);
-      }
-    }, _this.show = function () {
-      document.addEventListener('click', _this.handleDocumentClick, true);
-      _this.element = document.createElement('div');
-      _this.element.className = _this.props.className;
-      document.body.appendChild(_this.element);
-      _this.renderIntoSubtree();
-      _this.tether = new _tetherFix2.default(_this.getTetherConfig());
-      _this.props.tetherRef(_this.tether);
-      _this.tether.position();
-    }, _this.toggle = function (e) {
-      if (_this.props.disabled) {
-        return e && e.preventDefault();
-      }
-      return _this.props.toggle();
-    }, _this.renderIntoSubtree = function () {
-      _reactDom2.default.unstable_renderSubtreeIntoContainer(_this, _this.renderChildren(), _this.element);
-    }, _this.renderChildren = function () {
-      var _this$props = _this.props,
-          children = _this$props.children,
-          style = _this$props.style;
-      return _react2.default.cloneElement(children, { style: style });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(TetherContent, [{
-    key: 'render',
-    value: function render() {
-      return null;
-    }
-  }]);
-  return TetherContent;
-}(_react2.default.Component);
-TetherContent.propTypes = {
-  children: _propTypes2.default.node.isRequired,
-  className: _propTypes2.default.string,
-  isOpen: _propTypes2.default.bool,
-  disabled: _propTypes2.default.bool,
-  toggle: _propTypes2.default.func.isRequired,
-  tether: _propTypes2.default.object.isRequired,
-  tetherRef: _propTypes2.default.func,
-  style: _propTypes2.default.node
-};
-TetherContent.defaultProps = defaultProps;
-exports.default = TetherContent;
-module.exports = exports['default'];
-});
-unwrapExports(TetherContent_1);
-
-var Dropdown_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _reactDom2 = _interopRequireDefault(_reactDom);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-var _DropdownMenu2 = _interopRequireDefault(DropdownMenu_1);
-var _TetherContent2 = _interopRequireDefault(TetherContent_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  isOpen: false,
-  tag: 'div',
-  theme: _theme2.default
-};
-var defaultTetherConfig = {
-  classPrefix: 'bs-tether',
-  classes: { element: 'dropdown', enabled: 'show' },
-  constraints: [{ to: 'scrollParent', attachment: 'together none' }, { to: 'window', attachment: 'together none' }]
-};
-var DropdownUnstyled = function (_React$Component) {
-  _inherits(DropdownUnstyled, _React$Component);
-  function DropdownUnstyled() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, DropdownUnstyled);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownUnstyled.__proto__ || Object.getPrototypeOf(DropdownUnstyled)).call.apply(_ref, [this].concat(args))), _this), _this.getTetherConfig = function (childProps) {
-      var target = function target() {
-        return _this.getTetherTarget();
-      };
-      var vElementAttach = 'top';
-      var hElementAttach = 'left';
-      var vTargetAttach = 'bottom';
-      var hTargetAttach = 'left';
-      if (childProps.right) {
-        hElementAttach = 'right';
-        hTargetAttach = 'right';
-      }
-      if (_this.props.dropup) {
-        vElementAttach = 'bottom';
-        vTargetAttach = 'top';
-      }
-      return _extends({}, defaultTetherConfig, {
-        attachment: vElementAttach + ' ' + hElementAttach,
-        targetAttachment: vTargetAttach + ' ' + hTargetAttach,
-        target: target
-      }, _this.props.tether);
-    }, _this.addEvents = function () {
-      document.addEventListener('click', _this.handleDocumentClick, true);
-    }, _this.removeEvents = function () {
-      document.removeEventListener('click', _this.handleDocumentClick, true);
-    }, _this.handleDocumentClick = function (e) {
-      var container = _reactDom2.default.findDOMNode(_this);
-      if (container.contains(e.target) && container !== e.target) {
-        return;
-      }
-      _this.toggle();
-    }, _this.toggle = function (e) {
-      if (_this.props.disabled) {
-        return e && e.preventDefault();
-      }
-      return _this.props.toggle();
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(DropdownUnstyled, [{
-    key: 'getChildContext',
-    value: function getChildContext() {
-      return {
-        toggle: this.props.toggle,
-        isOpen: this.props.isOpen
-      };
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.handleProps();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.isOpen !== prevProps.isOpen) {
-        this.handleProps();
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.removeEvents();
-    }
-  }, {
-    key: 'getTetherTarget',
-    value: function getTetherTarget() {
-      var container = _reactDom2.default.findDOMNode(this);
-      return container.querySelector('[data-toggle="dropdown"]');
-    }
-  }, {
-    key: 'handleProps',
-    value: function handleProps() {
-      if (this.props.tether) {
-        return;
-      }
-      if (this.props.isOpen) {
-        this.addEvents();
+      if (Object.keys(fieldErrors).length) {
+        result = setIn(result, 'submitErrors', fromJS(fieldErrors));
       } else {
-        this.removeEvents();
+        result = deleteIn(result, 'submitErrors');
       }
+      result = setIn(result, 'submitFailed', true);
+    } else {
+      result = setIn(result, 'submitSucceeded', true);
+      result = deleteIn(result, 'error');
+      result = deleteIn(result, 'submitErrors');
     }
-  }, {
-    key: 'renderChildren',
-    value: function renderChildren() {
-      var _this2 = this;
-      var _props = this.props,
-          tether = _props.tether,
-          children = _props.children,
-          attrs = _objectWithoutProperties(_props, ['tether', 'children']);
-      attrs.toggle = this.toggle;
-      return _react2.default.Children.map(_react2.default.Children.toArray(children), function (child) {
-        if (tether && child.type === _DropdownMenu2.default) {
-          var tetherConfig = _this2.getTetherConfig(child.props);
-          return _react2.default.createElement(
-            _TetherContent2.default,
-            _extends({}, attrs, { tether: tetherConfig }),
-            child
-          );
-        }
-        return child;
-      });
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.SET_SUBMIT_FAILED, function (state, _ref21) {
+    var fields = _ref21.meta.fields;
+    var result = state;
+    result = setIn(result, 'submitFailed', true);
+    result = deleteIn(result, 'submitSucceeded');
+    result = deleteIn(result, 'submitting');
+    fields.forEach(function (field) {
+      return result = setIn(result, 'fields.' + field + '.touched', true);
+    });
+    if (fields.length) {
+      result = setIn(result, 'anyTouched', true);
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _cn;
-      var _omit = (0, _lodash2.default)(this.props, ['toggle', 'tether', 'theme']),
-          className = _omit.className,
-          cssModule = _omit.cssModule,
-          dropup = _omit.dropup,
-          group = _omit.group,
-          size = _omit.size,
-          Tag = _omit.tag,
-          isOpen = _omit.isOpen,
-          attributes = _objectWithoutProperties(_omit, ['className', 'cssModule', 'dropup', 'group', 'size', 'tag', 'isOpen']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, (_cn = {
-        'btn-group': group
-      }, _defineProperty(_cn, 'btn-group-' + size, !!size), _defineProperty(_cn, 'dropdown', !group), _defineProperty(_cn, 'show', isOpen), _defineProperty(_cn, 'dropup', dropup), _cn)), cssModule);
-      return _react2.default.createElement(
-        Tag,
-        _extends({}, attributes, {
-          className: classes
-        }),
-        this.renderChildren()
-      );
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.SET_SUBMIT_SUCCEEDED, function (state) {
+    var result = state;
+    result = deleteIn(result, 'submitFailed');
+    result = setIn(result, 'submitSucceeded', true);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.TOUCH, function (state, _ref22) {
+    var fields = _ref22.meta.fields;
+    var result = state;
+    fields.forEach(function (field) {
+      return result = setIn(result, 'fields.' + field + '.touched', true);
+    });
+    result = setIn(result, 'anyTouched', true);
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.UNREGISTER_FIELD, function (state, _ref23) {
+    var _ref23$payload = _ref23.payload,
+        name = _ref23$payload.name,
+        destroyOnUnmount = _ref23$payload.destroyOnUnmount;
+    var result = state;
+    var key = 'registeredFields[\'' + name + '\']';
+    var field = getIn(result, key);
+    if (!field) {
+      return result;
     }
-  }]);
-  return DropdownUnstyled;
-}(_react2.default.Component);
-DropdownUnstyled.propTypes = {
-  disabled: _propTypes2.default.bool,
-  dropup: _propTypes2.default.bool,
-  group: _propTypes2.default.bool,
-  isOpen: _propTypes2.default.bool,
-  size: _propTypes2.default.string,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  tether: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.bool]),
-  toggle: _propTypes2.default.func,
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  theme: _propTypes2.default.object
-};
-DropdownUnstyled.childContextTypes = {
-  toggle: _propTypes2.default.func.isRequired,
-  isOpen: _propTypes2.default.bool.isRequired
-};
-var Dropdown = (0, _styledComponents2.default)(DropdownUnstyled).withConfig({
-  displayName: 'Dropdown'
-})(['', ''], function (props) {
-  return '\n    &.dropup,\n    &.dropdown {\n      position: relative;\n    }\n\n    & .dropdown-hide {\n      display: none;\n    }\n    \n    & .dropdown-toggle {\n      /* Generate the caret automatically */\n      &::after {\n        display: inline-block;\n        width: 0;\n        height: 0;\n        margin-left: ' + props.theme['$caret-width'] + ';\n        vertical-align: middle;\n        content: \'\';\n        border-top: ' + props.theme['$caret-width'] + ' solid;\n        border-right: ' + props.theme['$caret-width'] + ' solid transparent;\n        border-left: ' + props.theme['$caret-width'] + ' solid transparent;\n      }\n\n      /* Prevent the focus on the dropdown toggle when closing dropdowns */\n      &:focus {\n        outline: 0;\n      }\n    }\n\n    &.dropup {\n      .dropdown-toggle {\n        &::after {\n          border-top: 0;\n          border-bottom: ' + props.theme['$caret-width'] + ' solid;\n        }\n      }\n    }\n\n    & .dropdown-menu {\n      clear: left;\n      position: absolute;\n      top: 100%;\n      left: 0;\n      z-index: ' + props.theme['$zindex-dropdown'] + ';\n      display: none; // none by default, but block on "open" of the menu\n      float: left;\n      min-width: ' + props.theme['$dropdown-min-width'] + ';\n      padding: ' + props.theme['$dropdown-padding-y'] + ' 0;\n      margin: ' + props.theme['$dropdown-margin-top'] + ' 0; /* override default ul */\n      font-size: ' + props.theme['$font-size-base'] + ';\n      color: ' + props.theme['$body-color'] + ';\n      text-align: left; /* Ensures proper alignment if parent has it changed (e.g., modal footer) */\n      list-style: none;\n      background-color: ' + props.theme['$dropdown-bg'] + ';\n      background-clip: padding-box;\n      border: ' + props.theme['$dropdown-border-width'] + ' solid ' + props.theme['$dropdown-border-color'] + ';\n      ' + (0, borderRadius_1.borderRadius)(props.theme['$enable-rounded'], props.theme['$border-radius']) + '\n      ' + (0, boxShadow_1.boxShadow)(props.theme['$enable-shadows'], props.theme['$dropdown-box-shadow']) + '\n    }\n\n    /* mixin from bootstrap 4, see : scss/mixins/_nav-divider.css */\n    & .dropdown-divider {\n      ' + (0, navDivider_1.navDivider)(props.theme['$spacer-y'], props.theme['$dropdown-divider-bg']) + '\n    }\n\n    & .dropdown-item {\n      display: block;\n      width: 100%; /* For <button>s */\n      padding: 3px ' + props.theme['$dropdown-item-padding-x'] + ';\n      clear: both;\n      font-weight: ' + props.theme['$font-weight-normal'] + ';\n      color: ' + props.theme['$dropdown-link-color'] + ';\n      text-align: inherit; /* For <button>s */\n      white-space: nowrap; /* prevent links from randomly breaking onto new lines */\n      background: none; /* For <button>s */\n      border: 0; /* For <button>s */\n\n      ' + (0, hover_1.hoverFocus)(props.theme['$enable-hover-media-query'], '\n        color: ' + props.theme['$dropdown-link-hover-color'] + ';\n        text-decoration: none;\n        background-color: ' + props.theme['$dropdown-link-hover-bg'] + '\n      ') + '\n\n      &.active,\n      &:active {\n        color: ' + props.theme['$dropdown-link-active-color'] + ';\n        text-decoration: none;\n        background-color: ' + props.theme['$dropdown-link-active-bg'] + '\n      }\n\n      &.disabled,\n      &:disabled{\n        color: ' + props.theme['$dropdown-link-disabled-color'] + ';\n        cursor: ' + props.theme['$cursor-disabled'] + ';\n        background-color: transparent;\n        ' + (0, conditional.ifThen)(props.theme['$enabled-gradients'], 'background-image: none; /* Remove CSS gradient */') + '\n      }\n    }\n\n    &.show {\n      /* show the menu */\n      &>.dropdown-menu {\n        display: block;\n      }\n\n      & > a {\n        outline: 0;\n      }\n    }\n\n\n    /* Menu positioning */\n\n    /* Add extra class to .dropdown-menu to flip the alignment of the dropdown*\n    /* menu with the parent. */\n    & .dropdown-menu-right {\n      right: 0;\n      left: auto; /* Reset the default from .dropdown-menu */\n    }\n\n    & .dropdown-menu-left {\n      right: auto;\n      left: 0;\n    }\n\n    /* Dropdown section headers */\n    & .dropdown-header {\n      display: block;\n      padding: ' + props.theme['$dropdown-padding-y'] + ' ' + props.theme['$dropdown-item-padding-x'] + ';\n      margin-bottom: 0; /* for use with heading elements */\n      font-size: ' + props.theme['$font-size-sm'] + ';\n      color: ' + props.theme['$dropdown-header-color'] + ';\n      white-space: nowrap; /* as with > li > a */\n    }\n    /* Dropdown section footers */\n    & .dropdown-footer {\n      display: block;\n      padding: ' + props.theme['$dropdown-padding-y'] + ' ' + props.theme['$dropdown-item-padding-x'] + ';\n      margin-bottom: 0; /* for use with heading elements */\n      font-size: ' + props.theme['$font-size-sm'] + ';\n      color: ' + props.theme['$dropdown-header-color'] + ';\n      white-space: nowrap; /* as with > li > a */\n    }\n    \n\n    /* Backdrop to catch body clicks on mobile, etc. */\n    & .dropdown-backdrop {\n      position: fixed;\n      top: 0;\n      right: 0;\n      bottom: 0;\n      left: 0;\n      z-index: ' + props.theme['$zindex-dropdown-backdrop'] + ';\n    }\n\n    /* Allow for dropdowns to go bottom up (aka, dropup-menu) */\n\n    /* Just add .dropup after the standard .dropdown class and you\'re set. */\n    /* TODO: abstract this so that the navbar fixed styles are not placed here? */\n\n    &.dropup {\n      .dropdown-menu {\n        top: auto;\n        bottom: 100%;\n        margin-bottom: ' + props.theme['$dropdown-margin-top'] + ';\n      }\n    }\n        \n    /* Added Mixin boutonGroup to enable dropdown to beneficiate from buttonGroup classes */\n    ' + (0, buttonGroup_1.buttonGroup)(props.theme['$enable-shadows'], props.theme['$enable-rounded'], props.theme['$input-btn-border-width'], props.theme['$btn-padding-x'], props.theme['$btn-active-box-shadow'], props.theme['$btn-padding-x-lg'], props.theme['$btn-padding-y-lg'], props.theme['$font-size-lg'], props.theme['$btn-border-radius-lg'], props.theme['$btn-padding-x-sm'], props.theme['$btn-padding-y-sm'], props.theme['$font-size-sm'], props.theme['$btn-border-radius-sm']) + '\n  ';
-});
-Dropdown.defaultProps = defaultProps;
-exports.default = Dropdown;
-module.exports = exports['default'];
-});
-unwrapExports(Dropdown_1);
-
-var typography_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.typography = typography;
-var defaultProps = exports.defaultProps = {
-  '$headings-margin-bottom': '0.5rem',
-  '$headings-font-family': 'inherit',
-  '$headings-font-weight': '500',
-  '$headings-line-height': '1.1',
-  '$headings-color': 'inherit',
-  '$display1-size': '6rem',
-  '$display2-size': '5.5rem',
-  '$display3-size': '4.5rem',
-  '$display4-size': '3.5rem',
-  '$display1-weight': '300',
-  '$display2-weight': '300',
-  '$display3-weight': '300',
-  '$display4-weight': '300'
-};
-function typography() {
-  var $headingsMarginBottom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$headings-margin-bottom'];
-  var $headingsFontFamily = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$headings-font-family'];
-  var $headingsFontWeight = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$headings-font-weight'];
-  var $headingsLineHeight = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$headings-line-height'];
-  var $headingsColor = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$headings-color'];
-  var $display1Size = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultProps['$display1-size'];
-  var $display2Size = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : defaultProps['$display2-size'];
-  var $display3Size = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : defaultProps['$display3-size'];
-  var $display4Size = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : defaultProps['$display4-size'];
-  var $display1Weight = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : defaultProps['$display1-weight'];
-  var $display2Weight = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : defaultProps['$display2-weight'];
-  var $display3Weight = arguments.length > 11 && arguments[11] !== undefined ? arguments[11] : defaultProps['$display3-weight'];
-  var $display4Weight = arguments.length > 12 && arguments[12] !== undefined ? arguments[12] : defaultProps['$display4-weight'];
-  return '\n    margin-bottom: ' + $headingsMarginBottom + ';\n    font-family: ' + $headingsFontFamily + ';\n    font-weight: ' + $headingsFontWeight + ';\n    line-height: ' + $headingsLineHeight + ';\n    color: ' + $headingsColor + ';\n    \n    /* Type Scss */\n\n    &.display-1 {\n      font-size: ' + $display1Size + ';\n      font-weight: ' + $display1Weight + ';\n      line-height: ' + $headingsLineHeight + ';\n\n    }\n    \n    &.display-2 {\n      font-size: ' + $display2Size + ';\n      font-weight: ' + $display2Weight + ';\n      line-height: ' + $headingsLineHeight + ';\n    }\n    \n    &.display-3 {\n      font-size: ' + $display3Size + ';\n      font-weight: ' + $display3Weight + ';\n      line-height: ' + $headingsLineHeight + ';\n    }\n    \n    &.display-4 {\n      font-size: ' + $display4Size + ';\n      font-weight: ' + $display4Weight + ';\n        line-height: ' + $headingsLineHeight + ';\n    }\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  typography: typography
-};
-});
-unwrapExports(typography_1);
-
-var H6_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = { theme: _theme2.default };
-var H6Unstyled = function (_React$Component) {
-  _inherits(H6Unstyled, _React$Component);
-  function H6Unstyled() {
-    _classCallCheck(this, H6Unstyled);
-    return _possibleConstructorReturn(this, (H6Unstyled.__proto__ || Object.getPrototypeOf(H6Unstyled)).apply(this, arguments));
-  }
-  _createClass(H6Unstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          color = _omit.color,
-          children = _omit.children,
-          cssModule = _omit.cssModule,
-          lead = _omit.lead,
-          attributes = _objectWithoutProperties(_omit, ['className', 'color', 'children', 'cssModule', 'lead']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, lead ? 'lead' : false, color ? 'text-' + color : false), cssModule);
-      return _react2.default.createElement(
-        'h6',
-        _extends({ className: classes }, attributes),
-        children
-      );
-    }
-  }]);
-  return H6Unstyled;
-}(_react2.default.Component);
-H6Unstyled.propTypes = {
-  className: _propTypes2.default.string,
-  children: _propTypes2.default.node,
-  lead: _propTypes2.default.bool,
-  theme: _propTypes2.default.object,
-  color: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-var H6 = (0, _styledComponents2.default)(H6Unstyled).withConfig({
-  displayName: 'H6'
-})(['', ''], function (props) {
-  return '\n    font-size: ' + props.theme['$font-size-h6'] + ';\n    ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    \n    &.lead {\n     font-size: ' + props.theme['$lead-font-size'] + ';\n     font-weight: ' + props.theme['$lead-font-weight'] + ';\n    }\n    \n    /* Reboot Scss */\n    margin-top: 0;\n  ';
-});
-H6.defaultProps = defaultProps;
-exports.default = H6;
-module.exports = exports['default'];
-});
-unwrapExports(H6_1);
-
-var DropdownItem_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _H2 = _interopRequireDefault(H6_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  tag: 'button'
-};
-var DropdownItem = function (_React$Component) {
-  _inherits(DropdownItem, _React$Component);
-  function DropdownItem() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, DropdownItem);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownItem.__proto__ || Object.getPrototypeOf(DropdownItem)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (e) {
-      if (_this.props.disabled || _this.props.header || _this.props.divider) {
-        e.preventDefault();
-        return;
+    var count = getIn(field, 'count') - 1;
+    if (count <= 0 && destroyOnUnmount) {
+      result = deleteIn(result, key);
+      if (deepEqual(getIn(result, 'registeredFields'), empty)) {
+        result = deleteIn(result, 'registeredFields');
       }
-      if (_this.props.onClick) {
-        _this.props.onClick(e);
-      }
-      _this.context.toggle();
-    }, _this.getTabIndex = function () {
-      if (_this.props.disabled || _this.props.header || _this.props.divider) {
-        return '-1';
-      }
-      return '0';
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(DropdownItem, [{
-    key: 'render',
-    value: function render() {
-      var tabIndex = this.getTabIndex();
-      var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          divider = _props.divider,
-          disabled = _props.disabled,
-          Tag = _props.tag,
-          header = _props.header,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'divider', 'disabled', 'tag', 'header']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, {
-        disabled: disabled,
-        'dropdown-item': !divider && !header,
-        'dropdown-header': header,
-        'dropdown-divider': divider
-      }), cssModule);
-      if (Tag === 'button') {
-        if (header) {
-          Tag = _H2.default;
-        } else if (divider) {
-          Tag = 'div';
+      var syncErrors = getIn(result, 'syncErrors');
+      if (syncErrors) {
+        syncErrors = plainDeleteInWithCleanUp(syncErrors, name);
+        if (_plain2.default.deepEqual(syncErrors, _plain2.default.empty)) {
+          result = deleteIn(result, 'syncErrors');
+        } else {
+          result = setIn(result, 'syncErrors', syncErrors);
         }
       }
-      return _react2.default.createElement(Tag, _extends({
-        tabIndex: tabIndex,
-        className: classes,
-        onClick: this.onClick
-      }, attributes));
-    }
-  }]);
-  return DropdownItem;
-}(_react2.default.Component);
-DropdownItem.propTypes = {
-  children: _propTypes2.default.node,
-  disabled: _propTypes2.default.bool,
-  divider: _propTypes2.default.bool,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  header: _propTypes2.default.bool,
-  onClick: _propTypes2.default.func,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-DropdownItem.contextTypes = {
-  toggle: _propTypes2.default.func
-};
-DropdownItem.defaultProps = defaultProps;
-exports.default = DropdownItem;
-module.exports = exports['default'];
-});
-unwrapExports(DropdownItem_1);
-
-var tabFocus_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.tabFocus = tabFocus;
-function tabFocus() {
-  return "\n    /* WebKit-specific. Other browsers will keep their default outline style. */\n    /* (Initially tried to also force default via 'outline: initial', */\n    /* but that seems to erroneously remove the outline in Firefox altogether.) */\n    outline: 5px auto -webkit-focus-ring-color;\n    outline-offset: -2px;\n  ";
-}
-exports.default = {
-  tabFocus: tabFocus
-};
-});
-unwrapExports(tabFocus_1);
-
-var a_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultProps = undefined;
-exports.a = a;
-var defaultProps = exports.defaultProps = {
-  '$grid-breakpoints': {
-    xs: '0',
-    sm: '576px',
-    md: '768px',
-    lg: '992px',
-    xl: '1200px'
-  },
-  '$link-color': '#0275d8',
-  '$link-decoration': 'none',
-  '$link-hover-color': '#014C8D',
-  '$link-hover-decoration': 'underline',
-  '$enable-hover-media-query': false
-};
-function a() {
-  var $linkColor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultProps['$link-color'];
-  var $linkDecoration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultProps['$link-decoration'];
-  var $linkHoverColor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultProps['$link-hover-color'];
-  var $linkHoverDecoration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultProps['$link-hover-decoration'];
-  var $enableHoverMediaQuery = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : defaultProps['$enable-hover-media-query'];
-  return '\n    color: ' + $linkColor + ';\n    text-decoration: ' + $linkDecoration + ';\n    background-color: transparent;\n    -webkit-text-decoration-skip: objects;\n  \n    ' + (0, hover_1.hoverFocus)($enableHoverMediaQuery, '\n      color: ' + $linkHoverColor + ';\n      text-decoration: ' + $linkHoverDecoration + ';\n    ') + '\n    \n    &:focus {\n      ' + (0, tabFocus_1.tabFocus)() + '\n    }\n\n    a:not([href]):not([tabindex]) {\n      color: inherit;\n      text-decoration: none;\n      \n      ' + (0, hover_1.hoverFocus)($enableHoverMediaQuery, '\n        color: inherit;\n        text-decoration: none;\n      ') + '\n\n      &:focus {\n        outline: 0;\n      }\n    }\n  ';
-}
-exports.default = {
-  defaultProps: defaultProps,
-  a: a
-};
-});
-unwrapExports(a_1);
-
-var composeLink_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-exports.default = composeLink;
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  theme: _theme2.default
-};
-function composeLink(RouterLink) {
-  var Link = function (_React$Component) {
-    _inherits(Link, _React$Component);
-    function Link() {
-      _classCallCheck(this, Link);
-      return _possibleConstructorReturn(this, (Link.__proto__ || Object.getPrototypeOf(Link)).apply(this, arguments));
-    }
-    _createClass(Link, [{
-      key: 'render',
-      value: function render() {
-        var _omit = (0, _lodash2.default)(this.props, ['theme']),
-            className = _omit.className,
-            to = _omit.to,
-            attributes = _objectWithoutProperties(_omit, ['className', 'to']);
-        return _react2.default.createElement(RouterLink, _extends({ className: className, to: to }, attributes));
+      var syncWarnings = getIn(result, 'syncWarnings');
+      if (syncWarnings) {
+        syncWarnings = plainDeleteInWithCleanUp(syncWarnings, name);
+        if (_plain2.default.deepEqual(syncWarnings, _plain2.default.empty)) {
+          result = deleteIn(result, 'syncWarnings');
+        } else {
+          result = setIn(result, 'syncWarnings', syncWarnings);
+        }
       }
-    }]);
-    return Link;
-  }(_react2.default.Component);
-  Link.propTypes = {
-    className: _propTypes2.default.string,
-    to: _propTypes2.default.string.isRequired,
-    theme: _propTypes2.default.object
+      result = deleteInWithCleanUp$$1(result, 'submitErrors.' + name);
+      result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + name);
+    } else {
+      field = setIn(field, 'count', count);
+      result = setIn(result, key, field);
+    }
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.UNTOUCH, function (state, _ref24) {
+    var fields = _ref24.meta.fields;
+    var result = state;
+    fields.forEach(function (field) {
+      return result = deleteIn(result, 'fields.' + field + '.touched');
+    });
+    var anyTouched = some(keys(getIn(result, 'registeredFields')), function (key) {
+      return getIn(result, 'fields.' + key + '.touched');
+    });
+    result = anyTouched ? setIn(result, 'anyTouched', true) : deleteIn(result, 'anyTouched');
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.UPDATE_SYNC_ERRORS, function (state, _ref25) {
+    var _ref25$payload = _ref25.payload,
+        syncErrors = _ref25$payload.syncErrors,
+        error = _ref25$payload.error;
+    var result = state;
+    if (error) {
+      result = setIn(result, 'error', error);
+      result = setIn(result, 'syncError', true);
+    } else {
+      result = deleteIn(result, 'error');
+      result = deleteIn(result, 'syncError');
+    }
+    if (Object.keys(syncErrors).length) {
+      result = setIn(result, 'syncErrors', syncErrors);
+    } else {
+      result = deleteIn(result, 'syncErrors');
+    }
+    return result;
+  }), _defineProperty(_behaviors, actionTypes.UPDATE_SYNC_WARNINGS, function (state, _ref26) {
+    var _ref26$payload = _ref26.payload,
+        syncWarnings = _ref26$payload.syncWarnings,
+        warning = _ref26$payload.warning;
+    var result = state;
+    if (warning) {
+      result = setIn(result, 'warning', warning);
+    } else {
+      result = deleteIn(result, 'warning');
+    }
+    if (Object.keys(syncWarnings).length) {
+      result = setIn(result, 'syncWarnings', syncWarnings);
+    } else {
+      result = deleteIn(result, 'syncWarnings');
+    }
+    return result;
+  }), _behaviors);
+  var reducer = function reducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
+    var action = arguments[1];
+    var behavior = behaviors[action.type];
+    return behavior ? behavior(state, action) : state;
   };
-  Link = (0, _styledComponents2.default)(Link).withConfig({
-    displayName: 'composeLink__Link'
-  })(['', ''], function (props) {
-    return '\n      ' + (0, a_1.a)(props.theme['$link-color'], props.theme['$link-decoration'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$enable-hover-media-query']) + '\n    \n      ' + (0, buttons.button)(props.theme['$enable-shadows'], props.theme['$enable-hover-media-query'], props.theme['$enable-transitions'], props.theme['$enable-rounded'], props.theme['$font-weight-normal'], props.theme['$btn-font-weight'], props.theme['$btn-line-height'], props.theme['$btn-transition'], props.theme['$input-btn-border-width'], props.theme['$btn-padding-x'], props.theme['$btn-padding-y'], props.theme['$font-size-base'], props.theme['$btn-border-radius'], props.theme['$btn-box-shadow'], props.theme['$btn-focus-box-shadow'], props.theme['$btn-active-box-shadow'], props.theme['$cursor-disabled'], props.theme['$link-color'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$btn-link-disabled-color'], props.theme['$btn-padding-x-lg'], props.theme['$btn-padding-y-lg'], props.theme['$font-size-lg'], props.theme['$btn-border-radius-lg'], props.theme['$btn-padding-x-sm'], props.theme['$btn-padding-y-sm'], props.theme['$font-size-sm'], props.theme['$btn-border-radius-sm'], props.theme['$btn-block-spacing-y'], props.theme['$btn-primary-color'], props.theme['$btn-primary-bg'], props.theme['$btn-primary-border'], props.theme['$btn-secondary-color'], props.theme['$btn-secondary-bg'], props.theme['$btn-secondary-border'], props.theme['$btn-info-color'], props.theme['$btn-info-bg'], props.theme['$btn-info-border'], props.theme['$btn-success-color'], props.theme['$btn-success-bg'], props.theme['$btn-success-border'], props.theme['$btn-warning-color'], props.theme['$btn-warning-bg'], props.theme['$btn-warning-border'], props.theme['$btn-danger-color'], props.theme['$btn-danger-bg'], props.theme['$btn-danger-border']) + '\n    ';
-  });
-  Link.defaultProps = defaultProps;
-  return Link;
+  var byForm = function byForm(reducer) {
+    return function () {
+      var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
+      var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { type: 'NONE' };
+      var form = action && action.meta && action.meta.form;
+      if (!form || !isReduxFormAction(action)) {
+        return state;
+      }
+      if (action.type === actionTypes.DESTROY && action.meta && action.meta.form) {
+        return action.meta.form.reduce(function (result, form) {
+          return deleteInWithCleanUp$$1(result, form);
+        }, state);
+      }
+      var formState = getIn(state, form);
+      var result = reducer(formState, action);
+      return result === formState ? state : setIn(state, form, result);
+    };
+  };
+  function decorate(target) {
+    target.plugin = function plugin(reducers) {
+      var _this = this;
+      return decorate(function () {
+        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
+        var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { type: 'NONE' };
+        return Object.keys(reducers).reduce(function (accumulator, key) {
+          var previousState = getIn(accumulator, key);
+          var nextState = reducers[key](previousState, action, getIn(state, key));
+          return nextState === previousState ? accumulator : setIn(accumulator, key, nextState);
+        }, _this(state, action));
+      });
+    };
+    return target;
+  }
+  return decorate(byForm(reducer));
 }
-module.exports = exports['default'];
+exports.default = createReducer;
 });
-unwrapExports(composeLink_1);
 
-var A_1 = createCommonjsModule(function (module, exports) {
+var reducer = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.composeLink = undefined;
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-Object.defineProperty(exports, 'composeLink', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(composeLink_1).default;
-  }
-});
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
+var _createReducer2 = _interopRequireDefault(createReducer_1);
+var _immutable2 = _interopRequireDefault(immutable$4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createReducer2.default)(_immutable2.default);
+});
+
+var createValues_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  tag: 'a',
-  theme: _theme2.default
-};
-var AUnstyled = function (_React$Component) {
-  _inherits(AUnstyled, _React$Component);
-  function AUnstyled() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, AUnstyled);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AUnstyled.__proto__ || Object.getPrototypeOf(AUnstyled)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      focus: false
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(AUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          active = _omit.active,
-          disabled = _omit.disabled,
-          cssModule = _omit.cssModule,
-          color = _omit.color,
-          Tag = _omit.tag,
-          attributes = _objectWithoutProperties(_omit, ['className', 'active', 'disabled', 'cssModule', 'color', 'tag']);
-      var focus = this.state.focus;
-      return _react2.default.createElement(Tag, _extends({
-        className: (0, _mapToCssModules2.default)((0, _classnames2.default)(className, _defineProperty({
-          focus: focus,
-          active: active,
-          disabled: disabled
-        }, 'text-' + color, color)), cssModule)
-      }, attributes));
-    }
-  }]);
-  return AUnstyled;
-}(_react2.default.Component);
-AUnstyled.propTypes = {
-  className: _propTypes2.default.string,
-  active: _propTypes2.default.bool,
-  tag: _propTypes2.default.string,
-  disabled: _propTypes2.default.bool,
-  theme: _propTypes2.default.object,
-  color: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object
-};
-var A = (0, _styledComponents2.default)(AUnstyled).withConfig({
-  displayName: 'A'
-})(['', ''], function (props) {
-  return '\n    ' + (0, a_1.a)(props.theme['$link-color'], props.theme['$link-decoration'], props.theme['$link-hover-color'], props.theme['$link-hover-decoration'], props.theme['$enable-hover-media-query']) + '\n  ';
-});
-A.defaultProps = defaultProps;
-exports.default = A;
-});
-unwrapExports(A_1);
-
-var DropdownToggle_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _Button2 = _interopRequireDefault(Button);
-var _A2 = _interopRequireDefault(A_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = {
-  'data-toggle': 'dropdown',
-  'aria-haspopup': true,
-  color: 'secondary'
-};
-var DropdownToggle = function (_React$Component) {
-  _inherits(DropdownToggle, _React$Component);
-  function DropdownToggle() {
-    var _ref;
-    var _temp, _this, _ret;
-    _classCallCheck(this, DropdownToggle);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownToggle.__proto__ || Object.getPrototypeOf(DropdownToggle)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (e) {
-      if (_this.props.disabled) {
-        e.preventDefault();
-        return;
+var createValues = function createValues(_ref) {
+  var getIn = _ref.getIn;
+  return function (config) {
+    var _prop$getFormState$co = _extends({
+      prop: 'values',
+      getFormState: function getFormState(state) {
+        return getIn(state, 'form');
       }
-      if (_this.props.nav && !_this.props.tag) {
-        e.preventDefault();
-      }
-      if (_this.props.onClick) {
-        _this.props.onClick(e);
-      }
-      _this.context.toggle();
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-  _createClass(DropdownToggle, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          className = _props.className,
-          cssModule = _props.cssModule,
-          caret = _props.caret,
-          split = _props.split,
-          nav = _props.nav,
-          tag = _props.tag,
-          attributes = _objectWithoutProperties(_props, ['className', 'cssModule', 'caret', 'split', 'nav', 'tag']);
-      var ariaLabel = attributes['aria-label'] || 'Toggle Dropdown';
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, {
-        'dropdown-toggle': caret || split,
-        'dropdown-toggle-split': split,
-        active: this.context.isOpen,
-        'nav-link': nav
-      }), cssModule);
-      var children = attributes.children || _react2.default.createElement(
-        'span',
-        { className: 'sr-only' },
-        ariaLabel
-      );
-      var Tag = void 0;
-      if (nav && !tag) {
-        Tag = _A2.default;
-        attributes.href = '#';
-      } else if (!tag) {
-        Tag = _Button2.default;
-      } else {
-        Tag = tag;
-      }
-      return _react2.default.createElement(
-        Tag,
-        _extends({
-          className: classes,
-          onClick: this.onClick,
-          'aria-haspopup': 'true',
-          'aria-expanded': this.context.isOpen
-        }, attributes),
-        children
-      );
+    }, config),
+        form = _prop$getFormState$co.form,
+        prop = _prop$getFormState$co.prop,
+        getFormState = _prop$getFormState$co.getFormState;
+    return (0, _reactRedux.connect)(function (state) {
+      return _defineProperty({}, prop, getIn(getFormState(state), form + '.values'));
     }
-  }]);
-  return DropdownToggle;
-}(_react2.default.Component);
-DropdownToggle.propTypes = {
-  caret: _propTypes2.default.bool,
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string,
-  cssModule: _propTypes2.default.object,
-  disabled: _propTypes2.default.bool,
-  onClick: _propTypes2.default.func,
-  'data-toggle': _propTypes2.default.string,
-  'aria-haspopup': _propTypes2.default.bool,
-  split: _propTypes2.default.bool,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
-  nav: _propTypes2.default.bool
+    );
+  };
 };
-DropdownToggle.contextTypes = {
-  isOpen: _propTypes2.default.bool.isRequired,
-  toggle: _propTypes2.default.func.isRequired
-};
-DropdownToggle.defaultProps = defaultProps;
-exports.default = DropdownToggle;
-module.exports = exports['default'];
+exports.default = createValues;
 });
-unwrapExports(DropdownToggle_1);
 
-var Dropdown = createCommonjsModule(function (module, exports) {
+var values = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(Dropdown_1).default;
-  }
-});
-Object.defineProperty(exports, 'DropdownItem', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(DropdownItem_1).default;
-  }
-});
-Object.defineProperty(exports, 'DropdownToggle', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(DropdownToggle_1).default;
-  }
-});
-Object.defineProperty(exports, 'DropdownMenu', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(DropdownMenu_1).default;
-  }
-});
+var _createValues2 = _interopRequireDefault(createValues_1);
+var _immutable2 = _interopRequireDefault(immutable$4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = (0, _createValues2.default)(_immutable2.default);
 });
-unwrapExports(Dropdown);
 
-var ButtonDropdown_1 = createCommonjsModule(function (module, exports) {
+var immutable$2 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _Dropdown2 = _interopRequireDefault(Dropdown);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var propTypes = {
-  children: _propTypes2.default.node,
-  toggle: _propTypes2.default.func.isRequired,
-  isOpen: _propTypes2.default.bool.isRequired
-};
-var ButtonDropdown = function ButtonDropdown(props) {
-  return _react2.default.createElement(_Dropdown2.default, _extends({}, props, { group: true }));
-};
-ButtonDropdown.propTypes = propTypes;
-exports.default = ButtonDropdown;
-module.exports = exports['default'];
-});
-unwrapExports(ButtonDropdown_1);
-
-var Button = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, 'default', {
+exports.untouch = exports.unregisterField = exports.touch = exports.submit = exports.stopSubmit = exports.stopAsyncValidation = exports.startSubmit = exports.startAsyncValidation = exports.setSubmitSucceeded = exports.setSubmitFailed = exports.reset = exports.registerField = exports.initialize = exports.focus = exports.destroy = exports.clearSubmitErrors = exports.change = exports.blur = exports.autofill = exports.arrayUnshift = exports.arraySwap = exports.arraySplice = exports.arrayShift = exports.arrayRemoveAll = exports.arrayRemove = exports.arrayPush = exports.arrayPop = exports.arrayMove = exports.arrayInsert = exports.actionTypes = exports.values = exports.reducer = exports.reduxForm = exports.hasSubmitFailed = exports.hasSubmitSucceeded = exports.isSubmitting = exports.isValid = exports.isPristine = exports.isInvalid = exports.isDirty = exports.getFormSubmitErrors = exports.getFormSyncWarnings = exports.getFormAsyncErrors = exports.getFormMeta = exports.getFormSyncErrors = exports.getFormInitialValues = exports.getFormValues = exports.getFormNames = exports.formValues = exports.formValueSelector = exports.FieldArray = exports.Fields = exports.Field = exports.formPropTypes = exports.fieldPropTypes = exports.fieldMetaPropTypes = exports.fieldInputPropTypes = exports.propTypes = exports.SubmissionError = exports.FormSection = exports.Form = exports.defaultShouldValidate = exports.defaultShouldAsyncValidate = undefined;
+Object.defineProperty(exports, 'defaultShouldAsyncValidate', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(Button_1).default;
+    return _interopRequireDefault(defaultShouldAsyncValidate_1).default;
   }
 });
-Object.defineProperty(exports, 'ButtonDropdown', {
+Object.defineProperty(exports, 'defaultShouldValidate', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(ButtonDropdown_1).default;
+    return _interopRequireDefault(defaultShouldValidate_1).default;
   }
 });
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-});
-var Button$1 = unwrapExports(Button);
-
-var P_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(_react);
-var _propTypes2 = _interopRequireDefault(_propTypes);
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
-var _classnames2 = _interopRequireDefault(_classnames);
-var _lodash2 = _interopRequireDefault(lodash_omit);
-var _mapToCssModules2 = _interopRequireDefault(_mapToCssModules);
-var _theme2 = _interopRequireDefault(theme$1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var defaultProps = { theme: _theme2.default };
-var PUnstyled = function (_React$Component) {
-  _inherits(PUnstyled, _React$Component);
-  function PUnstyled() {
-    _classCallCheck(this, PUnstyled);
-    return _possibleConstructorReturn(this, (PUnstyled.__proto__ || Object.getPrototypeOf(PUnstyled)).apply(this, arguments));
+Object.defineProperty(exports, 'Form', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(Form_1).default;
   }
-  _createClass(PUnstyled, [{
-    key: 'render',
-    value: function render() {
-      var _omit = (0, _lodash2.default)(this.props, ['theme']),
-          className = _omit.className,
-          color = _omit.color,
-          children = _omit.children,
-          cssModule = _omit.cssModule,
-          lead = _omit.lead,
-          attributes = _objectWithoutProperties(_omit, ['className', 'color', 'children', 'cssModule', 'lead']);
-      var classes = (0, _mapToCssModules2.default)((0, _classnames2.default)(className, lead ? 'lead' : false, color ? 'text-' + color : false), cssModule);
-      return _react2.default.createElement(
-        'p',
-        _extends({ className: classes }, attributes),
-        children
-      );
-    }
-  }]);
-  return PUnstyled;
-}(_react2.default.Component);
-PUnstyled.propTypes = {
-  className: _propTypes2.default.string,
-  children: _propTypes2.default.node,
-  theme: _propTypes2.default.object,
-  color: _propTypes2.default.string,
-  lead: _propTypes2.default.bool,
-  cssModule: _propTypes2.default.object
-};
-var P = (0, _styledComponents2.default)(PUnstyled).withConfig({
-  displayName: 'P'
-})(['', ''], function (props) {
-  return '\n    /* Type Scss */\n\n    &.lead {\n      font-size: ' + props.theme['$lead-font-size'] + ';\n      font-weight: ' + props.theme['$lead-font-weight'] + ';\n    }\n    \n    &.h1{\n      font-size: ' + props.theme['$font-size-h1'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    &.h2{\n      font-size: ' + props.theme['$font-size-h2'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    &.h3{\n      font-size: ' + props.theme['$font-size-h3'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    &.h4{\n      font-size: ' + props.theme['$font-size-h4'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    &.h5{\n      font-size: ' + props.theme['$font-size-h5'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    &.h6{\n      font-size: ' + props.theme['$font-size-h6'] + ';\n      ' + (0, typography_1.typography)(props.theme['$headings-margin-bottom'], props.theme['$headings-font-family'], props.theme['$headings-font-weight'], props.theme['$headings-line-height'], props.theme['$headings-color'], props.theme['$display1-size'], props.theme['$display2-size'], props.theme['$display3-size'], props.theme['$display4-size'], props.theme['$display1-weight'], props.theme['$display2-weight'], props.theme['$display3-weight'], props.theme['$display4-weight']) + '\n    }\n    \n    /* Reboot Scss */\n    margin-top: 0;   \n    margin-bottom: 1rem;\n  ';
 });
-P.defaultProps = defaultProps;
-exports.default = P;
-module.exports = exports['default'];
+Object.defineProperty(exports, 'FormSection', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(FormSection_1).default;
+  }
 });
-var P = unwrapExports(P_1);
+Object.defineProperty(exports, 'SubmissionError', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(SubmissionError_1).default;
+  }
+});
+Object.defineProperty(exports, 'propTypes', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(propTypes$1).default;
+  }
+});
+Object.defineProperty(exports, 'fieldInputPropTypes', {
+  enumerable: true,
+  get: function get() {
+    return propTypes$1.fieldInputPropTypes;
+  }
+});
+Object.defineProperty(exports, 'fieldMetaPropTypes', {
+  enumerable: true,
+  get: function get() {
+    return propTypes$1.fieldMetaPropTypes;
+  }
+});
+Object.defineProperty(exports, 'fieldPropTypes', {
+  enumerable: true,
+  get: function get() {
+    return propTypes$1.fieldPropTypes;
+  }
+});
+Object.defineProperty(exports, 'formPropTypes', {
+  enumerable: true,
+  get: function get() {
+    return propTypes$1.formPropTypes;
+  }
+});
+Object.defineProperty(exports, 'Field', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(Field).default;
+  }
+});
+Object.defineProperty(exports, 'Fields', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(Fields).default;
+  }
+});
+Object.defineProperty(exports, 'FieldArray', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(FieldArray).default;
+  }
+});
+Object.defineProperty(exports, 'formValueSelector', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(formValueSelector).default;
+  }
+});
+Object.defineProperty(exports, 'formValues', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(formValues).default;
+  }
+});
+Object.defineProperty(exports, 'getFormNames', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormNames).default;
+  }
+});
+Object.defineProperty(exports, 'getFormValues', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormValues).default;
+  }
+});
+Object.defineProperty(exports, 'getFormInitialValues', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormInitialValues).default;
+  }
+});
+Object.defineProperty(exports, 'getFormSyncErrors', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormSyncErrors).default;
+  }
+});
+Object.defineProperty(exports, 'getFormMeta', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormMeta).default;
+  }
+});
+Object.defineProperty(exports, 'getFormAsyncErrors', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormAsyncErrors).default;
+  }
+});
+Object.defineProperty(exports, 'getFormSyncWarnings', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormSyncWarnings).default;
+  }
+});
+Object.defineProperty(exports, 'getFormSubmitErrors', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(getFormSubmitErrors).default;
+  }
+});
+Object.defineProperty(exports, 'isDirty', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(isDirty).default;
+  }
+});
+Object.defineProperty(exports, 'isInvalid', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(isInvalid).default;
+  }
+});
+Object.defineProperty(exports, 'isPristine', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(isPristine$2).default;
+  }
+});
+Object.defineProperty(exports, 'isValid', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(isValid$2).default;
+  }
+});
+Object.defineProperty(exports, 'isSubmitting', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(isSubmitting).default;
+  }
+});
+Object.defineProperty(exports, 'hasSubmitSucceeded', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(hasSubmitSucceeded).default;
+  }
+});
+Object.defineProperty(exports, 'hasSubmitFailed', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(hasSubmitFailed).default;
+  }
+});
+Object.defineProperty(exports, 'reduxForm', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(reduxForm).default;
+  }
+});
+Object.defineProperty(exports, 'reducer', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(reducer).default;
+  }
+});
+Object.defineProperty(exports, 'values', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(values).default;
+  }
+});
+var _actions2 = _interopRequireDefault(actions_1);
+var _actionTypes$$1 = _interopRequireWildcard(actionTypes);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var actionTypes$$1 = exports.actionTypes = _actionTypes$$1;
+var arrayInsert = exports.arrayInsert = _actions2.default.arrayInsert;
+var arrayMove = exports.arrayMove = _actions2.default.arrayMove;
+var arrayPop = exports.arrayPop = _actions2.default.arrayPop;
+var arrayPush = exports.arrayPush = _actions2.default.arrayPush;
+var arrayRemove = exports.arrayRemove = _actions2.default.arrayRemove;
+var arrayRemoveAll = exports.arrayRemoveAll = _actions2.default.arrayRemoveAll;
+var arrayShift = exports.arrayShift = _actions2.default.arrayShift;
+var arraySplice = exports.arraySplice = _actions2.default.arraySplice;
+var arraySwap = exports.arraySwap = _actions2.default.arraySwap;
+var arrayUnshift = exports.arrayUnshift = _actions2.default.arrayUnshift;
+var autofill = exports.autofill = _actions2.default.autofill;
+var blur = exports.blur = _actions2.default.blur;
+var change = exports.change = _actions2.default.change;
+var clearSubmitErrors = exports.clearSubmitErrors = _actions2.default.clearSubmitErrors;
+var destroy = exports.destroy = _actions2.default.destroy;
+var focus = exports.focus = _actions2.default.focus;
+var initialize = exports.initialize = _actions2.default.initialize;
+var registerField = exports.registerField = _actions2.default.registerField;
+var reset = exports.reset = _actions2.default.reset;
+var setSubmitFailed = exports.setSubmitFailed = _actions2.default.setSubmitFailed;
+var setSubmitSucceeded = exports.setSubmitSucceeded = _actions2.default.setSubmitSucceeded;
+var startAsyncValidation = exports.startAsyncValidation = _actions2.default.startAsyncValidation;
+var startSubmit = exports.startSubmit = _actions2.default.startSubmit;
+var stopAsyncValidation = exports.stopAsyncValidation = _actions2.default.stopAsyncValidation;
+var stopSubmit = exports.stopSubmit = _actions2.default.stopSubmit;
+var submit = exports.submit = _actions2.default.submit;
+var touch = exports.touch = _actions2.default.touch;
+var unregisterField = exports.unregisterField = _actions2.default.unregisterField;
+var untouch = exports.untouch = _actions2.default.untouch;
+});
 
-var theme$4 = makeTheme$3();
-function makeTheme$3() {
+var immutable = immutable$2;
+var immutable_1 = immutable.Field;
+var immutable_2 = immutable.reduxForm;
+
+var theme$2 = makeTheme$1();
+function makeTheme$1() {
   var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var newTheme = { loginForm: {} };
   var u = userTheme;
@@ -16453,7 +11065,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var theme$3 = makeTheme$1(_extends({}, theme$4, theme));
+var theme$1 = makeTheme(_extends({}, theme$2, theme));
 var defaultProps$1 = {
   header: null,
   footer: null,
@@ -16468,26 +11080,26 @@ var defaultProps$1 = {
     username: 'Santaclauze',
     password: '••••••••••'
   },
-  theme: theme$3
+  theme: theme$1
 };
 var propTypes = {
-  header: _propTypes.node,
-  footer: _propTypes.node,
-  beforeButton: _propTypes.node,
-  className: _propTypes.string.isRequired,
-  onSubmit: _propTypes.func,
-  loading: _propTypes.bool,
-  initialValues: _propTypes.shape({
-    username: _propTypes.string,
-    password: _propTypes.string
+  header: PropTypes.node,
+  footer: PropTypes.node,
+  beforeButton: PropTypes.node,
+  className: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  initialValues: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string
   }),
-  placeHolder: _propTypes.shape({
-    username: _propTypes.string,
-    password: _propTypes.string
+  placeHolder: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string
   }),
-  theme: _propTypes.object
+  theme: PropTypes.object
 };
-var ErrorParagraph = _styledComponents(P).withConfig({
+var ErrorParagraph = styled(P).withConfig({
   displayName: 'LoginForm__ErrorParagraph'
 })(['position:absolute;font-size:0.8rem;right:0.2rem;bottom:0;margin-bottom:0;']);
 var renderField = function renderField(_ref) {
@@ -16500,25 +11112,25 @@ var renderField = function renderField(_ref) {
       _ref$meta = _ref.meta,
       touched = _ref$meta.touched,
       error = _ref$meta.error;
-  return _react.createElement(
+  return React.createElement(
     'div',
     null,
-    _react.createElement('input', _extends({ className: 'form__field-input' }, input, { type: type, placeholder: placeHolder, name: name })),
-    _react.createElement(
+    React.createElement('input', _extends({ className: 'form__field-input' }, input, { type: type, placeholder: placeHolder, name: name })),
+    React.createElement(
       'label',
       { className: 'form__field-label', htmlFor: name },
       label
     ),
-    touched && error && _react.createElement(
+    touched && error && React.createElement(
       FadeInRight,
       { inline: false },
-      _react.createElement(
+      React.createElement(
         ErrorParagraph,
         { color: 'warning', className: 'form_field-error' },
         ' ',
-        _react.createElement(FormattedMessage, { id: error }),
+        React.createElement(FormattedMessage, { id: error }),
         ' ',
-        _react.createElement('i', { className: 'fa fa-exclamation-circle' })
+        React.createElement('i', { className: 'fa fa-exclamation-circle' })
       )
     )
   );
@@ -16568,48 +11180,48 @@ var LoginFormUnstyled = function LoginFormUnstyled(props) {
       warn = reduxFormProps.warn,
       onError = reduxFormProps.onError,
       rest = objectWithoutProperties(reduxFormProps, ['anyTouched', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'dirty', 'dispatch', 'success', 'error', 'handleSubmit', 'initialize', 'initialized', 'initialValues', 'invalid', 'pristine', 'reset', 'submitFailed', 'submitSucceeded', 'submitting', 'touch', 'untouch', 'valid', 'warning', 'pure', 'triggerSubmit', 'autofill', 'clearSubmitErrors', 'clearAsyncError', 'submit', 'array', 'onSubmit', 'validate', 'warn', 'onError']);
-  return _react.createElement(
-    Form$1,
-    _extends({ name: 'login-form', className: _classnames('form', className), onSubmit: handleSubmit(onSubmit) }, rest),
+  return React.createElement(
+    Form,
+    _extends({ name: 'login-form', className: cn('form', className), onSubmit: handleSubmit(onSubmit) }, rest),
     header,
-    _react.createElement(
+    React.createElement(
       'div',
       { className: 'form__field-wrapper' },
-      _react.createElement(Field$1, {
+      React.createElement(immutable_1, {
         name: 'username',
         type: 'text',
-        label: _react.createElement(FormattedMessage, messages.formUsername),
+        label: React.createElement(FormattedMessage, messages.formUsername),
         placeHolder: placeHolder.username,
         component: renderField
       })
     ),
-    _react.createElement(
+    React.createElement(
       'div',
       { className: 'form__field-wrapper' },
-      _react.createElement(Field$1, {
+      React.createElement(immutable_1, {
         name: 'password',
         type: 'password',
-        label: _react.createElement(FormattedMessage, messages.formPassword),
+        label: React.createElement(FormattedMessage, messages.formPassword),
         placeHolder: placeHolder.password,
         component: renderField
       })
     ),
-    _react.createElement(
+    React.createElement(
       'div',
       { className: 'form__submit-btn-wrapper' },
-      _react.createElement(
+      React.createElement(
         'div',
         null,
         beforeButton,
-        _react.createElement(
-          Button$1,
+        React.createElement(
+          Button,
           { disabled: loading || submitting, color: 'success' },
-          _react.createElement(FormattedMessage, messages.authLogin),
-          (loading || submitting) && _react.createElement(
+          React.createElement(FormattedMessage, messages.authLogin),
+          (loading || submitting) && React.createElement(
             'span',
             null,
             ' ',
-            _react.createElement(LoadingIndicator, null)
+            React.createElement(LoadingIndicator, null)
           )
         )
       )
@@ -16618,13 +11230,13 @@ var LoginFormUnstyled = function LoginFormUnstyled(props) {
   );
 };
 LoginFormUnstyled.propTypes = propTypes;
-var LoginFormStyled = _styledComponents(LoginFormUnstyled).withConfig({
+var LoginFormStyled = styled(LoginFormUnstyled).withConfig({
   displayName: 'LoginForm__LoginFormStyled'
 })(['', ''], function (props) {
   return '\n    .form__field-wrapper {\n      width: 100%;\n      position: relative;\n      padding-top: 1.75em;\n      border-top: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      border-bottom: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n    \n    .form__field-wrapper + .form__field-wrapper {\n      border-top: none;\n    }\n    \n    .form__field-input:focus ~ .form__field-label {\n      color: ' + props.theme.loginForm.$color + ';\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n    }\n    \n    .form__field-input:focus {\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n      color: ' + props.theme.loginForm['$color-dark'] + ';\n    }\n    \n    .form__field-label {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      padding: 16px;\n      padding-top: 20px;\n      padding-bottom: 0;\n      margin: 0;\n      z-index: 1;\n      font-size: .8em;\n      color: ' + props.theme.loginForm['$color-light'] + ';\n      font-weight: 400;\n      user-select: none;\n      cursor: text;\n      \n      .form_field-error {\n        float: right;\n      }\n    }\n    \n    .form__field-input {\n      position: relative;\n      padding: 1.625em 16px;\n      width: 100%;\n      color: ' + props.theme.loginForm.$color + ';\n      border: none;\n      font-family: inherit;\n      outline: 0;\n      letter-spacing: 0.05em;\n    }\n    \n    .form__submit-btn-wrapper {\n      padding: 2em 1em;\n      width: 100%;\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n      display: flex;\n      justify-content: center;\n    }\n  ';
 });
 LoginFormStyled.defaultProps = defaultProps$1;
-var LoginForm = reduxForm$1({
+var LoginForm = immutable_2({
   form: 'login',
   enableReinitialize: false,
   validate: validate
@@ -16678,29 +11290,29 @@ var FormWrapperUnstyled = function (_React$Component) {
           notification = _props.notification,
           className = _props.className,
           formRest = objectWithoutProperties(_props, ['hideNotification', 'hideNotificationDelay', 'logo', 'version', 'notification', 'className']);
-      return _react.createElement(
+      return React.createElement(
         'div',
-        { className: _classnames(className, 'form-page__wrapper') },
-        _react.createElement(
+        { className: cn(className, 'form-page__wrapper') },
+        React.createElement(
           'div',
-          { className: _classnames('form-page__form-wrapper', { 'js-form__err-animation': this.state.shacked }) },
-          _react.createElement(
+          { className: cn('form-page__form-wrapper', { 'js-form__err-animation': this.state.shacked }) },
+          React.createElement(
             'div',
             { className: 'form-page__form-header text-center' },
-            _react.createElement(
+            React.createElement(
               'h2',
               { className: 'form-page__form-heading' },
-              _react.createElement(FormattedMessage, messages.authLogin)
+              React.createElement(FormattedMessage, messages.authLogin)
             ),
             logo
           ),
-          notification.text.length > 0 && _react.createElement(
+          notification.text.length > 0 && React.createElement(
             Alert,
             { color: notification.type, className: 'mx-2' },
-            _react.createElement(FormattedMessage, { id: notification.text })
+            React.createElement(FormattedMessage, { id: notification.text })
           ),
-          _react.createElement(LoginForm, formRest),
-          version && _react.createElement(
+          React.createElement(LoginForm, formRest),
+          version && React.createElement(
             Small,
             { className: 'text-center d-block' },
             version
@@ -16710,27 +11322,27 @@ var FormWrapperUnstyled = function (_React$Component) {
     }
   }]);
   return FormWrapperUnstyled;
-}(_react.Component);
+}(React.Component);
 FormWrapperUnstyled.defaultProps = defaultProps$$1;
 FormWrapperUnstyled.propTypes = {
-  className: _propTypes.string.isRequired,
-  logo: _propTypes.any,
-  version: _propTypes.any,
-  notification: _propTypes.shape({
-    text: _propTypes.string,
-    type: _propTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning', 'inverse'])
+  className: PropTypes.string.isRequired,
+  logo: PropTypes.any,
+  version: PropTypes.any,
+  notification: PropTypes.shape({
+    text: PropTypes.string,
+    type: PropTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning', 'inverse'])
   }),
-  hideNotification: _propTypes.func,
-  hideNotificationDelay: _propTypes.number
+  hideNotification: PropTypes.func,
+  hideNotificationDelay: PropTypes.number
 };
 var shake = keyframes(['0%{transform:translateX(0);}25%{transform:translateX(10px);}75%{transform:translateX(-10px);}100%{transform:translateX(0);}']);
-var FormWrapper = _styledComponents(FormWrapperUnstyled).withConfig({
+var FormWrapper = styled(FormWrapperUnstyled).withConfig({
   displayName: 'FormWrapper'
 })(['', ''], function (props) {
   return '\n\n    margin-top: calc(' + props.theme.$spacer * 1.25 + ');\n\n    &.form-page__wrapper {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      height: 100%;\n      width: 100%;\n    }\n\n    .form-page__form-wrapper {\n      max-width: ' + props.theme.loginForm['$max-width'] + ';\n      width: 100%;\n      border: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      ' + borderRadius_2(props.theme['$enable-rounded'], props.theme.loginForm['$border-radius']) + '\n      ' + boxShadow_2(props.theme['$enable-shadows'], props.theme.loginForm['$box-shadow']) + '\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n\n    .form-page__form-heading {\n      text-align: center;\n      font-size: ' + props.theme['$font-size-base'] + ';\n      user-select: none;\n    }\n\n    .form-page__form-header {\n      padding: ' + props.theme.$spacer + ';\n    }\n\n    & .js-form__err-animation {\n      animation: ' + shake + ' ' + props.theme['$motion-delay'].md + ' ' + props.theme['$motion-timing-function'].easeInOut + '\n    }\n\n  ';
 });
 FormWrapper.defaultProps = defaultProps$$1;
 
-export { FormWrapper as LoginForm, makeTheme$3 as makeThemeLoginForm, theme$4 as themeLoginForm };
+export { FormWrapper as LoginForm, makeTheme$1 as makeThemeLoginForm, theme$2 as themeLoginForm };
 export default FormWrapper;
 //# sourceMappingURL=login-form.es.js.map

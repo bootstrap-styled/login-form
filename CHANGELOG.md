@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2017-09-30
+
+- organizing import for redux-form
+
 ## [0.1.0] - 2017-09-30
 
 - rollup adding namedConfiguration for react-redux.
