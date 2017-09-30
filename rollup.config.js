@@ -38,14 +38,11 @@ const plugins = [
       return null;
     },
   },
-  nodeResolve(),
+  nodeResolve({
+    modulesOnly: true,
+  }),
   commonjs({
     include: 'node_modules/**',
-    namedExports: {
-      './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record', 'Iterable'],
-      './node_modules/redux/dist/redux.js': ['createStore', 'combineReducers', 'bindActionCreators', 'applyMiddleware', 'compose'],
-      './node_modules/react-redux/dist/react-redux.js': [' Provider', 'createProvider', 'connectAdvanced', 'connect'],
-    },
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'development'),
@@ -67,9 +64,9 @@ export default {
   input: 'src/index.js',
   sourcemap: true,
   name: pkg.name,
-  external: ['react', 'react-dom', 'prop-types', 'styled-components', 'bootstrap-styled', 'classnames', 'react-transition-group', 'loaders', 'redux-form', 'redux', 'react-redux', 'react-intl', 'message-common', 'bootstrap-styled-motion'],
+  external: ['react', 'react-dom', 'prop-types', 'styled-components', 'bootstrap-styled', 'classnames', 'react-transition-group', 'loaders', 'redux-form/immutable', 'redux', 'react-redux', 'react-intl', 'message-common', 'bootstrap-styled-motion'],
   exports: 'named',
   output,
   plugins,
-  globals: { react: 'React', 'react-dom': 'ReactDom', 'prop-types': 'PropTypes', 'styled-components': 'styled', 'bootstrap-styled': 'BootstrapStyled', classnames: 'cn', 'react-transition-group': 'ReactTransitionGroup', loaders: 'loaders', redux: 'redux', 'react-redux': 'react-redux', 'redux-form': 'redux-form', 'react-intl': 'react-intl', 'message-common': 'message-common', 'bootstrap-styled-motion': 'bootstrap-styled-motion' },
+  globals: { react: 'React', 'react-dom': 'ReactDom', 'prop-types': 'PropTypes', 'styled-components': 'styled', 'bootstrap-styled': 'BootstrapStyled', classnames: 'cn', 'react-transition-group': 'ReactTransitionGroup', loaders: 'loaders', redux: 'redux', 'react-redux': 'react-redux', 'redux-form/immutable': 'redux-form/immutable', 'react-intl': 'react-intl', 'message-common': 'message-common', 'bootstrap-styled-motion': 'bootstrap-styled-motion' },
 };

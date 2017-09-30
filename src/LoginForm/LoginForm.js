@@ -7,10 +7,7 @@ import messages from 'message-common';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme as themeMotion } from 'bootstrap-styled-motion';
 import { Form, Button, P, makeTheme } from 'bootstrap-styled';
-import * as Redux from 'redux'; // eslint-disable-line no-unused-vars
-import * as ReactRedux from 'react-redux'; // eslint-disable-line no-unused-vars
-import reduxForm from 'redux-form/lib/immutable/reduxForm';
-import Field from 'redux-form/lib/immutable/Field';
+import { reduxForm, Field } from 'redux-form/immutable';
 import { theme as themeLoginForm } from './theme';
 import { validate as validateForm } from './validate';
 const theme = makeTheme({ ...themeLoginForm, ...themeMotion });
