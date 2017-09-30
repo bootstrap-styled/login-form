@@ -1,5 +1,3 @@
-export const theme = makeTheme();
-
 export const makeTheme = (userTheme = {}) => {
   const newTheme = { loginForm: {} };
   const u = userTheme;
@@ -19,5 +17,8 @@ export const makeTheme = (userTheme = {}) => {
 
   return newTheme;
 };
+
+export const theme = makeTheme();
+
 
 export default theme;

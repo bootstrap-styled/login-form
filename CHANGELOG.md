@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.4] - 2017-09-30
 
-- Remove named exports for `redux`.
+- Remove useless named exports for `redux`.
 - Export theme by default in `theme.js`.
 - Using `export const` instead of `export function` for `makeTheme`.
 
