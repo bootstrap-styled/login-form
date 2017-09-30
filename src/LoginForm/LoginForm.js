@@ -8,8 +8,6 @@ import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme as themeMotion } from 'bootstrap-styled-motion';
 import { Form, Button, P, makeTheme } from 'bootstrap-styled';
 import { Field, reduxForm } from 'redux-form/immutable';
-// import Field from 'redux-form/lib/immutable/Field';
-// import reduxForm from 'redux-form/lib/immutable/reduxForm';
 import { theme as themeLoginForm } from './theme';
 import { validate as validateForm } from './validate';
 const theme = makeTheme({ ...themeLoginForm, ...themeMotion });
