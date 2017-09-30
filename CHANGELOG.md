@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2017-09-30
+
+- Trying with many redux and form-redux namedExports.
+
 ## [0.1.1] - 2017-09-30
 
 - organizing import for redux-form
