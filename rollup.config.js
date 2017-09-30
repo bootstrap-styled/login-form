@@ -42,7 +42,8 @@ const plugins = [
   commonjs({
     include: 'node_modules/**',
     namedExports: {
-      './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record'],
+      './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record', 'Iterable'],
+      './node_modules/redux-form/dist/redux-form.js': ['Provider', 'createProvider', 'connectAdvanced', 'connect'],
     },
   }),
   replace({
