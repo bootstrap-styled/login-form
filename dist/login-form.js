@@ -1,16 +1,16 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('prop-types'), require('styled-components'), require('classnames'), require('react-intl'), require('message-common'), require('bootstrap-styled'), require('loaders'), require('bootstrap-styled-motion'), require('react-redux'), require('redux')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'prop-types', 'styled-components', 'classnames', 'react-intl', 'message-common', 'bootstrap-styled', 'loaders', 'bootstrap-styled-motion', 'react-redux', 'redux'], factory) :
-	(factory((global['login-form'] = {}),global.React,global.PropTypes,global.styled,global.cn,global['react-intl'],global['message-common'],global.BootstrapStyled,global.loaders,global['bootstrap-styled-motion'],global['react-redux'],global.redux));
-}(this, (function (exports,React,PropTypes,styled,cn,reactIntl,messages,bootstrapStyled,loaders,bootstrapStyledMotion,reactRedux,redux) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('prop-types'), require('styled-components'), require('classnames'), require('react-intl'), require('message-common'), require('bootstrap-styled'), require('loaders'), require('bootstrap-styled-motion'), require('redux'), require('react-redux')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'react', 'prop-types', 'styled-components', 'classnames', 'react-intl', 'message-common', 'bootstrap-styled', 'loaders', 'bootstrap-styled-motion', 'redux', 'react-redux'], factory) :
+	(factory((global['login-form'] = {}),global.React,global.PropTypes,global.styled,global.cn,global['react-intl'],global['message-common'],global.BootstrapStyled,global.loaders,global['bootstrap-styled-motion'],global.redux,global['react-redux']));
+}(this, (function (exports,React,PropTypes,styled,cn,reactIntl,messages,bootstrapStyled,loaders,bootstrapStyledMotion,redux,reactRedux) { 'use strict';
 
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 var styled__default = 'default' in styled ? styled['default'] : styled;
 cn = cn && cn.hasOwnProperty('default') ? cn['default'] : cn;
 messages = messages && messages.hasOwnProperty('default') ? messages['default'] : messages;
-reactRedux = reactRedux && reactRedux.hasOwnProperty('default') ? reactRedux['default'] : reactRedux;
-redux = redux && redux.hasOwnProperty('default') ? redux['default'] : redux;
+var redux__default = redux['default'];
+var reactRedux__default = reactRedux['default'];
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -3201,12 +3201,12 @@ var createReduxForm = function createReduxForm(structure) {
                 if (_this.innerOnSubmit && _this.innerOnSubmit !== _this.submit) {
                   return _this.innerOnSubmit();
                 } else {
-                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, redux__default.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
                 }
               }
             } else {
               return (0, _silenceEvents2.default)(function () {
-                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, redux__default.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
               });
             }
           }, _this.reset = function () {
@@ -3470,7 +3470,7 @@ var createReduxForm = function createReduxForm(structure) {
               anyTouched: anyTouched,
               asyncValidate: this.asyncValidate,
               asyncValidating: asyncValidating
-            }, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch), {
+            }, (0, redux__default.bindActionCreators)({ blur: blur, change: change }, dispatch), {
               clearSubmit: clearSubmit,
               destroy: destroy,
               dirty: dirty,
@@ -3523,7 +3523,7 @@ var createReduxForm = function createReduxForm(structure) {
         persistentSubmitErrors: _propTypes2.default.bool,
         registeredFields: _propTypes2.default.any
       };
-      var connector = (0, reactRedux.connect)(function (state, props) {
+      var connector = (0, reactRedux__default.connect)(function (state, props) {
         var form = props.form,
             getFormState = props.getFormState,
             initialValues = props.initialValues,
@@ -3590,18 +3590,18 @@ var createReduxForm = function createReduxForm(structure) {
           return change(initialProps.form, field, value, !!initialProps.touchOnChange, !!initialProps.persistentSubmitErrors);
         };
         var boundFocus = bindForm(focus);
-        var connectedFormACs = (0, redux.bindActionCreators)(boundFormACs, dispatch);
+        var connectedFormACs = (0, redux__default.bindActionCreators)(boundFormACs, dispatch);
         var connectedArrayACs = {
-          insert: (0, redux.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
-          move: (0, redux.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
-          pop: (0, redux.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
-          push: (0, redux.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
-          remove: (0, redux.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
-          removeAll: (0, redux.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
-          shift: (0, redux.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
-          splice: (0, redux.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
-          swap: (0, redux.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
-          unshift: (0, redux.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
+          insert: (0, redux__default.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
+          move: (0, redux__default.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
+          pop: (0, redux__default.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
+          push: (0, redux__default.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
+          remove: (0, redux__default.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
+          removeAll: (0, redux__default.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
+          shift: (0, redux__default.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
+          splice: (0, redux__default.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
+          swap: (0, redux__default.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
+          unshift: (0, redux__default.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
         };
         var computedActions = _extends({}, connectedFormACs, boundArrayACs, {
           blur: boundBlur,
@@ -8291,7 +8291,7 @@ var createConnectedField = function createConnectedField(structure) {
     component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
     props: _propTypes2.default.object
   };
-  var connector = (0, reactRedux.connect)(function (state, ownProps) {
+  var connector = (0, reactRedux__default.connect)(function (state, ownProps) {
     var name = ownProps.name,
         _ownProps$_reduxForm = ownProps._reduxForm,
         initialValues = _ownProps$_reduxForm.initialValues,
