@@ -10830,8 +10830,7 @@ var immutable = immutable$2;
 var immutable_1 = immutable.Field;
 var immutable_2 = immutable.reduxForm;
 
-var theme$2 = makeTheme$1();
-function makeTheme$1() {
+var makeTheme$1 = function makeTheme$$1() {
   var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var newTheme = { loginForm: {} };
   var u = userTheme;
@@ -10845,7 +10844,8 @@ function makeTheme$1() {
   newTheme.loginForm.$color = u.loginForm && u.loginForm.$color ? u.loginForm.$color : '#666';
   newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
   return newTheme;
-}
+};
+var theme$2 = makeTheme$1();
 
 var validate = function validate(values) {
   var errors = {};
@@ -11347,8 +11347,8 @@ FormWrapper.defaultProps = defaultProps$$1;
 
 exports['default'] = FormWrapper;
 exports.LoginForm = FormWrapper;
-exports.makeThemeLoginForm = makeTheme$1;
-exports.themeLoginForm = theme$2;
+exports.makeTheme = makeTheme$1;
+exports.theme = theme$2;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

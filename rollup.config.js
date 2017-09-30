@@ -43,12 +43,7 @@ const plugins = [
     include: 'node_modules/**',
     namedExports: {
       './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record', 'Iterable'],
-      './node_modules/redux/dist/redux.js': ['createStore', 'combineReducers', 'bindActionCreators', 'applyMiddleware', 'compose', 'default'],
-      './node_modules/redux/es/index.js': ['createStore', 'combineReducers', 'bindActionCreators', 'applyMiddleware', 'compose', 'default'],
-      './node_modules/redux-form/es/immutable.js': ['Field', 'reduxForm', 'default'],
-      './node_modules/redux-form/immutable.js': ['Field', 'reduxForm', 'default'],
-      './node_modules/react-redux/dist/react-redux.js': ['Provider', 'createProvider', 'connectAdvanced', 'connect', 'default'],
-      './node_modules/react-redux/es/react-redux.js': ['Provider', 'createProvider', 'connectAdvanced', 'connect', 'default'],
+      './node_modules/redux-form/immutable.js': ['Field', 'reduxForm'],
     },
   }),
   replace({

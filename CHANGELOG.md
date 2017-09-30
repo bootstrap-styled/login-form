@@ -2,25 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - 2017-09-30
+
+- Remove useless named exports for `redux`.
+- Export theme by default in `theme.js`.
+- Using `export const` instead of `export function` for `makeTheme`.
+
 ## [0.1.3] - 2017-09-30
 
-- Trying with react-redux namedExports.
+- Trying with `react-redux` namedExports.
 
 ## [0.1.2] - 2017-09-30
 
-- Trying with many redux and form-redux namedExports.
+- Trying with many `redux` and `form-redux` namedExports.
 
 ## [0.1.1] - 2017-09-30
 
-- organizing import for redux-form
+- organizing import for `redux-form`
 
 ## [0.1.0] - 2017-09-30
 
-- rollup adding namedConfiguration for react-redux.
+- rollup adding namedConfiguration for `react-redux`.
 
 ## [0.0.9] - 2017-09-30
 
-- Export by default the LoginForm.
+- Export by default the `LoginForm`.
 
 ## [0.0.8] - 2017-09-30
 

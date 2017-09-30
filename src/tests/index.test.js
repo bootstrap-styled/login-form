@@ -1,4 +1,4 @@
-import { LoginForm, makeThemeLoginForm, themeLoginForm } from '../index';
+import { LoginForm, makeTheme, theme } from '../index';
 
 describe('should exports login forms', () => {
   describe('LoginForm', () => {
@@ -6,10 +6,10 @@ describe('should exports login forms', () => {
       expect(typeof LoginForm).toEqual('function');
     });
     it('should export makeTheme', () => {
-      expect(typeof makeThemeLoginForm).toEqual('function');
+      expect(typeof makeTheme).toEqual('function');
     });
     it('should export LoginForm', () => {
-      expect(typeof themeLoginForm).toEqual('object');
+      expect(typeof theme).toEqual('object');
     });
   });
 });
