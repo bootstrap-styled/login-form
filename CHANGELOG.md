@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.7] - 2017-09-13
+## [0.0.9] - 2017-09-30
+
+- Export by default the LoginForm.
+
+## [0.0.8] - 2017-09-30
 
 The login form now require [redux-form](https://www.npmjs.com/package/redux-form).
 
@@ -31,6 +35,10 @@ The login form now require [redux-form](https://www.npmjs.com/package/redux-form
 - Upgrade dependency [bootstrap-styled](https://module.kopaxgroup.com/styled-components/bootstrap-styled/tags/v1.4.1) from 1.4.0 to 1.4.1.
 - Upgrade dependency [enzyme](https://www.npmjs.com/package/enzyme) from ^2.9.1 to ^3.0.0.
 - Upgrade dependency [loaders](https://www.npmjs.com/package/loaders) from 0.0.3 to 20024/styled-components/loaders.git#0.0.4.
+
+## [0.0.7] - 2017-09-13
+
+- Fix build warnings.
 
 ## [0.0.6] - 2017-09-13
 
