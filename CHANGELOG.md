@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.7] - 2017-09-30
+
+- Now work with `redux-form`. 
+
 ## [0.1.6] - 2017-09-30
 
 - Using lib `redux-form`.

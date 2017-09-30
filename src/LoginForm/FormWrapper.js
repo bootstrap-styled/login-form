@@ -5,8 +5,9 @@ import cn from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import messages from 'message-common';
 import { Alert, Small } from 'bootstrap-styled';
-import { boxShadow } from 'bootstrap-styled-mixins/lib/box-shadow';
-import { borderRadius } from 'bootstrap-styled-mixins/lib/border-radius';
+// import { boxShadow } from 'bootstrap-styled-mixins/lib/box-shadow';
+// import { borderRadius } from 'bootstrap-styled-mixins/lib/border-radius';
+import { boxShadow, radius } from 'bootstrap-styled-mixins';
 import LoginForm, { defaultProps as formDefaultProps } from './LoginForm';
 
 export const defaultProps = {
@@ -121,7 +122,7 @@ const FormWrapper = styled(FormWrapperUnstyled)`
       max-width: ${props.theme.loginForm['$max-width']};
       width: 100%;
       border: 1px solid ${props.theme.loginForm['$color-lighter']};
-      ${borderRadius(props.theme['$enable-rounded'], props.theme.loginForm['$border-radius'])}
+      ${radius.all(props.theme['$enable-rounded'], props.theme.loginForm['$border-radius'])}
       ${boxShadow(props.theme['$enable-shadows'], props.theme.loginForm['$box-shadow'])}
       background-color: ${props.theme.loginForm['$background-color']};
     }
