@@ -1,6 +1,6 @@
 {
   "name": "login-form",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Library login-form description",
   "main": "lib/index.js",
   "jsnext:main": "dist/login-form.es.js",
@@ -42,7 +42,9 @@
     "lib",
     "src"
   ],
-  "keywords": ["bootstrap-styled"],
+  "keywords": [
+    "bootstrap-styled"
+  ],
   "author": "",
   "license": "UNLICENSED",
   "eslintConfig": {
