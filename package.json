@@ -42,7 +42,7 @@
     "lib",
     "src"
   ],
-  "keywords": "",
+  "keywords": ["bootstrap-styled"],
   "author": "",
   "license": "UNLICENSED",
   "eslintConfig": {

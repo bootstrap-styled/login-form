@@ -1,6 +1,6 @@
 export const theme = makeTheme();
 
-export function makeTheme(userTheme = {}) {
+export const makeTheme = (userTheme = {}) => {
   const newTheme = { loginForm: {} };
   const u = userTheme;
 
@@ -18,4 +18,6 @@ export function makeTheme(userTheme = {}) {
   newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
 
   return newTheme;
-}
+};
+
+export default theme;
