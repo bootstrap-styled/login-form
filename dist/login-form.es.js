@@ -7,14 +7,16 @@ import messages from 'message-common';
 import { Alert, Button, Form, P, Small, makeTheme } from 'bootstrap-styled';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme } from 'bootstrap-styled-motion';
-import _reactRedux from 'react-redux';
-import _redux from 'redux';
+import reactRedux from 'react-redux';
+import redux from 'redux';
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 
 
-
+function unwrapExports (x) {
+	return x && x.__esModule ? x['default'] : x;
+}
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -44,6 +46,7 @@ exports.default = {
   boxShadow: boxShadow
 };
 });
+unwrapExports(boxShadow_1);
 var boxShadow_2 = boxShadow_1.boxShadow;
 
 var borderRadius_1 = createCommonjsModule(function (module, exports) {
@@ -109,652 +112,114 @@ exports.default = {
   left: borderLeftRadius
 };
 });
+unwrapExports(borderRadius_1);
 var borderRadius_2 = borderRadius_1.borderRadius;
 
-var defaultShouldAsyncValidate_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var defaultShouldAsyncValidate = function defaultShouldAsyncValidate(_ref) {
-  var initialized = _ref.initialized,
-      trigger = _ref.trigger,
-      pristine = _ref.pristine,
-      syncValidationPasses = _ref.syncValidationPasses;
-  if (!syncValidationPasses) {
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+var _listCacheClear = listCacheClear;
+
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+var eq_1 = eq;
+
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq_1(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+var _assocIndexOf = assocIndexOf;
+
+var arrayProto = Array.prototype;
+var splice = arrayProto.splice;
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+  if (index < 0) {
     return false;
   }
-  switch (trigger) {
-    case 'blur':
-      return true;
-    case 'submit':
-      return !pristine || !initialized;
-    default:
-      return false;
-  }
-};
-exports.default = defaultShouldAsyncValidate;
-});
-
-var defaultShouldValidate_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var defaultShouldValidate = function defaultShouldValidate(_ref) {
-  var values = _ref.values,
-      nextProps = _ref.nextProps,
-      initialRender = _ref.initialRender,
-      lastFieldValidatorKeys = _ref.lastFieldValidatorKeys,
-      fieldValidatorKeys = _ref.fieldValidatorKeys,
-      structure = _ref.structure;
-  if (initialRender) {
-    return true;
-  }
-  return !structure.deepEqual(values, nextProps && nextProps.values) || !structure.deepEqual(lastFieldValidatorKeys, fieldValidatorKeys);
-};
-exports.default = defaultShouldValidate;
-});
-
-var Form_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var Form$$1 = function (_Component) {
-  _inherits(Form$$1, _Component);
-  function Form$$1(props, context) {
-    _classCallCheck(this, Form$$1);
-    var _this = _possibleConstructorReturn(this, (Form$$1.__proto__ || Object.getPrototypeOf(Form$$1)).call(this, props, context));
-    if (!context._reduxForm) {
-      throw new Error('Form must be inside a component decorated with reduxForm()');
-    }
-    return _this;
-  }
-  _createClass(Form$$1, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.context._reduxForm.registerInnerOnSubmit(this.props.onSubmit);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement('form', this.props);
-    }
-  }]);
-  return Form$$1;
-}(React.Component);
-Form$$1.propTypes = {
-  onSubmit: _propTypes2.default.func.isRequired
-};
-Form$$1.contextTypes = {
-  _reduxForm: _propTypes2.default.object
-};
-exports.default = Form$$1;
-});
-
-var prefixName = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var formatName = function formatName(_ref, name) {
-  var sectionPrefix = _ref._reduxForm.sectionPrefix;
-  return sectionPrefix ? sectionPrefix + '.' + name : name;
-};
-exports.default = formatName;
-});
-
-var FormSection_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _prefixName2 = _interopRequireDefault(prefixName);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var FormSection = function (_Component) {
-  _inherits(FormSection, _Component);
-  function FormSection(props, context) {
-    _classCallCheck(this, FormSection);
-    var _this = _possibleConstructorReturn(this, (FormSection.__proto__ || Object.getPrototypeOf(FormSection)).call(this, props, context));
-    if (!context._reduxForm) {
-      throw new Error('FormSection must be inside a component decorated with reduxForm()');
-    }
-    return _this;
-  }
-  _createClass(FormSection, [{
-    key: 'getChildContext',
-    value: function getChildContext() {
-      var context = this.context,
-          name = this.props.name;
-      return {
-        _reduxForm: _extends({}, context._reduxForm, {
-          sectionPrefix: (0, _prefixName2.default)(context, name)
-        })
-      };
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          name = _props.name,
-          component = _props.component,
-          rest = _objectWithoutProperties(_props, ['children', 'name', 'component']);
-      if (_react2.default.isValidElement(children)) {
-        return children;
-      }
-      return (0, React.createElement)(component, _extends({}, rest, {
-        children: children
-      }));
-    }
-  }]);
-  return FormSection;
-}(React.Component);
-FormSection.propTypes = {
-  name: _propTypes2.default.string.isRequired,
-  component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string])
-};
-FormSection.defaultProps = {
-  component: 'div'
-};
-FormSection.childContextTypes = {
-  _reduxForm: _propTypes2.default.object.isRequired
-};
-FormSection.contextTypes = {
-  _reduxForm: _propTypes2.default.object
-};
-exports.default = FormSection;
-});
-
-var lib = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _extendableBuiltin(cls) {
-  function ExtendableBuiltin() {
-    cls.apply(this, arguments);
-  }
-  ExtendableBuiltin.prototype = Object.create(cls.prototype, {
-    constructor: {
-      value: cls,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (Object.setPrototypeOf) {
-    Object.setPrototypeOf(ExtendableBuiltin, cls);
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
   } else {
-    ExtendableBuiltin.__proto__ = cls;
+    splice.call(data, index, 1);
   }
-  return ExtendableBuiltin;
+  --this.size;
+  return true;
 }
-var ExtendableError = function (_extendableBuiltin2) {
-  _inherits(ExtendableError, _extendableBuiltin2);
-  function ExtendableError() {
-    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    _classCallCheck(this, ExtendableError);
-    var _this = _possibleConstructorReturn(this, (ExtendableError.__proto__ || Object.getPrototypeOf(ExtendableError)).call(this, message));
-    Object.defineProperty(_this, 'message', {
-      configurable: true,
-      enumerable: false,
-      value: message,
-      writable: true
-    });
-    Object.defineProperty(_this, 'name', {
-      configurable: true,
-      enumerable: false,
-      value: _this.constructor.name,
-      writable: true
-    });
-    if (Error.hasOwnProperty('captureStackTrace')) {
-      Error.captureStackTrace(_this, _this.constructor);
-      return _possibleConstructorReturn(_this);
-    }
-    Object.defineProperty(_this, 'stack', {
-      configurable: true,
-      enumerable: false,
-      value: new Error(message).stack,
-      writable: true
-    });
-    return _this;
-  }
-  return ExtendableError;
-}(_extendableBuiltin(Error));
-exports.default = ExtendableError;
-module.exports = exports['default'];
-});
+var _listCacheDelete = listCacheDelete;
 
-var SubmissionError_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _es6Error2 = _interopRequireDefault(lib);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var SubmissionError = function (_ExtendableError) {
-  _inherits(SubmissionError, _ExtendableError);
-  function SubmissionError(errors) {
-    _classCallCheck(this, SubmissionError);
-    var _this = _possibleConstructorReturn(this, (SubmissionError.__proto__ || Object.getPrototypeOf(SubmissionError)).call(this, 'Submit Validation Failed'));
-    _this.errors = errors;
-    return _this;
-  }
-  return SubmissionError;
-}(_es6Error2.default);
-exports.default = SubmissionError;
-});
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+  return index < 0 ? undefined : data[index][1];
+}
+var _listCacheGet = listCacheGet;
 
-var propTypes$1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fieldPropTypes = exports.fieldMetaPropTypes = exports.fieldInputPropTypes = exports.formPropTypes = undefined;
-var _propTypes2 = _interopRequireDefault(PropTypes);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var any = _propTypes2.default.any,
-    bool = _propTypes2.default.bool,
-    func = _propTypes2.default.func,
-    shape = _propTypes2.default.shape,
-    string = _propTypes2.default.string,
-    oneOfType = _propTypes2.default.oneOfType,
-    object = _propTypes2.default.object;
-var formPropTypes = exports.formPropTypes = {
-  anyTouched: bool.isRequired,
-  asyncValidating: oneOfType([bool, string]).isRequired,
-  dirty: bool.isRequired,
-  error: any,
-  form: string.isRequired,
-  invalid: bool.isRequired,
-  initialized: bool.isRequired,
-  initialValues: object,
-  pristine: bool.isRequired,
-  pure: bool.isRequired,
-  submitting: bool.isRequired,
-  submitFailed: bool.isRequired,
-  submitSucceeded: bool.isRequired,
-  valid: bool.isRequired,
-  warning: any,
-  array: shape({
-    insert: func.isRequired,
-    move: func.isRequired,
-    pop: func.isRequired,
-    push: func.isRequired,
-    remove: func.isRequired,
-    removeAll: func.isRequired,
-    shift: func.isRequired,
-    splice: func.isRequired,
-    swap: func.isRequired,
-    unshift: func.isRequired
-  }),
-  asyncValidate: func.isRequired,
-  autofill: func.isRequired,
-  blur: func.isRequired,
-  change: func.isRequired,
-  clearAsyncError: func.isRequired,
-  destroy: func.isRequired,
-  dispatch: func.isRequired,
-  handleSubmit: func.isRequired,
-  initialize: func.isRequired,
-  reset: func.isRequired,
-  touch: func.isRequired,
-  submit: func.isRequired,
-  untouch: func.isRequired,
-  triggerSubmit: bool,
-  clearSubmit: func.isRequired
-};
-var fieldInputPropTypes = exports.fieldInputPropTypes = {
-  checked: bool,
-  name: string.isRequired,
-  onBlur: func.isRequired,
-  onChange: func.isRequired,
-  onDragStart: func.isRequired,
-  onDrop: func.isRequired,
-  onFocus: func.isRequired,
-  value: any
-};
-var fieldMetaPropTypes = exports.fieldMetaPropTypes = {
-  active: bool.isRequired,
-  asyncValidating: bool.isRequired,
-  autofilled: bool.isRequired,
-  dirty: bool.isRequired,
-  dispatch: func.isRequired,
-  error: string,
-  form: string.isRequired,
-  invalid: bool.isRequired,
-  pristine: bool.isRequired,
-  submitting: bool.isRequired,
-  submitFailed: bool.isRequired,
-  touched: bool.isRequired,
-  valid: bool.isRequired,
-  visited: bool.isRequired,
-  warning: string
-};
-var fieldPropTypes = exports.fieldPropTypes = {
-  input: shape(fieldInputPropTypes).isRequired,
-  meta: shape(fieldMetaPropTypes).isRequired
-};
-exports.default = formPropTypes;
-});
+function listCacheHas(key) {
+  return _assocIndexOf(this.__data__, key) > -1;
+}
+var _listCacheHas = listCacheHas;
 
-'use strict';
-var NODE_ENV = "development";
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (NODE_ENV !== 'production') {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
   }
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-      error.name = 'Invariant Violation';
-    }
-    error.framesToPop = 1;
-    throw error;
-  }
-};
-var invariant_1 = invariant;
+  return this;
+}
+var _listCacheSet = listCacheSet;
 
-var createFieldProps_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var processProps = function processProps(type, props, _value) {
-  var value = props.value;
-  if (type === 'checkbox') {
-    return _extends({}, props, {
-      checked: !!value
-    });
-  }
-  if (type === 'radio') {
-    return _extends({}, props, {
-      checked: value === _value,
-      value: _value
-    });
-  }
-  if (type === 'select-multiple') {
-    return _extends({}, props, {
-      value: value || []
-    });
-  }
-  if (type === 'file') {
-    return _extends({}, props, {
-      value: value || undefined
-    });
-  }
-  return props;
-};
-var createFieldProps = function createFieldProps(_ref2, name, _ref) {
-  var getIn = _ref2.getIn,
-      toJS = _ref2.toJS;
-  var asyncError = _ref.asyncError,
-      asyncValidating = _ref.asyncValidating,
-      onBlur = _ref.onBlur,
-      onChange = _ref.onChange,
-      onDrop = _ref.onDrop,
-      onDragStart = _ref.onDragStart,
-      dirty = _ref.dirty,
-      dispatch = _ref.dispatch,
-      onFocus = _ref.onFocus,
-      form = _ref.form,
-      format = _ref.format,
-      initial = _ref.initial,
-      parse = _ref.parse,
-      pristine = _ref.pristine,
-      props = _ref.props,
-      state = _ref.state,
-      submitError = _ref.submitError,
-      submitFailed = _ref.submitFailed,
-      submitting = _ref.submitting,
-      syncError = _ref.syncError,
-      syncWarning = _ref.syncWarning,
-      validate = _ref.validate,
-      value = _ref.value,
-      _value = _ref._value,
-      warn = _ref.warn,
-      custom = _objectWithoutProperties(_ref, ['asyncError', 'asyncValidating', 'onBlur', 'onChange', 'onDrop', 'onDragStart', 'dirty', 'dispatch', 'onFocus', 'form', 'format', 'initial', 'parse', 'pristine', 'props', 'state', 'submitError', 'submitFailed', 'submitting', 'syncError', 'syncWarning', 'validate', 'value', '_value', 'warn']);
-  var error = syncError || asyncError || submitError;
-  var warning = syncWarning;
-  var formatFieldValue = function formatFieldValue(value, format) {
-    if (format === null) {
-      return value;
-    }
-    var defaultFormattedValue = value == null ? '' : value;
-    return format ? format(value, name) : defaultFormattedValue;
-  };
-  var formattedFieldValue = formatFieldValue(value, format);
-  return {
-    input: processProps(custom.type, {
-      name: name,
-      onBlur: onBlur,
-      onChange: onChange,
-      onDragStart: onDragStart,
-      onDrop: onDrop,
-      onFocus: onFocus,
-      value: formattedFieldValue
-    }, _value),
-    meta: _extends({}, toJS(state), {
-      active: !!(state && getIn(state, 'active')),
-      asyncValidating: asyncValidating,
-      autofilled: !!(state && getIn(state, 'autofilled')),
-      dirty: dirty,
-      dispatch: dispatch,
-      error: error,
-      form: form,
-      initial: initial,
-      warning: warning,
-      invalid: !!error,
-      pristine: pristine,
-      submitting: !!submitting,
-      submitFailed: !!submitFailed,
-      touched: !!(state && getIn(state, 'touched')),
-      valid: !error,
-      visited: !!(state && getIn(state, 'visited'))
-    }),
-    custom: _extends({}, custom, props)
-  };
-};
-exports.default = createFieldProps;
-});
-
-var isEvent_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var isEvent = function isEvent(candidate) {
-  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
-};
-exports.default = isEvent;
-});
-
-var getValue_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isEvent2 = _interopRequireDefault(isEvent_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var getSelectedValues = function getSelectedValues(options) {
-  var result = [];
-  if (options) {
-    for (var index = 0; index < options.length; index++) {
-      var option = options[index];
-      if (option.selected) {
-        result.push(option.value);
-      }
-    }
-  }
-  return result;
-};
-var getValue = function getValue(event, isReactNative) {
-  if ((0, _isEvent2.default)(event)) {
-    if (!isReactNative && event.nativeEvent && event.nativeEvent.text !== undefined) {
-      return event.nativeEvent.text;
-    }
-    if (isReactNative && event.nativeEvent !== undefined) {
-      return event.nativeEvent.text;
-    }
-    var detypedEvent = event;
-    var _detypedEvent$target = detypedEvent.target,
-        type = _detypedEvent$target.type,
-        value = _detypedEvent$target.value,
-        checked = _detypedEvent$target.checked,
-        files = _detypedEvent$target.files,
-        dataTransfer = detypedEvent.dataTransfer;
-    if (type === 'checkbox') {
-      return checked || '';
-    }
-    if (type === 'file') {
-      return files || dataTransfer && dataTransfer.files;
-    }
-    if (type === 'select-multiple') {
-      return getSelectedValues(event.target.options);
-    }
-    return value;
-  }
-  return event;
-};
-exports.default = getValue;
-});
-
-var isReactNative_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var isReactNative = typeof window !== 'undefined' && window.navigator && window.navigator.product && window.navigator.product === 'ReactNative';
-exports.default = isReactNative;
-});
-
-var onChangeValue_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getValue2 = _interopRequireDefault(getValue_1);
-var _isReactNative2 = _interopRequireDefault(isReactNative_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var onChangeValue = function onChangeValue(event, _ref) {
-  var name = _ref.name,
-      parse = _ref.parse,
-      normalize = _ref.normalize;
-  var value = (0, _getValue2.default)(event, _isReactNative2.default);
-  if (parse) {
-    value = parse(value, name);
-  }
-  if (normalize) {
-    value = normalize(name, value);
-  }
-  return value;
-};
-exports.default = onChangeValue;
-});
-
-var eventConsts = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var dataKey = exports.dataKey = 'text';
-});
-
-var splice_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-var splice = function splice(array, index, removeNum, value) {
-  array = array || [];
-  if (index < array.length) {
-    if (value === undefined && !removeNum) {
-      var _copy2 = [].concat(_toConsumableArray(array));
-      _copy2.splice(index, 0, true);
-      _copy2[index] = undefined;
-      return _copy2;
-    }
-    if (value != null) {
-      var _copy3 = [].concat(_toConsumableArray(array));
-      _copy3.splice(index, removeNum, value);
-      return _copy3;
-    }
-    var _copy = [].concat(_toConsumableArray(array));
-    _copy.splice(index, removeNum);
-    return _copy;
-  }
-  if (removeNum) {
-    return array;
-  }
-  var copy = [].concat(_toConsumableArray(array));
-  copy[index] = value;
-  return copy;
-};
-exports.default = splice;
-});
-
-function arrayMap(array, iteratee) {
+function ListCache(entries) {
   var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
+      length = entries == null ? 0 : entries.length;
+  this.clear();
   while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
   }
+}
+ListCache.prototype.clear = _listCacheClear;
+ListCache.prototype['delete'] = _listCacheDelete;
+ListCache.prototype.get = _listCacheGet;
+ListCache.prototype.has = _listCacheHas;
+ListCache.prototype.set = _listCacheSet;
+var _ListCache = ListCache;
+
+function stackClear() {
+  this.__data__ = new _ListCache;
+  this.size = 0;
+}
+var _stackClear = stackClear;
+
+function stackDelete(key) {
+  var data = this.__data__,
+      result = data['delete'](key);
+  this.size = data.size;
   return result;
 }
-var _arrayMap = arrayMap;
+var _stackDelete = stackDelete;
 
-function copyArray(source, array) {
-  var index = -1,
-      length = source.length;
-  array || (array = Array(length));
-  while (++index < length) {
-    array[index] = source[index];
-  }
-  return array;
+function stackGet(key) {
+  return this.__data__.get(key);
 }
-var _copyArray = copyArray;
+var _stackGet = stackGet;
 
-var isArray = Array.isArray;
-var isArray_1 = isArray;
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+var _stackHas = stackHas;
 
 var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 var _freeGlobal = freeGlobal;
@@ -766,12 +231,12 @@ var _root = root;
 var Symbol$1 = _root.Symbol;
 var _Symbol = Symbol$1;
 
-var objectProto = Object.prototype;
-var hasOwnProperty = objectProto.hasOwnProperty;
-var nativeObjectToString = objectProto.toString;
+var objectProto$1 = Object.prototype;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+var nativeObjectToString = objectProto$1.toString;
 var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
+  var isOwn = hasOwnProperty$1.call(value, symToStringTag$1),
       tag = value[symToStringTag$1];
   try {
     value[symToStringTag$1] = undefined;
@@ -789,8 +254,8 @@ function getRawTag(value) {
 }
 var _getRawTag = getRawTag;
 
-var objectProto$1 = Object.prototype;
-var nativeObjectToString$1 = objectProto$1.toString;
+var objectProto$2 = Object.prototype;
+var nativeObjectToString$1 = objectProto$2.toString;
 function objectToString(value) {
   return nativeObjectToString$1.call(value);
 }
@@ -808,18 +273,6 @@ function baseGetTag(value) {
     : _objectToString(value);
 }
 var _baseGetTag = baseGetTag;
-
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-var isObjectLike_1 = isObjectLike;
-
-var symbolTag = '[object Symbol]';
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
-}
-var isSymbol_1 = isSymbol;
 
 function isObject(value) {
   var type = typeof value;
@@ -870,11 +323,11 @@ var _toSource = toSource;
 var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
 var funcProto = Function.prototype;
-var objectProto$2 = Object.prototype;
+var objectProto = Object.prototype;
 var funcToString = funcProto.toString;
-var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&')
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
   .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 );
 function baseIsNative(value) {
@@ -886,16 +339,19 @@ function baseIsNative(value) {
 }
 var _baseIsNative = baseIsNative;
 
-function getValue$1(object, key) {
+function getValue(object, key) {
   return object == null ? undefined : object[key];
 }
-var _getValue$1 = getValue$1;
+var _getValue = getValue;
 
 function getNative(object, key) {
-  var value = _getValue$1(object, key);
+  var value = _getValue(object, key);
   return _baseIsNative(value) ? value : undefined;
 }
 var _getNative = getNative;
+
+var Map = _getNative(_root, 'Map');
+var _Map = Map;
 
 var nativeCreate = _getNative(Object, 'create');
 var _nativeCreate = nativeCreate;
@@ -958,91 +414,6 @@ Hash.prototype.get = _hashGet;
 Hash.prototype.has = _hashHas;
 Hash.prototype.set = _hashSet;
 var _Hash = Hash;
-
-function listCacheClear() {
-  this.__data__ = [];
-  this.size = 0;
-}
-var _listCacheClear = listCacheClear;
-
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-var eq_1 = eq;
-
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq_1(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-var _assocIndexOf = assocIndexOf;
-
-var arrayProto = Array.prototype;
-var splice$1 = arrayProto.splice;
-function listCacheDelete(key) {
-  var data = this.__data__,
-      index = _assocIndexOf(data, key);
-  if (index < 0) {
-    return false;
-  }
-  var lastIndex = data.length - 1;
-  if (index == lastIndex) {
-    data.pop();
-  } else {
-    splice$1.call(data, index, 1);
-  }
-  --this.size;
-  return true;
-}
-var _listCacheDelete = listCacheDelete;
-
-function listCacheGet(key) {
-  var data = this.__data__,
-      index = _assocIndexOf(data, key);
-  return index < 0 ? undefined : data[index][1];
-}
-var _listCacheGet = listCacheGet;
-
-function listCacheHas(key) {
-  return _assocIndexOf(this.__data__, key) > -1;
-}
-var _listCacheHas = listCacheHas;
-
-function listCacheSet(key, value) {
-  var data = this.__data__,
-      index = _assocIndexOf(data, key);
-  if (index < 0) {
-    ++this.size;
-    data.push([key, value]);
-  } else {
-    data[index][1] = value;
-  }
-  return this;
-}
-var _listCacheSet = listCacheSet;
-
-function ListCache(entries) {
-  var index = -1,
-      length = entries == null ? 0 : entries.length;
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-ListCache.prototype.clear = _listCacheClear;
-ListCache.prototype['delete'] = _listCacheDelete;
-ListCache.prototype.get = _listCacheGet;
-ListCache.prototype.has = _listCacheHas;
-ListCache.prototype.set = _listCacheSet;
-var _ListCache = ListCache;
-
-var Map = _getNative(_root, 'Map');
-var _Map = Map;
 
 function mapCacheClear() {
   this.size = 0;
@@ -1112,183 +483,6 @@ MapCache.prototype.has = _mapCacheHas;
 MapCache.prototype.set = _mapCacheSet;
 var _MapCache = MapCache;
 
-var FUNC_ERROR_TEXT = 'Expected a function';
-function memoize(func, resolver) {
-  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  var memoized = function() {
-    var args = arguments,
-        key = resolver ? resolver.apply(this, args) : args[0],
-        cache = memoized.cache;
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    var result = func.apply(this, args);
-    memoized.cache = cache.set(key, result) || cache;
-    return result;
-  };
-  memoized.cache = new (memoize.Cache || _MapCache);
-  return memoized;
-}
-memoize.Cache = _MapCache;
-var memoize_1 = memoize;
-
-var MAX_MEMOIZE_SIZE = 500;
-function memoizeCapped(func) {
-  var result = memoize_1(func, function(key) {
-    if (cache.size === MAX_MEMOIZE_SIZE) {
-      cache.clear();
-    }
-    return key;
-  });
-  var cache = result.cache;
-  return result;
-}
-var _memoizeCapped = memoizeCapped;
-
-var reLeadingDot = /^\./;
-var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
-var reEscapeChar = /\\(\\)?/g;
-var stringToPath = _memoizeCapped(function(string) {
-  var result = [];
-  if (reLeadingDot.test(string)) {
-    result.push('');
-  }
-  string.replace(rePropName, function(match, number, quote, string) {
-    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
-  });
-  return result;
-});
-var _stringToPath = stringToPath;
-
-var INFINITY = 1 / 0;
-function toKey(value) {
-  if (typeof value == 'string' || isSymbol_1(value)) {
-    return value;
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-var _toKey = toKey;
-
-var INFINITY$1 = 1 / 0;
-var symbolProto = _Symbol ? _Symbol.prototype : undefined;
-var symbolToString = symbolProto ? symbolProto.toString : undefined;
-function baseToString(value) {
-  if (typeof value == 'string') {
-    return value;
-  }
-  if (isArray_1(value)) {
-    return _arrayMap(value, baseToString) + '';
-  }
-  if (isSymbol_1(value)) {
-    return symbolToString ? symbolToString.call(value) : '';
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY$1) ? '-0' : result;
-}
-var _baseToString = baseToString;
-
-function toString(value) {
-  return value == null ? '' : _baseToString(value);
-}
-var toString_1 = toString;
-
-function toPath(value) {
-  if (isArray_1(value)) {
-    return _arrayMap(value, _toKey);
-  }
-  return isSymbol_1(value) ? [value] : _copyArray(_stringToPath(toString_1(value)));
-}
-var toPath_1 = toPath;
-
-var getIn_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _toPath3 = _interopRequireDefault(toPath_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var getIn = function getIn(state, field) {
-  if (!state) {
-    return state;
-  }
-  var path = (0, _toPath3.default)(field);
-  var length = path.length;
-  if (!length) {
-    return undefined;
-  }
-  var result = state;
-  for (var i = 0; i < length && result; ++i) {
-    result = result[path[i]];
-  }
-  return result;
-};
-exports.default = getIn;
-});
-
-var setIn_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _toPath3 = _interopRequireDefault(toPath_1);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-var setInWithPath = function setInWithPath(state, value, path, pathIndex) {
-  if (pathIndex >= path.length) {
-    return value;
-  }
-  var first = path[pathIndex];
-  var firstState = state && (Array.isArray(state) ? state[Number(first)] : state[first]);
-  var next = setInWithPath(firstState, value, path, pathIndex + 1);
-  if (!state) {
-    if (isNaN(first)) {
-      return _defineProperty({}, first, next);
-    }
-    var initialized = [];
-    initialized[parseInt(first, 10)] = next;
-    return initialized;
-  }
-  if (Array.isArray(state)) {
-    var copy = [].concat(state);
-    copy[parseInt(first, 10)] = next;
-    return copy;
-  }
-  return _extends({}, state, _defineProperty({}, first, next));
-};
-var setIn = function setIn(state, field, value) {
-  return setInWithPath(state, value, (0, _toPath3.default)(field), 0);
-};
-exports.default = setIn;
-});
-
-function stackClear() {
-  this.__data__ = new _ListCache;
-  this.size = 0;
-}
-var _stackClear = stackClear;
-
-function stackDelete(key) {
-  var data = this.__data__,
-      result = data['delete'](key);
-  this.size = data.size;
-  return result;
-}
-var _stackDelete = stackDelete;
-
-function stackGet(key) {
-  return this.__data__.get(key);
-}
-var _stackGet = stackGet;
-
-function stackHas(key) {
-  return this.__data__.has(key);
-}
-var _stackHas = stackHas;
-
 var LARGE_ARRAY_SIZE = 200;
 function stackSet(key, value) {
   var data = this.__data__;
@@ -1317,6 +511,644 @@ Stack.prototype.get = _stackGet;
 Stack.prototype.has = _stackHas;
 Stack.prototype.set = _stackSet;
 var _Stack = Stack;
+
+var defineProperty = (function() {
+  try {
+    var func = _getNative(Object, 'defineProperty');
+    func({}, '', {});
+    return func;
+  } catch (e) {}
+}());
+var _defineProperty = defineProperty;
+
+function baseAssignValue(object, key, value) {
+  if (key == '__proto__' && _defineProperty) {
+    _defineProperty(object, key, {
+      'configurable': true,
+      'enumerable': true,
+      'value': value,
+      'writable': true
+    });
+  } else {
+    object[key] = value;
+  }
+}
+var _baseAssignValue = baseAssignValue;
+
+function assignMergeValue(object, key, value) {
+  if ((value !== undefined && !eq_1(object[key], value)) ||
+      (value === undefined && !(key in object))) {
+    _baseAssignValue(object, key, value);
+  }
+}
+var _assignMergeValue = assignMergeValue;
+
+function createBaseFor(fromRight) {
+  return function(object, iteratee, keysFunc) {
+    var index = -1,
+        iterable = Object(object),
+        props = keysFunc(object),
+        length = props.length;
+    while (length--) {
+      var key = props[fromRight ? length : ++index];
+      if (iteratee(iterable[key], key, iterable) === false) {
+        break;
+      }
+    }
+    return object;
+  };
+}
+var _createBaseFor = createBaseFor;
+
+var baseFor = _createBaseFor();
+var _baseFor = baseFor;
+
+var _cloneBuffer = createCommonjsModule(function (module, exports) {
+var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+var moduleExports = freeModule && freeModule.exports === freeExports;
+var Buffer = moduleExports ? _root.Buffer : undefined,
+    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var length = buffer.length,
+      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+  buffer.copy(result);
+  return result;
+}
+module.exports = cloneBuffer;
+});
+
+var Uint8Array = _root.Uint8Array;
+var _Uint8Array = Uint8Array;
+
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
+  return result;
+}
+var _cloneArrayBuffer = cloneArrayBuffer;
+
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+var _cloneTypedArray = cloneTypedArray;
+
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+var _copyArray = copyArray;
+
+var objectCreate = Object.create;
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!isObject_1(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = proto;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
+var _baseCreate = baseCreate;
+
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+var _overArg = overArg;
+
+var getPrototype = _overArg(Object.getPrototypeOf, Object);
+var _getPrototype = getPrototype;
+
+var objectProto$5 = Object.prototype;
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto$5;
+  return value === proto;
+}
+var _isPrototype = isPrototype;
+
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !_isPrototype(object))
+    ? _baseCreate(_getPrototype(object))
+    : {};
+}
+var _initCloneObject = initCloneObject;
+
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+var isObjectLike_1 = isObjectLike;
+
+var argsTag = '[object Arguments]';
+function baseIsArguments(value) {
+  return isObjectLike_1(value) && _baseGetTag(value) == argsTag;
+}
+var _baseIsArguments = baseIsArguments;
+
+var objectProto$6 = Object.prototype;
+var hasOwnProperty$4 = objectProto$6.hasOwnProperty;
+var propertyIsEnumerable = objectProto$6.propertyIsEnumerable;
+var isArguments = _baseIsArguments(function() { return arguments; }()) ? _baseIsArguments : function(value) {
+  return isObjectLike_1(value) && hasOwnProperty$4.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+var isArguments_1 = isArguments;
+
+var isArray = Array.isArray;
+var isArray_1 = isArray;
+
+var MAX_SAFE_INTEGER = 9007199254740991;
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+var isLength_1 = isLength;
+
+function isArrayLike(value) {
+  return value != null && isLength_1(value.length) && !isFunction_1(value);
+}
+var isArrayLike_1 = isArrayLike;
+
+function isArrayLikeObject(value) {
+  return isObjectLike_1(value) && isArrayLike_1(value);
+}
+var isArrayLikeObject_1 = isArrayLikeObject;
+
+function stubFalse() {
+  return false;
+}
+var stubFalse_1 = stubFalse;
+
+var isBuffer_1 = createCommonjsModule(function (module, exports) {
+var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+var moduleExports = freeModule && freeModule.exports === freeExports;
+var Buffer = moduleExports ? _root.Buffer : undefined;
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+var isBuffer = nativeIsBuffer || stubFalse_1;
+module.exports = isBuffer;
+});
+
+var objectTag = '[object Object]';
+var funcProto$2 = Function.prototype;
+var objectProto$7 = Object.prototype;
+var funcToString$2 = funcProto$2.toString;
+var hasOwnProperty$5 = objectProto$7.hasOwnProperty;
+var objectCtorString = funcToString$2.call(Object);
+function isPlainObject(value) {
+  if (!isObjectLike_1(value) || _baseGetTag(value) != objectTag) {
+    return false;
+  }
+  var proto = _getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = hasOwnProperty$5.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+    funcToString$2.call(Ctor) == objectCtorString;
+}
+var isPlainObject_1 = isPlainObject;
+
+var argsTag$1 = '[object Arguments]';
+var arrayTag = '[object Array]';
+var boolTag = '[object Boolean]';
+var dateTag = '[object Date]';
+var errorTag = '[object Error]';
+var funcTag$1 = '[object Function]';
+var mapTag = '[object Map]';
+var numberTag = '[object Number]';
+var objectTag$1 = '[object Object]';
+var regexpTag = '[object RegExp]';
+var setTag = '[object Set]';
+var stringTag = '[object String]';
+var weakMapTag = '[object WeakMap]';
+var arrayBufferTag = '[object ArrayBuffer]';
+var dataViewTag = '[object DataView]';
+var float32Tag = '[object Float32Array]';
+var float64Tag = '[object Float64Array]';
+var int8Tag = '[object Int8Array]';
+var int16Tag = '[object Int16Array]';
+var int32Tag = '[object Int32Array]';
+var uint8Tag = '[object Uint8Array]';
+var uint8ClampedTag = '[object Uint8ClampedArray]';
+var uint16Tag = '[object Uint16Array]';
+var uint32Tag = '[object Uint32Array]';
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag$1] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag$1] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag$1] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+function baseIsTypedArray(value) {
+  return isObjectLike_1(value) &&
+    isLength_1(value.length) && !!typedArrayTags[_baseGetTag(value)];
+}
+var _baseIsTypedArray = baseIsTypedArray;
+
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+var _baseUnary = baseUnary;
+
+var _nodeUtil = createCommonjsModule(function (module, exports) {
+var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+var moduleExports = freeModule && freeModule.exports === freeExports;
+var freeProcess = moduleExports && _freeGlobal.process;
+var nodeUtil = (function() {
+  try {
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+module.exports = nodeUtil;
+});
+
+var nodeIsTypedArray = _nodeUtil && _nodeUtil.isTypedArray;
+var isTypedArray = nodeIsTypedArray ? _baseUnary(nodeIsTypedArray) : _baseIsTypedArray;
+var isTypedArray_1 = isTypedArray;
+
+var objectProto$8 = Object.prototype;
+var hasOwnProperty$6 = objectProto$8.hasOwnProperty;
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty$6.call(object, key) && eq_1(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    _baseAssignValue(object, key, value);
+  }
+}
+var _assignValue = assignValue;
+
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+  var index = -1,
+      length = props.length;
+  while (++index < length) {
+    var key = props[index];
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+    if (newValue === undefined) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      _baseAssignValue(object, key, newValue);
+    } else {
+      _assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
+var _copyObject = copyObject;
+
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+var _baseTimes = baseTimes;
+
+var MAX_SAFE_INTEGER$1 = 9007199254740991;
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER$1 : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+var _isIndex = isIndex;
+
+var objectProto$9 = Object.prototype;
+var hasOwnProperty$7 = objectProto$9.hasOwnProperty;
+function arrayLikeKeys(value, inherited) {
+  var isArr = isArray_1(value),
+      isArg = !isArr && isArguments_1(value),
+      isBuff = !isArr && !isArg && isBuffer_1(value),
+      isType = !isArr && !isArg && !isBuff && isTypedArray_1(value),
+      skipIndexes = isArr || isArg || isBuff || isType,
+      result = skipIndexes ? _baseTimes(value.length, String) : [],
+      length = result.length;
+  for (var key in value) {
+    if ((inherited || hasOwnProperty$7.call(value, key)) &&
+        !(skipIndexes && (
+           key == 'length' ||
+           (isBuff && (key == 'offset' || key == 'parent')) ||
+           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+           _isIndex(key, length)
+        ))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _arrayLikeKeys = arrayLikeKeys;
+
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _nativeKeysIn = nativeKeysIn;
+
+var objectProto$10 = Object.prototype;
+var hasOwnProperty$8 = objectProto$10.hasOwnProperty;
+function baseKeysIn(object) {
+  if (!isObject_1(object)) {
+    return _nativeKeysIn(object);
+  }
+  var isProto = _isPrototype(object),
+      result = [];
+  for (var key in object) {
+    if (!(key == 'constructor' && (isProto || !hasOwnProperty$8.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _baseKeysIn = baseKeysIn;
+
+function keysIn(object) {
+  return isArrayLike_1(object) ? _arrayLikeKeys(object, true) : _baseKeysIn(object);
+}
+var keysIn_1 = keysIn;
+
+function toPlainObject(value) {
+  return _copyObject(value, keysIn_1(value));
+}
+var toPlainObject_1 = toPlainObject;
+
+function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
+  var objValue = object[key],
+      srcValue = source[key],
+      stacked = stack.get(srcValue);
+  if (stacked) {
+    _assignMergeValue(object, key, stacked);
+    return;
+  }
+  var newValue = customizer
+    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
+    : undefined;
+  var isCommon = newValue === undefined;
+  if (isCommon) {
+    var isArr = isArray_1(srcValue),
+        isBuff = !isArr && isBuffer_1(srcValue),
+        isTyped = !isArr && !isBuff && isTypedArray_1(srcValue);
+    newValue = srcValue;
+    if (isArr || isBuff || isTyped) {
+      if (isArray_1(objValue)) {
+        newValue = objValue;
+      }
+      else if (isArrayLikeObject_1(objValue)) {
+        newValue = _copyArray(objValue);
+      }
+      else if (isBuff) {
+        isCommon = false;
+        newValue = _cloneBuffer(srcValue, true);
+      }
+      else if (isTyped) {
+        isCommon = false;
+        newValue = _cloneTypedArray(srcValue, true);
+      }
+      else {
+        newValue = [];
+      }
+    }
+    else if (isPlainObject_1(srcValue) || isArguments_1(srcValue)) {
+      newValue = objValue;
+      if (isArguments_1(objValue)) {
+        newValue = toPlainObject_1(objValue);
+      }
+      else if (!isObject_1(objValue) || (srcIndex && isFunction_1(objValue))) {
+        newValue = _initCloneObject(srcValue);
+      }
+    }
+    else {
+      isCommon = false;
+    }
+  }
+  if (isCommon) {
+    stack.set(srcValue, newValue);
+    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
+    stack['delete'](srcValue);
+  }
+  _assignMergeValue(object, key, newValue);
+}
+var _baseMergeDeep = baseMergeDeep;
+
+function baseMerge(object, source, srcIndex, customizer, stack) {
+  if (object === source) {
+    return;
+  }
+  _baseFor(source, function(srcValue, key) {
+    if (isObject_1(srcValue)) {
+      stack || (stack = new _Stack);
+      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
+    }
+    else {
+      var newValue = customizer
+        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+        : undefined;
+      if (newValue === undefined) {
+        newValue = srcValue;
+      }
+      _assignMergeValue(object, key, newValue);
+    }
+  }, keysIn_1);
+}
+var _baseMerge = baseMerge;
+
+function identity(value) {
+  return value;
+}
+var identity_1 = identity;
+
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+var _apply = apply;
+
+var nativeMax = Math.max;
+function overRest(func, start, transform) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = transform(array);
+    return _apply(func, this, otherArgs);
+  };
+}
+var _overRest = overRest;
+
+function constant(value) {
+  return function() {
+    return value;
+  };
+}
+var constant_1 = constant;
+
+var baseSetToString = !_defineProperty ? identity_1 : function(func, string) {
+  return _defineProperty(func, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': constant_1(string),
+    'writable': true
+  });
+};
+var _baseSetToString = baseSetToString;
+
+var HOT_COUNT = 800;
+var HOT_SPAN = 16;
+var nativeNow = Date.now;
+function shortOut(func) {
+  var count = 0,
+      lastCalled = 0;
+  return function() {
+    var stamp = nativeNow(),
+        remaining = HOT_SPAN - (stamp - lastCalled);
+    lastCalled = stamp;
+    if (remaining > 0) {
+      if (++count >= HOT_COUNT) {
+        return arguments[0];
+      }
+    } else {
+      count = 0;
+    }
+    return func.apply(undefined, arguments);
+  };
+}
+var _shortOut = shortOut;
+
+var setToString = _shortOut(_baseSetToString);
+var _setToString = setToString;
+
+function baseRest(func, start) {
+  return _setToString(_overRest(func, start, identity_1), func + '');
+}
+var _baseRest = baseRest;
+
+function isIterateeCall(value, index, object) {
+  if (!isObject_1(object)) {
+    return false;
+  }
+  var type = typeof index;
+  if (type == 'number'
+        ? (isArrayLike_1(object) && _isIndex(index, object.length))
+        : (type == 'string' && index in object)
+      ) {
+    return eq_1(object[index], value);
+  }
+  return false;
+}
+var _isIterateeCall = isIterateeCall;
+
+function createAssigner(assigner) {
+  return _baseRest(function(object, sources) {
+    var index = -1,
+        length = sources.length,
+        customizer = length > 1 ? sources[length - 1] : undefined,
+        guard = length > 2 ? sources[2] : undefined;
+    customizer = (assigner.length > 3 && typeof customizer == 'function')
+      ? (length--, customizer)
+      : undefined;
+    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
+      customizer = length < 3 ? undefined : customizer;
+      length = 1;
+    }
+    object = Object(object);
+    while (++index < length) {
+      var source = sources[index];
+      if (source) {
+        assigner(object, source, index, customizer);
+      }
+    }
+    return object;
+  });
+}
+var _createAssigner = createAssigner;
+
+var merge = _createAssigner(function(object, source, srcIndex) {
+  _baseMerge(object, source, srcIndex);
+});
+var merge_1 = merge;
+
+var nativeKeys = _overArg(Object.keys, Object);
+var _nativeKeys = nativeKeys;
+
+var objectProto$11 = Object.prototype;
+var hasOwnProperty$9 = objectProto$11.hasOwnProperty;
+function baseKeys(object) {
+  if (!_isPrototype(object)) {
+    return _nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty$9.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var _baseKeys = baseKeys;
+
+function keys(object) {
+  return isArrayLike_1(object) ? _arrayLikeKeys(object) : _baseKeys(object);
+}
+var keys_1 = keys;
+
+function baseForOwn(object, iteratee) {
+  return object && _baseFor(object, iteratee, keys_1);
+}
+var _baseForOwn = baseForOwn;
 
 var HASH_UNDEFINED$2 = '__lodash_hash_undefined__';
 function setCacheAdd(value) {
@@ -1359,10 +1191,10 @@ function cacheHas(cache, key) {
 }
 var _cacheHas = cacheHas;
 
-var COMPARE_PARTIAL_FLAG$1 = 1;
-var COMPARE_UNORDERED_FLAG = 2;
+var COMPARE_PARTIAL_FLAG$2 = 1;
+var COMPARE_UNORDERED_FLAG$1 = 2;
 function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
-  var isPartial = bitmask & COMPARE_PARTIAL_FLAG$1,
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG$2,
       arrLength = array.length,
       othLength = other.length;
   if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
@@ -1374,7 +1206,7 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
   }
   var index = -1,
       result = true,
-      seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new _SetCache : undefined;
+      seen = (bitmask & COMPARE_UNORDERED_FLAG$1) ? new _SetCache : undefined;
   stack.set(array, other);
   stack.set(other, array);
   while (++index < arrLength) {
@@ -1416,9 +1248,6 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
 }
 var _equalArrays = equalArrays;
 
-var Uint8Array = _root.Uint8Array;
-var _Uint8Array = Uint8Array;
-
 function mapToArray(map) {
   var index = -1,
       result = Array(map.size);
@@ -1439,49 +1268,49 @@ function setToArray(set) {
 }
 var _setToArray = setToArray;
 
-var COMPARE_PARTIAL_FLAG$2 = 1;
-var COMPARE_UNORDERED_FLAG$1 = 2;
-var boolTag = '[object Boolean]';
-var dateTag = '[object Date]';
-var errorTag = '[object Error]';
-var mapTag = '[object Map]';
-var numberTag = '[object Number]';
-var regexpTag = '[object RegExp]';
-var setTag = '[object Set]';
-var stringTag = '[object String]';
-var symbolTag$1 = '[object Symbol]';
-var arrayBufferTag = '[object ArrayBuffer]';
-var dataViewTag = '[object DataView]';
-var symbolProto$1 = _Symbol ? _Symbol.prototype : undefined;
-var symbolValueOf = symbolProto$1 ? symbolProto$1.valueOf : undefined;
+var COMPARE_PARTIAL_FLAG$3 = 1;
+var COMPARE_UNORDERED_FLAG$2 = 2;
+var boolTag$1 = '[object Boolean]';
+var dateTag$1 = '[object Date]';
+var errorTag$1 = '[object Error]';
+var mapTag$1 = '[object Map]';
+var numberTag$1 = '[object Number]';
+var regexpTag$1 = '[object RegExp]';
+var setTag$1 = '[object Set]';
+var stringTag$1 = '[object String]';
+var symbolTag = '[object Symbol]';
+var arrayBufferTag$1 = '[object ArrayBuffer]';
+var dataViewTag$1 = '[object DataView]';
+var symbolProto = _Symbol ? _Symbol.prototype : undefined;
+var symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
 function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
   switch (tag) {
-    case dataViewTag:
+    case dataViewTag$1:
       if ((object.byteLength != other.byteLength) ||
           (object.byteOffset != other.byteOffset)) {
         return false;
       }
       object = object.buffer;
       other = other.buffer;
-    case arrayBufferTag:
+    case arrayBufferTag$1:
       if ((object.byteLength != other.byteLength) ||
           !equalFunc(new _Uint8Array(object), new _Uint8Array(other))) {
         return false;
       }
       return true;
-    case boolTag:
-    case dateTag:
-    case numberTag:
+    case boolTag$1:
+    case dateTag$1:
+    case numberTag$1:
       return eq_1(+object, +other);
-    case errorTag:
+    case errorTag$1:
       return object.name == other.name && object.message == other.message;
-    case regexpTag:
-    case stringTag:
+    case regexpTag$1:
+    case stringTag$1:
       return object == (other + '');
-    case mapTag:
+    case mapTag$1:
       var convert = _mapToArray;
-    case setTag:
-      var isPartial = bitmask & COMPARE_PARTIAL_FLAG$2;
+    case setTag$1:
+      var isPartial = bitmask & COMPARE_PARTIAL_FLAG$3;
       convert || (convert = _setToArray);
       if (object.size != other.size && !isPartial) {
         return false;
@@ -1490,12 +1319,12 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
       if (stacked) {
         return stacked == other;
       }
-      bitmask |= COMPARE_UNORDERED_FLAG$1;
+      bitmask |= COMPARE_UNORDERED_FLAG$2;
       stack.set(object, other);
       var result = _equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
       stack['delete'](object);
       return result;
-    case symbolTag$1:
+    case symbolTag:
       if (symbolValueOf) {
         return symbolValueOf.call(object) == symbolValueOf.call(other);
       }
@@ -1541,8 +1370,8 @@ function stubArray() {
 }
 var stubArray_1 = stubArray;
 
-var objectProto$7 = Object.prototype;
-var propertyIsEnumerable = objectProto$7.propertyIsEnumerable;
+var objectProto$14 = Object.prototype;
+var propertyIsEnumerable$1 = objectProto$14.propertyIsEnumerable;
 var nativeGetSymbols = Object.getOwnPropertySymbols;
 var getSymbols = !nativeGetSymbols ? stubArray_1 : function(object) {
   if (object == null) {
@@ -1550,215 +1379,21 @@ var getSymbols = !nativeGetSymbols ? stubArray_1 : function(object) {
   }
   object = Object(object);
   return _arrayFilter(nativeGetSymbols(object), function(symbol) {
-    return propertyIsEnumerable.call(object, symbol);
+    return propertyIsEnumerable$1.call(object, symbol);
   });
 };
 var _getSymbols = getSymbols;
-
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-var _baseTimes = baseTimes;
-
-var argsTag$1 = '[object Arguments]';
-function baseIsArguments(value) {
-  return isObjectLike_1(value) && _baseGetTag(value) == argsTag$1;
-}
-var _baseIsArguments = baseIsArguments;
-
-var objectProto$9 = Object.prototype;
-var hasOwnProperty$7 = objectProto$9.hasOwnProperty;
-var propertyIsEnumerable$1 = objectProto$9.propertyIsEnumerable;
-var isArguments = _baseIsArguments(function() { return arguments; }()) ? _baseIsArguments : function(value) {
-  return isObjectLike_1(value) && hasOwnProperty$7.call(value, 'callee') &&
-    !propertyIsEnumerable$1.call(value, 'callee');
-};
-var isArguments_1 = isArguments;
-
-function stubFalse() {
-  return false;
-}
-var stubFalse_1 = stubFalse;
-
-var isBuffer_1 = createCommonjsModule(function (module, exports) {
-var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
-var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-var moduleExports = freeModule && freeModule.exports === freeExports;
-var Buffer = moduleExports ? _root.Buffer : undefined;
-var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
-var isBuffer = nativeIsBuffer || stubFalse_1;
-module.exports = isBuffer;
-});
-
-var MAX_SAFE_INTEGER = 9007199254740991;
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-var _isIndex = isIndex;
-
-var MAX_SAFE_INTEGER$1 = 9007199254740991;
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER$1;
-}
-var isLength_1 = isLength;
-
-var argsTag$2 = '[object Arguments]';
-var arrayTag$1 = '[object Array]';
-var boolTag$1 = '[object Boolean]';
-var dateTag$1 = '[object Date]';
-var errorTag$1 = '[object Error]';
-var funcTag$1 = '[object Function]';
-var mapTag$1 = '[object Map]';
-var numberTag$1 = '[object Number]';
-var objectTag$1 = '[object Object]';
-var regexpTag$1 = '[object RegExp]';
-var setTag$1 = '[object Set]';
-var stringTag$1 = '[object String]';
-var weakMapTag = '[object WeakMap]';
-var arrayBufferTag$1 = '[object ArrayBuffer]';
-var dataViewTag$1 = '[object DataView]';
-var float32Tag = '[object Float32Array]';
-var float64Tag = '[object Float64Array]';
-var int8Tag = '[object Int8Array]';
-var int16Tag = '[object Int16Array]';
-var int32Tag = '[object Int32Array]';
-var uint8Tag = '[object Uint8Array]';
-var uint8ClampedTag = '[object Uint8ClampedArray]';
-var uint16Tag = '[object Uint16Array]';
-var uint32Tag = '[object Uint32Array]';
-var typedArrayTags = {};
-typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
-typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
-typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
-typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
-typedArrayTags[uint32Tag] = true;
-typedArrayTags[argsTag$2] = typedArrayTags[arrayTag$1] =
-typedArrayTags[arrayBufferTag$1] = typedArrayTags[boolTag$1] =
-typedArrayTags[dataViewTag$1] = typedArrayTags[dateTag$1] =
-typedArrayTags[errorTag$1] = typedArrayTags[funcTag$1] =
-typedArrayTags[mapTag$1] = typedArrayTags[numberTag$1] =
-typedArrayTags[objectTag$1] = typedArrayTags[regexpTag$1] =
-typedArrayTags[setTag$1] = typedArrayTags[stringTag$1] =
-typedArrayTags[weakMapTag] = false;
-function baseIsTypedArray(value) {
-  return isObjectLike_1(value) &&
-    isLength_1(value.length) && !!typedArrayTags[_baseGetTag(value)];
-}
-var _baseIsTypedArray = baseIsTypedArray;
-
-function baseUnary(func) {
-  return function(value) {
-    return func(value);
-  };
-}
-var _baseUnary = baseUnary;
-
-var _nodeUtil = createCommonjsModule(function (module, exports) {
-var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
-var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-var moduleExports = freeModule && freeModule.exports === freeExports;
-var freeProcess = moduleExports && _freeGlobal.process;
-var nodeUtil = (function() {
-  try {
-    return freeProcess && freeProcess.binding && freeProcess.binding('util');
-  } catch (e) {}
-}());
-module.exports = nodeUtil;
-});
-
-var nodeIsTypedArray = _nodeUtil && _nodeUtil.isTypedArray;
-var isTypedArray = nodeIsTypedArray ? _baseUnary(nodeIsTypedArray) : _baseIsTypedArray;
-var isTypedArray_1 = isTypedArray;
-
-var objectProto$8 = Object.prototype;
-var hasOwnProperty$6 = objectProto$8.hasOwnProperty;
-function arrayLikeKeys(value, inherited) {
-  var isArr = isArray_1(value),
-      isArg = !isArr && isArguments_1(value),
-      isBuff = !isArr && !isArg && isBuffer_1(value),
-      isType = !isArr && !isArg && !isBuff && isTypedArray_1(value),
-      skipIndexes = isArr || isArg || isBuff || isType,
-      result = skipIndexes ? _baseTimes(value.length, String) : [],
-      length = result.length;
-  for (var key in value) {
-    if ((inherited || hasOwnProperty$6.call(value, key)) &&
-        !(skipIndexes && (
-           key == 'length' ||
-           (isBuff && (key == 'offset' || key == 'parent')) ||
-           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
-           _isIndex(key, length)
-        ))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _arrayLikeKeys = arrayLikeKeys;
-
-var objectProto$11 = Object.prototype;
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto$11;
-  return value === proto;
-}
-var _isPrototype = isPrototype;
-
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-var _overArg = overArg;
-
-var nativeKeys = _overArg(Object.keys, Object);
-var _nativeKeys = nativeKeys;
-
-var objectProto$10 = Object.prototype;
-var hasOwnProperty$8 = objectProto$10.hasOwnProperty;
-function baseKeys(object) {
-  if (!_isPrototype(object)) {
-    return _nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty$8.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _baseKeys = baseKeys;
-
-function isArrayLike(value) {
-  return value != null && isLength_1(value.length) && !isFunction_1(value);
-}
-var isArrayLike_1 = isArrayLike;
-
-function keys(object) {
-  return isArrayLike_1(object) ? _arrayLikeKeys(object) : _baseKeys(object);
-}
-var keys_1 = keys;
 
 function getAllKeys(object) {
   return _baseGetAllKeys(object, keys_1, _getSymbols);
 }
 var _getAllKeys = getAllKeys;
 
-var COMPARE_PARTIAL_FLAG$3 = 1;
-var objectProto$6 = Object.prototype;
-var hasOwnProperty$5 = objectProto$6.hasOwnProperty;
+var COMPARE_PARTIAL_FLAG$4 = 1;
+var objectProto$13 = Object.prototype;
+var hasOwnProperty$11 = objectProto$13.hasOwnProperty;
 function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
-  var isPartial = bitmask & COMPARE_PARTIAL_FLAG$3,
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG$4,
       objProps = _getAllKeys(object),
       objLength = objProps.length,
       othProps = _getAllKeys(other),
@@ -1769,7 +1404,7 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
   var index = objLength;
   while (index--) {
     var key = objProps[index];
-    if (!(isPartial ? key in other : hasOwnProperty$5.call(other, key))) {
+    if (!(isPartial ? key in other : hasOwnProperty$11.call(other, key))) {
       return false;
     }
   }
@@ -1828,7 +1463,7 @@ var WeakMap$1 = _getNative(_root, 'WeakMap');
 var _WeakMap = WeakMap$1;
 
 var mapTag$2 = '[object Map]';
-var objectTag$2 = '[object Object]';
+var objectTag$3 = '[object Object]';
 var promiseTag = '[object Promise]';
 var setTag$2 = '[object Set]';
 var weakMapTag$1 = '[object WeakMap]';
@@ -1846,7 +1481,7 @@ if ((_DataView && getTag(new _DataView(new ArrayBuffer(1))) != dataViewTag$2) ||
     (_WeakMap && getTag(new _WeakMap) != weakMapTag$1)) {
   getTag = function(value) {
     var result = _baseGetTag(value),
-        Ctor = result == objectTag$2 ? value.constructor : undefined,
+        Ctor = result == objectTag$3 ? value.constructor : undefined,
         ctorString = Ctor ? _toSource(Ctor) : '';
     if (ctorString) {
       switch (ctorString) {
@@ -1862,21 +1497,21 @@ if ((_DataView && getTag(new _DataView(new ArrayBuffer(1))) != dataViewTag$2) ||
 }
 var _getTag = getTag;
 
-var COMPARE_PARTIAL_FLAG = 1;
-var argsTag = '[object Arguments]';
-var arrayTag = '[object Array]';
-var objectTag = '[object Object]';
-var objectProto$5 = Object.prototype;
-var hasOwnProperty$4 = objectProto$5.hasOwnProperty;
+var COMPARE_PARTIAL_FLAG$1 = 1;
+var argsTag$2 = '[object Arguments]';
+var arrayTag$1 = '[object Array]';
+var objectTag$2 = '[object Object]';
+var objectProto$12 = Object.prototype;
+var hasOwnProperty$10 = objectProto$12.hasOwnProperty;
 function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
   var objIsArr = isArray_1(object),
       othIsArr = isArray_1(other),
-      objTag = objIsArr ? arrayTag : _getTag(object),
-      othTag = othIsArr ? arrayTag : _getTag(other);
-  objTag = objTag == argsTag ? objectTag : objTag;
-  othTag = othTag == argsTag ? objectTag : othTag;
-  var objIsObj = objTag == objectTag,
-      othIsObj = othTag == objectTag,
+      objTag = objIsArr ? arrayTag$1 : _getTag(object),
+      othTag = othIsArr ? arrayTag$1 : _getTag(other);
+  objTag = objTag == argsTag$2 ? objectTag$2 : objTag;
+  othTag = othTag == argsTag$2 ? objectTag$2 : othTag;
+  var objIsObj = objTag == objectTag$2,
+      othIsObj = othTag == objectTag$2,
       isSameTag = objTag == othTag;
   if (isSameTag && isBuffer_1(object)) {
     if (!isBuffer_1(other)) {
@@ -1891,9 +1526,9 @@ function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
       ? _equalArrays(object, other, bitmask, customizer, equalFunc, stack)
       : _equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
   }
-  if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
-    var objIsWrapped = objIsObj && hasOwnProperty$4.call(object, '__wrapped__'),
-        othIsWrapped = othIsObj && hasOwnProperty$4.call(other, '__wrapped__');
+  if (!(bitmask & COMPARE_PARTIAL_FLAG$1)) {
+    var objIsWrapped = objIsObj && hasOwnProperty$10.call(object, '__wrapped__'),
+        othIsWrapped = othIsObj && hasOwnProperty$10.call(other, '__wrapped__');
     if (objIsWrapped || othIsWrapped) {
       var objUnwrapped = objIsWrapped ? object.value() : object,
           othUnwrapped = othIsWrapped ? other.value() : other;
@@ -1919,6 +1554,949 @@ function baseIsEqual(value, other, bitmask, customizer, stack) {
   return _baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
 }
 var _baseIsEqual = baseIsEqual;
+
+var COMPARE_PARTIAL_FLAG = 1;
+var COMPARE_UNORDERED_FLAG = 2;
+function baseIsMatch(object, source, matchData, customizer) {
+  var index = matchData.length,
+      length = index,
+      noCustomizer = !customizer;
+  if (object == null) {
+    return !length;
+  }
+  object = Object(object);
+  while (index--) {
+    var data = matchData[index];
+    if ((noCustomizer && data[2])
+          ? data[1] !== object[data[0]]
+          : !(data[0] in object)
+        ) {
+      return false;
+    }
+  }
+  while (++index < length) {
+    data = matchData[index];
+    var key = data[0],
+        objValue = object[key],
+        srcValue = data[1];
+    if (noCustomizer && data[2]) {
+      if (objValue === undefined && !(key in object)) {
+        return false;
+      }
+    } else {
+      var stack = new _Stack;
+      if (customizer) {
+        var result = customizer(objValue, srcValue, key, object, source, stack);
+      }
+      if (!(result === undefined
+            ? _baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG, customizer, stack)
+            : result
+          )) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+var _baseIsMatch = baseIsMatch;
+
+function isStrictComparable(value) {
+  return value === value && !isObject_1(value);
+}
+var _isStrictComparable = isStrictComparable;
+
+function getMatchData(object) {
+  var result = keys_1(object),
+      length = result.length;
+  while (length--) {
+    var key = result[length],
+        value = object[key];
+    result[length] = [key, value, _isStrictComparable(value)];
+  }
+  return result;
+}
+var _getMatchData = getMatchData;
+
+function matchesStrictComparable(key, srcValue) {
+  return function(object) {
+    if (object == null) {
+      return false;
+    }
+    return object[key] === srcValue &&
+      (srcValue !== undefined || (key in Object(object)));
+  };
+}
+var _matchesStrictComparable = matchesStrictComparable;
+
+function baseMatches(source) {
+  var matchData = _getMatchData(source);
+  if (matchData.length == 1 && matchData[0][2]) {
+    return _matchesStrictComparable(matchData[0][0], matchData[0][1]);
+  }
+  return function(object) {
+    return object === source || _baseIsMatch(object, source, matchData);
+  };
+}
+var _baseMatches = baseMatches;
+
+var symbolTag$1 = '[object Symbol]';
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag$1);
+}
+var isSymbol_1 = isSymbol;
+
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+var reIsPlainProp = /^\w*$/;
+function isKey(value, object) {
+  if (isArray_1(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      value == null || isSymbol_1(value)) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object));
+}
+var _isKey = isKey;
+
+var FUNC_ERROR_TEXT = 'Expected a function';
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result) || cache;
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || _MapCache);
+  return memoized;
+}
+memoize.Cache = _MapCache;
+var memoize_1 = memoize;
+
+var MAX_MEMOIZE_SIZE = 500;
+function memoizeCapped(func) {
+  var result = memoize_1(func, function(key) {
+    if (cache.size === MAX_MEMOIZE_SIZE) {
+      cache.clear();
+    }
+    return key;
+  });
+  var cache = result.cache;
+  return result;
+}
+var _memoizeCapped = memoizeCapped;
+
+var reLeadingDot = /^\./;
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+var reEscapeChar = /\\(\\)?/g;
+var stringToPath = _memoizeCapped(function(string) {
+  var result = [];
+  if (reLeadingDot.test(string)) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, number, quote, string) {
+    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+var _stringToPath = stringToPath;
+
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+var _arrayMap = arrayMap;
+
+var INFINITY = 1 / 0;
+var symbolProto$1 = _Symbol ? _Symbol.prototype : undefined;
+var symbolToString = symbolProto$1 ? symbolProto$1.toString : undefined;
+function baseToString(value) {
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isArray_1(value)) {
+    return _arrayMap(value, baseToString) + '';
+  }
+  if (isSymbol_1(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+var _baseToString = baseToString;
+
+function toString(value) {
+  return value == null ? '' : _baseToString(value);
+}
+var toString_1 = toString;
+
+function castPath(value, object) {
+  if (isArray_1(value)) {
+    return value;
+  }
+  return _isKey(value, object) ? [value] : _stringToPath(toString_1(value));
+}
+var _castPath = castPath;
+
+var INFINITY$1 = 1 / 0;
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol_1(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY$1) ? '-0' : result;
+}
+var _toKey = toKey;
+
+function baseGet(object, path) {
+  path = _castPath(path, object);
+  var index = 0,
+      length = path.length;
+  while (object != null && index < length) {
+    object = object[_toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+var _baseGet = baseGet;
+
+function get(object, path, defaultValue) {
+  var result = object == null ? undefined : _baseGet(object, path);
+  return result === undefined ? defaultValue : result;
+}
+var get_1 = get;
+
+function baseHasIn(object, key) {
+  return object != null && key in Object(object);
+}
+var _baseHasIn = baseHasIn;
+
+function hasPath(object, path, hasFunc) {
+  path = _castPath(path, object);
+  var index = -1,
+      length = path.length,
+      result = false;
+  while (++index < length) {
+    var key = _toKey(path[index]);
+    if (!(result = object != null && hasFunc(object, key))) {
+      break;
+    }
+    object = object[key];
+  }
+  if (result || ++index != length) {
+    return result;
+  }
+  length = object == null ? 0 : object.length;
+  return !!length && isLength_1(length) && _isIndex(key, length) &&
+    (isArray_1(object) || isArguments_1(object));
+}
+var _hasPath = hasPath;
+
+function hasIn(object, path) {
+  return object != null && _hasPath(object, path, _baseHasIn);
+}
+var hasIn_1 = hasIn;
+
+var COMPARE_PARTIAL_FLAG$5 = 1;
+var COMPARE_UNORDERED_FLAG$3 = 2;
+function baseMatchesProperty(path, srcValue) {
+  if (_isKey(path) && _isStrictComparable(srcValue)) {
+    return _matchesStrictComparable(_toKey(path), srcValue);
+  }
+  return function(object) {
+    var objValue = get_1(object, path);
+    return (objValue === undefined && objValue === srcValue)
+      ? hasIn_1(object, path)
+      : _baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG$5 | COMPARE_UNORDERED_FLAG$3);
+  };
+}
+var _baseMatchesProperty = baseMatchesProperty;
+
+function baseProperty(key) {
+  return function(object) {
+    return object == null ? undefined : object[key];
+  };
+}
+var _baseProperty = baseProperty;
+
+function basePropertyDeep(path) {
+  return function(object) {
+    return _baseGet(object, path);
+  };
+}
+var _basePropertyDeep = basePropertyDeep;
+
+function property(path) {
+  return _isKey(path) ? _baseProperty(_toKey(path)) : _basePropertyDeep(path);
+}
+var property_1 = property;
+
+function baseIteratee(value) {
+  if (typeof value == 'function') {
+    return value;
+  }
+  if (value == null) {
+    return identity_1;
+  }
+  if (typeof value == 'object') {
+    return isArray_1(value)
+      ? _baseMatchesProperty(value[0], value[1])
+      : _baseMatches(value);
+  }
+  return property_1(value);
+}
+var _baseIteratee = baseIteratee;
+
+function mapValues(object, iteratee) {
+  var result = {};
+  iteratee = _baseIteratee(iteratee, 3);
+  _baseForOwn(object, function(value, key, object) {
+    _baseAssignValue(result, key, iteratee(value, key, object));
+  });
+  return result;
+}
+var mapValues_1 = mapValues;
+
+'use strict';
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var defineProperty$2 = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+var hoistNonReactStatics = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') {
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+        var keys = getOwnPropertyNames(sourceComponent);
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        }
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try {
+                    defineProperty$2(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+        return targetComponent;
+    }
+    return targetComponent;
+};
+
+var isPromise_1 = isPromise;
+function isPromise(obj) {
+  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+}
+
+var actionTypes = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var prefix = exports.prefix = '@@redux-form/';
+var ARRAY_INSERT = exports.ARRAY_INSERT = prefix + 'ARRAY_INSERT';
+var ARRAY_MOVE = exports.ARRAY_MOVE = prefix + 'ARRAY_MOVE';
+var ARRAY_POP = exports.ARRAY_POP = prefix + 'ARRAY_POP';
+var ARRAY_PUSH = exports.ARRAY_PUSH = prefix + 'ARRAY_PUSH';
+var ARRAY_REMOVE = exports.ARRAY_REMOVE = prefix + 'ARRAY_REMOVE';
+var ARRAY_REMOVE_ALL = exports.ARRAY_REMOVE_ALL = prefix + 'ARRAY_REMOVE_ALL';
+var ARRAY_SHIFT = exports.ARRAY_SHIFT = prefix + 'ARRAY_SHIFT';
+var ARRAY_SPLICE = exports.ARRAY_SPLICE = prefix + 'ARRAY_SPLICE';
+var ARRAY_UNSHIFT = exports.ARRAY_UNSHIFT = prefix + 'ARRAY_UNSHIFT';
+var ARRAY_SWAP = exports.ARRAY_SWAP = prefix + 'ARRAY_SWAP';
+var AUTOFILL = exports.AUTOFILL = prefix + 'AUTOFILL';
+var BLUR = exports.BLUR = prefix + 'BLUR';
+var CHANGE = exports.CHANGE = prefix + 'CHANGE';
+var CLEAR_SUBMIT = exports.CLEAR_SUBMIT = prefix + 'CLEAR_SUBMIT';
+var CLEAR_SUBMIT_ERRORS = exports.CLEAR_SUBMIT_ERRORS = prefix + 'CLEAR_SUBMIT_ERRORS';
+var CLEAR_ASYNC_ERROR = exports.CLEAR_ASYNC_ERROR = prefix + 'CLEAR_ASYNC_ERROR';
+var DESTROY = exports.DESTROY = prefix + 'DESTROY';
+var FOCUS = exports.FOCUS = prefix + 'FOCUS';
+var INITIALIZE = exports.INITIALIZE = prefix + 'INITIALIZE';
+var REGISTER_FIELD = exports.REGISTER_FIELD = prefix + 'REGISTER_FIELD';
+var RESET = exports.RESET = prefix + 'RESET';
+var SET_SUBMIT_FAILED = exports.SET_SUBMIT_FAILED = prefix + 'SET_SUBMIT_FAILED';
+var SET_SUBMIT_SUCCEEDED = exports.SET_SUBMIT_SUCCEEDED = prefix + 'SET_SUBMIT_SUCCEEDED';
+var START_ASYNC_VALIDATION = exports.START_ASYNC_VALIDATION = prefix + 'START_ASYNC_VALIDATION';
+var START_SUBMIT = exports.START_SUBMIT = prefix + 'START_SUBMIT';
+var STOP_ASYNC_VALIDATION = exports.STOP_ASYNC_VALIDATION = prefix + 'STOP_ASYNC_VALIDATION';
+var STOP_SUBMIT = exports.STOP_SUBMIT = prefix + 'STOP_SUBMIT';
+var SUBMIT = exports.SUBMIT = prefix + 'SUBMIT';
+var TOUCH = exports.TOUCH = prefix + 'TOUCH';
+var UNREGISTER_FIELD = exports.UNREGISTER_FIELD = prefix + 'UNREGISTER_FIELD';
+var UNTOUCH = exports.UNTOUCH = prefix + 'UNTOUCH';
+var UPDATE_SYNC_ERRORS = exports.UPDATE_SYNC_ERRORS = prefix + 'UPDATE_SYNC_ERRORS';
+var UPDATE_SYNC_WARNINGS = exports.UPDATE_SYNC_WARNINGS = prefix + 'UPDATE_SYNC_WARNINGS';
+});
+unwrapExports(actionTypes);
+
+var actions_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var arrayInsert = function arrayInsert(form, field, index, value) {
+  return {
+    type: actionTypes.ARRAY_INSERT,
+    meta: { form: form, field: field, index: index },
+    payload: value
+  };
+};
+var arrayMove = function arrayMove(form, field, from, to) {
+  return {
+    type: actionTypes.ARRAY_MOVE,
+    meta: { form: form, field: field, from: from, to: to }
+  };
+};
+var arrayPop = function arrayPop(form, field) {
+  return {
+    type: actionTypes.ARRAY_POP,
+    meta: { form: form, field: field }
+  };
+};
+var arrayPush = function arrayPush(form, field, value) {
+  return {
+    type: actionTypes.ARRAY_PUSH,
+    meta: { form: form, field: field },
+    payload: value
+  };
+};
+var arrayRemove = function arrayRemove(form, field, index) {
+  return {
+    type: actionTypes.ARRAY_REMOVE,
+    meta: { form: form, field: field, index: index }
+  };
+};
+var arrayRemoveAll = function arrayRemoveAll(form, field) {
+  return {
+    type: actionTypes.ARRAY_REMOVE_ALL,
+    meta: { form: form, field: field }
+  };
+};
+var arrayShift = function arrayShift(form, field) {
+  return {
+    type: actionTypes.ARRAY_SHIFT,
+    meta: { form: form, field: field }
+  };
+};
+var arraySplice = function arraySplice(form, field, index, removeNum, value) {
+  var action = {
+    type: actionTypes.ARRAY_SPLICE,
+    meta: { form: form, field: field, index: index, removeNum: removeNum }
+  };
+  if (value !== undefined) {
+    action.payload = value;
+  }
+  return action;
+};
+var arraySwap = function arraySwap(form, field, indexA, indexB) {
+  if (indexA === indexB) {
+    throw new Error('Swap indices cannot be equal');
+  }
+  if (indexA < 0 || indexB < 0) {
+    throw new Error('Swap indices cannot be negative');
+  }
+  return { type: actionTypes.ARRAY_SWAP, meta: { form: form, field: field, indexA: indexA, indexB: indexB } };
+};
+var arrayUnshift = function arrayUnshift(form, field, value) {
+  return {
+    type: actionTypes.ARRAY_UNSHIFT,
+    meta: { form: form, field: field },
+    payload: value
+  };
+};
+var autofill = function autofill(form, field, value) {
+  return {
+    type: actionTypes.AUTOFILL,
+    meta: { form: form, field: field },
+    payload: value
+  };
+};
+var blur = function blur(form, field, value, touch) {
+  return {
+    type: actionTypes.BLUR,
+    meta: { form: form, field: field, touch: touch },
+    payload: value
+  };
+};
+var change = function change(form, field, value, touch, persistentSubmitErrors) {
+  return {
+    type: actionTypes.CHANGE,
+    meta: { form: form, field: field, touch: touch, persistentSubmitErrors: persistentSubmitErrors },
+    payload: value
+  };
+};
+var clearSubmit = function clearSubmit(form) {
+  return {
+    type: actionTypes.CLEAR_SUBMIT,
+    meta: { form: form }
+  };
+};
+var clearSubmitErrors = function clearSubmitErrors(form) {
+  return {
+    type: actionTypes.CLEAR_SUBMIT_ERRORS,
+    meta: { form: form }
+  };
+};
+var clearAsyncError = function clearAsyncError(form, field) {
+  return {
+    type: actionTypes.CLEAR_ASYNC_ERROR,
+    meta: { form: form, field: field }
+  };
+};
+var destroy = function destroy() {
+  for (var _len = arguments.length, form = Array(_len), _key = 0; _key < _len; _key++) {
+    form[_key] = arguments[_key];
+  }
+  return {
+    type: actionTypes.DESTROY,
+    meta: { form: form }
+  };
+};
+var focus = function focus(form, field) {
+  return {
+    type: actionTypes.FOCUS,
+    meta: { form: form, field: field }
+  };
+};
+var initialize = function initialize(form, values, keepDirty) {
+  var otherMeta = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  if (keepDirty instanceof Object) {
+    otherMeta = keepDirty;
+    keepDirty = false;
+  }
+  return {
+    type: actionTypes.INITIALIZE,
+    meta: _extends({ form: form, keepDirty: keepDirty }, otherMeta),
+    payload: values
+  };
+};
+var registerField = function registerField(form, name, type) {
+  return {
+    type: actionTypes.REGISTER_FIELD,
+    meta: { form: form },
+    payload: { name: name, type: type }
+  };
+};
+var reset = function reset(form) {
+  return {
+    type: actionTypes.RESET,
+    meta: { form: form }
+  };
+};
+var startAsyncValidation = function startAsyncValidation(form, field) {
+  return {
+    type: actionTypes.START_ASYNC_VALIDATION,
+    meta: { form: form, field: field }
+  };
+};
+var startSubmit = function startSubmit(form) {
+  return {
+    type: actionTypes.START_SUBMIT,
+    meta: { form: form }
+  };
+};
+var stopAsyncValidation = function stopAsyncValidation(form, errors) {
+  return {
+    type: actionTypes.STOP_ASYNC_VALIDATION,
+    meta: { form: form },
+    payload: errors,
+    error: !!(errors && Object.keys(errors).length)
+  };
+};
+var stopSubmit = function stopSubmit(form, errors) {
+  return {
+    type: actionTypes.STOP_SUBMIT,
+    meta: { form: form },
+    payload: errors,
+    error: !!(errors && Object.keys(errors).length)
+  };
+};
+var submit = function submit(form) {
+  return {
+    type: actionTypes.SUBMIT,
+    meta: { form: form }
+  };
+};
+var setSubmitFailed = function setSubmitFailed(form) {
+  for (var _len2 = arguments.length, fields = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    fields[_key2 - 1] = arguments[_key2];
+  }
+  return {
+    type: actionTypes.SET_SUBMIT_FAILED,
+    meta: { form: form, fields: fields },
+    error: true
+  };
+};
+var setSubmitSucceeded = function setSubmitSucceeded(form) {
+  for (var _len3 = arguments.length, fields = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+    fields[_key3 - 1] = arguments[_key3];
+  }
+  return {
+    type: actionTypes.SET_SUBMIT_SUCCEEDED,
+    meta: { form: form, fields: fields },
+    error: false
+  };
+};
+var touch = function touch(form) {
+  for (var _len4 = arguments.length, fields = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+    fields[_key4 - 1] = arguments[_key4];
+  }
+  return {
+    type: actionTypes.TOUCH,
+    meta: { form: form, fields: fields }
+  };
+};
+var unregisterField = function unregisterField(form, name) {
+  var destroyOnUnmount = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  return {
+    type: actionTypes.UNREGISTER_FIELD,
+    meta: { form: form },
+    payload: { name: name, destroyOnUnmount: destroyOnUnmount }
+  };
+};
+var untouch = function untouch(form) {
+  for (var _len5 = arguments.length, fields = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+    fields[_key5 - 1] = arguments[_key5];
+  }
+  return {
+    type: actionTypes.UNTOUCH,
+    meta: { form: form, fields: fields }
+  };
+};
+var updateSyncErrors = function updateSyncErrors(form) {
+  var syncErrors = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var error = arguments[2];
+  return {
+    type: actionTypes.UPDATE_SYNC_ERRORS,
+    meta: { form: form },
+    payload: { syncErrors: syncErrors, error: error }
+  };
+};
+var updateSyncWarnings = function updateSyncWarnings(form) {
+  var syncWarnings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var warning = arguments[2];
+  return {
+    type: actionTypes.UPDATE_SYNC_WARNINGS,
+    meta: { form: form },
+    payload: { syncWarnings: syncWarnings, warning: warning }
+  };
+};
+var actions = {
+  arrayInsert: arrayInsert,
+  arrayMove: arrayMove,
+  arrayPop: arrayPop,
+  arrayPush: arrayPush,
+  arrayRemove: arrayRemove,
+  arrayRemoveAll: arrayRemoveAll,
+  arrayShift: arrayShift,
+  arraySplice: arraySplice,
+  arraySwap: arraySwap,
+  arrayUnshift: arrayUnshift,
+  autofill: autofill,
+  blur: blur,
+  change: change,
+  clearSubmit: clearSubmit,
+  clearSubmitErrors: clearSubmitErrors,
+  clearAsyncError: clearAsyncError,
+  destroy: destroy,
+  focus: focus,
+  initialize: initialize,
+  registerField: registerField,
+  reset: reset,
+  startAsyncValidation: startAsyncValidation,
+  startSubmit: startSubmit,
+  stopAsyncValidation: stopAsyncValidation,
+  stopSubmit: stopSubmit,
+  submit: submit,
+  setSubmitFailed: setSubmitFailed,
+  setSubmitSucceeded: setSubmitSucceeded,
+  touch: touch,
+  unregisterField: unregisterField,
+  untouch: untouch,
+  updateSyncErrors: updateSyncErrors,
+  updateSyncWarnings: updateSyncWarnings
+};
+exports.default = actions;
+});
+unwrapExports(actions_1);
+
+var asyncValidation_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isPromise2 = _interopRequireDefault(isPromise_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var asyncValidation = function asyncValidation(fn, start, stop, field) {
+  start(field);
+  var promise = fn();
+  if (!(0, _isPromise2.default)(promise)) {
+    throw new Error('asyncValidate function passed to reduxForm must return a promise');
+  }
+  var handleErrors = function handleErrors(rejected) {
+    return function (errors) {
+      if (errors && Object.keys(errors).length) {
+        stop(errors);
+        return errors;
+      } else if (rejected) {
+        stop();
+        throw new Error('Asynchronous validation promise was rejected without errors.');
+      }
+      stop();
+      return Promise.resolve();
+    };
+  };
+  return promise.then(handleErrors(false), handleErrors(true));
+};
+exports.default = asyncValidation;
+});
+unwrapExports(asyncValidation_1);
+
+var defaultShouldAsyncValidate_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var defaultShouldAsyncValidate = function defaultShouldAsyncValidate(_ref) {
+  var initialized = _ref.initialized,
+      trigger = _ref.trigger,
+      pristine = _ref.pristine,
+      syncValidationPasses = _ref.syncValidationPasses;
+  if (!syncValidationPasses) {
+    return false;
+  }
+  switch (trigger) {
+    case 'blur':
+      return true;
+    case 'submit':
+      return !pristine || !initialized;
+    default:
+      return false;
+  }
+};
+exports.default = defaultShouldAsyncValidate;
+});
+unwrapExports(defaultShouldAsyncValidate_1);
+
+var defaultShouldValidate_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var defaultShouldValidate = function defaultShouldValidate(_ref) {
+  var values = _ref.values,
+      nextProps = _ref.nextProps,
+      initialRender = _ref.initialRender,
+      lastFieldValidatorKeys = _ref.lastFieldValidatorKeys,
+      fieldValidatorKeys = _ref.fieldValidatorKeys,
+      structure = _ref.structure;
+  if (initialRender) {
+    return true;
+  }
+  return !structure.deepEqual(values, nextProps && nextProps.values) || !structure.deepEqual(lastFieldValidatorKeys, fieldValidatorKeys);
+};
+exports.default = defaultShouldValidate;
+});
+unwrapExports(defaultShouldValidate_1);
+
+var isEvent_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var isEvent = function isEvent(candidate) {
+  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
+};
+exports.default = isEvent;
+});
+unwrapExports(isEvent_1);
+
+var silenceEvent_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isEvent2 = _interopRequireDefault(isEvent_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var silenceEvent = function silenceEvent(event) {
+  var is = (0, _isEvent2.default)(event);
+  if (is) {
+    event.preventDefault();
+  }
+  return is;
+};
+exports.default = silenceEvent;
+});
+unwrapExports(silenceEvent_1);
+
+var silenceEvents_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _silenceEvent2 = _interopRequireDefault(silenceEvent_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var silenceEvents = function silenceEvents(fn) {
+  return function (event) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return (0, _silenceEvent2.default)(event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
+  };
+};
+exports.default = silenceEvents;
+});
+unwrapExports(silenceEvents_1);
+
+var splice_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var splice = function splice(array, index, removeNum, value) {
+  array = array || [];
+  if (index < array.length) {
+    if (value === undefined && !removeNum) {
+      var _copy2 = [].concat(_toConsumableArray(array));
+      _copy2.splice(index, 0, true);
+      _copy2[index] = undefined;
+      return _copy2;
+    }
+    if (value != null) {
+      var _copy3 = [].concat(_toConsumableArray(array));
+      _copy3.splice(index, removeNum, value);
+      return _copy3;
+    }
+    var _copy = [].concat(_toConsumableArray(array));
+    _copy.splice(index, removeNum);
+    return _copy;
+  }
+  if (removeNum) {
+    return array;
+  }
+  var copy = [].concat(_toConsumableArray(array));
+  copy[index] = value;
+  return copy;
+};
+exports.default = splice;
+});
+unwrapExports(splice_1);
+
+function toPath(value) {
+  if (isArray_1(value)) {
+    return _arrayMap(value, _toKey);
+  }
+  return isSymbol_1(value) ? [value] : _copyArray(_stringToPath(toString_1(value)));
+}
+var toPath_1 = toPath;
+
+var getIn_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _toPath3 = _interopRequireDefault(toPath_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var getIn = function getIn(state, field) {
+  if (!state) {
+    return state;
+  }
+  var path = (0, _toPath3.default)(field);
+  var length = path.length;
+  if (!length) {
+    return undefined;
+  }
+  var result = state;
+  for (var i = 0; i < length && result; ++i) {
+    result = result[path[i]];
+  }
+  return result;
+};
+exports.default = getIn;
+});
+unwrapExports(getIn_1);
+
+var setIn_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _toPath3 = _interopRequireDefault(toPath_1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var setInWithPath = function setInWithPath(state, value, path, pathIndex) {
+  if (pathIndex >= path.length) {
+    return value;
+  }
+  var first = path[pathIndex];
+  var firstState = state && (Array.isArray(state) ? state[Number(first)] : state[first]);
+  var next = setInWithPath(firstState, value, path, pathIndex + 1);
+  if (!state) {
+    if (isNaN(first)) {
+      return _defineProperty({}, first, next);
+    }
+    var initialized = [];
+    initialized[parseInt(first, 10)] = next;
+    return initialized;
+  }
+  if (Array.isArray(state)) {
+    var copy = [].concat(state);
+    copy[parseInt(first, 10)] = next;
+    return copy;
+  }
+  return _extends({}, state, _defineProperty({}, first, next));
+};
+var setIn = function setIn(state, field, value) {
+  return setInWithPath(state, value, (0, _toPath3.default)(field), 0);
+};
+exports.default = setIn;
+});
+unwrapExports(setIn_1);
 
 function isEqualWith(value, other, customizer) {
   customizer = typeof customizer == 'function' ? customizer : undefined;
@@ -1947,6 +2525,7 @@ var deepEqual = function deepEqual(a, b) {
 };
 exports.default = deepEqual;
 });
+unwrapExports(deepEqual_1);
 
 var deleteIn_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -2011,6 +2590,7 @@ var deleteIn = function deleteIn(state, field) {
 };
 exports.default = deleteIn;
 });
+unwrapExports(deleteIn_1);
 
 var keys_1$2 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -2030,6 +2610,7 @@ function keys(value) {
 }
 exports.default = keys;
 });
+unwrapExports(keys_1$2);
 
 var plain = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -2071,423 +2652,1046 @@ var structure = {
 };
 exports.default = structure;
 });
+unwrapExports(plain);
 
-var ConnectedField = createCommonjsModule(function (module, exports) {
+var generateValidator_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _plain2 = _interopRequireDefault(plain);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var toArray = function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+};
+var getError = function getError(value, values, props, validators) {
+  var array = toArray(validators);
+  for (var i = 0; i < array.length; i++) {
+    var error = array[i](value, values, props);
+    if (error) {
+      return error;
+    }
+  }
+};
+var generateValidator = function generateValidator(validators, _ref) {
+  var getIn = _ref.getIn;
+  return function (values, props) {
+    var errors = {};
+    Object.keys(validators).forEach(function (name) {
+      var value = getIn(values, name);
+      var error = getError(value, values, props, validators[name]);
+      if (error) {
+        errors = _plain2.default.setIn(errors, name, error);
+      }
+    });
+    return errors;
+  };
+};
+exports.default = generateValidator;
+});
+unwrapExports(generateValidator_1);
+
+var lib = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _extendableBuiltin(cls) {
+  function ExtendableBuiltin() {
+    cls.apply(this, arguments);
+  }
+  ExtendableBuiltin.prototype = Object.create(cls.prototype, {
+    constructor: {
+      value: cls,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (Object.setPrototypeOf) {
+    Object.setPrototypeOf(ExtendableBuiltin, cls);
+  } else {
+    ExtendableBuiltin.__proto__ = cls;
+  }
+  return ExtendableBuiltin;
+}
+var ExtendableError = function (_extendableBuiltin2) {
+  _inherits(ExtendableError, _extendableBuiltin2);
+  function ExtendableError() {
+    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    _classCallCheck(this, ExtendableError);
+    var _this = _possibleConstructorReturn(this, (ExtendableError.__proto__ || Object.getPrototypeOf(ExtendableError)).call(this, message));
+    Object.defineProperty(_this, 'message', {
+      configurable: true,
+      enumerable: false,
+      value: message,
+      writable: true
+    });
+    Object.defineProperty(_this, 'name', {
+      configurable: true,
+      enumerable: false,
+      value: _this.constructor.name,
+      writable: true
+    });
+    if (Error.hasOwnProperty('captureStackTrace')) {
+      Error.captureStackTrace(_this, _this.constructor);
+      return _possibleConstructorReturn(_this);
+    }
+    Object.defineProperty(_this, 'stack', {
+      configurable: true,
+      enumerable: false,
+      value: new Error(message).stack,
+      writable: true
+    });
+    return _this;
+  }
+  return ExtendableError;
+}(_extendableBuiltin(Error));
+exports.default = ExtendableError;
+module.exports = exports['default'];
+});
+unwrapExports(lib);
+
+var SubmissionError_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _es6Error2 = _interopRequireDefault(lib);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var SubmissionError = function (_ExtendableError) {
+  _inherits(SubmissionError, _ExtendableError);
+  function SubmissionError(errors) {
+    _classCallCheck(this, SubmissionError);
+    var _this = _possibleConstructorReturn(this, (SubmissionError.__proto__ || Object.getPrototypeOf(SubmissionError)).call(this, 'Submit Validation Failed'));
+    _this.errors = errors;
+    return _this;
+  }
+  return SubmissionError;
+}(_es6Error2.default);
+exports.default = SubmissionError;
+});
+unwrapExports(SubmissionError_1);
+
+var handleSubmit_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var _react2 = _interopRequireDefault(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _createFieldProps3 = _interopRequireDefault(createFieldProps_1);
-var _onChangeValue2 = _interopRequireDefault(onChangeValue_1);
-var _plain2 = _interopRequireDefault(plain);
+var _isPromise2 = _interopRequireDefault(isPromise_1);
+var _SubmissionError2 = _interopRequireDefault(SubmissionError_1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var propsToNotUpdateFor = ['_reduxForm'];
-var isObject = function isObject(entity) {
-  return entity && (typeof entity === 'undefined' ? 'undefined' : _typeof(entity)) === 'object';
-};
-var isFunction = function isFunction(entity) {
-  return entity && typeof entity === 'function';
-};
-var eventPreventDefault = function eventPreventDefault(event) {
-  if (isObject(event) && isFunction(event.preventDefault)) {
-    event.preventDefault();
-  }
-};
-var eventDataTransferGetData = function eventDataTransferGetData(event, key) {
-  if (isObject(event) && isObject(event.dataTransfer) && isFunction(event.dataTransfer.getData)) {
-    return event.dataTransfer.getData(key);
-  }
-};
-var eventDataTransferSetData = function eventDataTransferSetData(event, key, value) {
-  if (isObject(event) && isObject(event.dataTransfer) && isFunction(event.dataTransfer.setData)) {
-    event.dataTransfer.setData(key, value);
-  }
-};
-var createConnectedField = function createConnectedField(structure) {
-  var deepEqual = structure.deepEqual,
-      getIn = structure.getIn;
-  var getSyncError = function getSyncError(syncErrors, name) {
-    var error = _plain2.default.getIn(syncErrors, name);
-    return error && error._error ? error._error : error;
-  };
-  var getSyncWarning = function getSyncWarning(syncWarnings, name) {
-    var warning = getIn(syncWarnings, name);
-    return warning && warning._warning ? warning._warning : warning;
-  };
-  var ConnectedField = function (_Component) {
-    _inherits(ConnectedField, _Component);
-    function ConnectedField() {
-      var _ref;
-      var _temp, _this, _ret;
-      _classCallCheck(this, ConnectedField);
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ConnectedField.__proto__ || Object.getPrototypeOf(ConnectedField)).call.apply(_ref, [this].concat(args))), _this), _this.saveRef = function (ref) {
-        return _this.ref = ref;
-      }, _this.isPristine = function () {
-        return _this.props.pristine;
-      }, _this.getValue = function () {
-        return _this.props.value;
-      }, _this.handleChange = function (event) {
-        var _this$props = _this.props,
-            name = _this$props.name,
-            dispatch = _this$props.dispatch,
-            parse = _this$props.parse,
-            normalize = _this$props.normalize,
-            onChange = _this$props.onChange,
-            _reduxForm = _this$props._reduxForm,
-            previousValue = _this$props.value;
-        var newValue = (0, _onChangeValue2.default)(event, { name: name, parse: parse, normalize: normalize });
-        var defaultPrevented = false;
-        if (onChange) {
-          onChange(_extends({}, event, {
-            preventDefault: function preventDefault() {
-              defaultPrevented = true;
-              return eventPreventDefault(event);
-            }
-          }), newValue, previousValue);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var handleSubmit = function handleSubmit(submit, props, valid, asyncValidate, fields) {
+  var dispatch = props.dispatch,
+      onSubmitFail = props.onSubmitFail,
+      onSubmitSuccess = props.onSubmitSuccess,
+      startSubmit = props.startSubmit,
+      stopSubmit = props.stopSubmit,
+      setSubmitFailed = props.setSubmitFailed,
+      setSubmitSucceeded = props.setSubmitSucceeded,
+      syncErrors = props.syncErrors,
+      asyncErrors = props.asyncErrors,
+      touch = props.touch,
+      values = props.values,
+      persistentSubmitErrors = props.persistentSubmitErrors;
+  touch.apply(undefined, _toConsumableArray(fields));
+  if (valid || persistentSubmitErrors) {
+    var doSubmit = function doSubmit() {
+      var result = void 0;
+      try {
+        result = submit(values, dispatch, props);
+      } catch (submitError) {
+        var error = submitError instanceof _SubmissionError2.default ? submitError.errors : undefined;
+        stopSubmit(error);
+        setSubmitFailed.apply(undefined, _toConsumableArray(fields));
+        if (onSubmitFail) {
+          onSubmitFail(error, dispatch, submitError, props);
         }
-        if (!defaultPrevented) {
-          dispatch(_reduxForm.change(name, newValue));
-        }
-      }, _this.handleFocus = function (event) {
-        var _this$props2 = _this.props,
-            name = _this$props2.name,
-            dispatch = _this$props2.dispatch,
-            onFocus = _this$props2.onFocus,
-            _reduxForm = _this$props2._reduxForm;
-        var defaultPrevented = false;
-        if (onFocus) {
-          onFocus(_extends({}, event, {
-            preventDefault: function preventDefault() {
-              defaultPrevented = true;
-              return eventPreventDefault(event);
-            }
-          }));
-        }
-        if (!defaultPrevented) {
-          dispatch(_reduxForm.focus(name));
-        }
-      }, _this.handleBlur = function (event) {
-        var _this$props3 = _this.props,
-            name = _this$props3.name,
-            dispatch = _this$props3.dispatch,
-            parse = _this$props3.parse,
-            normalize = _this$props3.normalize,
-            onBlur = _this$props3.onBlur,
-            _reduxForm = _this$props3._reduxForm,
-            _value = _this$props3._value,
-            previousValue = _this$props3.value;
-        var newValue = (0, _onChangeValue2.default)(event, { name: name, parse: parse, normalize: normalize });
-        if (newValue === _value && _value !== undefined) {
-          newValue = previousValue;
-        }
-        var defaultPrevented = false;
-        if (onBlur) {
-          onBlur(_extends({}, event, {
-            preventDefault: function preventDefault() {
-              defaultPrevented = true;
-              return eventPreventDefault(event);
-            }
-          }), newValue, previousValue);
-        }
-        if (!defaultPrevented) {
-          dispatch(_reduxForm.blur(name, newValue));
-          if (_reduxForm.asyncValidate) {
-            _reduxForm.asyncValidate(name, newValue);
-          }
-        }
-      }, _this.handleDragStart = function (event) {
-        var _this$props4 = _this.props,
-            onDragStart = _this$props4.onDragStart,
-            value = _this$props4.value;
-        eventDataTransferSetData(event, eventConsts.dataKey, value == null ? '' : value);
-        if (onDragStart) {
-          onDragStart(event);
-        }
-      }, _this.handleDrop = function (event) {
-        var _this$props5 = _this.props,
-            name = _this$props5.name,
-            dispatch = _this$props5.dispatch,
-            onDrop = _this$props5.onDrop,
-            _reduxForm = _this$props5._reduxForm,
-            previousValue = _this$props5.value;
-        var newValue = eventDataTransferGetData(event, eventConsts.dataKey);
-        var defaultPrevented = false;
-        if (onDrop) {
-          onDrop(_extends({}, event, {
-            preventDefault: function preventDefault() {
-              defaultPrevented = true;
-              return eventPreventDefault(event);
-            }
-          }), newValue, previousValue);
-        }
-        if (!defaultPrevented) {
-          dispatch(_reduxForm.change(name, newValue));
-          eventPreventDefault(event);
-        }
-      }, _temp), _possibleConstructorReturn(_this, _ret);
-    }
-    _createClass(ConnectedField, [{
-      key: 'shouldComponentUpdate',
-      value: function shouldComponentUpdate(nextProps) {
-        var _this2 = this;
-        var nextPropsKeys = Object.keys(nextProps);
-        var thisPropsKeys = Object.keys(this.props);
-        return nextPropsKeys.length !== thisPropsKeys.length || nextPropsKeys.some(function (prop) {
-          return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this2.props[prop], nextProps[prop]);
-        });
-      }
-    }, {
-      key: 'getRenderedComponent',
-      value: function getRenderedComponent() {
-        return this.ref;
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        var _props = this.props,
-            component = _props.component,
-            withRef = _props.withRef,
-            name = _props.name,
-            _reduxForm = _props._reduxForm,
-            normalize = _props.normalize,
-            onBlur = _props.onBlur,
-            onChange = _props.onChange,
-            onFocus = _props.onFocus,
-            onDragStart = _props.onDragStart,
-            onDrop = _props.onDrop,
-            rest = _objectWithoutProperties(_props, ['component', 'withRef', 'name', '_reduxForm', 'normalize', 'onBlur', 'onChange', 'onFocus', 'onDragStart', 'onDrop']);
-        var _createFieldProps = (0, _createFieldProps3.default)(structure, name, _extends({}, rest, {
-          form: _reduxForm.form,
-          onBlur: this.handleBlur,
-          onChange: this.handleChange,
-          onDrop: this.handleDrop,
-          onDragStart: this.handleDragStart,
-          onFocus: this.handleFocus
-        })),
-            custom = _createFieldProps.custom,
-            props = _objectWithoutProperties(_createFieldProps, ['custom']);
-        if (withRef) {
-          custom.ref = this.saveRef;
-        }
-        if (typeof component === 'string') {
-          var input = props.input;
-          return (0, React.createElement)(component, _extends({}, input, custom));
+        if (error || onSubmitFail) {
+          return error;
         } else {
-          return (0, React.createElement)(component, _extends({}, props, custom));
+          throw submitError;
         }
       }
-    }]);
-    return ConnectedField;
-  }(React.Component);
-  ConnectedField.propTypes = {
-    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
-    props: _propTypes2.default.object
-  };
-  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
-    var name = ownProps.name,
-        _ownProps$_reduxForm = ownProps._reduxForm,
-        initialValues = _ownProps$_reduxForm.initialValues,
-        getFormState = _ownProps$_reduxForm.getFormState;
-    var formState = getFormState(state);
-    var initialState = getIn(formState, 'initial.' + name);
-    var initial = initialState !== undefined ? initialState : initialValues && getIn(initialValues, name);
-    var value = getIn(formState, 'values.' + name);
-    var submitting = getIn(formState, 'submitting');
-    var syncError = getSyncError(getIn(formState, 'syncErrors'), name);
-    var syncWarning = getSyncWarning(getIn(formState, 'syncWarnings'), name);
-    var pristine = deepEqual(value, initial);
-    return {
-      asyncError: getIn(formState, 'asyncErrors.' + name),
-      asyncValidating: getIn(formState, 'asyncValidating') === name,
-      dirty: !pristine,
-      pristine: pristine,
-      state: getIn(formState, 'fields.' + name),
-      submitError: getIn(formState, 'submitErrors.' + name),
-      submitFailed: getIn(formState, 'submitFailed'),
-      submitting: submitting,
-      syncError: syncError,
-      syncWarning: syncWarning,
-      initial: initial,
-      value: value,
-      _value: ownProps.value
+      if ((0, _isPromise2.default)(result)) {
+        startSubmit();
+        return result.then(function (submitResult) {
+          stopSubmit();
+          setSubmitSucceeded();
+          if (onSubmitSuccess) {
+            onSubmitSuccess(submitResult, dispatch, props);
+          }
+          return submitResult;
+        }, function (submitError) {
+          var error = submitError instanceof _SubmissionError2.default ? submitError.errors : undefined;
+          stopSubmit(error);
+          setSubmitFailed.apply(undefined, _toConsumableArray(fields));
+          if (onSubmitFail) {
+            onSubmitFail(error, dispatch, submitError, props);
+          }
+          if (error || onSubmitFail) {
+            return error;
+          } else {
+            throw submitError;
+          }
+        });
+      } else {
+        setSubmitSucceeded();
+        if (onSubmitSuccess) {
+          onSubmitSuccess(result, dispatch, props);
+        }
+      }
+      return result;
     };
-  }, undefined, undefined, { withRef: true });
-  return connector(ConnectedField);
-};
-exports.default = createConnectedField;
-});
-
-var shallowCompare_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isEqualWith3 = _interopRequireDefault(isEqualWith_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var customizer = function customizer(objectValue, otherValue, indexOrkey, object, other, stack) {
-  if (stack) {
-    return objectValue === otherValue;
+    var asyncValidateResult = asyncValidate && asyncValidate();
+    if (asyncValidateResult) {
+      return asyncValidateResult.then(function (asyncErrors) {
+        if (asyncErrors) {
+          throw asyncErrors;
+        }
+        return doSubmit();
+      }).catch(function (asyncErrors) {
+        setSubmitFailed.apply(undefined, _toConsumableArray(fields));
+        if (onSubmitFail) {
+          onSubmitFail(asyncErrors, dispatch, null, props);
+        }
+        return Promise.reject(asyncErrors);
+      });
+    } else {
+      return doSubmit();
+    }
+  } else {
+    setSubmitFailed.apply(undefined, _toConsumableArray(fields));
+    var errors = _extends({}, asyncErrors, syncErrors);
+    if (onSubmitFail) {
+      onSubmitFail(errors, dispatch, null, props);
+    }
+    return errors;
   }
 };
-var shallowCompare = function shallowCompare(instance, nextProps, nextState) {
-  return !(0, _isEqualWith3.default)(instance.props, nextProps, customizer) || !(0, _isEqualWith3.default)(instance.state, nextState, customizer);
-};
-exports.default = shallowCompare;
+exports.default = handleSubmit;
 });
+unwrapExports(handleSubmit_1);
 
-var createField_1 = createCommonjsModule(function (module, exports) {
+var hasError = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _invariant2 = _interopRequireDefault(invariant_1);
-var _ConnectedField2 = _interopRequireDefault(ConnectedField);
-var _shallowCompare2 = _interopRequireDefault(shallowCompare_1);
-var _prefixName2 = _interopRequireDefault(prefixName);
-var _plain2 = _interopRequireDefault(plain);
+var getErrorKeys = function getErrorKeys(name, type) {
+  switch (type) {
+    case 'Field':
+      return [name, name + '._error'];
+    case 'FieldArray':
+      return [name + '._error'];
+    default:
+      throw new Error('Unknown field type');
+  }
+};
+var createHasError = function createHasError(_ref) {
+  var getIn = _ref.getIn;
+  var hasError = function hasError(field, syncErrors, asyncErrors, submitErrors) {
+    if (!syncErrors && !asyncErrors && !submitErrors) {
+      return false;
+    }
+    var name = getIn(field, 'name');
+    var type = getIn(field, 'type');
+    return getErrorKeys(name, type).some(function (key) {
+      return getIn(syncErrors, key) || getIn(asyncErrors, key) || getIn(submitErrors, key);
+    });
+  };
+  return hasError;
+};
+exports.default = createHasError;
+});
+unwrapExports(hasError);
+
+var isValid = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _hasError2 = _interopRequireDefault(hasError);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var createIsValid = function createIsValid(structure) {
+  var getIn = structure.getIn,
+      keys = structure.keys;
+  var hasError$$1 = (0, _hasError2.default)(structure);
+  return function (form, getFormState) {
+    var ignoreSubmitErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
+      var formState = nonNullGetFormState(state);
+      var syncError = getIn(formState, form + '.syncError');
+      if (syncError) {
+        return false;
+      }
+      if (!ignoreSubmitErrors) {
+        var error = getIn(formState, form + '.error');
+        if (error) {
+          return false;
+        }
+      }
+      var syncErrors = getIn(formState, form + '.syncErrors');
+      var asyncErrors = getIn(formState, form + '.asyncErrors');
+      var submitErrors = ignoreSubmitErrors ? undefined : getIn(formState, form + '.submitErrors');
+      if (!syncErrors && !asyncErrors && !submitErrors) {
+        return true;
+      }
+      var registeredFields = getIn(formState, form + '.registeredFields');
+      if (!registeredFields) {
+        return true;
+      }
+      return !keys(registeredFields).filter(function (name) {
+        return getIn(registeredFields, '[\'' + name + '\'].count') > 0;
+      }).some(function (name) {
+        return hasError$$1(getIn(registeredFields, '[\'' + name + '\']'), syncErrors, asyncErrors, submitErrors);
+      });
+    };
+  };
+};
+exports.default = createIsValid;
+});
+unwrapExports(isValid);
+
+var getDisplayName_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var React$$1 = _interopRequireWildcard(React);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var getDisplayName = function getDisplayName(Comp) {
+  return Comp.displayName || Comp.name || 'Component';
+};
+exports.default = getDisplayName;
+});
+unwrapExports(getDisplayName_1);
+
+var createReduxForm_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _merge5 = _interopRequireDefault(merge_1);
+var _mapValues3 = _interopRequireDefault(mapValues_1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var React$$1 = _interopRequireWildcard(React);
+var _hoistNonReactStatics2 = _interopRequireDefault(hoistNonReactStatics);
+var _isPromise2 = _interopRequireDefault(isPromise_1);
+var _propTypes2 = _interopRequireDefault(PropTypes);
+var _actions2 = _interopRequireDefault(actions_1);
+var _asyncValidation2 = _interopRequireDefault(asyncValidation_1);
+var _defaultShouldAsyncValidate2 = _interopRequireDefault(defaultShouldAsyncValidate_1);
+var _defaultShouldValidate2 = _interopRequireDefault(defaultShouldValidate_1);
+var _silenceEvent2 = _interopRequireDefault(silenceEvent_1);
+var _silenceEvents2 = _interopRequireDefault(silenceEvents_1);
+var _generateValidator2 = _interopRequireDefault(generateValidator_1);
+var _handleSubmit2 = _interopRequireDefault(handleSubmit_1);
+var _isValid2 = _interopRequireDefault(isValid);
+var _plain2 = _interopRequireDefault(plain);
+var _getDisplayName2 = _interopRequireDefault(getDisplayName_1);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var createField = function createField(structure) {
-  var ConnectedField$$1 = (0, _ConnectedField2.default)(structure);
-  var setIn = structure.setIn;
-  var Field = function (_Component) {
-    _inherits(Field, _Component);
-    function Field(props, context) {
-      _classCallCheck(this, Field);
-      var _this = _possibleConstructorReturn(this, (Field.__proto__ || Object.getPrototypeOf(Field)).call(this, props, context));
-      _this.saveRef = function (ref) {
-        return _this.ref = ref;
-      };
-      _this.normalize = function (name, value) {
-        var normalize = _this.props.normalize;
-        if (!normalize) {
-          return value;
-        }
-        var previousValues = _this.context._reduxForm.getValues();
-        var previousValue = _this.value;
-        var nextValues = setIn(previousValues, name, value);
-        return normalize(value, previousValue, nextValues, previousValues);
-      };
-      if (!context._reduxForm) {
-        throw new Error('Field must be inside a component decorated with reduxForm()');
-      }
-      return _this;
-    }
-    _createClass(Field, [{
-      key: 'shouldComponentUpdate',
-      value: function shouldComponentUpdate(nextProps) {
-        return (0, _shallowCompare2.default)(this, nextProps);
-      }
-    }, {
-      key: 'componentWillMount',
-      value: function componentWillMount() {
-        var _this2 = this;
-        this.context._reduxForm.register(this.name, 'Field', function () {
-          return _this2.props.validate;
-        }, function () {
-          return _this2.props.warn;
-        });
-      }
-    }, {
-      key: 'componentWillReceiveProps',
-      value: function componentWillReceiveProps(nextProps) {
-        if (this.props.name !== nextProps.name ||
-        !_plain2.default.deepEqual(this.props.validate, nextProps.validate) || !_plain2.default.deepEqual(this.props.warn, nextProps.warn)) {
-          this.context._reduxForm.unregister(this.name);
-          this.context._reduxForm.register((0, _prefixName2.default)(this.context, nextProps.name), 'Field', function () {
-            return nextProps.validate;
-          }, function () {
-            return nextProps.warn;
-          });
-        }
-      }
-    }, {
-      key: 'componentWillUnmount',
-      value: function componentWillUnmount() {
-        this.context._reduxForm.unregister(this.name);
-      }
-    }, {
-      key: 'getRenderedComponent',
-      value: function getRenderedComponent() {
-        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to Field');
-        return this.ref ? this.ref.getWrappedInstance().getRenderedComponent() : undefined;
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        return (0, React.createElement)(ConnectedField$$1, _extends({}, this.props, {
-          name: this.name,
-          normalize: this.normalize,
-          _reduxForm: this.context._reduxForm,
-          ref: this.saveRef
-        }));
-      }
-    }, {
-      key: 'name',
-      get: function get() {
-        return (0, _prefixName2.default)(this.context, this.props.name);
-      }
-    }, {
-      key: 'dirty',
-      get: function get() {
-        return !this.pristine;
-      }
-    }, {
-      key: 'pristine',
-      get: function get() {
-        return !!(this.ref && this.ref.getWrappedInstance().isPristine());
-      }
-    }, {
-      key: 'value',
-      get: function get() {
-        return this.ref && this.ref.getWrappedInstance().getValue();
-      }
-    }]);
-    return Field;
-  }(React.Component);
-  Field.propTypes = {
-    name: _propTypes2.default.string.isRequired,
-    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
-    format: _propTypes2.default.func,
-    normalize: _propTypes2.default.func,
-    onBlur: _propTypes2.default.func,
-    onChange: _propTypes2.default.func,
-    onFocus: _propTypes2.default.func,
-    onDragStart: _propTypes2.default.func,
-    onDrop: _propTypes2.default.func,
-    parse: _propTypes2.default.func,
-    props: _propTypes2.default.object,
-    validate: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
-    warn: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
-    withRef: _propTypes2.default.bool
-  };
-  Field.contextTypes = {
-    _reduxForm: _propTypes2.default.object
-  };
-  return Field;
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+var isClassComponent = function isClassComponent(Component) {
+  return Boolean(Component && Component.prototype && _typeof(Component.prototype.isReactComponent) === 'object');
 };
-exports.default = createField;
+var arrayInsert = _actions2.default.arrayInsert,
+    arrayMove = _actions2.default.arrayMove,
+    arrayPop = _actions2.default.arrayPop,
+    arrayPush = _actions2.default.arrayPush,
+    arrayRemove = _actions2.default.arrayRemove,
+    arrayRemoveAll = _actions2.default.arrayRemoveAll,
+    arrayShift = _actions2.default.arrayShift,
+    arraySplice = _actions2.default.arraySplice,
+    arraySwap = _actions2.default.arraySwap,
+    arrayUnshift = _actions2.default.arrayUnshift,
+    blur = _actions2.default.blur,
+    change = _actions2.default.change,
+    focus = _actions2.default.focus,
+    formActions = _objectWithoutProperties(_actions2.default, ['arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'blur', 'change', 'focus']);
+var arrayActions = {
+  arrayInsert: arrayInsert,
+  arrayMove: arrayMove,
+  arrayPop: arrayPop,
+  arrayPush: arrayPush,
+  arrayRemove: arrayRemove,
+  arrayRemoveAll: arrayRemoveAll,
+  arrayShift: arrayShift,
+  arraySplice: arraySplice,
+  arraySwap: arraySwap,
+  arrayUnshift: arrayUnshift
+};
+var propsToNotUpdateFor = [].concat(_toConsumableArray(Object.keys(_actions2.default)), ['array', 'asyncErrors', 'initialValues', 'syncErrors', 'syncWarnings', 'values', 'registeredFields']);
+var checkSubmit = function checkSubmit(submit) {
+  if (!submit || typeof submit !== 'function') {
+    throw new Error('You must either pass handleSubmit() an onSubmit function or pass onSubmit as a prop');
+  }
+  return submit;
+};
+var createReduxForm = function createReduxForm(structure) {
+  var deepEqual = structure.deepEqual,
+      empty = structure.empty,
+      getIn = structure.getIn,
+      setIn = structure.setIn,
+      keys = structure.keys,
+      fromJS = structure.fromJS;
+  var isValid$$1 = (0, _isValid2.default)(structure);
+  return function (initialConfig) {
+    var config = _extends({
+      touchOnBlur: true,
+      touchOnChange: false,
+      persistentSubmitErrors: false,
+      destroyOnUnmount: true,
+      shouldAsyncValidate: _defaultShouldAsyncValidate2.default,
+      shouldValidate: _defaultShouldValidate2.default,
+      enableReinitialize: false,
+      keepDirtyOnReinitialize: false,
+      getFormState: function getFormState(state) {
+        return getIn(state, 'form');
+      },
+      pure: true,
+      forceUnregisterOnUnmount: false
+    }, initialConfig);
+    return function (WrappedComponent) {
+      var Form$$1 = function (_Component) {
+        _inherits(Form$$1, _Component);
+        function Form$$1() {
+          var _ref;
+          var _temp, _this, _ret;
+          _classCallCheck(this, Form$$1);
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+          return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Form$$1.__proto__ || Object.getPrototypeOf(Form$$1)).call.apply(_ref, [this].concat(args))), _this), _this.destroyed = false, _this.fieldValidators = {}, _this.lastFieldValidatorKeys = [], _this.fieldWarners = {}, _this.lastFieldWarnerKeys = [], _this.innerOnSubmit = undefined, _this.submitPromise = undefined, _this.getValues = function () {
+            return _this.props.values;
+          }, _this.isValid = function () {
+            return _this.props.valid;
+          }, _this.isPristine = function () {
+            return _this.props.pristine;
+          }, _this.register = function (name, type, getValidator, getWarner) {
+            _this.props.registerField(name, type);
+            if (getValidator) {
+              _this.fieldValidators[name] = getValidator;
+            }
+            if (getWarner) {
+              _this.fieldWarners[name] = getWarner;
+            }
+          }, _this.unregister = function (name) {
+            if (!_this.destroyed) {
+              if (_this.props.destroyOnUnmount || _this.props.forceUnregisterOnUnmount) {
+                _this.props.unregisterField(name);
+                delete _this.fieldValidators[name];
+                delete _this.fieldWarners[name];
+              } else {
+                _this.props.unregisterField(name, false);
+              }
+            }
+          }, _this.getFieldList = function (options) {
+            var registeredFields = _this.props.registeredFields;
+            var list = [];
+            if (!registeredFields) {
+              return list;
+            }
+            var keySeq = keys(registeredFields);
+            if (options && options.excludeFieldArray) {
+              keySeq = keySeq.filter(function (name) {
+                return getIn(registeredFields, '[\'' + name + '\'].type') !== 'FieldArray';
+              });
+            }
+            return fromJS(keySeq.reduce(function (acc, key) {
+              acc.push(key);
+              return acc;
+            }, list));
+          }, _this.getValidators = function () {
+            var validators = {};
+            Object.keys(_this.fieldValidators).forEach(function (name) {
+              var validator = _this.fieldValidators[name]();
+              if (validator) {
+                validators[name] = validator;
+              }
+            });
+            return validators;
+          }, _this.generateValidator = function () {
+            var validators = _this.getValidators();
+            return Object.keys(validators).length ? (0, _generateValidator2.default)(validators, structure) : undefined;
+          }, _this.getWarners = function () {
+            var warners = {};
+            Object.keys(_this.fieldWarners).forEach(function (name) {
+              var warner = _this.fieldWarners[name]();
+              if (warner) {
+                warners[name] = warner;
+              }
+            });
+            return warners;
+          }, _this.generateWarner = function () {
+            var warners = _this.getWarners();
+            return Object.keys(warners).length ? (0, _generateValidator2.default)(warners, structure) : undefined;
+          }, _this.asyncValidate = function (name, value) {
+            var _this$props = _this.props,
+                asyncBlurFields = _this$props.asyncBlurFields,
+                asyncErrors = _this$props.asyncErrors,
+                asyncValidate = _this$props.asyncValidate,
+                dispatch = _this$props.dispatch,
+                initialized = _this$props.initialized,
+                pristine = _this$props.pristine,
+                shouldAsyncValidate = _this$props.shouldAsyncValidate,
+                startAsyncValidation = _this$props.startAsyncValidation,
+                stopAsyncValidation = _this$props.stopAsyncValidation,
+                syncErrors = _this$props.syncErrors,
+                values = _this$props.values;
+            var submitting = !name;
+            if (asyncValidate) {
+              var valuesToValidate = submitting ? values : setIn(values, name, value);
+              var syncValidationPasses = submitting || !getIn(syncErrors, name);
+              var isBlurredField = !submitting && (!asyncBlurFields || ~asyncBlurFields.indexOf(name.replace(/\[[0-9]+\]/g, '[]')));
+              if ((isBlurredField || submitting) && shouldAsyncValidate({
+                asyncErrors: asyncErrors,
+                initialized: initialized,
+                trigger: submitting ? 'submit' : 'blur',
+                blurredField: name,
+                pristine: pristine,
+                syncValidationPasses: syncValidationPasses
+              })) {
+                return (0, _asyncValidation2.default)(function () {
+                  return asyncValidate(valuesToValidate, dispatch, _this.props, name);
+                }, startAsyncValidation, stopAsyncValidation, name);
+              }
+            }
+          }, _this.submitCompleted = function (result) {
+            delete _this.submitPromise;
+            return result;
+          }, _this.submitFailed = function (error) {
+            delete _this.submitPromise;
+            return error;
+          }, _this.listenToSubmit = function (promise) {
+            if (!(0, _isPromise2.default)(promise)) {
+              return promise;
+            }
+            _this.submitPromise = promise;
+            return promise.then(_this.submitCompleted, _this.submitFailed);
+          }, _this.submit = function (submitOrEvent) {
+            var _this$props2 = _this.props,
+                onSubmit = _this$props2.onSubmit,
+                blur = _this$props2.blur,
+                change = _this$props2.change,
+                dispatch = _this$props2.dispatch;
+            if (!submitOrEvent || (0, _silenceEvent2.default)(submitOrEvent)) {
+              if (!_this.submitPromise) {
+                if (_this.innerOnSubmit && _this.innerOnSubmit !== _this.submit) {
+                  return _this.innerOnSubmit();
+                } else {
+                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+                }
+              }
+            } else {
+              return (0, _silenceEvents2.default)(function () {
+                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
+              });
+            }
+          }, _this.reset = function () {
+            return _this.props.reset();
+          }, _temp), _possibleConstructorReturn(_this, _ret);
+        }
+        _createClass(Form$$1, [{
+          key: 'getChildContext',
+          value: function getChildContext() {
+            var _this2 = this;
+            return {
+              _reduxForm: _extends({}, this.props, {
+                getFormState: function getFormState(state) {
+                  return getIn(_this2.props.getFormState(state), _this2.props.form);
+                },
+                asyncValidate: this.asyncValidate,
+                getValues: this.getValues,
+                sectionPrefix: undefined,
+                register: this.register,
+                unregister: this.unregister,
+                registerInnerOnSubmit: function registerInnerOnSubmit(innerOnSubmit) {
+                  return _this2.innerOnSubmit = innerOnSubmit;
+                }
+              })
+            };
+          }
+        }, {
+          key: 'initIfNeeded',
+          value: function initIfNeeded(nextProps) {
+            var enableReinitialize = this.props.enableReinitialize;
+            if (nextProps) {
+              if ((enableReinitialize || !nextProps.initialized) && !deepEqual(this.props.initialValues, nextProps.initialValues)) {
+                var _keepDirty = nextProps.initialized && this.props.keepDirtyOnReinitialize;
+                this.props.initialize(nextProps.initialValues, _keepDirty, {
+                  lastInitialValues: this.props.initialValues
+                });
+              }
+            } else if (this.props.initialValues && (!this.props.initialized || enableReinitialize)) {
+              this.props.initialize(this.props.initialValues, this.props.keepDirtyOnReinitialize);
+            }
+          }
+        }, {
+          key: 'updateSyncErrorsIfNeeded',
+          value: function updateSyncErrorsIfNeeded(nextSyncErrors, nextError, lastSyncErrors) {
+            var _props = this.props,
+                error = _props.error,
+                updateSyncErrors = _props.updateSyncErrors;
+            var noErrors = (!lastSyncErrors || !Object.keys(lastSyncErrors).length) && !error;
+            var nextNoErrors = (!nextSyncErrors || !Object.keys(nextSyncErrors).length) && !nextError;
+            if (!(noErrors && nextNoErrors) && (!_plain2.default.deepEqual(lastSyncErrors, nextSyncErrors) || !_plain2.default.deepEqual(error, nextError))) {
+              updateSyncErrors(nextSyncErrors, nextError);
+            }
+          }
+        }, {
+          key: 'clearSubmitPromiseIfNeeded',
+          value: function clearSubmitPromiseIfNeeded(nextProps) {
+            var submitting = this.props.submitting;
+            if (this.submitPromise && submitting && !nextProps.submitting) {
+              delete this.submitPromise;
+            }
+          }
+        }, {
+          key: 'submitIfNeeded',
+          value: function submitIfNeeded(nextProps) {
+            var _props2 = this.props,
+                clearSubmit = _props2.clearSubmit,
+                triggerSubmit = _props2.triggerSubmit;
+            if (!triggerSubmit && nextProps.triggerSubmit) {
+              clearSubmit();
+              this.submit();
+            }
+          }
+        }, {
+          key: 'validateIfNeeded',
+          value: function validateIfNeeded(nextProps) {
+            var _props3 = this.props,
+                shouldValidate = _props3.shouldValidate,
+                validate = _props3.validate,
+                values = _props3.values;
+            var fieldLevelValidate = this.generateValidator();
+            if (validate || fieldLevelValidate) {
+              var initialRender = nextProps === undefined;
+              var fieldValidatorKeys = Object.keys(this.getValidators());
+              var shouldValidateResult = shouldValidate({
+                values: values,
+                nextProps: nextProps,
+                props: this.props,
+                initialRender: initialRender,
+                lastFieldValidatorKeys: this.lastFieldValidatorKeys,
+                fieldValidatorKeys: fieldValidatorKeys,
+                structure: structure
+              });
+              if (shouldValidateResult) {
+                var propsToValidate = initialRender || !nextProps ? this.props : nextProps;
+                var _merge2 = (0, _merge5.default)(validate ? validate(propsToValidate.values, propsToValidate) || {} : {}, fieldLevelValidate ? fieldLevelValidate(propsToValidate.values, propsToValidate) || {} : {}),
+                    _error = _merge2._error,
+                    nextSyncErrors = _objectWithoutProperties(_merge2, ['_error']);
+                this.lastFieldValidatorKeys = fieldValidatorKeys;
+                this.updateSyncErrorsIfNeeded(nextSyncErrors, _error, propsToValidate.syncErrors);
+              }
+            }
+          }
+        }, {
+          key: 'updateSyncWarningsIfNeeded',
+          value: function updateSyncWarningsIfNeeded(nextSyncWarnings, nextWarning, lastSyncWarnings) {
+            var _props4 = this.props,
+                warning = _props4.warning,
+                syncWarnings = _props4.syncWarnings,
+                updateSyncWarnings = _props4.updateSyncWarnings;
+            var noWarnings = (!syncWarnings || !Object.keys(syncWarnings).length) && !warning;
+            var nextNoWarnings = (!nextSyncWarnings || !Object.keys(nextSyncWarnings).length) && !nextWarning;
+            if (!(noWarnings && nextNoWarnings) && (!_plain2.default.deepEqual(lastSyncWarnings, nextSyncWarnings) || !_plain2.default.deepEqual(warning, nextWarning))) {
+              updateSyncWarnings(nextSyncWarnings, nextWarning);
+            }
+          }
+        }, {
+          key: 'warnIfNeeded',
+          value: function warnIfNeeded(nextProps) {
+            var _props5 = this.props,
+                shouldValidate = _props5.shouldValidate,
+                warn = _props5.warn,
+                values = _props5.values;
+            var fieldLevelWarn = this.generateWarner();
+            if (warn || fieldLevelWarn) {
+              var initialRender = nextProps === undefined;
+              var fieldWarnerKeys = Object.keys(this.getWarners());
+              var shouldWarnResult = shouldValidate({
+                values: values,
+                nextProps: nextProps,
+                props: this.props,
+                initialRender: initialRender,
+                lastFieldValidatorKeys: this.lastFieldWarnerKeys,
+                fieldValidatorKeys: fieldWarnerKeys,
+                structure: structure
+              });
+              if (shouldWarnResult) {
+                var propsToWarn = initialRender || !nextProps ? this.props : nextProps;
+                var _merge3 = (0, _merge5.default)(warn ? warn(propsToWarn.values, propsToWarn) : {}, fieldLevelWarn ? fieldLevelWarn(propsToWarn.values, propsToWarn) : {}),
+                    _warning = _merge3._warning,
+                    nextSyncWarnings = _objectWithoutProperties(_merge3, ['_warning']);
+                this.lastFieldWarnerKeys = fieldWarnerKeys;
+                this.updateSyncWarningsIfNeeded(nextSyncWarnings, _warning, propsToWarn.syncWarnings);
+              }
+            }
+          }
+        }, {
+          key: 'componentWillMount',
+          value: function componentWillMount() {
+            this.initIfNeeded();
+            this.validateIfNeeded();
+            this.warnIfNeeded();
+          }
+        }, {
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(nextProps) {
+            this.initIfNeeded(nextProps);
+            this.validateIfNeeded(nextProps);
+            this.warnIfNeeded(nextProps);
+            this.clearSubmitPromiseIfNeeded(nextProps);
+            this.submitIfNeeded(nextProps);
+            var onChange = nextProps.onChange,
+                values = nextProps.values,
+                dispatch = nextProps.dispatch;
+            if (onChange && !deepEqual(values, this.props.values)) {
+              onChange(values, dispatch, nextProps);
+            }
+          }
+        }, {
+          key: 'shouldComponentUpdate',
+          value: function shouldComponentUpdate(nextProps) {
+            var _this3 = this;
+            if (!this.props.pure) return true;
+            var _config$immutableProp = config.immutableProps,
+                immutableProps = _config$immutableProp === undefined ? [] : _config$immutableProp;
+            return Object.keys(nextProps).some(function (prop) {
+              if (~immutableProps.indexOf(prop)) {
+                return _this3.props[prop] !== nextProps[prop];
+              }
+              return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this3.props[prop], nextProps[prop]);
+            });
+          }
+        }, {
+          key: 'componentWillUnmount',
+          value: function componentWillUnmount() {
+            var _props6 = this.props,
+                destroyOnUnmount = _props6.destroyOnUnmount,
+                destroy = _props6.destroy;
+            if (destroyOnUnmount) {
+              this.destroyed = true;
+              destroy();
+            }
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var _props7 = this.props,
+                anyTouched = _props7.anyTouched,
+                arrayInsert = _props7.arrayInsert,
+                arrayMove = _props7.arrayMove,
+                arrayPop = _props7.arrayPop,
+                arrayPush = _props7.arrayPush,
+                arrayRemove = _props7.arrayRemove,
+                arrayRemoveAll = _props7.arrayRemoveAll,
+                arrayShift = _props7.arrayShift,
+                arraySplice = _props7.arraySplice,
+                arraySwap = _props7.arraySwap,
+                arrayUnshift = _props7.arrayUnshift,
+                asyncErrors = _props7.asyncErrors,
+                asyncValidate = _props7.asyncValidate,
+                asyncValidating = _props7.asyncValidating,
+                blur = _props7.blur,
+                change = _props7.change,
+                clearSubmit = _props7.clearSubmit,
+                destroy = _props7.destroy,
+                destroyOnUnmount = _props7.destroyOnUnmount,
+                forceUnregisterOnUnmount = _props7.forceUnregisterOnUnmount,
+                dirty = _props7.dirty,
+                dispatch = _props7.dispatch,
+                enableReinitialize = _props7.enableReinitialize,
+                error = _props7.error,
+                focus = _props7.focus,
+                form = _props7.form,
+                getFormState = _props7.getFormState,
+                initialize = _props7.initialize,
+                initialized = _props7.initialized,
+                initialValues = _props7.initialValues,
+                invalid = _props7.invalid,
+                keepDirtyOnReinitialize = _props7.keepDirtyOnReinitialize,
+                pristine = _props7.pristine,
+                propNamespace = _props7.propNamespace,
+                registeredFields = _props7.registeredFields,
+                registerField = _props7.registerField,
+                reset = _props7.reset,
+                setSubmitFailed = _props7.setSubmitFailed,
+                setSubmitSucceeded = _props7.setSubmitSucceeded,
+                shouldAsyncValidate = _props7.shouldAsyncValidate,
+                shouldValidate = _props7.shouldValidate,
+                startAsyncValidation = _props7.startAsyncValidation,
+                startSubmit = _props7.startSubmit,
+                stopAsyncValidation = _props7.stopAsyncValidation,
+                stopSubmit = _props7.stopSubmit,
+                submitting = _props7.submitting,
+                submitFailed = _props7.submitFailed,
+                submitSucceeded = _props7.submitSucceeded,
+                touch = _props7.touch,
+                touchOnBlur = _props7.touchOnBlur,
+                touchOnChange = _props7.touchOnChange,
+                persistentSubmitErrors = _props7.persistentSubmitErrors,
+                syncErrors = _props7.syncErrors,
+                syncWarnings = _props7.syncWarnings,
+                unregisterField = _props7.unregisterField,
+                untouch = _props7.untouch,
+                updateSyncErrors = _props7.updateSyncErrors,
+                updateSyncWarnings = _props7.updateSyncWarnings,
+                valid = _props7.valid,
+                validExceptSubmit = _props7.validExceptSubmit,
+                values = _props7.values,
+                warning = _props7.warning,
+                rest = _objectWithoutProperties(_props7, ['anyTouched', 'arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'asyncErrors', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'destroyOnUnmount', 'forceUnregisterOnUnmount', 'dirty', 'dispatch', 'enableReinitialize', 'error', 'focus', 'form', 'getFormState', 'initialize', 'initialized', 'initialValues', 'invalid', 'keepDirtyOnReinitialize', 'pristine', 'propNamespace', 'registeredFields', 'registerField', 'reset', 'setSubmitFailed', 'setSubmitSucceeded', 'shouldAsyncValidate', 'shouldValidate', 'startAsyncValidation', 'startSubmit', 'stopAsyncValidation', 'stopSubmit', 'submitting', 'submitFailed', 'submitSucceeded', 'touch', 'touchOnBlur', 'touchOnChange', 'persistentSubmitErrors', 'syncErrors', 'syncWarnings', 'unregisterField', 'untouch', 'updateSyncErrors', 'updateSyncWarnings', 'valid', 'validExceptSubmit', 'values', 'warning']);
+            var reduxFormProps = _extends({
+              anyTouched: anyTouched,
+              asyncValidate: this.asyncValidate,
+              asyncValidating: asyncValidating
+            }, (0, redux.bindActionCreators)({ blur: blur, change: change }, dispatch), {
+              clearSubmit: clearSubmit,
+              destroy: destroy,
+              dirty: dirty,
+              dispatch: dispatch,
+              error: error,
+              form: form,
+              handleSubmit: this.submit,
+              initialize: initialize,
+              initialized: initialized,
+              initialValues: initialValues,
+              invalid: invalid,
+              pristine: pristine,
+              reset: reset,
+              submitting: submitting,
+              submitFailed: submitFailed,
+              submitSucceeded: submitSucceeded,
+              touch: touch,
+              untouch: untouch,
+              valid: valid,
+              warning: warning
+            });
+            var propsToPass = _extends({}, propNamespace ? _defineProperty({}, propNamespace, reduxFormProps) : reduxFormProps, rest);
+            if (isClassComponent(WrappedComponent)) {
+              propsToPass.ref = 'wrapped';
+            }
+            return (0, React.createElement)(WrappedComponent, propsToPass);
+          }
+        }]);
+        return Form$$1;
+      }(React.Component);
+      Form$$1.displayName = 'Form(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
+      Form$$1.WrappedComponent = WrappedComponent;
+      Form$$1.childContextTypes = {
+        _reduxForm: _propTypes2.default.object.isRequired
+      };
+      Form$$1.propTypes = {
+        destroyOnUnmount: _propTypes2.default.bool,
+        forceUnregisterOnUnmount: _propTypes2.default.bool,
+        form: _propTypes2.default.string.isRequired,
+        initialValues: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object]),
+        getFormState: _propTypes2.default.func,
+        onSubmitFail: _propTypes2.default.func,
+        onSubmitSuccess: _propTypes2.default.func,
+        propNamespace: _propTypes2.default.string,
+        validate: _propTypes2.default.func,
+        warn: _propTypes2.default.func,
+        touchOnBlur: _propTypes2.default.bool,
+        touchOnChange: _propTypes2.default.bool,
+        triggerSubmit: _propTypes2.default.bool,
+        persistentSubmitErrors: _propTypes2.default.bool,
+        registeredFields: _propTypes2.default.any
+      };
+      var connector = (0, reactRedux.connect)(function (state, props) {
+        var form = props.form,
+            getFormState = props.getFormState,
+            initialValues = props.initialValues,
+            enableReinitialize = props.enableReinitialize,
+            keepDirtyOnReinitialize = props.keepDirtyOnReinitialize;
+        var formState = getIn(getFormState(state) || empty, form) || empty;
+        var stateInitial = getIn(formState, 'initial');
+        var initialized = !!stateInitial;
+        var shouldUpdateInitialValues = enableReinitialize && initialized && !deepEqual(initialValues, stateInitial);
+        var shouldResetValues = shouldUpdateInitialValues && !keepDirtyOnReinitialize;
+        var initial = initialValues || stateInitial || empty;
+        if (shouldUpdateInitialValues) {
+          initial = stateInitial || empty;
+        }
+        var values = getIn(formState, 'values') || initial;
+        if (shouldResetValues) {
+          values = initial;
+        }
+        var pristine = shouldResetValues || deepEqual(initial, values);
+        var asyncErrors = getIn(formState, 'asyncErrors');
+        var syncErrors = getIn(formState, 'syncErrors') || {};
+        var syncWarnings = getIn(formState, 'syncWarnings') || {};
+        var registeredFields = getIn(formState, 'registeredFields');
+        var valid = isValid$$1(form, getFormState, false)(state);
+        var validExceptSubmit = isValid$$1(form, getFormState, true)(state);
+        var anyTouched = !!getIn(formState, 'anyTouched');
+        var submitting = !!getIn(formState, 'submitting');
+        var submitFailed = !!getIn(formState, 'submitFailed');
+        var submitSucceeded = !!getIn(formState, 'submitSucceeded');
+        var error = getIn(formState, 'error');
+        var warning = getIn(formState, 'warning');
+        var triggerSubmit = getIn(formState, 'triggerSubmit');
+        return {
+          anyTouched: anyTouched,
+          asyncErrors: asyncErrors,
+          asyncValidating: getIn(formState, 'asyncValidating') || false,
+          dirty: !pristine,
+          error: error,
+          initialized: initialized,
+          invalid: !valid,
+          pristine: pristine,
+          registeredFields: registeredFields,
+          submitting: submitting,
+          submitFailed: submitFailed,
+          submitSucceeded: submitSucceeded,
+          syncErrors: syncErrors,
+          syncWarnings: syncWarnings,
+          triggerSubmit: triggerSubmit,
+          values: values,
+          valid: valid,
+          validExceptSubmit: validExceptSubmit,
+          warning: warning
+        };
+      }, function (dispatch, initialProps) {
+        var bindForm = function bindForm(actionCreator) {
+          return actionCreator.bind(null, initialProps.form);
+        };
+        var boundFormACs = (0, _mapValues3.default)(formActions, bindForm);
+        var boundArrayACs = (0, _mapValues3.default)(arrayActions, bindForm);
+        var boundBlur = function boundBlur(field, value) {
+          return blur(initialProps.form, field, value, !!initialProps.touchOnBlur);
+        };
+        var boundChange = function boundChange(field, value) {
+          return change(initialProps.form, field, value, !!initialProps.touchOnChange, !!initialProps.persistentSubmitErrors);
+        };
+        var boundFocus = bindForm(focus);
+        var connectedFormACs = (0, redux.bindActionCreators)(boundFormACs, dispatch);
+        var connectedArrayACs = {
+          insert: (0, redux.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
+          move: (0, redux.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
+          pop: (0, redux.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
+          push: (0, redux.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
+          remove: (0, redux.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
+          removeAll: (0, redux.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
+          shift: (0, redux.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
+          splice: (0, redux.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
+          swap: (0, redux.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
+          unshift: (0, redux.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
+        };
+        var computedActions = _extends({}, connectedFormACs, boundArrayACs, {
+          blur: boundBlur,
+          change: boundChange,
+          array: connectedArrayACs,
+          focus: boundFocus,
+          dispatch: dispatch
+        });
+        return function () {
+          return computedActions;
+        };
+      }, undefined, { withRef: true });
+      var ConnectedForm = (0, _hoistNonReactStatics2.default)(connector(Form$$1), WrappedComponent);
+      ConnectedForm.defaultProps = config;
+      return function (_Component2) {
+        _inherits(ReduxForm, _Component2);
+        function ReduxForm() {
+          _classCallCheck(this, ReduxForm);
+          return _possibleConstructorReturn(this, (ReduxForm.__proto__ || Object.getPrototypeOf(ReduxForm)).apply(this, arguments));
+        }
+        _createClass(ReduxForm, [{
+          key: 'submit',
+          value: function submit() {
+            return this.ref && this.ref.getWrappedInstance().submit();
+          }
+        }, {
+          key: 'reset',
+          value: function reset() {
+            if (this.ref) {
+              this.ref.getWrappedInstance().reset();
+            }
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var _this5 = this;
+            var _props8 = this.props,
+                initialValues = _props8.initialValues,
+                rest = _objectWithoutProperties(_props8, ['initialValues']);
+            return (0, React.createElement)(ConnectedForm, _extends({}, rest, {
+              ref: function ref(_ref3) {
+                return _this5.ref = _ref3;
+              },
+              initialValues: fromJS(initialValues)
+            }));
+          }
+        }, {
+          key: 'valid',
+          get: function get() {
+            return !!(this.ref && this.ref.getWrappedInstance().isValid());
+          }
+        }, {
+          key: 'invalid',
+          get: function get() {
+            return !this.valid;
+          }
+        }, {
+          key: 'pristine',
+          get: function get() {
+            return !!(this.ref && this.ref.getWrappedInstance().isPristine());
+          }
+        }, {
+          key: 'dirty',
+          get: function get() {
+            return !this.pristine;
+          }
+        }, {
+          key: 'values',
+          get: function get() {
+            return this.ref ? this.ref.getWrappedInstance().getValues() : empty;
+          }
+        }, {
+          key: 'fieldList',
+          get: function get() {
+            return this.ref ? this.ref.getWrappedInstance().getFieldList() : [];
+          }
+        }, {
+          key: 'wrappedInstance',
+          get: function get() {
+            return this.ref && this.ref.getWrappedInstance().refs.wrapped;
+          }
+        }]);
+        return ReduxForm;
+      }(React.Component);
+    };
+  };
+};
+exports.default = createReduxForm;
 });
+unwrapExports(createReduxForm_1);
 
-var immutable$5 = createCommonjsModule(function (module, exports) {
+var immutable$1 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
   module.exports = factory();
 }(commonjsGlobal, function () { 'use strict';var SLICE$0 = Array.prototype.slice;
@@ -6468,7 +7672,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var customizer = function customizer(obj, other) {
   if (obj == other) return true;
   if ((obj == null || obj === '' || obj === false) && (other == null || other === '' || other === false)) return true;
-  if (immutable$5.Iterable.isIterable(obj) && immutable$5.Iterable.isIterable(other)) {
+  if (immutable$1.Iterable.isIterable(obj) && immutable$1.Iterable.isIterable(other)) {
     return obj.count() === other.count() && obj.every(function (value, key) {
       return other.has(key) && (0, _isEqualWith3.default)(value, other.get(key), customizer);
     });
@@ -6480,6 +7684,7 @@ var deepEqual = function deepEqual(a, b) {
 };
 exports.default = deepEqual;
 });
+unwrapExports(deepEqual_1$1);
 
 var keys_1$3 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6488,20 +7693,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _keys2 = _interopRequireDefault(keys_1$2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var empty = (0, immutable$5.List)();
+var empty = (0, immutable$1.List)();
 var keys = function keys(value) {
-  if (immutable$5.List.isList(value)) {
+  if (immutable$1.List.isList(value)) {
     return value.map(function (i) {
       return i.name;
     });
   }
-  if (immutable$5.Iterable.isIterable(value)) {
+  if (immutable$1.Iterable.isIterable(value)) {
     return value.keySeq();
   }
-  return value ? (0, immutable$5.List)((0, _keys2.default)(value)) : empty;
+  return value ? (0, immutable$1.List)((0, _keys2.default)(value)) : empty;
 };
 exports.default = keys;
 });
+unwrapExports(keys_1$3);
 
 var setIn_1$1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6516,7 +7722,7 @@ var undefinedArrayMerge = function undefinedArrayMerge(previous, next) {
   return next !== undefined ? next : previous;
 };
 var mergeLists = function mergeLists(original, value) {
-  return original && immutable$5.List.isList(original) ? original.mergeDeepWith(undefinedArrayMerge, value) : value;
+  return original && immutable$1.List.isList(original) ? original.mergeDeepWith(undefinedArrayMerge, value) : value;
 };
 function setIn(state, field, value) {
   var path = (0, _toPath3.default)(field);
@@ -6530,7 +7736,7 @@ function setIn(state, field, value) {
         return 'continue';
       }
       mutable = mutable.updateIn(path.slice(0, pathIndex + 1), function (value) {
-        return mergeLists(value, new immutable$5.List().set(parseInt(nextPart, 10), new immutable$5.Map()));
+        return mergeLists(value, new immutable$1.List().set(parseInt(nextPart, 10), new immutable$1.Map()));
       });
     };
     for (var pathIndex = 0; pathIndex < path.length - 1; ++pathIndex) {
@@ -6541,6 +7747,7 @@ function setIn(state, field, value) {
   });
 }
 });
+unwrapExports(setIn_1$1);
 
 var splice$2 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -6548,7 +7755,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = function (list, index, removeNum, value) {
-  list = immutable$5.List.isList(list) ? list : (0, immutable$5.List)();
+  list = immutable$1.List.isList(list) ? list : (0, immutable$1.List)();
   if (index < list.count()) {
     if (value === undefined && !removeNum) {
       return list.splice(index, 0, true)
@@ -6566,8 +7773,9 @@ exports.default = function (list, index, removeNum, value) {
   return list.set(index, value);
 };
 });
+unwrapExports(splice$2);
 
-var immutable$4 = createCommonjsModule(function (module, exports) {
+var immutable = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6579,13 +7787,13 @@ var _setIn2 = _interopRequireDefault(setIn_1$1);
 var _splice2 = _interopRequireDefault(splice$2);
 var _getIn2 = _interopRequireDefault(getIn_1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var emptyList = (0, immutable$5.List)();
+var emptyList = (0, immutable$1.List)();
 var structure = {
   allowsArrayErrors: false,
-  empty: (0, immutable$5.Map)(),
+  empty: (0, immutable$1.Map)(),
   emptyList: emptyList,
   getIn: function getIn(state, field) {
-    return immutable$5.Iterable.isIterable(state) ? state.getIn((0, _toPath3.default)(field)) : (0, _getIn2.default)(state, field);
+    return immutable$1.Iterable.isIterable(state) ? state.getIn((0, _toPath3.default)(field)) : (0, _getIn2.default)(state, field);
   },
   setIn: _setIn2.default,
   deepEqual: _deepEqual2.default,
@@ -6596,8 +7804,8 @@ var structure = {
     items.forEach(callback);
   },
   fromJS: function fromJS(jsValue) {
-    return (0, immutable$5.fromJS)(jsValue, function (key, value) {
-      return immutable$5.Iterable.isIndexed(value) ? value.toList() : value.toMap();
+    return (0, immutable$1.fromJS)(jsValue, function (key, value) {
+      return immutable$1.Iterable.isIndexed(value) ? value.toList() : value.toMap();
     });
   },
   keys: _keys2.default,
@@ -6609,791 +7817,425 @@ var structure = {
   },
   splice: _splice2.default,
   toJS: function toJS(value) {
-    return immutable$5.Iterable.isIterable(value) ? value.toJS() : value;
+    return immutable$1.Iterable.isIterable(value) ? value.toJS() : value;
   }
 };
 exports.default = structure;
 });
+unwrapExports(immutable);
 
-var Field = createCommonjsModule(function (module, exports) {
+var reduxForm = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _createField2 = _interopRequireDefault(createField_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
+var _createReduxForm2 = _interopRequireDefault(createReduxForm_1);
+var _immutable2 = _interopRequireDefault(immutable);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createField2.default)(_immutable2.default);
+exports.default = (0, _createReduxForm2.default)(_immutable2.default);
 });
+var reduxForm$1 = unwrapExports(reduxForm);
 
-var ConnectedFields = createCommonjsModule(function (module, exports) {
+'use strict';
+var NODE_ENV = "development";
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (NODE_ENV !== 'production') {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+    error.framesToPop = 1;
+    throw error;
+  }
+};
+var invariant_1 = invariant;
+
+var createFieldProps_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+var processProps = function processProps(type, props, _value) {
+  var value = props.value;
+  if (type === 'checkbox') {
+    return _extends({}, props, {
+      checked: !!value
+    });
+  }
+  if (type === 'radio') {
+    return _extends({}, props, {
+      checked: value === _value,
+      value: _value
+    });
+  }
+  if (type === 'select-multiple') {
+    return _extends({}, props, {
+      value: value || []
+    });
+  }
+  if (type === 'file') {
+    return _extends({}, props, {
+      value: value || undefined
+    });
+  }
+  return props;
+};
+var createFieldProps = function createFieldProps(_ref2, name, _ref) {
+  var getIn = _ref2.getIn,
+      toJS = _ref2.toJS;
+  var asyncError = _ref.asyncError,
+      asyncValidating = _ref.asyncValidating,
+      onBlur = _ref.onBlur,
+      onChange = _ref.onChange,
+      onDrop = _ref.onDrop,
+      onDragStart = _ref.onDragStart,
+      dirty = _ref.dirty,
+      dispatch = _ref.dispatch,
+      onFocus = _ref.onFocus,
+      form = _ref.form,
+      format = _ref.format,
+      initial = _ref.initial,
+      parse = _ref.parse,
+      pristine = _ref.pristine,
+      props = _ref.props,
+      state = _ref.state,
+      submitError = _ref.submitError,
+      submitFailed = _ref.submitFailed,
+      submitting = _ref.submitting,
+      syncError = _ref.syncError,
+      syncWarning = _ref.syncWarning,
+      validate = _ref.validate,
+      value = _ref.value,
+      _value = _ref._value,
+      warn = _ref.warn,
+      custom = _objectWithoutProperties(_ref, ['asyncError', 'asyncValidating', 'onBlur', 'onChange', 'onDrop', 'onDragStart', 'dirty', 'dispatch', 'onFocus', 'form', 'format', 'initial', 'parse', 'pristine', 'props', 'state', 'submitError', 'submitFailed', 'submitting', 'syncError', 'syncWarning', 'validate', 'value', '_value', 'warn']);
+  var error = syncError || asyncError || submitError;
+  var warning = syncWarning;
+  var formatFieldValue = function formatFieldValue(value, format) {
+    if (format === null) {
+      return value;
+    }
+    var defaultFormattedValue = value == null ? '' : value;
+    return format ? format(value, name) : defaultFormattedValue;
+  };
+  var formattedFieldValue = formatFieldValue(value, format);
+  return {
+    input: processProps(custom.type, {
+      name: name,
+      onBlur: onBlur,
+      onChange: onChange,
+      onDragStart: onDragStart,
+      onDrop: onDrop,
+      onFocus: onFocus,
+      value: formattedFieldValue
+    }, _value),
+    meta: _extends({}, toJS(state), {
+      active: !!(state && getIn(state, 'active')),
+      asyncValidating: asyncValidating,
+      autofilled: !!(state && getIn(state, 'autofilled')),
+      dirty: dirty,
+      dispatch: dispatch,
+      error: error,
+      form: form,
+      initial: initial,
+      warning: warning,
+      invalid: !!error,
+      pristine: pristine,
+      submitting: !!submitting,
+      submitFailed: !!submitFailed,
+      touched: !!(state && getIn(state, 'touched')),
+      valid: !error,
+      visited: !!(state && getIn(state, 'visited'))
+    }),
+    custom: _extends({}, custom, props)
+  };
+};
+exports.default = createFieldProps;
+});
+unwrapExports(createFieldProps_1);
+
+var getValue_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isEvent2 = _interopRequireDefault(isEvent_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var getSelectedValues = function getSelectedValues(options) {
+  var result = [];
+  if (options) {
+    for (var index = 0; index < options.length; index++) {
+      var option = options[index];
+      if (option.selected) {
+        result.push(option.value);
+      }
+    }
+  }
+  return result;
+};
+var getValue = function getValue(event, isReactNative) {
+  if ((0, _isEvent2.default)(event)) {
+    if (!isReactNative && event.nativeEvent && event.nativeEvent.text !== undefined) {
+      return event.nativeEvent.text;
+    }
+    if (isReactNative && event.nativeEvent !== undefined) {
+      return event.nativeEvent.text;
+    }
+    var detypedEvent = event;
+    var _detypedEvent$target = detypedEvent.target,
+        type = _detypedEvent$target.type,
+        value = _detypedEvent$target.value,
+        checked = _detypedEvent$target.checked,
+        files = _detypedEvent$target.files,
+        dataTransfer = detypedEvent.dataTransfer;
+    if (type === 'checkbox') {
+      return checked || '';
+    }
+    if (type === 'file') {
+      return files || dataTransfer && dataTransfer.files;
+    }
+    if (type === 'select-multiple') {
+      return getSelectedValues(event.target.options);
+    }
+    return value;
+  }
+  return event;
+};
+exports.default = getValue;
+});
+unwrapExports(getValue_1);
+
+var isReactNative_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var isReactNative = typeof window !== 'undefined' && window.navigator && window.navigator.product && window.navigator.product === 'ReactNative';
+exports.default = isReactNative;
+});
+unwrapExports(isReactNative_1);
+
+var onChangeValue_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _getValue2 = _interopRequireDefault(getValue_1);
+var _isReactNative2 = _interopRequireDefault(isReactNative_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var onChangeValue = function onChangeValue(event, _ref) {
+  var name = _ref.name,
+      parse = _ref.parse,
+      normalize = _ref.normalize;
+  var value = (0, _getValue2.default)(event, _isReactNative2.default);
+  if (parse) {
+    value = parse(value, name);
+  }
+  if (normalize) {
+    value = normalize(name, value);
+  }
+  return value;
+};
+exports.default = onChangeValue;
+});
+unwrapExports(onChangeValue_1);
+
+var eventConsts = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var dataKey = exports.dataKey = 'text';
+});
+unwrapExports(eventConsts);
+
+var ConnectedField = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _react2 = _interopRequireDefault(React);
 var _propTypes2 = _interopRequireDefault(PropTypes);
 var _createFieldProps3 = _interopRequireDefault(createFieldProps_1);
-var _plain2 = _interopRequireDefault(plain);
 var _onChangeValue2 = _interopRequireDefault(onChangeValue_1);
+var _plain2 = _interopRequireDefault(plain);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 var propsToNotUpdateFor = ['_reduxForm'];
-var createConnectedFields = function createConnectedFields(structure) {
+var isObject = function isObject(entity) {
+  return entity && (typeof entity === 'undefined' ? 'undefined' : _typeof(entity)) === 'object';
+};
+var isFunction = function isFunction(entity) {
+  return entity && typeof entity === 'function';
+};
+var eventPreventDefault = function eventPreventDefault(event) {
+  if (isObject(event) && isFunction(event.preventDefault)) {
+    event.preventDefault();
+  }
+};
+var eventDataTransferGetData = function eventDataTransferGetData(event, key) {
+  if (isObject(event) && isObject(event.dataTransfer) && isFunction(event.dataTransfer.getData)) {
+    return event.dataTransfer.getData(key);
+  }
+};
+var eventDataTransferSetData = function eventDataTransferSetData(event, key, value) {
+  if (isObject(event) && isObject(event.dataTransfer) && isFunction(event.dataTransfer.setData)) {
+    event.dataTransfer.setData(key, value);
+  }
+};
+var createConnectedField = function createConnectedField(structure) {
   var deepEqual = structure.deepEqual,
-      getIn = structure.getIn,
-      size = structure.size;
+      getIn = structure.getIn;
   var getSyncError = function getSyncError(syncErrors, name) {
-    return _plain2.default.getIn(syncErrors, name + '._error') || _plain2.default.getIn(syncErrors, name);
+    var error = _plain2.default.getIn(syncErrors, name);
+    return error && error._error ? error._error : error;
   };
   var getSyncWarning = function getSyncWarning(syncWarnings, name) {
     var warning = getIn(syncWarnings, name);
     return warning && warning._warning ? warning._warning : warning;
   };
-  var ConnectedFields = function (_Component) {
-    _inherits(ConnectedFields, _Component);
-    function ConnectedFields(props) {
-      _classCallCheck(this, ConnectedFields);
-      var _this = _possibleConstructorReturn(this, (ConnectedFields.__proto__ || Object.getPrototypeOf(ConnectedFields)).call(this, props));
-      _this.onChangeFns = {};
-      _this.onFocusFns = {};
-      _this.onBlurFns = {};
-      _this.prepareEventHandlers = function (_ref) {
-        var names = _ref.names;
-        return names.forEach(function (name) {
-          _this.onChangeFns[name] = function (event) {
-            return _this.handleChange(name, event);
-          };
-          _this.onFocusFns[name] = function () {
-            return _this.handleFocus(name);
-          };
-          _this.onBlurFns[name] = function (event) {
-            return _this.handleBlur(name, event);
-          };
-        });
-      };
-      _this.handleChange = function (name, event) {
-        var _this$props = _this.props,
-            dispatch = _this$props.dispatch,
-            parse = _this$props.parse,
-            _reduxForm = _this$props._reduxForm;
-        var value = (0, _onChangeValue2.default)(event, { name: name, parse: parse });
-        dispatch(_reduxForm.change(name, value));
-      };
-      _this.handleFocus = function (name) {
-        var _this$props2 = _this.props,
-            dispatch = _this$props2.dispatch,
-            _reduxForm = _this$props2._reduxForm;
-        dispatch(_reduxForm.focus(name));
-      };
-      _this.handleBlur = function (name, event) {
-        var _this$props3 = _this.props,
-            dispatch = _this$props3.dispatch,
-            parse = _this$props3.parse,
-            _reduxForm = _this$props3._reduxForm;
-        var value = (0, _onChangeValue2.default)(event, { name: name, parse: parse });
-        dispatch(_reduxForm.blur(name, value));
-        if (_reduxForm.asyncValidate) {
-          _reduxForm.asyncValidate(name, value);
-        }
-      };
-      _this.prepareEventHandlers(props);
-      return _this;
-    }
-    _createClass(ConnectedFields, [{
-      key: 'componentWillReceiveProps',
-      value: function componentWillReceiveProps(nextProps) {
-        var _this2 = this;
-        if (this.props.names !== nextProps.names && (size(this.props.names) !== size(nextProps.names) || nextProps.names.some(function (nextName) {
-          return !_this2.props._fields[nextName];
-        }))) {
-          this.prepareEventHandlers(nextProps);
-        }
-      }
-    }, {
-      key: 'shouldComponentUpdate',
-      value: function shouldComponentUpdate(nextProps) {
-        var _this3 = this;
-        var nextPropsKeys = Object.keys(nextProps);
-        var thisPropsKeys = Object.keys(this.props);
-        return nextPropsKeys.length !== thisPropsKeys.length || nextPropsKeys.some(function (prop) {
-          return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this3.props[prop], nextProps[prop]);
-        });
-      }
-    }, {
-      key: 'isDirty',
-      value: function isDirty() {
-        var _fields = this.props._fields;
-        return Object.keys(_fields).some(function (name) {
-          return _fields[name].dirty;
-        });
-      }
-    }, {
-      key: 'getValues',
-      value: function getValues() {
-        var _fields = this.props._fields;
-        return Object.keys(_fields).reduce(function (accumulator, name) {
-          return _plain2.default.setIn(accumulator, name, _fields[name].value);
-        }, {});
-      }
-    }, {
-      key: 'getRenderedComponent',
-      value: function getRenderedComponent() {
-        return this.refs.renderedComponent;
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        var _this4 = this;
-        var _props = this.props,
-            component = _props.component,
-            withRef = _props.withRef,
-            _fields = _props._fields,
-            _reduxForm = _props._reduxForm,
-            rest = _objectWithoutProperties(_props, ['component', 'withRef', '_fields', '_reduxForm']);
-        var sectionPrefix = _reduxForm.sectionPrefix,
-            form = _reduxForm.form;
-        var _Object$keys$reduce = Object.keys(_fields).reduce(function (accumulator, name) {
-          var connectedProps = _fields[name];
-          var _createFieldProps = (0, _createFieldProps3.default)(structure, name, _extends({}, connectedProps, rest, {
-            form: form,
-            onBlur: _this4.onBlurFns[name],
-            onChange: _this4.onChangeFns[name],
-            onFocus: _this4.onFocusFns[name]
-          })),
-              custom = _createFieldProps.custom,
-              fieldProps = _objectWithoutProperties(_createFieldProps, ['custom']);
-          accumulator.custom = custom;
-          var fieldName = sectionPrefix ? name.replace(sectionPrefix + '.', '') : name;
-          return _plain2.default.setIn(accumulator, fieldName, fieldProps);
-        }, {}),
-            custom = _Object$keys$reduce.custom,
-            props = _objectWithoutProperties(_Object$keys$reduce, ['custom']);
-        if (withRef) {
-          props.ref = 'renderedComponent';
-        }
-        return (0, React.createElement)(component, _extends({}, props, custom));
-      }
-    }]);
-    return ConnectedFields;
-  }(React.Component);
-  ConnectedFields.propTypes = {
-    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
-    _fields: _propTypes2.default.object.isRequired,
-    props: _propTypes2.default.object
-  };
-  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
-    var names = ownProps.names,
-        _ownProps$_reduxForm = ownProps._reduxForm,
-        initialValues = _ownProps$_reduxForm.initialValues,
-        getFormState = _ownProps$_reduxForm.getFormState;
-    var formState = getFormState(state);
-    return {
-      _fields: names.reduce(function (accumulator, name) {
-        var initialState = getIn(formState, 'initial.' + name);
-        var initial = initialState !== undefined ? initialState : initialValues && getIn(initialValues, name);
-        var value = getIn(formState, 'values.' + name);
-        var syncError = getSyncError(getIn(formState, 'syncErrors'), name);
-        var syncWarning = getSyncWarning(getIn(formState, 'syncWarnings'), name);
-        var submitting = getIn(formState, 'submitting');
-        var pristine = value === initial;
-        accumulator[name] = {
-          asyncError: getIn(formState, 'asyncErrors.' + name),
-          asyncValidating: getIn(formState, 'asyncValidating') === name,
-          dirty: !pristine,
-          initial: initial,
-          pristine: pristine,
-          state: getIn(formState, 'fields.' + name),
-          submitError: getIn(formState, 'submitErrors.' + name),
-          submitFailed: getIn(formState, 'submitFailed'),
-          submitting: submitting,
-          syncError: syncError,
-          syncWarning: syncWarning,
-          value: value,
-          _value: ownProps.value
-        };
-        return accumulator;
-      }, {})
-    };
-  }, undefined, undefined, { withRef: true });
-  return connector(ConnectedFields);
-};
-exports.default = createConnectedFields;
-});
-
-var createFields_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _invariant2 = _interopRequireDefault(invariant_1);
-var _ConnectedFields2 = _interopRequireDefault(ConnectedFields);
-var _shallowCompare2 = _interopRequireDefault(shallowCompare_1);
-var _plain2 = _interopRequireDefault(plain);
-var _prefixName2 = _interopRequireDefault(prefixName);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var validateNameProp = function validateNameProp(prop) {
-  if (!prop) {
-    return new Error('No "names" prop was specified <Fields/>');
-  }
-  if (!Array.isArray(prop) && !prop._isFieldArray) {
-    return new Error('Invalid prop "names" supplied to <Fields/>. Must be either an array of strings or the fields array generated by FieldArray.');
-  }
-};
-var createFields = function createFields(structure) {
-  var ConnectedFields$$1 = (0, _ConnectedFields2.default)(structure);
-  var Fields = function (_Component) {
-    _inherits(Fields, _Component);
-    function Fields(props, context) {
-      _classCallCheck(this, Fields);
-      var _this = _possibleConstructorReturn(this, (Fields.__proto__ || Object.getPrototypeOf(Fields)).call(this, props, context));
-      if (!context._reduxForm) {
-        throw new Error('Fields must be inside a component decorated with reduxForm()');
-      }
-      return _this;
-    }
-    _createClass(Fields, [{
-      key: 'shouldComponentUpdate',
-      value: function shouldComponentUpdate(nextProps) {
-        return (0, _shallowCompare2.default)(this, nextProps);
-      }
-    }, {
-      key: 'componentWillMount',
-      value: function componentWillMount() {
-        var error = validateNameProp(this.props.names);
-        if (error) {
-          throw error;
-        }
-        var context = this.context;
-        var register = context._reduxForm.register;
-        this.names.forEach(function (name) {
-          return register(name, 'Field');
-        });
-      }
-    }, {
-      key: 'componentWillReceiveProps',
-      value: function componentWillReceiveProps(nextProps) {
-        if (!_plain2.default.deepEqual(this.props.names, nextProps.names)) {
-          var context = this.context;
-          var _context$_reduxForm = context._reduxForm,
-              register = _context$_reduxForm.register,
-              unregister = _context$_reduxForm.unregister;
-          this.props.names.forEach(function (name) {
-            return unregister((0, _prefixName2.default)(context, name));
-          });
-          nextProps.names.forEach(function (name) {
-            return register((0, _prefixName2.default)(context, name), 'Field');
-          });
-        }
-      }
-    }, {
-      key: 'componentWillUnmount',
-      value: function componentWillUnmount() {
-        var context = this.context;
-        var unregister = context._reduxForm.unregister;
-        this.props.names.forEach(function (name) {
-          return unregister((0, _prefixName2.default)(context, name));
-        });
-      }
-    }, {
-      key: 'getRenderedComponent',
-      value: function getRenderedComponent() {
-        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to Fields');
-        return this.refs.connected.getWrappedInstance().getRenderedComponent();
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        var context = this.context;
-        return (0, React.createElement)(ConnectedFields$$1, _extends({}, this.props, {
-          names: this.props.names.map(function (name) {
-            return (0, _prefixName2.default)(context, name);
-          }),
-          _reduxForm: this.context._reduxForm,
-          ref: 'connected'
-        }));
-      }
-    }, {
-      key: 'names',
-      get: function get() {
-        var context = this.context;
-        return this.props.names.map(function (name) {
-          return (0, _prefixName2.default)(context, name);
-        });
-      }
-    }, {
-      key: 'dirty',
-      get: function get() {
-        return this.refs.connected.getWrappedInstance().isDirty();
-      }
-    }, {
-      key: 'pristine',
-      get: function get() {
-        return !this.dirty;
-      }
-    }, {
-      key: 'values',
-      get: function get() {
-        return this.refs.connected && this.refs.connected.getWrappedInstance().getValues();
-      }
-    }]);
-    return Fields;
-  }(React.Component);
-  Fields.propTypes = {
-    names: function names(props, propName) {
-      return validateNameProp(props[propName]);
-    },
-    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
-    format: _propTypes2.default.func,
-    parse: _propTypes2.default.func,
-    props: _propTypes2.default.object,
-    withRef: _propTypes2.default.bool
-  };
-  Fields.contextTypes = {
-    _reduxForm: _propTypes2.default.object
-  };
-  return Fields;
-};
-exports.default = createFields;
-});
-
-var Fields = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createFields2 = _interopRequireDefault(createFields_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createFields2.default)(_immutable2.default);
-});
-
-var defineProperty = (function() {
-  try {
-    var func = _getNative(Object, 'defineProperty');
-    func({}, '', {});
-    return func;
-  } catch (e) {}
-}());
-var _defineProperty = defineProperty;
-
-function baseAssignValue(object, key, value) {
-  if (key == '__proto__' && _defineProperty) {
-    _defineProperty(object, key, {
-      'configurable': true,
-      'enumerable': true,
-      'value': value,
-      'writable': true
-    });
-  } else {
-    object[key] = value;
-  }
-}
-var _baseAssignValue = baseAssignValue;
-
-function createBaseFor(fromRight) {
-  return function(object, iteratee, keysFunc) {
-    var index = -1,
-        iterable = Object(object),
-        props = keysFunc(object),
-        length = props.length;
-    while (length--) {
-      var key = props[fromRight ? length : ++index];
-      if (iteratee(iterable[key], key, iterable) === false) {
-        break;
-      }
-    }
-    return object;
-  };
-}
-var _createBaseFor = createBaseFor;
-
-var baseFor = _createBaseFor();
-var _baseFor = baseFor;
-
-function baseForOwn(object, iteratee) {
-  return object && _baseFor(object, iteratee, keys_1);
-}
-var _baseForOwn = baseForOwn;
-
-var COMPARE_PARTIAL_FLAG$4 = 1;
-var COMPARE_UNORDERED_FLAG$2 = 2;
-function baseIsMatch(object, source, matchData, customizer) {
-  var index = matchData.length,
-      length = index,
-      noCustomizer = !customizer;
-  if (object == null) {
-    return !length;
-  }
-  object = Object(object);
-  while (index--) {
-    var data = matchData[index];
-    if ((noCustomizer && data[2])
-          ? data[1] !== object[data[0]]
-          : !(data[0] in object)
-        ) {
-      return false;
-    }
-  }
-  while (++index < length) {
-    data = matchData[index];
-    var key = data[0],
-        objValue = object[key],
-        srcValue = data[1];
-    if (noCustomizer && data[2]) {
-      if (objValue === undefined && !(key in object)) {
-        return false;
-      }
-    } else {
-      var stack = new _Stack;
-      if (customizer) {
-        var result = customizer(objValue, srcValue, key, object, source, stack);
-      }
-      if (!(result === undefined
-            ? _baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG$4 | COMPARE_UNORDERED_FLAG$2, customizer, stack)
-            : result
-          )) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-var _baseIsMatch = baseIsMatch;
-
-function isStrictComparable(value) {
-  return value === value && !isObject_1(value);
-}
-var _isStrictComparable = isStrictComparable;
-
-function getMatchData(object) {
-  var result = keys_1(object),
-      length = result.length;
-  while (length--) {
-    var key = result[length],
-        value = object[key];
-    result[length] = [key, value, _isStrictComparable(value)];
-  }
-  return result;
-}
-var _getMatchData = getMatchData;
-
-function matchesStrictComparable(key, srcValue) {
-  return function(object) {
-    if (object == null) {
-      return false;
-    }
-    return object[key] === srcValue &&
-      (srcValue !== undefined || (key in Object(object)));
-  };
-}
-var _matchesStrictComparable = matchesStrictComparable;
-
-function baseMatches(source) {
-  var matchData = _getMatchData(source);
-  if (matchData.length == 1 && matchData[0][2]) {
-    return _matchesStrictComparable(matchData[0][0], matchData[0][1]);
-  }
-  return function(object) {
-    return object === source || _baseIsMatch(object, source, matchData);
-  };
-}
-var _baseMatches = baseMatches;
-
-var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-var reIsPlainProp = /^\w*$/;
-function isKey(value, object) {
-  if (isArray_1(value)) {
-    return false;
-  }
-  var type = typeof value;
-  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
-      value == null || isSymbol_1(value)) {
-    return true;
-  }
-  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
-    (object != null && value in Object(object));
-}
-var _isKey = isKey;
-
-function castPath(value, object) {
-  if (isArray_1(value)) {
-    return value;
-  }
-  return _isKey(value, object) ? [value] : _stringToPath(toString_1(value));
-}
-var _castPath = castPath;
-
-function baseGet(object, path) {
-  path = _castPath(path, object);
-  var index = 0,
-      length = path.length;
-  while (object != null && index < length) {
-    object = object[_toKey(path[index++])];
-  }
-  return (index && index == length) ? object : undefined;
-}
-var _baseGet = baseGet;
-
-function get(object, path, defaultValue) {
-  var result = object == null ? undefined : _baseGet(object, path);
-  return result === undefined ? defaultValue : result;
-}
-var get_1 = get;
-
-function baseHasIn(object, key) {
-  return object != null && key in Object(object);
-}
-var _baseHasIn = baseHasIn;
-
-function hasPath(object, path, hasFunc) {
-  path = _castPath(path, object);
-  var index = -1,
-      length = path.length,
-      result = false;
-  while (++index < length) {
-    var key = _toKey(path[index]);
-    if (!(result = object != null && hasFunc(object, key))) {
-      break;
-    }
-    object = object[key];
-  }
-  if (result || ++index != length) {
-    return result;
-  }
-  length = object == null ? 0 : object.length;
-  return !!length && isLength_1(length) && _isIndex(key, length) &&
-    (isArray_1(object) || isArguments_1(object));
-}
-var _hasPath = hasPath;
-
-function hasIn(object, path) {
-  return object != null && _hasPath(object, path, _baseHasIn);
-}
-var hasIn_1 = hasIn;
-
-var COMPARE_PARTIAL_FLAG$5 = 1;
-var COMPARE_UNORDERED_FLAG$3 = 2;
-function baseMatchesProperty(path, srcValue) {
-  if (_isKey(path) && _isStrictComparable(srcValue)) {
-    return _matchesStrictComparable(_toKey(path), srcValue);
-  }
-  return function(object) {
-    var objValue = get_1(object, path);
-    return (objValue === undefined && objValue === srcValue)
-      ? hasIn_1(object, path)
-      : _baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG$5 | COMPARE_UNORDERED_FLAG$3);
-  };
-}
-var _baseMatchesProperty = baseMatchesProperty;
-
-function identity(value) {
-  return value;
-}
-var identity_1 = identity;
-
-function baseProperty(key) {
-  return function(object) {
-    return object == null ? undefined : object[key];
-  };
-}
-var _baseProperty = baseProperty;
-
-function basePropertyDeep(path) {
-  return function(object) {
-    return _baseGet(object, path);
-  };
-}
-var _basePropertyDeep = basePropertyDeep;
-
-function property(path) {
-  return _isKey(path) ? _baseProperty(_toKey(path)) : _basePropertyDeep(path);
-}
-var property_1 = property;
-
-function baseIteratee(value) {
-  if (typeof value == 'function') {
-    return value;
-  }
-  if (value == null) {
-    return identity_1;
-  }
-  if (typeof value == 'object') {
-    return isArray_1(value)
-      ? _baseMatchesProperty(value[0], value[1])
-      : _baseMatches(value);
-  }
-  return property_1(value);
-}
-var _baseIteratee = baseIteratee;
-
-function mapValues(object, iteratee) {
-  var result = {};
-  iteratee = _baseIteratee(iteratee, 3);
-  _baseForOwn(object, function(value, key, object) {
-    _baseAssignValue(result, key, iteratee(value, key, object));
-  });
-  return result;
-}
-var mapValues_1 = mapValues;
-
-var createFieldArrayProps_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var createFieldArrayProps = function createFieldArrayProps(_ref2, name, form, sectionPrefix, getValue, _ref) {
-  var getIn = _ref2.getIn;
-  var arrayInsert = _ref.arrayInsert,
-      arrayMove = _ref.arrayMove,
-      arrayPop = _ref.arrayPop,
-      arrayPush = _ref.arrayPush,
-      arrayRemove = _ref.arrayRemove,
-      arrayRemoveAll = _ref.arrayRemoveAll,
-      arrayShift = _ref.arrayShift,
-      arraySplice = _ref.arraySplice,
-      arraySwap = _ref.arraySwap,
-      arrayUnshift = _ref.arrayUnshift,
-      asyncError = _ref.asyncError,
-      dirty = _ref.dirty,
-      length = _ref.length,
-      pristine = _ref.pristine,
-      submitError = _ref.submitError,
-      state = _ref.state,
-      submitFailed = _ref.submitFailed,
-      submitting = _ref.submitting,
-      syncError = _ref.syncError,
-      syncWarning = _ref.syncWarning,
-      value = _ref.value,
-      props = _ref.props,
-      rest = _objectWithoutProperties(_ref, ['arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'asyncError', 'dirty', 'length', 'pristine', 'submitError', 'state', 'submitFailed', 'submitting', 'syncError', 'syncWarning', 'value', 'props']);
-  var error = syncError || asyncError || submitError;
-  var warning = syncWarning;
-  var fieldName = sectionPrefix ? name.replace(sectionPrefix + '.', '') : name;
-  var finalProps = _extends({
-    fields: {
-      _isFieldArray: true,
-      forEach: function forEach(callback) {
-        return (value || []).forEach(function (item, index) {
-          return callback(fieldName + '[' + index + ']', index, finalProps.fields);
-        });
-      },
-      get: getValue,
-      getAll: function getAll() {
-        return value;
-      },
-      insert: arrayInsert,
-      length: length,
-      map: function map(callback) {
-        return (value || []).map(function (item, index) {
-          return callback(fieldName + '[' + index + ']', index, finalProps.fields);
-        });
-      },
-      move: arrayMove,
-      name: name,
-      pop: function pop() {
-        arrayPop();
-        return getIn(value, String(length - 1));
-      },
-      push: arrayPush,
-      reduce: function reduce(callback, initial) {
-        return (value || []).reduce(function (accumulator, item, index) {
-          return callback(accumulator, fieldName + '[' + index + ']', index, finalProps.fields);
-        }, initial);
-      },
-      remove: arrayRemove,
-      removeAll: arrayRemoveAll,
-      shift: function shift() {
-        arrayShift();
-        return getIn(value, '0');
-      },
-      swap: arraySwap,
-      unshift: arrayUnshift
-    },
-    meta: {
-      dirty: dirty,
-      error: error,
-      form: form,
-      warning: warning,
-      invalid: !!error,
-      pristine: pristine,
-      submitting: submitting,
-      submitFailed: submitFailed,
-      valid: !error
-    }
-  }, props, rest);
-  return finalProps;
-};
-exports.default = createFieldArrayProps;
-});
-
-var ConnectedFieldArray = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _mapValues3 = _interopRequireDefault(mapValues_1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _react2 = _interopRequireDefault(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _createFieldArrayProps2 = _interopRequireDefault(createFieldArrayProps_1);
-var _plain2 = _interopRequireDefault(plain);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-var propsToNotUpdateFor = ['_reduxForm', 'value'];
-var createConnectedFieldArray = function createConnectedFieldArray(structure) {
-  var deepEqual = structure.deepEqual,
-      getIn = structure.getIn,
-      size = structure.size;
-  var getSyncError = function getSyncError(syncErrors, name) {
-    return _plain2.default.getIn(syncErrors, name + '._error');
-  };
-  var getSyncWarning = function getSyncWarning(syncWarnings, name) {
-    return getIn(syncWarnings, name + '._warning');
-  };
-  var ConnectedFieldArray = function (_Component) {
-    _inherits(ConnectedFieldArray, _Component);
-    function ConnectedFieldArray() {
+  var ConnectedField = function (_Component) {
+    _inherits(ConnectedField, _Component);
+    function ConnectedField() {
       var _ref;
       var _temp, _this, _ret;
-      _classCallCheck(this, ConnectedFieldArray);
+      _classCallCheck(this, ConnectedField);
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
-      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ConnectedFieldArray.__proto__ || Object.getPrototypeOf(ConnectedFieldArray)).call.apply(_ref, [this].concat(args))), _this), _this.saveRef = function (ref) {
-        _this.ref = ref;
-      }, _this.getValue = function (index) {
-        return _this.props.value && getIn(_this.props.value, String(index));
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ConnectedField.__proto__ || Object.getPrototypeOf(ConnectedField)).call.apply(_ref, [this].concat(args))), _this), _this.saveRef = function (ref) {
+        return _this.ref = ref;
+      }, _this.isPristine = function () {
+        return _this.props.pristine;
+      }, _this.getValue = function () {
+        return _this.props.value;
+      }, _this.handleChange = function (event) {
+        var _this$props = _this.props,
+            name = _this$props.name,
+            dispatch = _this$props.dispatch,
+            parse = _this$props.parse,
+            normalize = _this$props.normalize,
+            onChange = _this$props.onChange,
+            _reduxForm = _this$props._reduxForm,
+            previousValue = _this$props.value;
+        var newValue = (0, _onChangeValue2.default)(event, { name: name, parse: parse, normalize: normalize });
+        var defaultPrevented = false;
+        if (onChange) {
+          onChange(_extends({}, event, {
+            preventDefault: function preventDefault() {
+              defaultPrevented = true;
+              return eventPreventDefault(event);
+            }
+          }), newValue, previousValue);
+        }
+        if (!defaultPrevented) {
+          dispatch(_reduxForm.change(name, newValue));
+        }
+      }, _this.handleFocus = function (event) {
+        var _this$props2 = _this.props,
+            name = _this$props2.name,
+            dispatch = _this$props2.dispatch,
+            onFocus = _this$props2.onFocus,
+            _reduxForm = _this$props2._reduxForm;
+        var defaultPrevented = false;
+        if (onFocus) {
+          onFocus(_extends({}, event, {
+            preventDefault: function preventDefault() {
+              defaultPrevented = true;
+              return eventPreventDefault(event);
+            }
+          }));
+        }
+        if (!defaultPrevented) {
+          dispatch(_reduxForm.focus(name));
+        }
+      }, _this.handleBlur = function (event) {
+        var _this$props3 = _this.props,
+            name = _this$props3.name,
+            dispatch = _this$props3.dispatch,
+            parse = _this$props3.parse,
+            normalize = _this$props3.normalize,
+            onBlur = _this$props3.onBlur,
+            _reduxForm = _this$props3._reduxForm,
+            _value = _this$props3._value,
+            previousValue = _this$props3.value;
+        var newValue = (0, _onChangeValue2.default)(event, { name: name, parse: parse, normalize: normalize });
+        if (newValue === _value && _value !== undefined) {
+          newValue = previousValue;
+        }
+        var defaultPrevented = false;
+        if (onBlur) {
+          onBlur(_extends({}, event, {
+            preventDefault: function preventDefault() {
+              defaultPrevented = true;
+              return eventPreventDefault(event);
+            }
+          }), newValue, previousValue);
+        }
+        if (!defaultPrevented) {
+          dispatch(_reduxForm.blur(name, newValue));
+          if (_reduxForm.asyncValidate) {
+            _reduxForm.asyncValidate(name, newValue);
+          }
+        }
+      }, _this.handleDragStart = function (event) {
+        var _this$props4 = _this.props,
+            onDragStart = _this$props4.onDragStart,
+            value = _this$props4.value;
+        eventDataTransferSetData(event, eventConsts.dataKey, value == null ? '' : value);
+        if (onDragStart) {
+          onDragStart(event);
+        }
+      }, _this.handleDrop = function (event) {
+        var _this$props5 = _this.props,
+            name = _this$props5.name,
+            dispatch = _this$props5.dispatch,
+            onDrop = _this$props5.onDrop,
+            _reduxForm = _this$props5._reduxForm,
+            previousValue = _this$props5.value;
+        var newValue = eventDataTransferGetData(event, eventConsts.dataKey);
+        var defaultPrevented = false;
+        if (onDrop) {
+          onDrop(_extends({}, event, {
+            preventDefault: function preventDefault() {
+              defaultPrevented = true;
+              return eventPreventDefault(event);
+            }
+          }), newValue, previousValue);
+        }
+        if (!defaultPrevented) {
+          dispatch(_reduxForm.change(name, newValue));
+          eventPreventDefault(event);
+        }
       }, _temp), _possibleConstructorReturn(_this, _ret);
     }
-    _createClass(ConnectedFieldArray, [{
+    _createClass(ConnectedField, [{
       key: 'shouldComponentUpdate',
       value: function shouldComponentUpdate(nextProps) {
         var _this2 = this;
-        var thisValue = this.props.value;
-        var nextValue = nextProps.value;
-        if (thisValue && nextValue) {
-          if (thisValue.length !== nextValue.length || nextProps.rerenderOnEveryChange && thisValue.some(function (val, index) {
-            return !deepEqual(val, nextValue[index]);
-          })) {
-            return true;
-          }
-        }
         var nextPropsKeys = Object.keys(nextProps);
         var thisPropsKeys = Object.keys(this.props);
         return nextPropsKeys.length !== thisPropsKeys.length || nextPropsKeys.some(function (prop) {
@@ -7413,104 +8255,108 @@ var createConnectedFieldArray = function createConnectedFieldArray(structure) {
             withRef = _props.withRef,
             name = _props.name,
             _reduxForm = _props._reduxForm,
-            validate = _props.validate,
-            warn = _props.warn,
-            rerenderOnEveryChange = _props.rerenderOnEveryChange,
-            rest = _objectWithoutProperties(_props, ['component', 'withRef', 'name', '_reduxForm', 'validate', 'warn', 'rerenderOnEveryChange']);
-        var props = (0, _createFieldArrayProps2.default)(structure, name, _reduxForm.form, _reduxForm.sectionPrefix, this.getValue, rest);
+            normalize = _props.normalize,
+            onBlur = _props.onBlur,
+            onChange = _props.onChange,
+            onFocus = _props.onFocus,
+            onDragStart = _props.onDragStart,
+            onDrop = _props.onDrop,
+            rest = _objectWithoutProperties(_props, ['component', 'withRef', 'name', '_reduxForm', 'normalize', 'onBlur', 'onChange', 'onFocus', 'onDragStart', 'onDrop']);
+        var _createFieldProps = (0, _createFieldProps3.default)(structure, name, _extends({}, rest, {
+          form: _reduxForm.form,
+          onBlur: this.handleBlur,
+          onChange: this.handleChange,
+          onDrop: this.handleDrop,
+          onDragStart: this.handleDragStart,
+          onFocus: this.handleFocus
+        })),
+            custom = _createFieldProps.custom,
+            props = _objectWithoutProperties(_createFieldProps, ['custom']);
         if (withRef) {
-          props.ref = this.saveRef;
+          custom.ref = this.saveRef;
         }
-        return (0, React.createElement)(component, props);
-      }
-    }, {
-      key: 'dirty',
-      get: function get() {
-        return this.props.dirty;
-      }
-    }, {
-      key: 'pristine',
-      get: function get() {
-        return this.props.pristine;
-      }
-    }, {
-      key: 'value',
-      get: function get() {
-        return this.props.value;
+        if (typeof component === 'string') {
+          var input = props.input;
+          return (0, React.createElement)(component, _extends({}, input, custom));
+        } else {
+          return (0, React.createElement)(component, _extends({}, props, custom));
+        }
       }
     }]);
-    return ConnectedFieldArray;
+    return ConnectedField;
   }(React.Component);
-  ConnectedFieldArray.propTypes = {
+  ConnectedField.propTypes = {
     component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
-    props: _propTypes2.default.object,
-    rerenderOnEveryChange: _propTypes2.default.bool
+    props: _propTypes2.default.object
   };
-  ConnectedFieldArray.defaultProps = {
-    rerenderOnEveryChange: false
-  };
-  ConnectedFieldArray.contextTypes = {
-    _reduxForm: _propTypes2.default.object
-  };
-  var connector = (0, _reactRedux.connect)(function (state, ownProps) {
+  var connector = (0, reactRedux.connect)(function (state, ownProps) {
     var name = ownProps.name,
         _ownProps$_reduxForm = ownProps._reduxForm,
         initialValues = _ownProps$_reduxForm.initialValues,
         getFormState = _ownProps$_reduxForm.getFormState;
     var formState = getFormState(state);
-    var initial = getIn(formState, 'initial.' + name) || initialValues && getIn(initialValues, name);
+    var initialState = getIn(formState, 'initial.' + name);
+    var initial = initialState !== undefined ? initialState : initialValues && getIn(initialValues, name);
     var value = getIn(formState, 'values.' + name);
     var submitting = getIn(formState, 'submitting');
     var syncError = getSyncError(getIn(formState, 'syncErrors'), name);
     var syncWarning = getSyncWarning(getIn(formState, 'syncWarnings'), name);
     var pristine = deepEqual(value, initial);
     return {
-      asyncError: getIn(formState, 'asyncErrors.' + name + '._error'),
+      asyncError: getIn(formState, 'asyncErrors.' + name),
+      asyncValidating: getIn(formState, 'asyncValidating') === name,
       dirty: !pristine,
       pristine: pristine,
       state: getIn(formState, 'fields.' + name),
-      submitError: getIn(formState, 'submitErrors.' + name + '._error'),
+      submitError: getIn(formState, 'submitErrors.' + name),
       submitFailed: getIn(formState, 'submitFailed'),
       submitting: submitting,
       syncError: syncError,
       syncWarning: syncWarning,
+      initial: initial,
       value: value,
-      length: size(value)
+      _value: ownProps.value
     };
-  }, function (dispatch, ownProps) {
-    var name = ownProps.name,
-        _reduxForm = ownProps._reduxForm;
-    var arrayInsert = _reduxForm.arrayInsert,
-        arrayMove = _reduxForm.arrayMove,
-        arrayPop = _reduxForm.arrayPop,
-        arrayPush = _reduxForm.arrayPush,
-        arrayRemove = _reduxForm.arrayRemove,
-        arrayRemoveAll = _reduxForm.arrayRemoveAll,
-        arrayShift = _reduxForm.arrayShift,
-        arraySplice = _reduxForm.arraySplice,
-        arraySwap = _reduxForm.arraySwap,
-        arrayUnshift = _reduxForm.arrayUnshift;
-    return (0, _mapValues3.default)({
-      arrayInsert: arrayInsert,
-      arrayMove: arrayMove,
-      arrayPop: arrayPop,
-      arrayPush: arrayPush,
-      arrayRemove: arrayRemove,
-      arrayRemoveAll: arrayRemoveAll,
-      arrayShift: arrayShift,
-      arraySplice: arraySplice,
-      arraySwap: arraySwap,
-      arrayUnshift: arrayUnshift
-    }, function (actionCreator) {
-      return (0, _redux.bindActionCreators)(actionCreator.bind(null, name), dispatch);
-    });
-  }, undefined, { withRef: true });
-  return connector(ConnectedFieldArray);
+  }, undefined, undefined, { withRef: true });
+  return connector(ConnectedField);
 };
-exports.default = createConnectedFieldArray;
+exports.default = createConnectedField;
 });
+unwrapExports(ConnectedField);
 
-var createFieldArray_1 = createCommonjsModule(function (module, exports) {
+var shallowCompare_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _isEqualWith3 = _interopRequireDefault(isEqualWith_1);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var customizer = function customizer(objectValue, otherValue, indexOrkey, object, other, stack) {
+  if (stack) {
+    return objectValue === otherValue;
+  }
+};
+var shallowCompare = function shallowCompare(instance, nextProps, nextState) {
+  return !(0, _isEqualWith3.default)(instance.props, nextProps, customizer) || !(0, _isEqualWith3.default)(instance.state, nextState, customizer);
+};
+exports.default = shallowCompare;
+});
+unwrapExports(shallowCompare_1);
+
+var prefixName = createCommonjsModule(function (module, exports) {
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var formatName = function formatName(_ref, name) {
+  var sectionPrefix = _ref._reduxForm.sectionPrefix;
+  return sectionPrefix ? sectionPrefix + '.' + name : name;
+};
+exports.default = formatName;
+});
+unwrapExports(prefixName);
+
+var createField_1 = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7520,58 +8366,66 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react2 = _interopRequireDefault(React);
 var _propTypes2 = _interopRequireDefault(PropTypes);
 var _invariant2 = _interopRequireDefault(invariant_1);
-var _ConnectedFieldArray2 = _interopRequireDefault(ConnectedFieldArray);
+var _ConnectedField2 = _interopRequireDefault(ConnectedField);
+var _shallowCompare2 = _interopRequireDefault(shallowCompare_1);
 var _prefixName2 = _interopRequireDefault(prefixName);
+var _plain2 = _interopRequireDefault(plain);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-var toArray = function toArray(value) {
-  return Array.isArray(value) ? value : [value];
-};
-var wrapError = function wrapError(fn, key) {
-  return fn && function () {
-    var validators = toArray(fn);
-    for (var i = 0; i < validators.length; i++) {
-      var result = validators[i].apply(validators, arguments);
-      if (result) {
-        return _defineProperty({}, key, result);
-      }
-    }
-  };
-};
-var createFieldArray = function createFieldArray(structure) {
-  var ConnectedFieldArray$$1 = (0, _ConnectedFieldArray2.default)(structure);
-  var FieldArray = function (_Component) {
-    _inherits(FieldArray, _Component);
-    function FieldArray(props, context) {
-      _classCallCheck(this, FieldArray);
-      var _this = _possibleConstructorReturn(this, (FieldArray.__proto__ || Object.getPrototypeOf(FieldArray)).call(this, props, context));
+var createField = function createField(structure) {
+  var ConnectedField$$1 = (0, _ConnectedField2.default)(structure);
+  var setIn = structure.setIn;
+  var Field = function (_Component) {
+    _inherits(Field, _Component);
+    function Field(props, context) {
+      _classCallCheck(this, Field);
+      var _this = _possibleConstructorReturn(this, (Field.__proto__ || Object.getPrototypeOf(Field)).call(this, props, context));
       _this.saveRef = function (ref) {
-        _this.ref = ref;
+        return _this.ref = ref;
+      };
+      _this.normalize = function (name, value) {
+        var normalize = _this.props.normalize;
+        if (!normalize) {
+          return value;
+        }
+        var previousValues = _this.context._reduxForm.getValues();
+        var previousValue = _this.value;
+        var nextValues = setIn(previousValues, name, value);
+        return normalize(value, previousValue, nextValues, previousValues);
       };
       if (!context._reduxForm) {
-        throw new Error('FieldArray must be inside a component decorated with reduxForm()');
+        throw new Error('Field must be inside a component decorated with reduxForm()');
       }
       return _this;
     }
-    _createClass(FieldArray, [{
+    _createClass(Field, [{
+      key: 'shouldComponentUpdate',
+      value: function shouldComponentUpdate(nextProps) {
+        return (0, _shallowCompare2.default)(this, nextProps);
+      }
+    }, {
       key: 'componentWillMount',
       value: function componentWillMount() {
         var _this2 = this;
-        this.context._reduxForm.register(this.name, 'FieldArray', function () {
-          return wrapError(_this2.props.validate, '_error');
+        this.context._reduxForm.register(this.name, 'Field', function () {
+          return _this2.props.validate;
         }, function () {
-          return wrapError(_this2.props.warn, '_warning');
+          return _this2.props.warn;
         });
       }
     }, {
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(nextProps) {
-        if (this.props.name !== nextProps.name) {
+        if (this.props.name !== nextProps.name ||
+        !_plain2.default.deepEqual(this.props.validate, nextProps.validate) || !_plain2.default.deepEqual(this.props.warn, nextProps.warn)) {
           this.context._reduxForm.unregister(this.name);
-          this.context._reduxForm.register((0, _prefixName2.default)(this.context, nextProps.name), 'FieldArray');
+          this.context._reduxForm.register((0, _prefixName2.default)(this.context, nextProps.name), 'Field', function () {
+            return nextProps.validate;
+          }, function () {
+            return nextProps.warn;
+          });
         }
       }
     }, {
@@ -7582,14 +8436,15 @@ var createFieldArray = function createFieldArray(structure) {
     }, {
       key: 'getRenderedComponent',
       value: function getRenderedComponent() {
-        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to FieldArray');
-        return this.ref && this.ref.getWrappedInstance().getRenderedComponent();
+        (0, _invariant2.default)(this.props.withRef, 'If you want to access getRenderedComponent(), ' + 'you must specify a withRef prop to Field');
+        return this.ref ? this.ref.getWrappedInstance().getRenderedComponent() : undefined;
       }
     }, {
       key: 'render',
       value: function render() {
-        return (0, React.createElement)(ConnectedFieldArray$$1, _extends({}, this.props, {
+        return (0, React.createElement)(ConnectedField$$1, _extends({}, this.props, {
           name: this.name,
+          normalize: this.normalize,
           _reduxForm: this.context._reduxForm,
           ref: this.saveRef
         }));
@@ -7602,3231 +8457,57 @@ var createFieldArray = function createFieldArray(structure) {
     }, {
       key: 'dirty',
       get: function get() {
-        return !this.ref || this.ref.getWrappedInstance().dirty;
+        return !this.pristine;
       }
     }, {
       key: 'pristine',
       get: function get() {
-        return !!(this.ref && this.ref.getWrappedInstance().pristine);
+        return !!(this.ref && this.ref.getWrappedInstance().isPristine());
       }
     }, {
       key: 'value',
       get: function get() {
-        return this.ref ? this.ref.getWrappedInstance().value : undefined;
+        return this.ref && this.ref.getWrappedInstance().getValue();
       }
     }]);
-    return FieldArray;
+    return Field;
   }(React.Component);
-  FieldArray.propTypes = {
+  Field.propTypes = {
     name: _propTypes2.default.string.isRequired,
-    component: _propTypes2.default.func.isRequired,
+    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]).isRequired,
+    format: _propTypes2.default.func,
+    normalize: _propTypes2.default.func,
+    onBlur: _propTypes2.default.func,
+    onChange: _propTypes2.default.func,
+    onFocus: _propTypes2.default.func,
+    onDragStart: _propTypes2.default.func,
+    onDrop: _propTypes2.default.func,
+    parse: _propTypes2.default.func,
     props: _propTypes2.default.object,
     validate: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
     warn: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.arrayOf(_propTypes2.default.func)]),
     withRef: _propTypes2.default.bool
   };
-  FieldArray.contextTypes = {
+  Field.contextTypes = {
     _reduxForm: _propTypes2.default.object
   };
-  return FieldArray;
+  return Field;
 };
-exports.default = createFieldArray;
+exports.default = createField;
 });
+unwrapExports(createField_1);
 
-var FieldArray = createCommonjsModule(function (module, exports) {
+var Field = createCommonjsModule(function (module, exports) {
 'use strict';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _createFieldArray2 = _interopRequireDefault(createFieldArray_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
+var _createField2 = _interopRequireDefault(createField_1);
+var _immutable2 = _interopRequireDefault(immutable);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createFieldArray2.default)(_immutable2.default);
+exports.default = (0, _createField2.default)(_immutable2.default);
 });
-
-var createFormValueSelector_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _invariant2 = _interopRequireDefault(invariant_1);
-var _plain2 = _interopRequireDefault(plain);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var createFormValueSelector = function createFormValueSelector(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    (0, _invariant2.default)(form, 'Form value must be specified');
-    var nonNullGetFormState = getFormState || function (state) {
-      return getIn(state, 'form');
-    };
-    return function (state) {
-      for (var _len = arguments.length, fields = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        fields[_key - 1] = arguments[_key];
-      }
-      (0, _invariant2.default)(fields.length, 'No fields specified');
-      return fields.length === 1 ?
-      getIn(nonNullGetFormState(state), form + '.values.' + fields[0]) :
-      fields.reduce(function (accumulator, field) {
-        var value = getIn(nonNullGetFormState(state), form + '.values.' + field);
-        return value === undefined ? accumulator : _plain2.default.setIn(accumulator, field, value);
-      }, {});
-    };
-  };
-};
-exports.default = createFormValueSelector;
-});
-
-var formValueSelector = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createFormValueSelector2 = _interopRequireDefault(createFormValueSelector_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createFormValueSelector2.default)(_immutable2.default);
-});
-
-var createFormValues = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var React$$2 = _interopRequireWildcard(React);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _prefixName2 = _interopRequireDefault(prefixName);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-var createValues = function createValues(_ref) {
-  var getIn = _ref.getIn;
-  return function (firstArg) {
-    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      rest[_key - 1] = arguments[_key];
-    }
-    var valuesMap = void 0;
-    if (typeof firstArg === 'string') {
-      valuesMap = [firstArg].concat(_toConsumableArray(rest)).map(function (k) {
-        return {
-          prop: k,
-          path: k
-        };
-      });
-    } else {
-      var config = firstArg;
-      valuesMap = Object.keys(config).map(function (k) {
-        return {
-          prop: k,
-          path: config[k]
-        };
-      });
-    }
-    if (!valuesMap.length) {
-      throw new Error('formValues(): You must specify values to get as formValues(name1, name2, ...) or formValues({propName1: propPath1, ...})');
-    }
-    return function (Component) {
-      var FormValues = function (_React$Component) {
-        _inherits(FormValues, _React$Component);
-        function FormValues(props, context) {
-          _classCallCheck(this, FormValues);
-          var _this = _possibleConstructorReturn(this, (FormValues.__proto__ || Object.getPrototypeOf(FormValues)).call(this, props, context));
-          if (!context._reduxForm) {
-            throw new Error('formValues() must be used inside a React tree decorated with reduxForm()');
-          }
-          var formValuesSelector = function formValuesSelector(_, _ref2) {
-            var getValues = _this.context._reduxForm.getValues;
-            var props = {};
-            var values = getValues();
-            valuesMap.forEach(function (_ref3) {
-              var prop = _ref3.prop,
-                  path = _ref3.path;
-              return props[prop] = getIn(values, (0, _prefixName2.default)(_this.context, path));
-            });
-            return props;
-          };
-          _this.Component = (0, _reactRedux.connect)(formValuesSelector, function () {
-            return {};
-          }
-          )(function (_ref4) {
-            var sectionPrefix = _ref4.sectionPrefix,
-                otherProps = _objectWithoutProperties(_ref4, ['sectionPrefix']);
-            return React$$2.createElement(Component, otherProps);
-          });
-          return _this;
-        }
-        _createClass(FormValues, [{
-          key: 'render',
-          value: function render() {
-            var Component = this.Component;
-            return React$$2.createElement(Component
-            , _extends({ sectionPrefix: this.context._reduxForm.sectionPrefix
-            }, this.props));
-          }
-        }]);
-        return FormValues;
-      }(React$$2.Component);
-      FormValues.contextTypes = {
-        _reduxForm: _propTypes2.default.object
-      };
-      return FormValues;
-    };
-  };
-};
-exports.default = createValues;
-});
-
-var formValues = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createFormValues2 = _interopRequireDefault(createFormValues);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createFormValues2.default)(_immutable2.default);
-});
-
-var getFormNames$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormNames = function createGetFormNames(_ref) {
-  var getIn = _ref.getIn,
-      keys = _ref.keys;
-  return function (getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return keys(nonNullGetFormState(state));
-    };
-  };
-};
-exports.default = createGetFormNames;
-});
-
-var getFormNames = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormNames2 = _interopRequireDefault(getFormNames$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormNames2.default)(_immutable2.default);
-});
-
-var getFormValues$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormValues = function createGetFormValues(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.values');
-    };
-  };
-};
-exports.default = createGetFormValues;
-});
-
-var getFormValues = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormValues2 = _interopRequireDefault(getFormValues$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormValues2.default)(_immutable2.default);
-});
-
-var getFormInitialValues$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormInitialValues = function createGetFormInitialValues(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.initial');
-    };
-  };
-};
-exports.default = createGetFormInitialValues;
-});
-
-var getFormInitialValues = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormInitialValues2 = _interopRequireDefault(getFormInitialValues$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormInitialValues2.default)(_immutable2.default);
-});
-
-var getFormSyncErrors$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormSyncErrors = function createGetFormSyncErrors(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.syncErrors');
-    };
-  };
-};
-exports.default = createGetFormSyncErrors;
-});
-
-var getFormSyncErrors = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormSyncErrors2 = _interopRequireDefault(getFormSyncErrors$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormSyncErrors2.default)(_immutable2.default);
-});
-
-var getFormMeta$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormMeta = function createGetFormMeta(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.fields');
-    };
-  };
-};
-exports.default = createGetFormMeta;
-});
-
-var getFormMeta = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormMeta2 = _interopRequireDefault(getFormMeta$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormMeta2.default)(_immutable2.default);
-});
-
-var getFormAsyncErrors$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormAsyncErrors = function createGetFormAsyncErrors(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.asyncErrors');
-    };
-  };
-};
-exports.default = createGetFormAsyncErrors;
-});
-
-var getFormAsyncErrors = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormAsyncErrors2 = _interopRequireDefault(getFormAsyncErrors$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormAsyncErrors2.default)(_immutable2.default);
-});
-
-var getFormSyncWarnings$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormSyncWarnings = function createGetFormSyncWarnings(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.syncWarnings');
-    };
-  };
-};
-exports.default = createGetFormSyncWarnings;
-});
-
-var getFormSyncWarnings = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormSyncWarnings2 = _interopRequireDefault(getFormSyncWarnings$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormSyncWarnings2.default)(_immutable2.default);
-});
-
-var getFormSubmitErrors$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createGetFormSubmitErrors = function createGetFormSubmitErrors(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return getIn(nonNullGetFormState(state), form + '.submitErrors');
-    };
-  };
-};
-exports.default = createGetFormSubmitErrors;
-});
-
-var getFormSubmitErrors = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _getFormSubmitErrors2 = _interopRequireDefault(getFormSubmitErrors$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _getFormSubmitErrors2.default)(_immutable2.default);
-});
-
-var isPristine = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createIsPristine = function createIsPristine(_ref) {
-  var deepEqual = _ref.deepEqual,
-      empty = _ref.empty,
-      getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      var formState = nonNullGetFormState(state);
-      var initial = getIn(formState, form + '.initial') || empty;
-      var values = getIn(formState, form + '.values') || initial;
-      return deepEqual(initial, values);
-    };
-  };
-};
-exports.default = createIsPristine;
-});
-
-var isDirty$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isPristine2 = _interopRequireDefault(isPristine);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var createIsDirty = function createIsDirty(structure) {
-  return function (form, getFormState) {
-    var isPristine$$1 = (0, _isPristine2.default)(structure)(form, getFormState);
-    return function (state) {
-      return !isPristine$$1(state);
-    };
-  };
-};
-exports.default = createIsDirty;
-});
-
-var isDirty = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isDirty2 = _interopRequireDefault(isDirty$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _isDirty2.default)(_immutable2.default);
-});
-
-var hasError = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var getErrorKeys = function getErrorKeys(name, type) {
-  switch (type) {
-    case 'Field':
-      return [name, name + '._error'];
-    case 'FieldArray':
-      return [name + '._error'];
-    default:
-      throw new Error('Unknown field type');
-  }
-};
-var createHasError = function createHasError(_ref) {
-  var getIn = _ref.getIn;
-  var hasError = function hasError(field, syncErrors, asyncErrors, submitErrors) {
-    if (!syncErrors && !asyncErrors && !submitErrors) {
-      return false;
-    }
-    var name = getIn(field, 'name');
-    var type = getIn(field, 'type');
-    return getErrorKeys(name, type).some(function (key) {
-      return getIn(syncErrors, key) || getIn(asyncErrors, key) || getIn(submitErrors, key);
-    });
-  };
-  return hasError;
-};
-exports.default = createHasError;
-});
-
-var isValid = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _hasError2 = _interopRequireDefault(hasError);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var createIsValid = function createIsValid(structure) {
-  var getIn = structure.getIn,
-      keys = structure.keys;
-  var hasError$$1 = (0, _hasError2.default)(structure);
-  return function (form, getFormState) {
-    var ignoreSubmitErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      var formState = nonNullGetFormState(state);
-      var syncError = getIn(formState, form + '.syncError');
-      if (syncError) {
-        return false;
-      }
-      if (!ignoreSubmitErrors) {
-        var error = getIn(formState, form + '.error');
-        if (error) {
-          return false;
-        }
-      }
-      var syncErrors = getIn(formState, form + '.syncErrors');
-      var asyncErrors = getIn(formState, form + '.asyncErrors');
-      var submitErrors = ignoreSubmitErrors ? undefined : getIn(formState, form + '.submitErrors');
-      if (!syncErrors && !asyncErrors && !submitErrors) {
-        return true;
-      }
-      var registeredFields = getIn(formState, form + '.registeredFields');
-      if (!registeredFields) {
-        return true;
-      }
-      return !keys(registeredFields).filter(function (name) {
-        return getIn(registeredFields, '[\'' + name + '\'].count') > 0;
-      }).some(function (name) {
-        return hasError$$1(getIn(registeredFields, '[\'' + name + '\']'), syncErrors, asyncErrors, submitErrors);
-      });
-    };
-  };
-};
-exports.default = createIsValid;
-});
-
-var isInvalid$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isValid2 = _interopRequireDefault(isValid);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var createIsInvalid = function createIsInvalid(structure) {
-  return function (form, getFormState) {
-    var isValid$$1 = (0, _isValid2.default)(structure)(form, getFormState);
-    return function (state) {
-      return !isValid$$1(state);
-    };
-  };
-};
-exports.default = createIsInvalid;
-});
-
-var isInvalid = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isInvalid2 = _interopRequireDefault(isInvalid$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _isInvalid2.default)(_immutable2.default);
-});
-
-var isPristine$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isPristine2 = _interopRequireDefault(isPristine);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _isPristine2.default)(_immutable2.default);
-});
-
-var isValid$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isValid2 = _interopRequireDefault(isValid);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _isValid2.default)(_immutable2.default);
-});
-
-var isSubmitting$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createIsSubmitting = function createIsSubmitting(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return !!getIn(nonNullGetFormState(state), form + '.submitting');
-    };
-  };
-};
-exports.default = createIsSubmitting;
-});
-
-var isSubmitting = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isSubmitting2 = _interopRequireDefault(isSubmitting$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _isSubmitting2.default)(_immutable2.default);
-});
-
-var hasSubmitSucceeded$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createHasSubmitSucceeded = function createHasSubmitSucceeded(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return !!getIn(nonNullGetFormState(state), form + '.submitSucceeded');
-    };
-  };
-};
-exports.default = createHasSubmitSucceeded;
-});
-
-var hasSubmitSucceeded = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _hasSubmitSucceeded2 = _interopRequireDefault(hasSubmitSucceeded$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _hasSubmitSucceeded2.default)(_immutable2.default);
-});
-
-var hasSubmitFailed$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createHasSubmitFailed = function createHasSubmitFailed(_ref) {
-  var getIn = _ref.getIn;
-  return function (form, getFormState) {
-    return function (state) {
-      var nonNullGetFormState = getFormState || function (state) {
-        return getIn(state, 'form');
-      };
-      return !!getIn(nonNullGetFormState(state), form + '.submitFailed');
-    };
-  };
-};
-exports.default = createHasSubmitFailed;
-});
-
-var hasSubmitFailed = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _hasSubmitFailed2 = _interopRequireDefault(hasSubmitFailed$2);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _hasSubmitFailed2.default)(_immutable2.default);
-});
-
-function assignMergeValue(object, key, value) {
-  if ((value !== undefined && !eq_1(object[key], value)) ||
-      (value === undefined && !(key in object))) {
-    _baseAssignValue(object, key, value);
-  }
-}
-var _assignMergeValue = assignMergeValue;
-
-var _cloneBuffer = createCommonjsModule(function (module, exports) {
-var freeExports = 'object' == 'object' && exports && !exports.nodeType && exports;
-var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-var moduleExports = freeModule && freeModule.exports === freeExports;
-var Buffer = moduleExports ? _root.Buffer : undefined,
-    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
-function cloneBuffer(buffer, isDeep) {
-  if (isDeep) {
-    return buffer.slice();
-  }
-  var length = buffer.length,
-      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
-  buffer.copy(result);
-  return result;
-}
-module.exports = cloneBuffer;
-});
-
-function cloneArrayBuffer(arrayBuffer) {
-  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
-  return result;
-}
-var _cloneArrayBuffer = cloneArrayBuffer;
-
-function cloneTypedArray(typedArray, isDeep) {
-  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-}
-var _cloneTypedArray = cloneTypedArray;
-
-var objectCreate = Object.create;
-var baseCreate = (function() {
-  function object() {}
-  return function(proto) {
-    if (!isObject_1(proto)) {
-      return {};
-    }
-    if (objectCreate) {
-      return objectCreate(proto);
-    }
-    object.prototype = proto;
-    var result = new object;
-    object.prototype = undefined;
-    return result;
-  };
-}());
-var _baseCreate = baseCreate;
-
-var getPrototype = _overArg(Object.getPrototypeOf, Object);
-var _getPrototype = getPrototype;
-
-function initCloneObject(object) {
-  return (typeof object.constructor == 'function' && !_isPrototype(object))
-    ? _baseCreate(_getPrototype(object))
-    : {};
-}
-var _initCloneObject = initCloneObject;
-
-function isArrayLikeObject(value) {
-  return isObjectLike_1(value) && isArrayLike_1(value);
-}
-var isArrayLikeObject_1 = isArrayLikeObject;
-
-var objectTag$3 = '[object Object]';
-var funcProto$2 = Function.prototype;
-var objectProto$12 = Object.prototype;
-var funcToString$2 = funcProto$2.toString;
-var hasOwnProperty$9 = objectProto$12.hasOwnProperty;
-var objectCtorString = funcToString$2.call(Object);
-function isPlainObject(value) {
-  if (!isObjectLike_1(value) || _baseGetTag(value) != objectTag$3) {
-    return false;
-  }
-  var proto = _getPrototype(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = hasOwnProperty$9.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-    funcToString$2.call(Ctor) == objectCtorString;
-}
-var isPlainObject_1 = isPlainObject;
-
-var objectProto$13 = Object.prototype;
-var hasOwnProperty$10 = objectProto$13.hasOwnProperty;
-function assignValue(object, key, value) {
-  var objValue = object[key];
-  if (!(hasOwnProperty$10.call(object, key) && eq_1(objValue, value)) ||
-      (value === undefined && !(key in object))) {
-    _baseAssignValue(object, key, value);
-  }
-}
-var _assignValue = assignValue;
-
-function copyObject(source, props, object, customizer) {
-  var isNew = !object;
-  object || (object = {});
-  var index = -1,
-      length = props.length;
-  while (++index < length) {
-    var key = props[index];
-    var newValue = customizer
-      ? customizer(object[key], source[key], key, object, source)
-      : undefined;
-    if (newValue === undefined) {
-      newValue = source[key];
-    }
-    if (isNew) {
-      _baseAssignValue(object, key, newValue);
-    } else {
-      _assignValue(object, key, newValue);
-    }
-  }
-  return object;
-}
-var _copyObject = copyObject;
-
-function nativeKeysIn(object) {
-  var result = [];
-  if (object != null) {
-    for (var key in Object(object)) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _nativeKeysIn = nativeKeysIn;
-
-var objectProto$14 = Object.prototype;
-var hasOwnProperty$11 = objectProto$14.hasOwnProperty;
-function baseKeysIn(object) {
-  if (!isObject_1(object)) {
-    return _nativeKeysIn(object);
-  }
-  var isProto = _isPrototype(object),
-      result = [];
-  for (var key in object) {
-    if (!(key == 'constructor' && (isProto || !hasOwnProperty$11.call(object, key)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-var _baseKeysIn = baseKeysIn;
-
-function keysIn(object) {
-  return isArrayLike_1(object) ? _arrayLikeKeys(object, true) : _baseKeysIn(object);
-}
-var keysIn_1 = keysIn;
-
-function toPlainObject(value) {
-  return _copyObject(value, keysIn_1(value));
-}
-var toPlainObject_1 = toPlainObject;
-
-function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
-  var objValue = object[key],
-      srcValue = source[key],
-      stacked = stack.get(srcValue);
-  if (stacked) {
-    _assignMergeValue(object, key, stacked);
-    return;
-  }
-  var newValue = customizer
-    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
-    : undefined;
-  var isCommon = newValue === undefined;
-  if (isCommon) {
-    var isArr = isArray_1(srcValue),
-        isBuff = !isArr && isBuffer_1(srcValue),
-        isTyped = !isArr && !isBuff && isTypedArray_1(srcValue);
-    newValue = srcValue;
-    if (isArr || isBuff || isTyped) {
-      if (isArray_1(objValue)) {
-        newValue = objValue;
-      }
-      else if (isArrayLikeObject_1(objValue)) {
-        newValue = _copyArray(objValue);
-      }
-      else if (isBuff) {
-        isCommon = false;
-        newValue = _cloneBuffer(srcValue, true);
-      }
-      else if (isTyped) {
-        isCommon = false;
-        newValue = _cloneTypedArray(srcValue, true);
-      }
-      else {
-        newValue = [];
-      }
-    }
-    else if (isPlainObject_1(srcValue) || isArguments_1(srcValue)) {
-      newValue = objValue;
-      if (isArguments_1(objValue)) {
-        newValue = toPlainObject_1(objValue);
-      }
-      else if (!isObject_1(objValue) || (srcIndex && isFunction_1(objValue))) {
-        newValue = _initCloneObject(srcValue);
-      }
-    }
-    else {
-      isCommon = false;
-    }
-  }
-  if (isCommon) {
-    stack.set(srcValue, newValue);
-    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
-    stack['delete'](srcValue);
-  }
-  _assignMergeValue(object, key, newValue);
-}
-var _baseMergeDeep = baseMergeDeep;
-
-function baseMerge(object, source, srcIndex, customizer, stack) {
-  if (object === source) {
-    return;
-  }
-  _baseFor(source, function(srcValue, key) {
-    if (isObject_1(srcValue)) {
-      stack || (stack = new _Stack);
-      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
-    }
-    else {
-      var newValue = customizer
-        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
-        : undefined;
-      if (newValue === undefined) {
-        newValue = srcValue;
-      }
-      _assignMergeValue(object, key, newValue);
-    }
-  }, keysIn_1);
-}
-var _baseMerge = baseMerge;
-
-function apply(func, thisArg, args) {
-  switch (args.length) {
-    case 0: return func.call(thisArg);
-    case 1: return func.call(thisArg, args[0]);
-    case 2: return func.call(thisArg, args[0], args[1]);
-    case 3: return func.call(thisArg, args[0], args[1], args[2]);
-  }
-  return func.apply(thisArg, args);
-}
-var _apply = apply;
-
-var nativeMax = Math.max;
-function overRest(func, start, transform) {
-  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax(args.length - start, 0),
-        array = Array(length);
-    while (++index < length) {
-      array[index] = args[start + index];
-    }
-    index = -1;
-    var otherArgs = Array(start + 1);
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = transform(array);
-    return _apply(func, this, otherArgs);
-  };
-}
-var _overRest = overRest;
-
-function constant(value) {
-  return function() {
-    return value;
-  };
-}
-var constant_1 = constant;
-
-var baseSetToString = !_defineProperty ? identity_1 : function(func, string) {
-  return _defineProperty(func, 'toString', {
-    'configurable': true,
-    'enumerable': false,
-    'value': constant_1(string),
-    'writable': true
-  });
-};
-var _baseSetToString = baseSetToString;
-
-var HOT_COUNT = 800;
-var HOT_SPAN = 16;
-var nativeNow = Date.now;
-function shortOut(func) {
-  var count = 0,
-      lastCalled = 0;
-  return function() {
-    var stamp = nativeNow(),
-        remaining = HOT_SPAN - (stamp - lastCalled);
-    lastCalled = stamp;
-    if (remaining > 0) {
-      if (++count >= HOT_COUNT) {
-        return arguments[0];
-      }
-    } else {
-      count = 0;
-    }
-    return func.apply(undefined, arguments);
-  };
-}
-var _shortOut = shortOut;
-
-var setToString = _shortOut(_baseSetToString);
-var _setToString = setToString;
-
-function baseRest(func, start) {
-  return _setToString(_overRest(func, start, identity_1), func + '');
-}
-var _baseRest = baseRest;
-
-function isIterateeCall(value, index, object) {
-  if (!isObject_1(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-        ? (isArrayLike_1(object) && _isIndex(index, object.length))
-        : (type == 'string' && index in object)
-      ) {
-    return eq_1(object[index], value);
-  }
-  return false;
-}
-var _isIterateeCall = isIterateeCall;
-
-function createAssigner(assigner) {
-  return _baseRest(function(object, sources) {
-    var index = -1,
-        length = sources.length,
-        customizer = length > 1 ? sources[length - 1] : undefined,
-        guard = length > 2 ? sources[2] : undefined;
-    customizer = (assigner.length > 3 && typeof customizer == 'function')
-      ? (length--, customizer)
-      : undefined;
-    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
-      customizer = length < 3 ? undefined : customizer;
-      length = 1;
-    }
-    object = Object(object);
-    while (++index < length) {
-      var source = sources[index];
-      if (source) {
-        assigner(object, source, index, customizer);
-      }
-    }
-    return object;
-  });
-}
-var _createAssigner = createAssigner;
-
-var merge = _createAssigner(function(object, source, srcIndex) {
-  _baseMerge(object, source, srcIndex);
-});
-var merge_1 = merge;
-
-'use strict';
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-var KNOWN_STATICS = {
-  name: true,
-  length: true,
-  prototype: true,
-  caller: true,
-  callee: true,
-  arguments: true,
-  arity: true
-};
-var defineProperty$2 = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
-var hoistNonReactStatics = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') {
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-        }
-        var keys = getOwnPropertyNames(sourceComponent);
-        if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        }
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try {
-                    defineProperty$2(targetComponent, key, descriptor);
-                } catch (e) {}
-            }
-        }
-        return targetComponent;
-    }
-    return targetComponent;
-};
-
-var isPromise_1 = isPromise;
-function isPromise(obj) {
-  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
-}
-
-var actionTypes = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var prefix = exports.prefix = '@@redux-form/';
-var ARRAY_INSERT = exports.ARRAY_INSERT = prefix + 'ARRAY_INSERT';
-var ARRAY_MOVE = exports.ARRAY_MOVE = prefix + 'ARRAY_MOVE';
-var ARRAY_POP = exports.ARRAY_POP = prefix + 'ARRAY_POP';
-var ARRAY_PUSH = exports.ARRAY_PUSH = prefix + 'ARRAY_PUSH';
-var ARRAY_REMOVE = exports.ARRAY_REMOVE = prefix + 'ARRAY_REMOVE';
-var ARRAY_REMOVE_ALL = exports.ARRAY_REMOVE_ALL = prefix + 'ARRAY_REMOVE_ALL';
-var ARRAY_SHIFT = exports.ARRAY_SHIFT = prefix + 'ARRAY_SHIFT';
-var ARRAY_SPLICE = exports.ARRAY_SPLICE = prefix + 'ARRAY_SPLICE';
-var ARRAY_UNSHIFT = exports.ARRAY_UNSHIFT = prefix + 'ARRAY_UNSHIFT';
-var ARRAY_SWAP = exports.ARRAY_SWAP = prefix + 'ARRAY_SWAP';
-var AUTOFILL = exports.AUTOFILL = prefix + 'AUTOFILL';
-var BLUR = exports.BLUR = prefix + 'BLUR';
-var CHANGE = exports.CHANGE = prefix + 'CHANGE';
-var CLEAR_SUBMIT = exports.CLEAR_SUBMIT = prefix + 'CLEAR_SUBMIT';
-var CLEAR_SUBMIT_ERRORS = exports.CLEAR_SUBMIT_ERRORS = prefix + 'CLEAR_SUBMIT_ERRORS';
-var CLEAR_ASYNC_ERROR = exports.CLEAR_ASYNC_ERROR = prefix + 'CLEAR_ASYNC_ERROR';
-var DESTROY = exports.DESTROY = prefix + 'DESTROY';
-var FOCUS = exports.FOCUS = prefix + 'FOCUS';
-var INITIALIZE = exports.INITIALIZE = prefix + 'INITIALIZE';
-var REGISTER_FIELD = exports.REGISTER_FIELD = prefix + 'REGISTER_FIELD';
-var RESET = exports.RESET = prefix + 'RESET';
-var SET_SUBMIT_FAILED = exports.SET_SUBMIT_FAILED = prefix + 'SET_SUBMIT_FAILED';
-var SET_SUBMIT_SUCCEEDED = exports.SET_SUBMIT_SUCCEEDED = prefix + 'SET_SUBMIT_SUCCEEDED';
-var START_ASYNC_VALIDATION = exports.START_ASYNC_VALIDATION = prefix + 'START_ASYNC_VALIDATION';
-var START_SUBMIT = exports.START_SUBMIT = prefix + 'START_SUBMIT';
-var STOP_ASYNC_VALIDATION = exports.STOP_ASYNC_VALIDATION = prefix + 'STOP_ASYNC_VALIDATION';
-var STOP_SUBMIT = exports.STOP_SUBMIT = prefix + 'STOP_SUBMIT';
-var SUBMIT = exports.SUBMIT = prefix + 'SUBMIT';
-var TOUCH = exports.TOUCH = prefix + 'TOUCH';
-var UNREGISTER_FIELD = exports.UNREGISTER_FIELD = prefix + 'UNREGISTER_FIELD';
-var UNTOUCH = exports.UNTOUCH = prefix + 'UNTOUCH';
-var UPDATE_SYNC_ERRORS = exports.UPDATE_SYNC_ERRORS = prefix + 'UPDATE_SYNC_ERRORS';
-var UPDATE_SYNC_WARNINGS = exports.UPDATE_SYNC_WARNINGS = prefix + 'UPDATE_SYNC_WARNINGS';
-});
-
-var actions_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var arrayInsert = function arrayInsert(form, field, index, value) {
-  return {
-    type: actionTypes.ARRAY_INSERT,
-    meta: { form: form, field: field, index: index },
-    payload: value
-  };
-};
-var arrayMove = function arrayMove(form, field, from, to) {
-  return {
-    type: actionTypes.ARRAY_MOVE,
-    meta: { form: form, field: field, from: from, to: to }
-  };
-};
-var arrayPop = function arrayPop(form, field) {
-  return {
-    type: actionTypes.ARRAY_POP,
-    meta: { form: form, field: field }
-  };
-};
-var arrayPush = function arrayPush(form, field, value) {
-  return {
-    type: actionTypes.ARRAY_PUSH,
-    meta: { form: form, field: field },
-    payload: value
-  };
-};
-var arrayRemove = function arrayRemove(form, field, index) {
-  return {
-    type: actionTypes.ARRAY_REMOVE,
-    meta: { form: form, field: field, index: index }
-  };
-};
-var arrayRemoveAll = function arrayRemoveAll(form, field) {
-  return {
-    type: actionTypes.ARRAY_REMOVE_ALL,
-    meta: { form: form, field: field }
-  };
-};
-var arrayShift = function arrayShift(form, field) {
-  return {
-    type: actionTypes.ARRAY_SHIFT,
-    meta: { form: form, field: field }
-  };
-};
-var arraySplice = function arraySplice(form, field, index, removeNum, value) {
-  var action = {
-    type: actionTypes.ARRAY_SPLICE,
-    meta: { form: form, field: field, index: index, removeNum: removeNum }
-  };
-  if (value !== undefined) {
-    action.payload = value;
-  }
-  return action;
-};
-var arraySwap = function arraySwap(form, field, indexA, indexB) {
-  if (indexA === indexB) {
-    throw new Error('Swap indices cannot be equal');
-  }
-  if (indexA < 0 || indexB < 0) {
-    throw new Error('Swap indices cannot be negative');
-  }
-  return { type: actionTypes.ARRAY_SWAP, meta: { form: form, field: field, indexA: indexA, indexB: indexB } };
-};
-var arrayUnshift = function arrayUnshift(form, field, value) {
-  return {
-    type: actionTypes.ARRAY_UNSHIFT,
-    meta: { form: form, field: field },
-    payload: value
-  };
-};
-var autofill = function autofill(form, field, value) {
-  return {
-    type: actionTypes.AUTOFILL,
-    meta: { form: form, field: field },
-    payload: value
-  };
-};
-var blur = function blur(form, field, value, touch) {
-  return {
-    type: actionTypes.BLUR,
-    meta: { form: form, field: field, touch: touch },
-    payload: value
-  };
-};
-var change = function change(form, field, value, touch, persistentSubmitErrors) {
-  return {
-    type: actionTypes.CHANGE,
-    meta: { form: form, field: field, touch: touch, persistentSubmitErrors: persistentSubmitErrors },
-    payload: value
-  };
-};
-var clearSubmit = function clearSubmit(form) {
-  return {
-    type: actionTypes.CLEAR_SUBMIT,
-    meta: { form: form }
-  };
-};
-var clearSubmitErrors = function clearSubmitErrors(form) {
-  return {
-    type: actionTypes.CLEAR_SUBMIT_ERRORS,
-    meta: { form: form }
-  };
-};
-var clearAsyncError = function clearAsyncError(form, field) {
-  return {
-    type: actionTypes.CLEAR_ASYNC_ERROR,
-    meta: { form: form, field: field }
-  };
-};
-var destroy = function destroy() {
-  for (var _len = arguments.length, form = Array(_len), _key = 0; _key < _len; _key++) {
-    form[_key] = arguments[_key];
-  }
-  return {
-    type: actionTypes.DESTROY,
-    meta: { form: form }
-  };
-};
-var focus = function focus(form, field) {
-  return {
-    type: actionTypes.FOCUS,
-    meta: { form: form, field: field }
-  };
-};
-var initialize = function initialize(form, values, keepDirty) {
-  var otherMeta = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  if (keepDirty instanceof Object) {
-    otherMeta = keepDirty;
-    keepDirty = false;
-  }
-  return {
-    type: actionTypes.INITIALIZE,
-    meta: _extends({ form: form, keepDirty: keepDirty }, otherMeta),
-    payload: values
-  };
-};
-var registerField = function registerField(form, name, type) {
-  return {
-    type: actionTypes.REGISTER_FIELD,
-    meta: { form: form },
-    payload: { name: name, type: type }
-  };
-};
-var reset = function reset(form) {
-  return {
-    type: actionTypes.RESET,
-    meta: { form: form }
-  };
-};
-var startAsyncValidation = function startAsyncValidation(form, field) {
-  return {
-    type: actionTypes.START_ASYNC_VALIDATION,
-    meta: { form: form, field: field }
-  };
-};
-var startSubmit = function startSubmit(form) {
-  return {
-    type: actionTypes.START_SUBMIT,
-    meta: { form: form }
-  };
-};
-var stopAsyncValidation = function stopAsyncValidation(form, errors) {
-  return {
-    type: actionTypes.STOP_ASYNC_VALIDATION,
-    meta: { form: form },
-    payload: errors,
-    error: !!(errors && Object.keys(errors).length)
-  };
-};
-var stopSubmit = function stopSubmit(form, errors) {
-  return {
-    type: actionTypes.STOP_SUBMIT,
-    meta: { form: form },
-    payload: errors,
-    error: !!(errors && Object.keys(errors).length)
-  };
-};
-var submit = function submit(form) {
-  return {
-    type: actionTypes.SUBMIT,
-    meta: { form: form }
-  };
-};
-var setSubmitFailed = function setSubmitFailed(form) {
-  for (var _len2 = arguments.length, fields = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    fields[_key2 - 1] = arguments[_key2];
-  }
-  return {
-    type: actionTypes.SET_SUBMIT_FAILED,
-    meta: { form: form, fields: fields },
-    error: true
-  };
-};
-var setSubmitSucceeded = function setSubmitSucceeded(form) {
-  for (var _len3 = arguments.length, fields = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-    fields[_key3 - 1] = arguments[_key3];
-  }
-  return {
-    type: actionTypes.SET_SUBMIT_SUCCEEDED,
-    meta: { form: form, fields: fields },
-    error: false
-  };
-};
-var touch = function touch(form) {
-  for (var _len4 = arguments.length, fields = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-    fields[_key4 - 1] = arguments[_key4];
-  }
-  return {
-    type: actionTypes.TOUCH,
-    meta: { form: form, fields: fields }
-  };
-};
-var unregisterField = function unregisterField(form, name) {
-  var destroyOnUnmount = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  return {
-    type: actionTypes.UNREGISTER_FIELD,
-    meta: { form: form },
-    payload: { name: name, destroyOnUnmount: destroyOnUnmount }
-  };
-};
-var untouch = function untouch(form) {
-  for (var _len5 = arguments.length, fields = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-    fields[_key5 - 1] = arguments[_key5];
-  }
-  return {
-    type: actionTypes.UNTOUCH,
-    meta: { form: form, fields: fields }
-  };
-};
-var updateSyncErrors = function updateSyncErrors(form) {
-  var syncErrors = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var error = arguments[2];
-  return {
-    type: actionTypes.UPDATE_SYNC_ERRORS,
-    meta: { form: form },
-    payload: { syncErrors: syncErrors, error: error }
-  };
-};
-var updateSyncWarnings = function updateSyncWarnings(form) {
-  var syncWarnings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var warning = arguments[2];
-  return {
-    type: actionTypes.UPDATE_SYNC_WARNINGS,
-    meta: { form: form },
-    payload: { syncWarnings: syncWarnings, warning: warning }
-  };
-};
-var actions = {
-  arrayInsert: arrayInsert,
-  arrayMove: arrayMove,
-  arrayPop: arrayPop,
-  arrayPush: arrayPush,
-  arrayRemove: arrayRemove,
-  arrayRemoveAll: arrayRemoveAll,
-  arrayShift: arrayShift,
-  arraySplice: arraySplice,
-  arraySwap: arraySwap,
-  arrayUnshift: arrayUnshift,
-  autofill: autofill,
-  blur: blur,
-  change: change,
-  clearSubmit: clearSubmit,
-  clearSubmitErrors: clearSubmitErrors,
-  clearAsyncError: clearAsyncError,
-  destroy: destroy,
-  focus: focus,
-  initialize: initialize,
-  registerField: registerField,
-  reset: reset,
-  startAsyncValidation: startAsyncValidation,
-  startSubmit: startSubmit,
-  stopAsyncValidation: stopAsyncValidation,
-  stopSubmit: stopSubmit,
-  submit: submit,
-  setSubmitFailed: setSubmitFailed,
-  setSubmitSucceeded: setSubmitSucceeded,
-  touch: touch,
-  unregisterField: unregisterField,
-  untouch: untouch,
-  updateSyncErrors: updateSyncErrors,
-  updateSyncWarnings: updateSyncWarnings
-};
-exports.default = actions;
-});
-
-var asyncValidation_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isPromise2 = _interopRequireDefault(isPromise_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var asyncValidation = function asyncValidation(fn, start, stop, field) {
-  start(field);
-  var promise = fn();
-  if (!(0, _isPromise2.default)(promise)) {
-    throw new Error('asyncValidate function passed to reduxForm must return a promise');
-  }
-  var handleErrors = function handleErrors(rejected) {
-    return function (errors) {
-      if (errors && Object.keys(errors).length) {
-        stop(errors);
-        return errors;
-      } else if (rejected) {
-        stop();
-        throw new Error('Asynchronous validation promise was rejected without errors.');
-      }
-      stop();
-      return Promise.resolve();
-    };
-  };
-  return promise.then(handleErrors(false), handleErrors(true));
-};
-exports.default = asyncValidation;
-});
-
-var silenceEvent_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _isEvent2 = _interopRequireDefault(isEvent_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var silenceEvent = function silenceEvent(event) {
-  var is = (0, _isEvent2.default)(event);
-  if (is) {
-    event.preventDefault();
-  }
-  return is;
-};
-exports.default = silenceEvent;
-});
-
-var silenceEvents_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _silenceEvent2 = _interopRequireDefault(silenceEvent_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var silenceEvents = function silenceEvents(fn) {
-  return function (event) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    return (0, _silenceEvent2.default)(event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
-  };
-};
-exports.default = silenceEvents;
-});
-
-var generateValidator_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _plain2 = _interopRequireDefault(plain);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var toArray = function toArray(value) {
-  return Array.isArray(value) ? value : [value];
-};
-var getError = function getError(value, values, props, validators) {
-  var array = toArray(validators);
-  for (var i = 0; i < array.length; i++) {
-    var error = array[i](value, values, props);
-    if (error) {
-      return error;
-    }
-  }
-};
-var generateValidator = function generateValidator(validators, _ref) {
-  var getIn = _ref.getIn;
-  return function (values, props) {
-    var errors = {};
-    Object.keys(validators).forEach(function (name) {
-      var value = getIn(values, name);
-      var error = getError(value, values, props, validators[name]);
-      if (error) {
-        errors = _plain2.default.setIn(errors, name, error);
-      }
-    });
-    return errors;
-  };
-};
-exports.default = generateValidator;
-});
-
-var handleSubmit_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _isPromise2 = _interopRequireDefault(isPromise_1);
-var _SubmissionError2 = _interopRequireDefault(SubmissionError_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-var handleSubmit = function handleSubmit(submit, props, valid, asyncValidate, fields) {
-  var dispatch = props.dispatch,
-      onSubmitFail = props.onSubmitFail,
-      onSubmitSuccess = props.onSubmitSuccess,
-      startSubmit = props.startSubmit,
-      stopSubmit = props.stopSubmit,
-      setSubmitFailed = props.setSubmitFailed,
-      setSubmitSucceeded = props.setSubmitSucceeded,
-      syncErrors = props.syncErrors,
-      asyncErrors = props.asyncErrors,
-      touch = props.touch,
-      values = props.values,
-      persistentSubmitErrors = props.persistentSubmitErrors;
-  touch.apply(undefined, _toConsumableArray(fields));
-  if (valid || persistentSubmitErrors) {
-    var doSubmit = function doSubmit() {
-      var result = void 0;
-      try {
-        result = submit(values, dispatch, props);
-      } catch (submitError) {
-        var error = submitError instanceof _SubmissionError2.default ? submitError.errors : undefined;
-        stopSubmit(error);
-        setSubmitFailed.apply(undefined, _toConsumableArray(fields));
-        if (onSubmitFail) {
-          onSubmitFail(error, dispatch, submitError, props);
-        }
-        if (error || onSubmitFail) {
-          return error;
-        } else {
-          throw submitError;
-        }
-      }
-      if ((0, _isPromise2.default)(result)) {
-        startSubmit();
-        return result.then(function (submitResult) {
-          stopSubmit();
-          setSubmitSucceeded();
-          if (onSubmitSuccess) {
-            onSubmitSuccess(submitResult, dispatch, props);
-          }
-          return submitResult;
-        }, function (submitError) {
-          var error = submitError instanceof _SubmissionError2.default ? submitError.errors : undefined;
-          stopSubmit(error);
-          setSubmitFailed.apply(undefined, _toConsumableArray(fields));
-          if (onSubmitFail) {
-            onSubmitFail(error, dispatch, submitError, props);
-          }
-          if (error || onSubmitFail) {
-            return error;
-          } else {
-            throw submitError;
-          }
-        });
-      } else {
-        setSubmitSucceeded();
-        if (onSubmitSuccess) {
-          onSubmitSuccess(result, dispatch, props);
-        }
-      }
-      return result;
-    };
-    var asyncValidateResult = asyncValidate && asyncValidate();
-    if (asyncValidateResult) {
-      return asyncValidateResult.then(function (asyncErrors) {
-        if (asyncErrors) {
-          throw asyncErrors;
-        }
-        return doSubmit();
-      }).catch(function (asyncErrors) {
-        setSubmitFailed.apply(undefined, _toConsumableArray(fields));
-        if (onSubmitFail) {
-          onSubmitFail(asyncErrors, dispatch, null, props);
-        }
-        return Promise.reject(asyncErrors);
-      });
-    } else {
-      return doSubmit();
-    }
-  } else {
-    setSubmitFailed.apply(undefined, _toConsumableArray(fields));
-    var errors = _extends({}, asyncErrors, syncErrors);
-    if (onSubmitFail) {
-      onSubmitFail(errors, dispatch, null, props);
-    }
-    return errors;
-  }
-};
-exports.default = handleSubmit;
-});
-
-var getDisplayName_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var React$$2 = _interopRequireWildcard(React);
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-var getDisplayName = function getDisplayName(Comp) {
-  return Comp.displayName || Comp.name || 'Component';
-};
-exports.default = getDisplayName;
-});
-
-var createReduxForm_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _merge5 = _interopRequireDefault(merge_1);
-var _mapValues3 = _interopRequireDefault(mapValues_1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var React$$2 = _interopRequireWildcard(React);
-var _hoistNonReactStatics2 = _interopRequireDefault(hoistNonReactStatics);
-var _isPromise2 = _interopRequireDefault(isPromise_1);
-var _propTypes2 = _interopRequireDefault(PropTypes);
-var _actions2 = _interopRequireDefault(actions_1);
-var _asyncValidation2 = _interopRequireDefault(asyncValidation_1);
-var _defaultShouldAsyncValidate2 = _interopRequireDefault(defaultShouldAsyncValidate_1);
-var _defaultShouldValidate2 = _interopRequireDefault(defaultShouldValidate_1);
-var _silenceEvent2 = _interopRequireDefault(silenceEvent_1);
-var _silenceEvents2 = _interopRequireDefault(silenceEvents_1);
-var _generateValidator2 = _interopRequireDefault(generateValidator_1);
-var _handleSubmit2 = _interopRequireDefault(handleSubmit_1);
-var _isValid2 = _interopRequireDefault(isValid);
-var _plain2 = _interopRequireDefault(plain);
-var _getDisplayName2 = _interopRequireDefault(getDisplayName_1);
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var isClassComponent = function isClassComponent(Component) {
-  return Boolean(Component && Component.prototype && _typeof(Component.prototype.isReactComponent) === 'object');
-};
-var arrayInsert = _actions2.default.arrayInsert,
-    arrayMove = _actions2.default.arrayMove,
-    arrayPop = _actions2.default.arrayPop,
-    arrayPush = _actions2.default.arrayPush,
-    arrayRemove = _actions2.default.arrayRemove,
-    arrayRemoveAll = _actions2.default.arrayRemoveAll,
-    arrayShift = _actions2.default.arrayShift,
-    arraySplice = _actions2.default.arraySplice,
-    arraySwap = _actions2.default.arraySwap,
-    arrayUnshift = _actions2.default.arrayUnshift,
-    blur = _actions2.default.blur,
-    change = _actions2.default.change,
-    focus = _actions2.default.focus,
-    formActions = _objectWithoutProperties(_actions2.default, ['arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'blur', 'change', 'focus']);
-var arrayActions = {
-  arrayInsert: arrayInsert,
-  arrayMove: arrayMove,
-  arrayPop: arrayPop,
-  arrayPush: arrayPush,
-  arrayRemove: arrayRemove,
-  arrayRemoveAll: arrayRemoveAll,
-  arrayShift: arrayShift,
-  arraySplice: arraySplice,
-  arraySwap: arraySwap,
-  arrayUnshift: arrayUnshift
-};
-var propsToNotUpdateFor = [].concat(_toConsumableArray(Object.keys(_actions2.default)), ['array', 'asyncErrors', 'initialValues', 'syncErrors', 'syncWarnings', 'values', 'registeredFields']);
-var checkSubmit = function checkSubmit(submit) {
-  if (!submit || typeof submit !== 'function') {
-    throw new Error('You must either pass handleSubmit() an onSubmit function or pass onSubmit as a prop');
-  }
-  return submit;
-};
-var createReduxForm = function createReduxForm(structure) {
-  var deepEqual = structure.deepEqual,
-      empty = structure.empty,
-      getIn = structure.getIn,
-      setIn = structure.setIn,
-      keys = structure.keys,
-      fromJS = structure.fromJS;
-  var isValid$$2 = (0, _isValid2.default)(structure);
-  return function (initialConfig) {
-    var config = _extends({
-      touchOnBlur: true,
-      touchOnChange: false,
-      persistentSubmitErrors: false,
-      destroyOnUnmount: true,
-      shouldAsyncValidate: _defaultShouldAsyncValidate2.default,
-      shouldValidate: _defaultShouldValidate2.default,
-      enableReinitialize: false,
-      keepDirtyOnReinitialize: false,
-      getFormState: function getFormState(state) {
-        return getIn(state, 'form');
-      },
-      pure: true,
-      forceUnregisterOnUnmount: false
-    }, initialConfig);
-    return function (WrappedComponent) {
-      var Form$$1 = function (_Component) {
-        _inherits(Form$$1, _Component);
-        function Form$$1() {
-          var _ref;
-          var _temp, _this, _ret;
-          _classCallCheck(this, Form$$1);
-          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Form$$1.__proto__ || Object.getPrototypeOf(Form$$1)).call.apply(_ref, [this].concat(args))), _this), _this.destroyed = false, _this.fieldValidators = {}, _this.lastFieldValidatorKeys = [], _this.fieldWarners = {}, _this.lastFieldWarnerKeys = [], _this.innerOnSubmit = undefined, _this.submitPromise = undefined, _this.getValues = function () {
-            return _this.props.values;
-          }, _this.isValid = function () {
-            return _this.props.valid;
-          }, _this.isPristine = function () {
-            return _this.props.pristine;
-          }, _this.register = function (name, type, getValidator, getWarner) {
-            _this.props.registerField(name, type);
-            if (getValidator) {
-              _this.fieldValidators[name] = getValidator;
-            }
-            if (getWarner) {
-              _this.fieldWarners[name] = getWarner;
-            }
-          }, _this.unregister = function (name) {
-            if (!_this.destroyed) {
-              if (_this.props.destroyOnUnmount || _this.props.forceUnregisterOnUnmount) {
-                _this.props.unregisterField(name);
-                delete _this.fieldValidators[name];
-                delete _this.fieldWarners[name];
-              } else {
-                _this.props.unregisterField(name, false);
-              }
-            }
-          }, _this.getFieldList = function (options) {
-            var registeredFields = _this.props.registeredFields;
-            var list = [];
-            if (!registeredFields) {
-              return list;
-            }
-            var keySeq = keys(registeredFields);
-            if (options && options.excludeFieldArray) {
-              keySeq = keySeq.filter(function (name) {
-                return getIn(registeredFields, '[\'' + name + '\'].type') !== 'FieldArray';
-              });
-            }
-            return fromJS(keySeq.reduce(function (acc, key) {
-              acc.push(key);
-              return acc;
-            }, list));
-          }, _this.getValidators = function () {
-            var validators = {};
-            Object.keys(_this.fieldValidators).forEach(function (name) {
-              var validator = _this.fieldValidators[name]();
-              if (validator) {
-                validators[name] = validator;
-              }
-            });
-            return validators;
-          }, _this.generateValidator = function () {
-            var validators = _this.getValidators();
-            return Object.keys(validators).length ? (0, _generateValidator2.default)(validators, structure) : undefined;
-          }, _this.getWarners = function () {
-            var warners = {};
-            Object.keys(_this.fieldWarners).forEach(function (name) {
-              var warner = _this.fieldWarners[name]();
-              if (warner) {
-                warners[name] = warner;
-              }
-            });
-            return warners;
-          }, _this.generateWarner = function () {
-            var warners = _this.getWarners();
-            return Object.keys(warners).length ? (0, _generateValidator2.default)(warners, structure) : undefined;
-          }, _this.asyncValidate = function (name, value) {
-            var _this$props = _this.props,
-                asyncBlurFields = _this$props.asyncBlurFields,
-                asyncErrors = _this$props.asyncErrors,
-                asyncValidate = _this$props.asyncValidate,
-                dispatch = _this$props.dispatch,
-                initialized = _this$props.initialized,
-                pristine = _this$props.pristine,
-                shouldAsyncValidate = _this$props.shouldAsyncValidate,
-                startAsyncValidation = _this$props.startAsyncValidation,
-                stopAsyncValidation = _this$props.stopAsyncValidation,
-                syncErrors = _this$props.syncErrors,
-                values = _this$props.values;
-            var submitting = !name;
-            if (asyncValidate) {
-              var valuesToValidate = submitting ? values : setIn(values, name, value);
-              var syncValidationPasses = submitting || !getIn(syncErrors, name);
-              var isBlurredField = !submitting && (!asyncBlurFields || ~asyncBlurFields.indexOf(name.replace(/\[[0-9]+\]/g, '[]')));
-              if ((isBlurredField || submitting) && shouldAsyncValidate({
-                asyncErrors: asyncErrors,
-                initialized: initialized,
-                trigger: submitting ? 'submit' : 'blur',
-                blurredField: name,
-                pristine: pristine,
-                syncValidationPasses: syncValidationPasses
-              })) {
-                return (0, _asyncValidation2.default)(function () {
-                  return asyncValidate(valuesToValidate, dispatch, _this.props, name);
-                }, startAsyncValidation, stopAsyncValidation, name);
-              }
-            }
-          }, _this.submitCompleted = function (result) {
-            delete _this.submitPromise;
-            return result;
-          }, _this.submitFailed = function (error) {
-            delete _this.submitPromise;
-            return error;
-          }, _this.listenToSubmit = function (promise) {
-            if (!(0, _isPromise2.default)(promise)) {
-              return promise;
-            }
-            _this.submitPromise = promise;
-            return promise.then(_this.submitCompleted, _this.submitFailed);
-          }, _this.submit = function (submitOrEvent) {
-            var _this$props2 = _this.props,
-                onSubmit = _this$props2.onSubmit,
-                blur = _this$props2.blur,
-                change = _this$props2.change,
-                dispatch = _this$props2.dispatch;
-            if (!submitOrEvent || (0, _silenceEvent2.default)(submitOrEvent)) {
-              if (!_this.submitPromise) {
-                if (_this.innerOnSubmit && _this.innerOnSubmit !== _this.submit) {
-                  return _this.innerOnSubmit();
-                } else {
-                  return _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(onSubmit), _extends({}, _this.props, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
-                }
-              }
-            } else {
-              return (0, _silenceEvents2.default)(function () {
-                return !_this.submitPromise && _this.listenToSubmit((0, _handleSubmit2.default)(checkSubmit(submitOrEvent), _extends({}, _this.props, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch)), _this.props.validExceptSubmit, _this.asyncValidate, _this.getFieldList({ excludeFieldArray: true })));
-              });
-            }
-          }, _this.reset = function () {
-            return _this.props.reset();
-          }, _temp), _possibleConstructorReturn(_this, _ret);
-        }
-        _createClass(Form$$1, [{
-          key: 'getChildContext',
-          value: function getChildContext() {
-            var _this2 = this;
-            return {
-              _reduxForm: _extends({}, this.props, {
-                getFormState: function getFormState(state) {
-                  return getIn(_this2.props.getFormState(state), _this2.props.form);
-                },
-                asyncValidate: this.asyncValidate,
-                getValues: this.getValues,
-                sectionPrefix: undefined,
-                register: this.register,
-                unregister: this.unregister,
-                registerInnerOnSubmit: function registerInnerOnSubmit(innerOnSubmit) {
-                  return _this2.innerOnSubmit = innerOnSubmit;
-                }
-              })
-            };
-          }
-        }, {
-          key: 'initIfNeeded',
-          value: function initIfNeeded(nextProps) {
-            var enableReinitialize = this.props.enableReinitialize;
-            if (nextProps) {
-              if ((enableReinitialize || !nextProps.initialized) && !deepEqual(this.props.initialValues, nextProps.initialValues)) {
-                var _keepDirty = nextProps.initialized && this.props.keepDirtyOnReinitialize;
-                this.props.initialize(nextProps.initialValues, _keepDirty, {
-                  lastInitialValues: this.props.initialValues
-                });
-              }
-            } else if (this.props.initialValues && (!this.props.initialized || enableReinitialize)) {
-              this.props.initialize(this.props.initialValues, this.props.keepDirtyOnReinitialize);
-            }
-          }
-        }, {
-          key: 'updateSyncErrorsIfNeeded',
-          value: function updateSyncErrorsIfNeeded(nextSyncErrors, nextError, lastSyncErrors) {
-            var _props = this.props,
-                error = _props.error,
-                updateSyncErrors = _props.updateSyncErrors;
-            var noErrors = (!lastSyncErrors || !Object.keys(lastSyncErrors).length) && !error;
-            var nextNoErrors = (!nextSyncErrors || !Object.keys(nextSyncErrors).length) && !nextError;
-            if (!(noErrors && nextNoErrors) && (!_plain2.default.deepEqual(lastSyncErrors, nextSyncErrors) || !_plain2.default.deepEqual(error, nextError))) {
-              updateSyncErrors(nextSyncErrors, nextError);
-            }
-          }
-        }, {
-          key: 'clearSubmitPromiseIfNeeded',
-          value: function clearSubmitPromiseIfNeeded(nextProps) {
-            var submitting = this.props.submitting;
-            if (this.submitPromise && submitting && !nextProps.submitting) {
-              delete this.submitPromise;
-            }
-          }
-        }, {
-          key: 'submitIfNeeded',
-          value: function submitIfNeeded(nextProps) {
-            var _props2 = this.props,
-                clearSubmit = _props2.clearSubmit,
-                triggerSubmit = _props2.triggerSubmit;
-            if (!triggerSubmit && nextProps.triggerSubmit) {
-              clearSubmit();
-              this.submit();
-            }
-          }
-        }, {
-          key: 'validateIfNeeded',
-          value: function validateIfNeeded(nextProps) {
-            var _props3 = this.props,
-                shouldValidate = _props3.shouldValidate,
-                validate = _props3.validate,
-                values = _props3.values;
-            var fieldLevelValidate = this.generateValidator();
-            if (validate || fieldLevelValidate) {
-              var initialRender = nextProps === undefined;
-              var fieldValidatorKeys = Object.keys(this.getValidators());
-              var shouldValidateResult = shouldValidate({
-                values: values,
-                nextProps: nextProps,
-                props: this.props,
-                initialRender: initialRender,
-                lastFieldValidatorKeys: this.lastFieldValidatorKeys,
-                fieldValidatorKeys: fieldValidatorKeys,
-                structure: structure
-              });
-              if (shouldValidateResult) {
-                var propsToValidate = initialRender || !nextProps ? this.props : nextProps;
-                var _merge2 = (0, _merge5.default)(validate ? validate(propsToValidate.values, propsToValidate) || {} : {}, fieldLevelValidate ? fieldLevelValidate(propsToValidate.values, propsToValidate) || {} : {}),
-                    _error = _merge2._error,
-                    nextSyncErrors = _objectWithoutProperties(_merge2, ['_error']);
-                this.lastFieldValidatorKeys = fieldValidatorKeys;
-                this.updateSyncErrorsIfNeeded(nextSyncErrors, _error, propsToValidate.syncErrors);
-              }
-            }
-          }
-        }, {
-          key: 'updateSyncWarningsIfNeeded',
-          value: function updateSyncWarningsIfNeeded(nextSyncWarnings, nextWarning, lastSyncWarnings) {
-            var _props4 = this.props,
-                warning = _props4.warning,
-                syncWarnings = _props4.syncWarnings,
-                updateSyncWarnings = _props4.updateSyncWarnings;
-            var noWarnings = (!syncWarnings || !Object.keys(syncWarnings).length) && !warning;
-            var nextNoWarnings = (!nextSyncWarnings || !Object.keys(nextSyncWarnings).length) && !nextWarning;
-            if (!(noWarnings && nextNoWarnings) && (!_plain2.default.deepEqual(lastSyncWarnings, nextSyncWarnings) || !_plain2.default.deepEqual(warning, nextWarning))) {
-              updateSyncWarnings(nextSyncWarnings, nextWarning);
-            }
-          }
-        }, {
-          key: 'warnIfNeeded',
-          value: function warnIfNeeded(nextProps) {
-            var _props5 = this.props,
-                shouldValidate = _props5.shouldValidate,
-                warn = _props5.warn,
-                values = _props5.values;
-            var fieldLevelWarn = this.generateWarner();
-            if (warn || fieldLevelWarn) {
-              var initialRender = nextProps === undefined;
-              var fieldWarnerKeys = Object.keys(this.getWarners());
-              var shouldWarnResult = shouldValidate({
-                values: values,
-                nextProps: nextProps,
-                props: this.props,
-                initialRender: initialRender,
-                lastFieldValidatorKeys: this.lastFieldWarnerKeys,
-                fieldValidatorKeys: fieldWarnerKeys,
-                structure: structure
-              });
-              if (shouldWarnResult) {
-                var propsToWarn = initialRender || !nextProps ? this.props : nextProps;
-                var _merge3 = (0, _merge5.default)(warn ? warn(propsToWarn.values, propsToWarn) : {}, fieldLevelWarn ? fieldLevelWarn(propsToWarn.values, propsToWarn) : {}),
-                    _warning = _merge3._warning,
-                    nextSyncWarnings = _objectWithoutProperties(_merge3, ['_warning']);
-                this.lastFieldWarnerKeys = fieldWarnerKeys;
-                this.updateSyncWarningsIfNeeded(nextSyncWarnings, _warning, propsToWarn.syncWarnings);
-              }
-            }
-          }
-        }, {
-          key: 'componentWillMount',
-          value: function componentWillMount() {
-            this.initIfNeeded();
-            this.validateIfNeeded();
-            this.warnIfNeeded();
-          }
-        }, {
-          key: 'componentWillReceiveProps',
-          value: function componentWillReceiveProps(nextProps) {
-            this.initIfNeeded(nextProps);
-            this.validateIfNeeded(nextProps);
-            this.warnIfNeeded(nextProps);
-            this.clearSubmitPromiseIfNeeded(nextProps);
-            this.submitIfNeeded(nextProps);
-            var onChange = nextProps.onChange,
-                values = nextProps.values,
-                dispatch = nextProps.dispatch;
-            if (onChange && !deepEqual(values, this.props.values)) {
-              onChange(values, dispatch, nextProps);
-            }
-          }
-        }, {
-          key: 'shouldComponentUpdate',
-          value: function shouldComponentUpdate(nextProps) {
-            var _this3 = this;
-            if (!this.props.pure) return true;
-            var _config$immutableProp = config.immutableProps,
-                immutableProps = _config$immutableProp === undefined ? [] : _config$immutableProp;
-            return Object.keys(nextProps).some(function (prop) {
-              if (~immutableProps.indexOf(prop)) {
-                return _this3.props[prop] !== nextProps[prop];
-              }
-              return !~propsToNotUpdateFor.indexOf(prop) && !deepEqual(_this3.props[prop], nextProps[prop]);
-            });
-          }
-        }, {
-          key: 'componentWillUnmount',
-          value: function componentWillUnmount() {
-            var _props6 = this.props,
-                destroyOnUnmount = _props6.destroyOnUnmount,
-                destroy = _props6.destroy;
-            if (destroyOnUnmount) {
-              this.destroyed = true;
-              destroy();
-            }
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var _props7 = this.props,
-                anyTouched = _props7.anyTouched,
-                arrayInsert = _props7.arrayInsert,
-                arrayMove = _props7.arrayMove,
-                arrayPop = _props7.arrayPop,
-                arrayPush = _props7.arrayPush,
-                arrayRemove = _props7.arrayRemove,
-                arrayRemoveAll = _props7.arrayRemoveAll,
-                arrayShift = _props7.arrayShift,
-                arraySplice = _props7.arraySplice,
-                arraySwap = _props7.arraySwap,
-                arrayUnshift = _props7.arrayUnshift,
-                asyncErrors = _props7.asyncErrors,
-                asyncValidate = _props7.asyncValidate,
-                asyncValidating = _props7.asyncValidating,
-                blur = _props7.blur,
-                change = _props7.change,
-                clearSubmit = _props7.clearSubmit,
-                destroy = _props7.destroy,
-                destroyOnUnmount = _props7.destroyOnUnmount,
-                forceUnregisterOnUnmount = _props7.forceUnregisterOnUnmount,
-                dirty = _props7.dirty,
-                dispatch = _props7.dispatch,
-                enableReinitialize = _props7.enableReinitialize,
-                error = _props7.error,
-                focus = _props7.focus,
-                form = _props7.form,
-                getFormState = _props7.getFormState,
-                initialize = _props7.initialize,
-                initialized = _props7.initialized,
-                initialValues = _props7.initialValues,
-                invalid = _props7.invalid,
-                keepDirtyOnReinitialize = _props7.keepDirtyOnReinitialize,
-                pristine = _props7.pristine,
-                propNamespace = _props7.propNamespace,
-                registeredFields = _props7.registeredFields,
-                registerField = _props7.registerField,
-                reset = _props7.reset,
-                setSubmitFailed = _props7.setSubmitFailed,
-                setSubmitSucceeded = _props7.setSubmitSucceeded,
-                shouldAsyncValidate = _props7.shouldAsyncValidate,
-                shouldValidate = _props7.shouldValidate,
-                startAsyncValidation = _props7.startAsyncValidation,
-                startSubmit = _props7.startSubmit,
-                stopAsyncValidation = _props7.stopAsyncValidation,
-                stopSubmit = _props7.stopSubmit,
-                submitting = _props7.submitting,
-                submitFailed = _props7.submitFailed,
-                submitSucceeded = _props7.submitSucceeded,
-                touch = _props7.touch,
-                touchOnBlur = _props7.touchOnBlur,
-                touchOnChange = _props7.touchOnChange,
-                persistentSubmitErrors = _props7.persistentSubmitErrors,
-                syncErrors = _props7.syncErrors,
-                syncWarnings = _props7.syncWarnings,
-                unregisterField = _props7.unregisterField,
-                untouch = _props7.untouch,
-                updateSyncErrors = _props7.updateSyncErrors,
-                updateSyncWarnings = _props7.updateSyncWarnings,
-                valid = _props7.valid,
-                validExceptSubmit = _props7.validExceptSubmit,
-                values = _props7.values,
-                warning = _props7.warning,
-                rest = _objectWithoutProperties(_props7, ['anyTouched', 'arrayInsert', 'arrayMove', 'arrayPop', 'arrayPush', 'arrayRemove', 'arrayRemoveAll', 'arrayShift', 'arraySplice', 'arraySwap', 'arrayUnshift', 'asyncErrors', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'destroyOnUnmount', 'forceUnregisterOnUnmount', 'dirty', 'dispatch', 'enableReinitialize', 'error', 'focus', 'form', 'getFormState', 'initialize', 'initialized', 'initialValues', 'invalid', 'keepDirtyOnReinitialize', 'pristine', 'propNamespace', 'registeredFields', 'registerField', 'reset', 'setSubmitFailed', 'setSubmitSucceeded', 'shouldAsyncValidate', 'shouldValidate', 'startAsyncValidation', 'startSubmit', 'stopAsyncValidation', 'stopSubmit', 'submitting', 'submitFailed', 'submitSucceeded', 'touch', 'touchOnBlur', 'touchOnChange', 'persistentSubmitErrors', 'syncErrors', 'syncWarnings', 'unregisterField', 'untouch', 'updateSyncErrors', 'updateSyncWarnings', 'valid', 'validExceptSubmit', 'values', 'warning']);
-            var reduxFormProps = _extends({
-              anyTouched: anyTouched,
-              asyncValidate: this.asyncValidate,
-              asyncValidating: asyncValidating
-            }, (0, _redux.bindActionCreators)({ blur: blur, change: change }, dispatch), {
-              clearSubmit: clearSubmit,
-              destroy: destroy,
-              dirty: dirty,
-              dispatch: dispatch,
-              error: error,
-              form: form,
-              handleSubmit: this.submit,
-              initialize: initialize,
-              initialized: initialized,
-              initialValues: initialValues,
-              invalid: invalid,
-              pristine: pristine,
-              reset: reset,
-              submitting: submitting,
-              submitFailed: submitFailed,
-              submitSucceeded: submitSucceeded,
-              touch: touch,
-              untouch: untouch,
-              valid: valid,
-              warning: warning
-            });
-            var propsToPass = _extends({}, propNamespace ? _defineProperty({}, propNamespace, reduxFormProps) : reduxFormProps, rest);
-            if (isClassComponent(WrappedComponent)) {
-              propsToPass.ref = 'wrapped';
-            }
-            return (0, React.createElement)(WrappedComponent, propsToPass);
-          }
-        }]);
-        return Form$$1;
-      }(React.Component);
-      Form$$1.displayName = 'Form(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
-      Form$$1.WrappedComponent = WrappedComponent;
-      Form$$1.childContextTypes = {
-        _reduxForm: _propTypes2.default.object.isRequired
-      };
-      Form$$1.propTypes = {
-        destroyOnUnmount: _propTypes2.default.bool,
-        forceUnregisterOnUnmount: _propTypes2.default.bool,
-        form: _propTypes2.default.string.isRequired,
-        initialValues: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object]),
-        getFormState: _propTypes2.default.func,
-        onSubmitFail: _propTypes2.default.func,
-        onSubmitSuccess: _propTypes2.default.func,
-        propNamespace: _propTypes2.default.string,
-        validate: _propTypes2.default.func,
-        warn: _propTypes2.default.func,
-        touchOnBlur: _propTypes2.default.bool,
-        touchOnChange: _propTypes2.default.bool,
-        triggerSubmit: _propTypes2.default.bool,
-        persistentSubmitErrors: _propTypes2.default.bool,
-        registeredFields: _propTypes2.default.any
-      };
-      var connector = (0, _reactRedux.connect)(function (state, props) {
-        var form = props.form,
-            getFormState = props.getFormState,
-            initialValues = props.initialValues,
-            enableReinitialize = props.enableReinitialize,
-            keepDirtyOnReinitialize = props.keepDirtyOnReinitialize;
-        var formState = getIn(getFormState(state) || empty, form) || empty;
-        var stateInitial = getIn(formState, 'initial');
-        var initialized = !!stateInitial;
-        var shouldUpdateInitialValues = enableReinitialize && initialized && !deepEqual(initialValues, stateInitial);
-        var shouldResetValues = shouldUpdateInitialValues && !keepDirtyOnReinitialize;
-        var initial = initialValues || stateInitial || empty;
-        if (shouldUpdateInitialValues) {
-          initial = stateInitial || empty;
-        }
-        var values = getIn(formState, 'values') || initial;
-        if (shouldResetValues) {
-          values = initial;
-        }
-        var pristine = shouldResetValues || deepEqual(initial, values);
-        var asyncErrors = getIn(formState, 'asyncErrors');
-        var syncErrors = getIn(formState, 'syncErrors') || {};
-        var syncWarnings = getIn(formState, 'syncWarnings') || {};
-        var registeredFields = getIn(formState, 'registeredFields');
-        var valid = isValid$$2(form, getFormState, false)(state);
-        var validExceptSubmit = isValid$$2(form, getFormState, true)(state);
-        var anyTouched = !!getIn(formState, 'anyTouched');
-        var submitting = !!getIn(formState, 'submitting');
-        var submitFailed = !!getIn(formState, 'submitFailed');
-        var submitSucceeded = !!getIn(formState, 'submitSucceeded');
-        var error = getIn(formState, 'error');
-        var warning = getIn(formState, 'warning');
-        var triggerSubmit = getIn(formState, 'triggerSubmit');
-        return {
-          anyTouched: anyTouched,
-          asyncErrors: asyncErrors,
-          asyncValidating: getIn(formState, 'asyncValidating') || false,
-          dirty: !pristine,
-          error: error,
-          initialized: initialized,
-          invalid: !valid,
-          pristine: pristine,
-          registeredFields: registeredFields,
-          submitting: submitting,
-          submitFailed: submitFailed,
-          submitSucceeded: submitSucceeded,
-          syncErrors: syncErrors,
-          syncWarnings: syncWarnings,
-          triggerSubmit: triggerSubmit,
-          values: values,
-          valid: valid,
-          validExceptSubmit: validExceptSubmit,
-          warning: warning
-        };
-      }, function (dispatch, initialProps) {
-        var bindForm = function bindForm(actionCreator) {
-          return actionCreator.bind(null, initialProps.form);
-        };
-        var boundFormACs = (0, _mapValues3.default)(formActions, bindForm);
-        var boundArrayACs = (0, _mapValues3.default)(arrayActions, bindForm);
-        var boundBlur = function boundBlur(field, value) {
-          return blur(initialProps.form, field, value, !!initialProps.touchOnBlur);
-        };
-        var boundChange = function boundChange(field, value) {
-          return change(initialProps.form, field, value, !!initialProps.touchOnChange, !!initialProps.persistentSubmitErrors);
-        };
-        var boundFocus = bindForm(focus);
-        var connectedFormACs = (0, _redux.bindActionCreators)(boundFormACs, dispatch);
-        var connectedArrayACs = {
-          insert: (0, _redux.bindActionCreators)(boundArrayACs.arrayInsert, dispatch),
-          move: (0, _redux.bindActionCreators)(boundArrayACs.arrayMove, dispatch),
-          pop: (0, _redux.bindActionCreators)(boundArrayACs.arrayPop, dispatch),
-          push: (0, _redux.bindActionCreators)(boundArrayACs.arrayPush, dispatch),
-          remove: (0, _redux.bindActionCreators)(boundArrayACs.arrayRemove, dispatch),
-          removeAll: (0, _redux.bindActionCreators)(boundArrayACs.arrayRemoveAll, dispatch),
-          shift: (0, _redux.bindActionCreators)(boundArrayACs.arrayShift, dispatch),
-          splice: (0, _redux.bindActionCreators)(boundArrayACs.arraySplice, dispatch),
-          swap: (0, _redux.bindActionCreators)(boundArrayACs.arraySwap, dispatch),
-          unshift: (0, _redux.bindActionCreators)(boundArrayACs.arrayUnshift, dispatch)
-        };
-        var computedActions = _extends({}, connectedFormACs, boundArrayACs, {
-          blur: boundBlur,
-          change: boundChange,
-          array: connectedArrayACs,
-          focus: boundFocus,
-          dispatch: dispatch
-        });
-        return function () {
-          return computedActions;
-        };
-      }, undefined, { withRef: true });
-      var ConnectedForm = (0, _hoistNonReactStatics2.default)(connector(Form$$1), WrappedComponent);
-      ConnectedForm.defaultProps = config;
-      return function (_Component2) {
-        _inherits(ReduxForm, _Component2);
-        function ReduxForm() {
-          _classCallCheck(this, ReduxForm);
-          return _possibleConstructorReturn(this, (ReduxForm.__proto__ || Object.getPrototypeOf(ReduxForm)).apply(this, arguments));
-        }
-        _createClass(ReduxForm, [{
-          key: 'submit',
-          value: function submit() {
-            return this.ref && this.ref.getWrappedInstance().submit();
-          }
-        }, {
-          key: 'reset',
-          value: function reset() {
-            if (this.ref) {
-              this.ref.getWrappedInstance().reset();
-            }
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var _this5 = this;
-            var _props8 = this.props,
-                initialValues = _props8.initialValues,
-                rest = _objectWithoutProperties(_props8, ['initialValues']);
-            return (0, React.createElement)(ConnectedForm, _extends({}, rest, {
-              ref: function ref(_ref3) {
-                return _this5.ref = _ref3;
-              },
-              initialValues: fromJS(initialValues)
-            }));
-          }
-        }, {
-          key: 'valid',
-          get: function get() {
-            return !!(this.ref && this.ref.getWrappedInstance().isValid());
-          }
-        }, {
-          key: 'invalid',
-          get: function get() {
-            return !this.valid;
-          }
-        }, {
-          key: 'pristine',
-          get: function get() {
-            return !!(this.ref && this.ref.getWrappedInstance().isPristine());
-          }
-        }, {
-          key: 'dirty',
-          get: function get() {
-            return !this.pristine;
-          }
-        }, {
-          key: 'values',
-          get: function get() {
-            return this.ref ? this.ref.getWrappedInstance().getValues() : empty;
-          }
-        }, {
-          key: 'fieldList',
-          get: function get() {
-            return this.ref ? this.ref.getWrappedInstance().getFieldList() : [];
-          }
-        }, {
-          key: 'wrappedInstance',
-          get: function get() {
-            return this.ref && this.ref.getWrappedInstance().refs.wrapped;
-          }
-        }]);
-        return ReduxForm;
-      }(React.Component);
-    };
-  };
-};
-exports.default = createReduxForm;
-});
-
-var reduxForm = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createReduxForm2 = _interopRequireDefault(createReduxForm_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createReduxForm2.default)(_immutable2.default);
-});
-
-var deleteInWithCleanUp = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _toPath3 = _interopRequireDefault(toPath_1);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function createDeleteInWithCleanUp(_ref) {
-  var deepEqual = _ref.deepEqual,
-      empty = _ref.empty,
-      getIn = _ref.getIn,
-      deleteIn = _ref.deleteIn,
-      setIn = _ref.setIn;
-  var deleteInWithCleanUp = function deleteInWithCleanUp(state, path) {
-    if (path[path.length - 1] === ']') {
-      var pathTokens = (0, _toPath3.default)(path);
-      pathTokens.pop();
-      var parent = getIn(state, pathTokens.join('.'));
-      return parent ? setIn(state, path) : state;
-    }
-    var result = state;
-    if (getIn(state, path) !== undefined) {
-      result = deleteIn(state, path);
-    }
-    var dotIndex = path.lastIndexOf('.');
-    if (dotIndex > 0) {
-      var parentPath = path.substring(0, dotIndex);
-      if (parentPath[parentPath.length - 1] !== ']') {
-        var _parent = getIn(result, parentPath);
-        if (deepEqual(_parent, empty)) {
-          return deleteInWithCleanUp(result, parentPath);
-        }
-      }
-    }
-    return result;
-  };
-  return deleteInWithCleanUp;
-}
-exports.default = createDeleteInWithCleanUp;
-});
-
-var createReducer_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _deleteInWithCleanUp2 = _interopRequireDefault(deleteInWithCleanUp);
-var _plain2 = _interopRequireDefault(plain);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-var isReduxFormAction = function isReduxFormAction(action) {
-  return action && action.type && action.type.length > actionTypes.prefix.length && action.type.substring(0, actionTypes.prefix.length) === actionTypes.prefix;
-};
-function createReducer(structure) {
-  var _behaviors;
-  var deepEqual = structure.deepEqual,
-      empty = structure.empty,
-      forEach = structure.forEach,
-      getIn = structure.getIn,
-      setIn = structure.setIn,
-      deleteIn = structure.deleteIn,
-      fromJS = structure.fromJS,
-      keys = structure.keys,
-      size = structure.size,
-      some = structure.some,
-      splice = structure.splice;
-  var deleteInWithCleanUp$$1 = (0, _deleteInWithCleanUp2.default)(structure);
-  var plainDeleteInWithCleanUp = (0, _deleteInWithCleanUp2.default)(_plain2.default);
-  var doSplice = function doSplice(state, key, field, index, removeNum, value, force) {
-    var existing = getIn(state, key + '.' + field);
-    return existing || force ? setIn(state, key + '.' + field, splice(existing, index, removeNum, value)) : state;
-  };
-  var doPlainSplice = function doPlainSplice(state, key, field, index, removeNum, value, force) {
-    var slice = getIn(state, key);
-    var existing = _plain2.default.getIn(slice, field);
-    return existing || force ? setIn(state, key, _plain2.default.setIn(slice, field, _plain2.default.splice(existing, index, removeNum, value))) : state;
-  };
-  var rootKeys = ['values', 'fields', 'submitErrors', 'asyncErrors'];
-  var arraySplice = function arraySplice(state, field, index, removeNum, value) {
-    var result = state;
-    var nonValuesValue = value != null ? empty : undefined;
-    result = doSplice(result, 'values', field, index, removeNum, value, true);
-    result = doSplice(result, 'fields', field, index, removeNum, nonValuesValue);
-    result = doPlainSplice(result, 'syncErrors', field, index, removeNum, undefined);
-    result = doPlainSplice(result, 'syncWarnings', field, index, removeNum, undefined);
-    result = doSplice(result, 'submitErrors', field, index, removeNum, undefined);
-    result = doSplice(result, 'asyncErrors', field, index, removeNum, undefined);
-    return result;
-  };
-  var behaviors = (_behaviors = {}, _defineProperty(_behaviors, actionTypes.ARRAY_INSERT, function (state, _ref) {
-    var _ref$meta = _ref.meta,
-        field = _ref$meta.field,
-        index = _ref$meta.index,
-        payload = _ref.payload;
-    return arraySplice(state, field, index, 0, payload);
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_MOVE, function (state, _ref2) {
-    var _ref2$meta = _ref2.meta,
-        field = _ref2$meta.field,
-        from = _ref2$meta.from,
-        to = _ref2$meta.to;
-    var array = getIn(state, 'values.' + field);
-    var length = array ? size(array) : 0;
-    var result = state;
-    if (length) {
-      rootKeys.forEach(function (key) {
-        var path = key + '.' + field;
-        if (getIn(result, path)) {
-          var value = getIn(result, path + '[' + from + ']');
-          result = setIn(result, path, splice(getIn(result, path), from, 1));
-          result = setIn(result, path, splice(getIn(result, path), to, 0, value));
-        }
-      });
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_POP, function (state, _ref3) {
-    var field = _ref3.meta.field;
-    var array = getIn(state, 'values.' + field);
-    var length = array ? size(array) : 0;
-    return length ? arraySplice(state, field, length - 1, 1) : state;
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_PUSH, function (state, _ref4) {
-    var field = _ref4.meta.field,
-        payload = _ref4.payload;
-    var array = getIn(state, 'values.' + field);
-    var length = array ? size(array) : 0;
-    return arraySplice(state, field, length, 0, payload);
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_REMOVE, function (state, _ref5) {
-    var _ref5$meta = _ref5.meta,
-        field = _ref5$meta.field,
-        index = _ref5$meta.index;
-    return arraySplice(state, field, index, 1);
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_REMOVE_ALL, function (state, _ref6) {
-    var field = _ref6.meta.field;
-    var array = getIn(state, 'values.' + field);
-    var length = array ? size(array) : 0;
-    return length ? arraySplice(state, field, 0, length) : state;
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_SHIFT, function (state, _ref7) {
-    var field = _ref7.meta.field;
-    return arraySplice(state, field, 0, 1);
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_SPLICE, function (state, _ref8) {
-    var _ref8$meta = _ref8.meta,
-        field = _ref8$meta.field,
-        index = _ref8$meta.index,
-        removeNum = _ref8$meta.removeNum,
-        payload = _ref8.payload;
-    return arraySplice(state, field, index, removeNum, payload);
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_SWAP, function (state, _ref9) {
-    var _ref9$meta = _ref9.meta,
-        field = _ref9$meta.field,
-        indexA = _ref9$meta.indexA,
-        indexB = _ref9$meta.indexB;
-    var result = state;
-    rootKeys.forEach(function (key) {
-      var valueA = getIn(result, key + '.' + field + '[' + indexA + ']');
-      var valueB = getIn(result, key + '.' + field + '[' + indexB + ']');
-      if (valueA !== undefined || valueB !== undefined) {
-        result = setIn(result, key + '.' + field + '[' + indexA + ']', valueB);
-        result = setIn(result, key + '.' + field + '[' + indexB + ']', valueA);
-      }
-    });
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.ARRAY_UNSHIFT, function (state, _ref10) {
-    var field = _ref10.meta.field,
-        payload = _ref10.payload;
-    return arraySplice(state, field, 0, 0, payload);
-  }), _defineProperty(_behaviors, actionTypes.AUTOFILL, function (state, _ref11) {
-    var field = _ref11.meta.field,
-        payload = _ref11.payload;
-    var result = state;
-    result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + field);
-    result = deleteInWithCleanUp$$1(result, 'submitErrors.' + field);
-    result = setIn(result, 'fields.' + field + '.autofilled', true);
-    result = setIn(result, 'values.' + field, payload);
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.BLUR, function (state, _ref12) {
-    var _ref12$meta = _ref12.meta,
-        field = _ref12$meta.field,
-        touch = _ref12$meta.touch,
-        payload = _ref12.payload;
-    var result = state;
-    var initial = getIn(result, 'initial.' + field);
-    if (initial === undefined && payload === '') {
-      result = deleteInWithCleanUp$$1(result, 'values.' + field);
-    } else if (payload !== undefined) {
-      result = setIn(result, 'values.' + field, payload);
-    }
-    if (field === getIn(result, 'active')) {
-      result = deleteIn(result, 'active');
-    }
-    result = deleteIn(result, 'fields.' + field + '.active');
-    if (touch) {
-      result = setIn(result, 'fields.' + field + '.touched', true);
-      result = setIn(result, 'anyTouched', true);
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.CHANGE, function (state, _ref13) {
-    var _ref13$meta = _ref13.meta,
-        field = _ref13$meta.field,
-        touch = _ref13$meta.touch,
-        persistentSubmitErrors = _ref13$meta.persistentSubmitErrors,
-        payload = _ref13.payload;
-    var result = state;
-    var initial = getIn(result, 'initial.' + field);
-    if (initial === undefined && payload === '') {
-      result = deleteInWithCleanUp$$1(result, 'values.' + field);
-    } else if (payload !== undefined) {
-      result = setIn(result, 'values.' + field, payload);
-    }
-    result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + field);
-    if (!persistentSubmitErrors) {
-      result = deleteInWithCleanUp$$1(result, 'submitErrors.' + field);
-    }
-    result = deleteInWithCleanUp$$1(result, 'fields.' + field + '.autofilled');
-    if (touch) {
-      result = setIn(result, 'fields.' + field + '.touched', true);
-      result = setIn(result, 'anyTouched', true);
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.CLEAR_SUBMIT, function (state) {
-    return deleteIn(state, 'triggerSubmit');
-  }), _defineProperty(_behaviors, actionTypes.CLEAR_SUBMIT_ERRORS, function (state) {
-    var result = state;
-    result = deleteInWithCleanUp$$1(result, 'submitErrors');
-    result = deleteIn(result, 'error');
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.CLEAR_ASYNC_ERROR, function (state, _ref14) {
-    var field = _ref14.meta.field;
-    return deleteIn(state, 'asyncErrors.' + field);
-  }), _defineProperty(_behaviors, actionTypes.FOCUS, function (state, _ref15) {
-    var field = _ref15.meta.field;
-    var result = state;
-    var previouslyActive = getIn(state, 'active');
-    result = deleteIn(result, 'fields.' + previouslyActive + '.active');
-    result = setIn(result, 'fields.' + field + '.visited', true);
-    result = setIn(result, 'fields.' + field + '.active', true);
-    result = setIn(result, 'active', field);
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.INITIALIZE, function (state, _ref16) {
-    var payload = _ref16.payload,
-        _ref16$meta = _ref16.meta,
-        keepDirty = _ref16$meta.keepDirty,
-        keepSubmitSucceeded = _ref16$meta.keepSubmitSucceeded;
-    var mapData = fromJS(payload);
-    var result = empty;
-    var warning = getIn(state, 'warning');
-    if (warning) {
-      result = setIn(result, 'warning', warning);
-    }
-    var syncWarnings = getIn(state, 'syncWarnings');
-    if (syncWarnings) {
-      result = setIn(result, 'syncWarnings', syncWarnings);
-    }
-    var error = getIn(state, 'error');
-    if (error) {
-      result = setIn(result, 'error', error);
-    }
-    var syncErrors = getIn(state, 'syncErrors');
-    if (syncErrors) {
-      result = setIn(result, 'syncErrors', syncErrors);
-    }
-    var registeredFields = getIn(state, 'registeredFields');
-    if (registeredFields) {
-      result = setIn(result, 'registeredFields', registeredFields);
-    }
-    var previousValues = getIn(state, 'values');
-    var previousInitialValues = getIn(state, 'initial');
-    var newInitialValues = mapData;
-    var newValues = previousValues;
-    if (keepDirty && registeredFields) {
-      if (!deepEqual(newInitialValues, previousInitialValues)) {
-        forEach(keys(registeredFields), function (name) {
-          var previousInitialValue = getIn(previousInitialValues, name);
-          var previousValue = getIn(previousValues, name);
-          if (deepEqual(previousValue, previousInitialValue)) {
-            var newInitialValue = getIn(newInitialValues, name);
-            if (getIn(newValues, name) !== newInitialValue) {
-              newValues = setIn(newValues, name, newInitialValue);
-            }
-          }
-        });
-        forEach(keys(newInitialValues), function (name) {
-          var previousInitialValue = getIn(previousInitialValues, name);
-          if (typeof previousInitialValue === 'undefined') {
-            var newInitialValue = getIn(newInitialValues, name);
-            newValues = setIn(newValues, name, newInitialValue);
-          }
-        });
-      }
-    } else {
-      newValues = newInitialValues;
-    }
-    if (keepSubmitSucceeded && getIn(state, 'submitSucceeded')) {
-      result = setIn(result, 'submitSucceeded', true);
-    }
-    result = setIn(result, 'values', newValues);
-    result = setIn(result, 'initial', newInitialValues);
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.REGISTER_FIELD, function (state, _ref17) {
-    var _ref17$payload = _ref17.payload,
-        name = _ref17$payload.name,
-        type = _ref17$payload.type;
-    var key = 'registeredFields[\'' + name + '\']';
-    var field = getIn(state, key);
-    if (field) {
-      var count = getIn(field, 'count') + 1;
-      field = setIn(field, 'count', count);
-    } else {
-      field = fromJS({ name: name, type: type, count: 1 });
-    }
-    return setIn(state, key, field);
-  }), _defineProperty(_behaviors, actionTypes.RESET, function (state) {
-    var result = empty;
-    var registeredFields = getIn(state, 'registeredFields');
-    if (registeredFields) {
-      result = setIn(result, 'registeredFields', registeredFields);
-    }
-    var values = getIn(state, 'initial');
-    if (values) {
-      result = setIn(result, 'values', values);
-      result = setIn(result, 'initial', values);
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.SUBMIT, function (state) {
-    return setIn(state, 'triggerSubmit', true);
-  }), _defineProperty(_behaviors, actionTypes.START_ASYNC_VALIDATION, function (state, _ref18) {
-    var field = _ref18.meta.field;
-    return setIn(state, 'asyncValidating', field || true);
-  }), _defineProperty(_behaviors, actionTypes.START_SUBMIT, function (state) {
-    return setIn(state, 'submitting', true);
-  }), _defineProperty(_behaviors, actionTypes.STOP_ASYNC_VALIDATION, function (state, _ref19) {
-    var payload = _ref19.payload;
-    var result = state;
-    result = deleteIn(result, 'asyncValidating');
-    if (payload && Object.keys(payload).length) {
-      var _error = payload._error,
-          fieldErrors = _objectWithoutProperties(payload, ['_error']);
-      if (_error) {
-        result = setIn(result, 'error', _error);
-      }
-      if (Object.keys(fieldErrors).length) {
-        result = setIn(result, 'asyncErrors', fromJS(fieldErrors));
-      }
-    } else {
-      result = deleteIn(result, 'error');
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.STOP_SUBMIT, function (state, _ref20) {
-    var payload = _ref20.payload;
-    var result = state;
-    result = deleteIn(result, 'submitting');
-    result = deleteIn(result, 'submitFailed');
-    result = deleteIn(result, 'submitSucceeded');
-    if (payload && Object.keys(payload).length) {
-      var _error = payload._error,
-          fieldErrors = _objectWithoutProperties(payload, ['_error']);
-      if (_error) {
-        result = setIn(result, 'error', _error);
-      } else {
-        result = deleteIn(result, 'error');
-      }
-      if (Object.keys(fieldErrors).length) {
-        result = setIn(result, 'submitErrors', fromJS(fieldErrors));
-      } else {
-        result = deleteIn(result, 'submitErrors');
-      }
-      result = setIn(result, 'submitFailed', true);
-    } else {
-      result = setIn(result, 'submitSucceeded', true);
-      result = deleteIn(result, 'error');
-      result = deleteIn(result, 'submitErrors');
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.SET_SUBMIT_FAILED, function (state, _ref21) {
-    var fields = _ref21.meta.fields;
-    var result = state;
-    result = setIn(result, 'submitFailed', true);
-    result = deleteIn(result, 'submitSucceeded');
-    result = deleteIn(result, 'submitting');
-    fields.forEach(function (field) {
-      return result = setIn(result, 'fields.' + field + '.touched', true);
-    });
-    if (fields.length) {
-      result = setIn(result, 'anyTouched', true);
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.SET_SUBMIT_SUCCEEDED, function (state) {
-    var result = state;
-    result = deleteIn(result, 'submitFailed');
-    result = setIn(result, 'submitSucceeded', true);
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.TOUCH, function (state, _ref22) {
-    var fields = _ref22.meta.fields;
-    var result = state;
-    fields.forEach(function (field) {
-      return result = setIn(result, 'fields.' + field + '.touched', true);
-    });
-    result = setIn(result, 'anyTouched', true);
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.UNREGISTER_FIELD, function (state, _ref23) {
-    var _ref23$payload = _ref23.payload,
-        name = _ref23$payload.name,
-        destroyOnUnmount = _ref23$payload.destroyOnUnmount;
-    var result = state;
-    var key = 'registeredFields[\'' + name + '\']';
-    var field = getIn(result, key);
-    if (!field) {
-      return result;
-    }
-    var count = getIn(field, 'count') - 1;
-    if (count <= 0 && destroyOnUnmount) {
-      result = deleteIn(result, key);
-      if (deepEqual(getIn(result, 'registeredFields'), empty)) {
-        result = deleteIn(result, 'registeredFields');
-      }
-      var syncErrors = getIn(result, 'syncErrors');
-      if (syncErrors) {
-        syncErrors = plainDeleteInWithCleanUp(syncErrors, name);
-        if (_plain2.default.deepEqual(syncErrors, _plain2.default.empty)) {
-          result = deleteIn(result, 'syncErrors');
-        } else {
-          result = setIn(result, 'syncErrors', syncErrors);
-        }
-      }
-      var syncWarnings = getIn(result, 'syncWarnings');
-      if (syncWarnings) {
-        syncWarnings = plainDeleteInWithCleanUp(syncWarnings, name);
-        if (_plain2.default.deepEqual(syncWarnings, _plain2.default.empty)) {
-          result = deleteIn(result, 'syncWarnings');
-        } else {
-          result = setIn(result, 'syncWarnings', syncWarnings);
-        }
-      }
-      result = deleteInWithCleanUp$$1(result, 'submitErrors.' + name);
-      result = deleteInWithCleanUp$$1(result, 'asyncErrors.' + name);
-    } else {
-      field = setIn(field, 'count', count);
-      result = setIn(result, key, field);
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.UNTOUCH, function (state, _ref24) {
-    var fields = _ref24.meta.fields;
-    var result = state;
-    fields.forEach(function (field) {
-      return result = deleteIn(result, 'fields.' + field + '.touched');
-    });
-    var anyTouched = some(keys(getIn(result, 'registeredFields')), function (key) {
-      return getIn(result, 'fields.' + key + '.touched');
-    });
-    result = anyTouched ? setIn(result, 'anyTouched', true) : deleteIn(result, 'anyTouched');
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.UPDATE_SYNC_ERRORS, function (state, _ref25) {
-    var _ref25$payload = _ref25.payload,
-        syncErrors = _ref25$payload.syncErrors,
-        error = _ref25$payload.error;
-    var result = state;
-    if (error) {
-      result = setIn(result, 'error', error);
-      result = setIn(result, 'syncError', true);
-    } else {
-      result = deleteIn(result, 'error');
-      result = deleteIn(result, 'syncError');
-    }
-    if (Object.keys(syncErrors).length) {
-      result = setIn(result, 'syncErrors', syncErrors);
-    } else {
-      result = deleteIn(result, 'syncErrors');
-    }
-    return result;
-  }), _defineProperty(_behaviors, actionTypes.UPDATE_SYNC_WARNINGS, function (state, _ref26) {
-    var _ref26$payload = _ref26.payload,
-        syncWarnings = _ref26$payload.syncWarnings,
-        warning = _ref26$payload.warning;
-    var result = state;
-    if (warning) {
-      result = setIn(result, 'warning', warning);
-    } else {
-      result = deleteIn(result, 'warning');
-    }
-    if (Object.keys(syncWarnings).length) {
-      result = setIn(result, 'syncWarnings', syncWarnings);
-    } else {
-      result = deleteIn(result, 'syncWarnings');
-    }
-    return result;
-  }), _behaviors);
-  var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
-    var action = arguments[1];
-    var behavior = behaviors[action.type];
-    return behavior ? behavior(state, action) : state;
-  };
-  var byForm = function byForm(reducer) {
-    return function () {
-      var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
-      var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { type: 'NONE' };
-      var form = action && action.meta && action.meta.form;
-      if (!form || !isReduxFormAction(action)) {
-        return state;
-      }
-      if (action.type === actionTypes.DESTROY && action.meta && action.meta.form) {
-        return action.meta.form.reduce(function (result, form) {
-          return deleteInWithCleanUp$$1(result, form);
-        }, state);
-      }
-      var formState = getIn(state, form);
-      var result = reducer(formState, action);
-      return result === formState ? state : setIn(state, form, result);
-    };
-  };
-  function decorate(target) {
-    target.plugin = function plugin(reducers) {
-      var _this = this;
-      return decorate(function () {
-        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : empty;
-        var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { type: 'NONE' };
-        return Object.keys(reducers).reduce(function (accumulator, key) {
-          var previousState = getIn(accumulator, key);
-          var nextState = reducers[key](previousState, action, getIn(state, key));
-          return nextState === previousState ? accumulator : setIn(accumulator, key, nextState);
-        }, _this(state, action));
-      });
-    };
-    return target;
-  }
-  return decorate(byForm(reducer));
-}
-exports.default = createReducer;
-});
-
-var reducer = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createReducer2 = _interopRequireDefault(createReducer_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createReducer2.default)(_immutable2.default);
-});
-
-var createValues_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-var createValues = function createValues(_ref) {
-  var getIn = _ref.getIn;
-  return function (config) {
-    var _prop$getFormState$co = _extends({
-      prop: 'values',
-      getFormState: function getFormState(state) {
-        return getIn(state, 'form');
-      }
-    }, config),
-        form = _prop$getFormState$co.form,
-        prop = _prop$getFormState$co.prop,
-        getFormState = _prop$getFormState$co.getFormState;
-    return (0, _reactRedux.connect)(function (state) {
-      return _defineProperty({}, prop, getIn(getFormState(state), form + '.values'));
-    }
-    );
-  };
-};
-exports.default = createValues;
-});
-
-var values = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _createValues2 = _interopRequireDefault(createValues_1);
-var _immutable2 = _interopRequireDefault(immutable$4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = (0, _createValues2.default)(_immutable2.default);
-});
-
-var immutable$2 = createCommonjsModule(function (module, exports) {
-'use strict';
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.untouch = exports.unregisterField = exports.touch = exports.submit = exports.stopSubmit = exports.stopAsyncValidation = exports.startSubmit = exports.startAsyncValidation = exports.setSubmitSucceeded = exports.setSubmitFailed = exports.reset = exports.registerField = exports.initialize = exports.focus = exports.destroy = exports.clearSubmitErrors = exports.change = exports.blur = exports.autofill = exports.arrayUnshift = exports.arraySwap = exports.arraySplice = exports.arrayShift = exports.arrayRemoveAll = exports.arrayRemove = exports.arrayPush = exports.arrayPop = exports.arrayMove = exports.arrayInsert = exports.actionTypes = exports.values = exports.reducer = exports.reduxForm = exports.hasSubmitFailed = exports.hasSubmitSucceeded = exports.isSubmitting = exports.isValid = exports.isPristine = exports.isInvalid = exports.isDirty = exports.getFormSubmitErrors = exports.getFormSyncWarnings = exports.getFormAsyncErrors = exports.getFormMeta = exports.getFormSyncErrors = exports.getFormInitialValues = exports.getFormValues = exports.getFormNames = exports.formValues = exports.formValueSelector = exports.FieldArray = exports.Fields = exports.Field = exports.formPropTypes = exports.fieldPropTypes = exports.fieldMetaPropTypes = exports.fieldInputPropTypes = exports.propTypes = exports.SubmissionError = exports.FormSection = exports.Form = exports.defaultShouldValidate = exports.defaultShouldAsyncValidate = undefined;
-Object.defineProperty(exports, 'defaultShouldAsyncValidate', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(defaultShouldAsyncValidate_1).default;
-  }
-});
-Object.defineProperty(exports, 'defaultShouldValidate', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(defaultShouldValidate_1).default;
-  }
-});
-Object.defineProperty(exports, 'Form', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(Form_1).default;
-  }
-});
-Object.defineProperty(exports, 'FormSection', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FormSection_1).default;
-  }
-});
-Object.defineProperty(exports, 'SubmissionError', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(SubmissionError_1).default;
-  }
-});
-Object.defineProperty(exports, 'propTypes', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(propTypes$1).default;
-  }
-});
-Object.defineProperty(exports, 'fieldInputPropTypes', {
-  enumerable: true,
-  get: function get() {
-    return propTypes$1.fieldInputPropTypes;
-  }
-});
-Object.defineProperty(exports, 'fieldMetaPropTypes', {
-  enumerable: true,
-  get: function get() {
-    return propTypes$1.fieldMetaPropTypes;
-  }
-});
-Object.defineProperty(exports, 'fieldPropTypes', {
-  enumerable: true,
-  get: function get() {
-    return propTypes$1.fieldPropTypes;
-  }
-});
-Object.defineProperty(exports, 'formPropTypes', {
-  enumerable: true,
-  get: function get() {
-    return propTypes$1.formPropTypes;
-  }
-});
-Object.defineProperty(exports, 'Field', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(Field).default;
-  }
-});
-Object.defineProperty(exports, 'Fields', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(Fields).default;
-  }
-});
-Object.defineProperty(exports, 'FieldArray', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(FieldArray).default;
-  }
-});
-Object.defineProperty(exports, 'formValueSelector', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(formValueSelector).default;
-  }
-});
-Object.defineProperty(exports, 'formValues', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(formValues).default;
-  }
-});
-Object.defineProperty(exports, 'getFormNames', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormNames).default;
-  }
-});
-Object.defineProperty(exports, 'getFormValues', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormValues).default;
-  }
-});
-Object.defineProperty(exports, 'getFormInitialValues', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormInitialValues).default;
-  }
-});
-Object.defineProperty(exports, 'getFormSyncErrors', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormSyncErrors).default;
-  }
-});
-Object.defineProperty(exports, 'getFormMeta', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormMeta).default;
-  }
-});
-Object.defineProperty(exports, 'getFormAsyncErrors', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormAsyncErrors).default;
-  }
-});
-Object.defineProperty(exports, 'getFormSyncWarnings', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormSyncWarnings).default;
-  }
-});
-Object.defineProperty(exports, 'getFormSubmitErrors', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(getFormSubmitErrors).default;
-  }
-});
-Object.defineProperty(exports, 'isDirty', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(isDirty).default;
-  }
-});
-Object.defineProperty(exports, 'isInvalid', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(isInvalid).default;
-  }
-});
-Object.defineProperty(exports, 'isPristine', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(isPristine$2).default;
-  }
-});
-Object.defineProperty(exports, 'isValid', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(isValid$2).default;
-  }
-});
-Object.defineProperty(exports, 'isSubmitting', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(isSubmitting).default;
-  }
-});
-Object.defineProperty(exports, 'hasSubmitSucceeded', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(hasSubmitSucceeded).default;
-  }
-});
-Object.defineProperty(exports, 'hasSubmitFailed', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(hasSubmitFailed).default;
-  }
-});
-Object.defineProperty(exports, 'reduxForm', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(reduxForm).default;
-  }
-});
-Object.defineProperty(exports, 'reducer', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(reducer).default;
-  }
-});
-Object.defineProperty(exports, 'values', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(values).default;
-  }
-});
-var _actions2 = _interopRequireDefault(actions_1);
-var _actionTypes$$1 = _interopRequireWildcard(actionTypes);
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var actionTypes$$1 = exports.actionTypes = _actionTypes$$1;
-var arrayInsert = exports.arrayInsert = _actions2.default.arrayInsert;
-var arrayMove = exports.arrayMove = _actions2.default.arrayMove;
-var arrayPop = exports.arrayPop = _actions2.default.arrayPop;
-var arrayPush = exports.arrayPush = _actions2.default.arrayPush;
-var arrayRemove = exports.arrayRemove = _actions2.default.arrayRemove;
-var arrayRemoveAll = exports.arrayRemoveAll = _actions2.default.arrayRemoveAll;
-var arrayShift = exports.arrayShift = _actions2.default.arrayShift;
-var arraySplice = exports.arraySplice = _actions2.default.arraySplice;
-var arraySwap = exports.arraySwap = _actions2.default.arraySwap;
-var arrayUnshift = exports.arrayUnshift = _actions2.default.arrayUnshift;
-var autofill = exports.autofill = _actions2.default.autofill;
-var blur = exports.blur = _actions2.default.blur;
-var change = exports.change = _actions2.default.change;
-var clearSubmitErrors = exports.clearSubmitErrors = _actions2.default.clearSubmitErrors;
-var destroy = exports.destroy = _actions2.default.destroy;
-var focus = exports.focus = _actions2.default.focus;
-var initialize = exports.initialize = _actions2.default.initialize;
-var registerField = exports.registerField = _actions2.default.registerField;
-var reset = exports.reset = _actions2.default.reset;
-var setSubmitFailed = exports.setSubmitFailed = _actions2.default.setSubmitFailed;
-var setSubmitSucceeded = exports.setSubmitSucceeded = _actions2.default.setSubmitSucceeded;
-var startAsyncValidation = exports.startAsyncValidation = _actions2.default.startAsyncValidation;
-var startSubmit = exports.startSubmit = _actions2.default.startSubmit;
-var stopAsyncValidation = exports.stopAsyncValidation = _actions2.default.stopAsyncValidation;
-var stopSubmit = exports.stopSubmit = _actions2.default.stopSubmit;
-var submit = exports.submit = _actions2.default.submit;
-var touch = exports.touch = _actions2.default.touch;
-var unregisterField = exports.unregisterField = _actions2.default.unregisterField;
-var untouch = exports.untouch = _actions2.default.untouch;
-});
-
-var immutable = immutable$2;
-var immutable_1 = immutable.Field;
-var immutable_2 = immutable.reduxForm;
+var Field$1 = unwrapExports(Field);
 
 var makeTheme$1 = function makeTheme$$1() {
   var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -11187,7 +8868,7 @@ var LoginFormUnstyled = function LoginFormUnstyled(props) {
     React.createElement(
       'div',
       { className: 'form__field-wrapper' },
-      React.createElement(immutable_1, {
+      React.createElement(Field$1, {
         name: 'username',
         type: 'text',
         label: React.createElement(FormattedMessage, messages.formUsername),
@@ -11198,7 +8879,7 @@ var LoginFormUnstyled = function LoginFormUnstyled(props) {
     React.createElement(
       'div',
       { className: 'form__field-wrapper' },
-      React.createElement(immutable_1, {
+      React.createElement(Field$1, {
         name: 'password',
         type: 'password',
         label: React.createElement(FormattedMessage, messages.formPassword),
@@ -11236,7 +8917,7 @@ var LoginFormStyled = styled(LoginFormUnstyled).withConfig({
   return '\n    .form__field-wrapper {\n      width: 100%;\n      position: relative;\n      padding-top: 1.75em;\n      border-top: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      border-bottom: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n    \n    .form__field-wrapper + .form__field-wrapper {\n      border-top: none;\n    }\n    \n    .form__field-input:focus ~ .form__field-label {\n      color: ' + props.theme.loginForm.$color + ';\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n    }\n    \n    .form__field-input:focus {\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n      color: ' + props.theme.loginForm['$color-dark'] + ';\n    }\n    \n    .form__field-label {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      padding: 16px;\n      padding-top: 20px;\n      padding-bottom: 0;\n      margin: 0;\n      z-index: 1;\n      font-size: .8em;\n      color: ' + props.theme.loginForm['$color-light'] + ';\n      font-weight: 400;\n      user-select: none;\n      cursor: text;\n      \n      .form_field-error {\n        float: right;\n      }\n    }\n    \n    .form__field-input {\n      position: relative;\n      padding: 1.625em 16px;\n      width: 100%;\n      color: ' + props.theme.loginForm.$color + ';\n      border: none;\n      font-family: inherit;\n      outline: 0;\n      letter-spacing: 0.05em;\n    }\n    \n    .form__submit-btn-wrapper {\n      padding: 2em 1em;\n      width: 100%;\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n      display: flex;\n      justify-content: center;\n    }\n  ';
 });
 LoginFormStyled.defaultProps = defaultProps$1;
-var LoginForm = immutable_2({
+var LoginForm = reduxForm$1({
   form: 'login',
   enableReinitialize: false,
   validate: validate

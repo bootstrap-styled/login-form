@@ -43,7 +43,7 @@ const plugins = [
     include: 'node_modules/**',
     namedExports: {
       './node_modules/immutable/dist/immutable.js': ['fromJS', 'Map', 'List', 'Record', 'Iterable'],
-      './node_modules/redux-form/immutable.js': ['Field', 'reduxForm'],
+      // './node_modules/redux-form/es/immutable.js': ['Field', 'reduxForm'],
     },
   }),
   replace({
