@@ -1,6 +1,6 @@
 {
   "name": "login-form",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Library login-form description",
   "main": "lib/index.js",
   "jsnext:main": "dist/login-form.es.js",

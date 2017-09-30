@@ -16732,4 +16732,5 @@ var FormWrapper = _styledComponents(FormWrapperUnstyled).withConfig({
 FormWrapper.defaultProps = defaultProps$$1;
 
 export { FormWrapper as LoginForm, makeTheme$3 as makeThemeLoginForm, theme$4 as themeLoginForm };
+export default FormWrapper;
 //# sourceMappingURL=login-form.es.js.map

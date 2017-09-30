@@ -16734,6 +16734,7 @@ var FormWrapper = _styledComponents__default(FormWrapperUnstyled).withConfig({
 });
 FormWrapper.defaultProps = defaultProps$$1;
 
+exports['default'] = FormWrapper;
 exports.LoginForm = FormWrapper;
 exports.makeThemeLoginForm = makeTheme$3;
 exports.themeLoginForm = theme$4;
