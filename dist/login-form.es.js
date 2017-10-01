@@ -7,7 +7,7 @@ import messages from 'message-common';
 import { Alert, Button, Form, P, Small, makeTheme } from 'bootstrap-styled';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme } from 'bootstrap-styled-motion';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { Field, reduxForm as reduxForm$1 } from 'redux-form';
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1713,12 +1713,12 @@ var theme$2 = makeTheme$1();
 
 var validate = function validate(values) {
   var errors = {};
-  if (!values.get('username')) {
+  if (!values.username) {
     errors.username = 'kopax.common.form.warning.required';
-  } else if (values.get('username').length > 15) {
+  } else if (values.username.length > 15) {
     errors.username = 'kopax.common.form.warning.usernameMaxLength';
   }
-  if (!values.get('password')) {
+  if (!values.password) {
     errors.password = 'kopax.common.form.warning.required';
   }
   return errors;
@@ -2102,7 +2102,7 @@ var LoginFormStyled = styled(LoginFormUnstyled).withConfig({
   return '\n    .form__field-wrapper {\n      width: 100%;\n      position: relative;\n      padding-top: 1.75em;\n      border-top: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      border-bottom: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n    \n    .form__field-wrapper + .form__field-wrapper {\n      border-top: none;\n    }\n    \n    .form__field-input:focus ~ .form__field-label {\n      color: ' + props.theme.loginForm.$color + ';\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n    }\n    \n    .form__field-input:focus {\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n      color: ' + props.theme.loginForm['$color-dark'] + ';\n    }\n    \n    .form__field-label {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      padding: 16px;\n      padding-top: 20px;\n      padding-bottom: 0;\n      margin: 0;\n      z-index: 1;\n      font-size: .8em;\n      color: ' + props.theme.loginForm['$color-light'] + ';\n      font-weight: 400;\n      user-select: none;\n      cursor: text;\n      \n      .form_field-error {\n        float: right;\n      }\n    }\n    \n    .form__field-input {\n      position: relative;\n      padding: 1.625em 16px;\n      width: 100%;\n      color: ' + props.theme.loginForm.$color + ';\n      border: none;\n      font-family: inherit;\n      outline: 0;\n      letter-spacing: 0.05em;\n    }\n    \n    .form__submit-btn-wrapper {\n      padding: 2em 1em;\n      width: 100%;\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n      display: flex;\n      justify-content: center;\n    }\n  ';
 });
 LoginFormStyled.defaultProps = defaultProps$2$1;
-var LoginForm = reduxForm({
+var LoginForm = reduxForm$1({
   form: 'login',
   enableReinitialize: false,
   validate: validate

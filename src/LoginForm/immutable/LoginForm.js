@@ -7,7 +7,7 @@ import messages from 'message-common';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme as themeMotion } from 'bootstrap-styled-motion';
 import { Form, Button, P, makeTheme } from 'bootstrap-styled';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field } from 'redux-form/immutable';
 import { theme as themeLoginForm } from './theme';
 import { validate as validateForm } from './validate';
 const theme = makeTheme({ ...themeLoginForm, ...themeMotion });
