@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.9] - 2017-09-30
+
+- Refactor with HoC. 
+
+## [0.1.8] - 2017-09-30
+
+- Added form `redux-form/immutable`.
+
 ## [0.1.7] - 2017-09-30
 
 - Now work with `redux-form`. 
