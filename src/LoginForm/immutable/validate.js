@@ -1,11 +1,11 @@
 export const validate = (values) => {
   const errors = {};
-  if (!values.username) {
+  if (!values.get('username')) {
     errors.username = 'kopax.common.form.warning.required';
-  } else if (values.username.length > 15) {
+  } else if (values.get('username').length > 15) {
     errors.username = 'kopax.common.form.warning.usernameMaxLength';
   }
-  if (!values.password) {
+  if (!values.get('password')) {
     errors.password = 'kopax.common.form.warning.required';
   }
   return errors;

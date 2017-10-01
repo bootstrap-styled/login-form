@@ -110,6 +110,14 @@ render(
 );
 ``` 
 
+**Immutable**
+
+There is a `redux-form/immutable` version of the login form:
+
+```jsx
+import { LoginForm, theme as themeLoginForm } from 'login-form/lib/LoginForm/immutable';
+```
+
 ## Components
 
 - [LoginForm](src/LoginForm/README.md)
