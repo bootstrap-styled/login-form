@@ -1,14 +1,413 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('prop-types'), require('styled-components'), require('classnames'), require('react-intl'), require('message-common'), require('bootstrap-styled'), require('loaders'), require('bootstrap-styled-motion'), require('redux-form')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'prop-types', 'styled-components', 'classnames', 'react-intl', 'message-common', 'bootstrap-styled', 'loaders', 'bootstrap-styled-motion', 'redux-form'], factory) :
-	(factory((global['login-form'] = {}),global.React,global.PropTypes,global.styled,global.cn,global['react-intl'],global['message-common'],global.BootstrapStyled,global.loaders,global['bootstrap-styled-motion'],global['redux-form']));
-}(this, (function (exports,React,PropTypes,styled,cn,reactIntl,messages,bootstrapStyled,loaders,bootstrapStyledMotion,reduxForm) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('redux-form'), require('react'), require('prop-types'), require('styled-components'), require('classnames'), require('react-intl'), require('message-common'), require('loaders'), require('bootstrap-styled-motion'), require('bootstrap-styled')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'redux-form', 'react', 'prop-types', 'styled-components', 'classnames', 'react-intl', 'message-common', 'loaders', 'bootstrap-styled-motion', 'bootstrap-styled'], factory) :
+	(factory((global['login-form'] = {}),global['redux-form'],global.React,global.PropTypes,global.styled,global.cn,global['react-intl'],global['message-common'],global.loaders,global['bootstrap-styled-motion'],global.BootstrapStyled));
+}(this, (function (exports,reduxForm,React,PropTypes,styled,cn,reactIntl,messages,loaders,bootstrapStyledMotion,bootstrapStyled) { 'use strict';
 
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 var styled__default = 'default' in styled ? styled['default'] : styled;
 cn = cn && cn.hasOwnProperty('default') ? cn['default'] : cn;
 messages = messages && messages.hasOwnProperty('default') ? messages['default'] : messages;
+
+var makeTheme$1 = function makeTheme$$1() {
+  var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var newTheme = { loginForm: {} };
+  var u = userTheme;
+  newTheme.loginForm['$background-color'] = u.loginForm && u.loginForm['$background-color'] ? u.loginForm['$background-color'] : '#fff';
+  newTheme.loginForm['$box-shadow'] = u.loginForm && u.loginForm['$box-shadow'] ? u.loginForm['$box-shadow'] : '0px 1px 3px rgba(0, 0, 0, 0.25)';
+  newTheme.loginForm['$border-radius'] = u.loginForm && u.loginForm['$border-radius'] ? u.loginForm['$border-radius'] : '3px';
+  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
+  newTheme.loginForm['$max-width'] = u.loginForm && u.loginForm['$max-width'] ? u.loginForm['$max-width'] : '325px';
+  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
+  newTheme.loginForm['$color-light'] = u.loginForm && u.loginForm['$color-light'] ? u.loginForm['$color-light'] : '#999';
+  newTheme.loginForm.$color = u.loginForm && u.loginForm.$color ? u.loginForm.$color : '#666';
+  newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
+  return newTheme;
+};
+var theme$2 = makeTheme$1();
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+var theme$1 = bootstrapStyled.makeTheme(_extends({}, theme$2, bootstrapStyledMotion.theme));
+var defaultProps = {
+  header: null,
+  footer: null,
+  beforeButton: null,
+  onSubmit: null,
+  loading: null,
+  initialValues: {
+    username: '',
+    password: ''
+  },
+  placeHolder: {
+    username: 'Santaclauze',
+    password: '••••••••••'
+  },
+  theme: theme$1
+};
+var propTypes = {
+  header: PropTypes.node,
+  footer: PropTypes.node,
+  beforeButton: PropTypes.node,
+  className: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  initialValues: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string
+  }),
+  placeHolder: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string
+  }),
+  theme: PropTypes.object
+};
+var ErrorParagraph = styled__default(bootstrapStyled.P).withConfig({
+  displayName: 'withLoginForm__ErrorParagraph'
+})(['position:absolute;font-size:0.8rem;right:0.2rem;bottom:0;margin-bottom:0;']);
+var renderField = function renderField(_ref) {
+  var input = _ref.input,
+      placeHolder = _ref.placeHolder,
+      unused = _ref.theme,
+      type = _ref.type,
+      label = _ref.label,
+      name = _ref.name,
+      _ref$meta = _ref.meta,
+      touched = _ref$meta.touched,
+      error = _ref$meta.error;
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('input', _extends({ className: 'form__field-input' }, input, { type: type, placeholder: placeHolder, name: name })),
+    React.createElement(
+      'label',
+      { className: 'form__field-label', htmlFor: name },
+      label
+    ),
+    touched && error && React.createElement(
+      bootstrapStyledMotion.FadeInRight,
+      { inline: false },
+      React.createElement(
+        ErrorParagraph,
+        { color: 'warning', className: 'form_field-error' },
+        ' ',
+        React.createElement(reactIntl.FormattedMessage, { id: error }),
+        ' ',
+        React.createElement('i', { className: 'fa fa-exclamation-circle' })
+      )
+    )
+  );
+};
+var withLoginForm = (function (Field$$1) {
+  var LoginFormUnstyled = function LoginFormUnstyled(props) {
+    var className = props.className,
+        placeHolder = props.placeHolder,
+        header = props.header,
+        footer = props.footer,
+        beforeButton = props.beforeButton,
+        loading = props.loading,
+        reduxFormProps = objectWithoutProperties(props, ['className', 'placeHolder', 'header', 'footer', 'beforeButton', 'loading']);
+    var anyTouched = reduxFormProps.anyTouched,
+        asyncValidate = reduxFormProps.asyncValidate,
+        asyncValidating = reduxFormProps.asyncValidating,
+        blur = reduxFormProps.blur,
+        change = reduxFormProps.change,
+        clearSubmit = reduxFormProps.clearSubmit,
+        destroy = reduxFormProps.destroy,
+        dirty = reduxFormProps.dirty,
+        dispatch = reduxFormProps.dispatch,
+        success = reduxFormProps.success,
+        error = reduxFormProps.error,
+        handleSubmit = reduxFormProps.handleSubmit,
+        initialize = reduxFormProps.initialize,
+        initialized = reduxFormProps.initialized,
+        initialValues = reduxFormProps.initialValues,
+        invalid = reduxFormProps.invalid,
+        pristine = reduxFormProps.pristine,
+        reset = reduxFormProps.reset,
+        submitFailed = reduxFormProps.submitFailed,
+        submitSucceeded = reduxFormProps.submitSucceeded,
+        submitting = reduxFormProps.submitting,
+        touch = reduxFormProps.touch,
+        untouch = reduxFormProps.untouch,
+        valid = reduxFormProps.valid,
+        warning = reduxFormProps.warning,
+        pure = reduxFormProps.pure,
+        triggerSubmit = reduxFormProps.triggerSubmit,
+        autofill = reduxFormProps.autofill,
+        clearSubmitErrors = reduxFormProps.clearSubmitErrors,
+        clearAsyncError = reduxFormProps.clearAsyncError,
+        submit = reduxFormProps.submit,
+        array = reduxFormProps.array,
+        onSubmit = reduxFormProps.onSubmit,
+        validate = reduxFormProps.validate,
+        warn = reduxFormProps.warn,
+        onError = reduxFormProps.onError,
+        rest = objectWithoutProperties(reduxFormProps, ['anyTouched', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'dirty', 'dispatch', 'success', 'error', 'handleSubmit', 'initialize', 'initialized', 'initialValues', 'invalid', 'pristine', 'reset', 'submitFailed', 'submitSucceeded', 'submitting', 'touch', 'untouch', 'valid', 'warning', 'pure', 'triggerSubmit', 'autofill', 'clearSubmitErrors', 'clearAsyncError', 'submit', 'array', 'onSubmit', 'validate', 'warn', 'onError']);
+    return React.createElement(
+      bootstrapStyled.Form,
+      _extends({ name: 'login-form', className: cn('form', className), onSubmit: handleSubmit(onSubmit) }, rest),
+      header,
+      React.createElement(
+        'div',
+        { className: 'form__field-wrapper' },
+        React.createElement(Field$$1, {
+          name: 'username',
+          type: 'text',
+          label: React.createElement(reactIntl.FormattedMessage, messages.formUsername),
+          placeHolder: placeHolder.username,
+          component: renderField
+        })
+      ),
+      React.createElement(
+        'div',
+        { className: 'form__field-wrapper' },
+        React.createElement(Field$$1, {
+          name: 'password',
+          type: 'password',
+          label: React.createElement(reactIntl.FormattedMessage, messages.formPassword),
+          placeHolder: placeHolder.password,
+          component: renderField
+        })
+      ),
+      React.createElement(
+        'div',
+        { className: 'form__submit-btn-wrapper' },
+        React.createElement(
+          'div',
+          null,
+          beforeButton,
+          React.createElement(
+            bootstrapStyled.Button,
+            { disabled: loading || submitting, color: 'success' },
+            React.createElement(reactIntl.FormattedMessage, messages.authLogin),
+            (loading || submitting) && React.createElement(
+              'span',
+              null,
+              ' ',
+              React.createElement(loaders.LoadingIndicator, null)
+            )
+          )
+        )
+      ),
+      footer
+    );
+  };
+  LoginFormUnstyled.propTypes = propTypes;
+  var LoginForm = styled__default(LoginFormUnstyled).withConfig({
+    displayName: 'withLoginForm__LoginForm'
+  })(['', ''], function (props) {
+    return '\n    .form__field-wrapper {\n      width: 100%;\n      position: relative;\n      padding-top: 1.75em;\n      border-top: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      border-bottom: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n    \n    .form__field-wrapper + .form__field-wrapper {\n      border-top: none;\n    }\n    \n    .form__field-input:focus ~ .form__field-label {\n      color: ' + props.theme.loginForm.$color + ';\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n    }\n    \n    .form__field-input:focus {\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n      color: ' + props.theme.loginForm['$color-dark'] + ';\n    }\n    \n    .form__field-label {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      padding: 16px;\n      padding-top: 20px;\n      padding-bottom: 0;\n      margin: 0;\n      z-index: 1;\n      font-size: .8em;\n      color: ' + props.theme.loginForm['$color-light'] + ';\n      font-weight: 400;\n      user-select: none;\n      cursor: text;\n      \n      .form_field-error {\n        float: right;\n      }\n    }\n    \n    .form__field-input {\n      position: relative;\n      padding: 1.625em 16px;\n      width: 100%;\n      color: ' + props.theme.loginForm.$color + ';\n      border: none;\n      font-family: inherit;\n      outline: 0;\n      letter-spacing: 0.05em;\n    }\n    \n    .form__submit-btn-wrapper {\n      padding: 2em 1em;\n      width: 100%;\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n      display: flex;\n      justify-content: center;\n    }\n  ';
+  });
+  LoginForm.defaultProps = defaultProps;
+  return LoginForm;
+});
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1695,22 +2094,109 @@ exports.default = parseTransition;
 module.exports = exports['default'];
 });
 
-var makeTheme$1 = function makeTheme$$1() {
-  var userTheme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var newTheme = { loginForm: {} };
-  var u = userTheme;
-  newTheme.loginForm['$background-color'] = u.loginForm && u.loginForm['$background-color'] ? u.loginForm['$background-color'] : '#fff';
-  newTheme.loginForm['$box-shadow'] = u.loginForm && u.loginForm['$box-shadow'] ? u.loginForm['$box-shadow'] : '0px 1px 3px rgba(0, 0, 0, 0.25)';
-  newTheme.loginForm['$border-radius'] = u.loginForm && u.loginForm['$border-radius'] ? u.loginForm['$border-radius'] : '3px';
-  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
-  newTheme.loginForm['$max-width'] = u.loginForm && u.loginForm['$max-width'] ? u.loginForm['$max-width'] : '325px';
-  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
-  newTheme.loginForm['$color-light'] = u.loginForm && u.loginForm['$color-light'] ? u.loginForm['$color-light'] : '#999';
-  newTheme.loginForm.$color = u.loginForm && u.loginForm.$color ? u.loginForm.$color : '#666';
-  newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
-  return newTheme;
-};
-var theme$2 = makeTheme$1();
+var defaultProps$1 = _extends({
+  logo: null,
+  version: null,
+  notification: {
+    text: '',
+    type: 'info'
+  },
+  hideNotificationDelay: 3000
+}, defaultProps);
+var withFormWrapper = (function (LoginForm) {
+  var FormWrapperUnstyled = function (_React$Component) {
+    inherits(FormWrapperUnstyled, _React$Component);
+    function FormWrapperUnstyled() {
+      var _ref;
+      var _temp, _this, _ret;
+      classCallCheck(this, FormWrapperUnstyled);
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = FormWrapperUnstyled.__proto__ || Object.getPrototypeOf(FormWrapperUnstyled)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        shacked: false
+      }, _this.shack = function () {
+        _this.setState({
+          shacked: !_this.state.shacked
+        }, _this.resetShack);
+      }, _this.resetShack = function () {
+        if (_this.state.shacked) {
+          setTimeout(_this.props.hideNotification, _this.props.hideNotificationDelay);
+        }
+      }, _temp), possibleConstructorReturn(_this, _ret);
+    }
+    createClass(FormWrapperUnstyled, [{
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(newProps) {
+        if (newProps.notification.text !== this.props.notification.text) {
+          this.shack();
+        }
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _props = this.props,
+            hideNotification = _props.hideNotification,
+            hideNotificationDelay = _props.hideNotificationDelay,
+            logo = _props.logo,
+            version = _props.version,
+            notification = _props.notification,
+            className = _props.className,
+            formRest = objectWithoutProperties(_props, ['hideNotification', 'hideNotificationDelay', 'logo', 'version', 'notification', 'className']);
+        return React.createElement(
+          'div',
+          { className: cn(className, 'form-page__wrapper') },
+          React.createElement(
+            'div',
+            { className: cn('form-page__form-wrapper', { 'js-form__err-animation': this.state.shacked }) },
+            React.createElement(
+              'div',
+              { className: 'form-page__form-header text-center' },
+              React.createElement(
+                'h2',
+                { className: 'form-page__form-heading' },
+                React.createElement(reactIntl.FormattedMessage, messages.authLogin)
+              ),
+              logo
+            ),
+            notification.text.length > 0 && React.createElement(
+              bootstrapStyled.Alert,
+              { color: notification.type, className: 'mx-2' },
+              React.createElement(reactIntl.FormattedMessage, { id: notification.text })
+            ),
+            React.createElement(LoginForm, formRest),
+            version && React.createElement(
+              bootstrapStyled.Small,
+              { className: 'text-center d-block' },
+              version
+            )
+          )
+        );
+      }
+    }]);
+    return FormWrapperUnstyled;
+  }(React.Component);
+  FormWrapperUnstyled.defaultProps = defaultProps$1;
+  FormWrapperUnstyled.propTypes = {
+    className: PropTypes.string.isRequired,
+    logo: PropTypes.any,
+    version: PropTypes.any,
+    notification: PropTypes.shape({
+      text: PropTypes.string,
+      type: PropTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning', 'inverse'])
+    }),
+    hideNotification: PropTypes.func,
+    hideNotificationDelay: PropTypes.number
+  };
+  var shake = styled.keyframes(['0%{transform:translateX(0);}25%{transform:translateX(10px);}75%{transform:translateX(-10px);}100%{transform:translateX(0);}']);
+  var FormWrapper = styled__default(FormWrapperUnstyled).withConfig({
+    displayName: 'withFormWrapper__FormWrapper'
+  })(['', ''], function (props) {
+    return '\n      margin-top: calc(' + props.theme.$spacer * 1.25 + ');\n  \n      &.form-page__wrapper {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100%;\n        width: 100%;\n      }\n  \n      .form-page__form-wrapper {\n        max-width: ' + props.theme.loginForm['$max-width'] + ';\n        width: 100%;\n        border: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n        ' + borderRadius$1.all(props.theme['$enable-rounded'], props.theme.loginForm['$border-radius']) + '\n        ' + boxShadow(props.theme['$enable-shadows'], props.theme.loginForm['$box-shadow']) + '\n        background-color: ' + props.theme.loginForm['$background-color'] + ';\n      }\n  \n      .form-page__form-heading {\n        text-align: center;\n        font-size: ' + props.theme['$font-size-base'] + ';\n        user-select: none;\n      }\n  \n      .form-page__form-header {\n        padding: ' + props.theme.$spacer + ';\n      }\n  \n      & .js-form__err-animation {\n        animation: ' + shake + ' ' + props.theme['$motion-delay'].md + ' ' + props.theme['$motion-timing-function'].easeInOut + '\n      }\n  \n    ';
+  });
+  FormWrapper.defaultProps = defaultProps$1;
+  return FormWrapper;
+});
 
 var validate = function validate(values) {
   var errors = {};
@@ -1725,493 +2211,15 @@ var validate = function validate(values) {
   return errors;
 };
 
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-var objectWithoutProperties = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
-var theme$1 = bootstrapStyled.makeTheme(_extends({}, theme$2, bootstrapStyledMotion.theme));
-var defaultProps$2$1 = {
-  header: null,
-  footer: null,
-  beforeButton: null,
-  onSubmit: null,
-  loading: null,
-  initialValues: {
-    username: '',
-    password: ''
-  },
-  placeHolder: {
-    username: 'Santaclauze',
-    password: '••••••••••'
-  },
-  theme: theme$1
-};
-var propTypes = {
-  header: PropTypes.node,
-  footer: PropTypes.node,
-  beforeButton: PropTypes.node,
-  className: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func,
-  loading: PropTypes.bool,
-  initialValues: PropTypes.shape({
-    username: PropTypes.string,
-    password: PropTypes.string
-  }),
-  placeHolder: PropTypes.shape({
-    username: PropTypes.string,
-    password: PropTypes.string
-  }),
-  theme: PropTypes.object
-};
-var ErrorParagraph = styled__default(bootstrapStyled.P).withConfig({
-  displayName: 'LoginForm__ErrorParagraph'
-})(['position:absolute;font-size:0.8rem;right:0.2rem;bottom:0;margin-bottom:0;']);
-var renderField = function renderField(_ref) {
-  var input = _ref.input,
-      placeHolder = _ref.placeHolder,
-      unused = _ref.theme,
-      type = _ref.type,
-      label = _ref.label,
-      name = _ref.name,
-      _ref$meta = _ref.meta,
-      touched = _ref$meta.touched,
-      error = _ref$meta.error;
-  return React.createElement(
-    'div',
-    null,
-    React.createElement('input', _extends({ className: 'form__field-input' }, input, { type: type, placeholder: placeHolder, name: name })),
-    React.createElement(
-      'label',
-      { className: 'form__field-label', htmlFor: name },
-      label
-    ),
-    touched && error && React.createElement(
-      bootstrapStyledMotion.FadeInRight,
-      { inline: false },
-      React.createElement(
-        ErrorParagraph,
-        { color: 'warning', className: 'form_field-error' },
-        ' ',
-        React.createElement(reactIntl.FormattedMessage, { id: error }),
-        ' ',
-        React.createElement('i', { className: 'fa fa-exclamation-circle' })
-      )
-    )
-  );
-};
-var LoginFormUnstyled = function LoginFormUnstyled(props) {
-  var className = props.className,
-      placeHolder = props.placeHolder,
-      header = props.header,
-      footer = props.footer,
-      beforeButton = props.beforeButton,
-      loading = props.loading,
-      reduxFormProps = objectWithoutProperties(props, ['className', 'placeHolder', 'header', 'footer', 'beforeButton', 'loading']);
-  var anyTouched = reduxFormProps.anyTouched,
-      asyncValidate = reduxFormProps.asyncValidate,
-      asyncValidating = reduxFormProps.asyncValidating,
-      blur = reduxFormProps.blur,
-      change = reduxFormProps.change,
-      clearSubmit = reduxFormProps.clearSubmit,
-      destroy = reduxFormProps.destroy,
-      dirty = reduxFormProps.dirty,
-      dispatch = reduxFormProps.dispatch,
-      success = reduxFormProps.success,
-      error = reduxFormProps.error,
-      handleSubmit = reduxFormProps.handleSubmit,
-      initialize = reduxFormProps.initialize,
-      initialized = reduxFormProps.initialized,
-      initialValues = reduxFormProps.initialValues,
-      invalid = reduxFormProps.invalid,
-      pristine = reduxFormProps.pristine,
-      reset = reduxFormProps.reset,
-      submitFailed = reduxFormProps.submitFailed,
-      submitSucceeded = reduxFormProps.submitSucceeded,
-      submitting = reduxFormProps.submitting,
-      touch = reduxFormProps.touch,
-      untouch = reduxFormProps.untouch,
-      valid = reduxFormProps.valid,
-      warning = reduxFormProps.warning,
-      pure = reduxFormProps.pure,
-      triggerSubmit = reduxFormProps.triggerSubmit,
-      autofill = reduxFormProps.autofill,
-      clearSubmitErrors = reduxFormProps.clearSubmitErrors,
-      clearAsyncError = reduxFormProps.clearAsyncError,
-      submit = reduxFormProps.submit,
-      array = reduxFormProps.array,
-      onSubmit = reduxFormProps.onSubmit,
-      validate$$1 = reduxFormProps.validate,
-      warn = reduxFormProps.warn,
-      onError = reduxFormProps.onError,
-      rest = objectWithoutProperties(reduxFormProps, ['anyTouched', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'dirty', 'dispatch', 'success', 'error', 'handleSubmit', 'initialize', 'initialized', 'initialValues', 'invalid', 'pristine', 'reset', 'submitFailed', 'submitSucceeded', 'submitting', 'touch', 'untouch', 'valid', 'warning', 'pure', 'triggerSubmit', 'autofill', 'clearSubmitErrors', 'clearAsyncError', 'submit', 'array', 'onSubmit', 'validate', 'warn', 'onError']);
-  return React.createElement(
-    bootstrapStyled.Form,
-    _extends({ name: 'login-form', className: cn('form', className), onSubmit: handleSubmit(onSubmit) }, rest),
-    header,
-    React.createElement(
-      'div',
-      { className: 'form__field-wrapper' },
-      React.createElement(reduxForm.Field, {
-        name: 'username',
-        type: 'text',
-        label: React.createElement(reactIntl.FormattedMessage, messages.formUsername),
-        placeHolder: placeHolder.username,
-        component: renderField
-      })
-    ),
-    React.createElement(
-      'div',
-      { className: 'form__field-wrapper' },
-      React.createElement(reduxForm.Field, {
-        name: 'password',
-        type: 'password',
-        label: React.createElement(reactIntl.FormattedMessage, messages.formPassword),
-        placeHolder: placeHolder.password,
-        component: renderField
-      })
-    ),
-    React.createElement(
-      'div',
-      { className: 'form__submit-btn-wrapper' },
-      React.createElement(
-        'div',
-        null,
-        beforeButton,
-        React.createElement(
-          bootstrapStyled.Button,
-          { disabled: loading || submitting, color: 'success' },
-          React.createElement(reactIntl.FormattedMessage, messages.authLogin),
-          (loading || submitting) && React.createElement(
-            'span',
-            null,
-            ' ',
-            React.createElement(loaders.LoadingIndicator, null)
-          )
-        )
-      )
-    ),
-    footer
-  );
-};
-LoginFormUnstyled.propTypes = propTypes;
-var LoginFormStyled = styled__default(LoginFormUnstyled).withConfig({
-  displayName: 'LoginForm__LoginFormStyled'
-})(['', ''], function (props) {
-  return '\n    .form__field-wrapper {\n      width: 100%;\n      position: relative;\n      padding-top: 1.75em;\n      border-top: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      border-bottom: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n    \n    .form__field-wrapper + .form__field-wrapper {\n      border-top: none;\n    }\n    \n    .form__field-input:focus ~ .form__field-label {\n      color: ' + props.theme.loginForm.$color + ';\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n    }\n    \n    .form__field-input:focus {\n      background-color: ' + props.theme.loginForm['$color-lighter'] + ';\n      color: ' + props.theme.loginForm['$color-dark'] + ';\n    }\n    \n    .form__field-label {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      padding: 16px;\n      padding-top: 20px;\n      padding-bottom: 0;\n      margin: 0;\n      z-index: 1;\n      font-size: .8em;\n      color: ' + props.theme.loginForm['$color-light'] + ';\n      font-weight: 400;\n      user-select: none;\n      cursor: text;\n      \n      .form_field-error {\n        float: right;\n      }\n    }\n    \n    .form__field-input {\n      position: relative;\n      padding: 1.625em 16px;\n      width: 100%;\n      color: ' + props.theme.loginForm.$color + ';\n      border: none;\n      font-family: inherit;\n      outline: 0;\n      letter-spacing: 0.05em;\n    }\n    \n    .form__submit-btn-wrapper {\n      padding: 2em 1em;\n      width: 100%;\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n      display: flex;\n      justify-content: center;\n    }\n  ';
-});
-LoginFormStyled.defaultProps = defaultProps$2$1;
-var LoginForm = reduxForm.reduxForm({
+var LoginFormRedux = reduxForm.reduxForm({
   form: 'login',
   enableReinitialize: false,
   validate: validate
-})(LoginFormStyled);
+})(withLoginForm(reduxForm.Field));
+var LoginFormRedux$1 = withFormWrapper(LoginFormRedux);
 
-var defaultProps$$1 = _extends({
-  logo: null,
-  version: null,
-  notification: {
-    text: '',
-    type: 'info'
-  },
-  hideNotificationDelay: 3000
-}, defaultProps$2$1);
-var FormWrapperUnstyled = function (_React$Component) {
-  inherits(FormWrapperUnstyled, _React$Component);
-  function FormWrapperUnstyled() {
-    var _ref;
-    var _temp, _this, _ret;
-    classCallCheck(this, FormWrapperUnstyled);
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = FormWrapperUnstyled.__proto__ || Object.getPrototypeOf(FormWrapperUnstyled)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      shacked: false
-    }, _this.shack = function () {
-      _this.setState({
-        shacked: !_this.state.shacked
-      }, _this.resetShack);
-    }, _this.resetShack = function () {
-      if (_this.state.shacked) {
-        setTimeout(_this.props.hideNotification, _this.props.hideNotificationDelay);
-      }
-    }, _temp), possibleConstructorReturn(_this, _ret);
-  }
-  createClass(FormWrapperUnstyled, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(newProps) {
-      if (newProps.notification.text !== this.props.notification.text) {
-        this.shack();
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          hideNotification = _props.hideNotification,
-          hideNotificationDelay = _props.hideNotificationDelay,
-          logo = _props.logo,
-          version = _props.version,
-          notification = _props.notification,
-          className = _props.className,
-          formRest = objectWithoutProperties(_props, ['hideNotification', 'hideNotificationDelay', 'logo', 'version', 'notification', 'className']);
-      return React.createElement(
-        'div',
-        { className: cn(className, 'form-page__wrapper') },
-        React.createElement(
-          'div',
-          { className: cn('form-page__form-wrapper', { 'js-form__err-animation': this.state.shacked }) },
-          React.createElement(
-            'div',
-            { className: 'form-page__form-header text-center' },
-            React.createElement(
-              'h2',
-              { className: 'form-page__form-heading' },
-              React.createElement(reactIntl.FormattedMessage, messages.authLogin)
-            ),
-            logo
-          ),
-          notification.text.length > 0 && React.createElement(
-            bootstrapStyled.Alert,
-            { color: notification.type, className: 'mx-2' },
-            React.createElement(reactIntl.FormattedMessage, { id: notification.text })
-          ),
-          React.createElement(LoginForm, formRest),
-          version && React.createElement(
-            bootstrapStyled.Small,
-            { className: 'text-center d-block' },
-            version
-          )
-        )
-      );
-    }
-  }]);
-  return FormWrapperUnstyled;
-}(React.Component);
-FormWrapperUnstyled.defaultProps = defaultProps$$1;
-FormWrapperUnstyled.propTypes = {
-  className: PropTypes.string.isRequired,
-  logo: PropTypes.any,
-  version: PropTypes.any,
-  notification: PropTypes.shape({
-    text: PropTypes.string,
-    type: PropTypes.oneOf(['info', 'success', 'danger', 'primary', 'secondary', 'warning', 'inverse'])
-  }),
-  hideNotification: PropTypes.func,
-  hideNotificationDelay: PropTypes.number
-};
-var shake = styled.keyframes(['0%{transform:translateX(0);}25%{transform:translateX(10px);}75%{transform:translateX(-10px);}100%{transform:translateX(0);}']);
-var FormWrapper = styled__default(FormWrapperUnstyled).withConfig({
-  displayName: 'FormWrapper'
-})(['', ''], function (props) {
-  return '\n\n    margin-top: calc(' + props.theme.$spacer * 1.25 + ');\n\n    &.form-page__wrapper {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      height: 100%;\n      width: 100%;\n    }\n\n    .form-page__form-wrapper {\n      max-width: ' + props.theme.loginForm['$max-width'] + ';\n      width: 100%;\n      border: 1px solid ' + props.theme.loginForm['$color-lighter'] + ';\n      ' + borderRadius$1.all(props.theme['$enable-rounded'], props.theme.loginForm['$border-radius']) + '\n      ' + boxShadow(props.theme['$enable-shadows'], props.theme.loginForm['$box-shadow']) + '\n      background-color: ' + props.theme.loginForm['$background-color'] + ';\n    }\n\n    .form-page__form-heading {\n      text-align: center;\n      font-size: ' + props.theme['$font-size-base'] + ';\n      user-select: none;\n    }\n\n    .form-page__form-header {\n      padding: ' + props.theme.$spacer + ';\n    }\n\n    & .js-form__err-animation {\n      animation: ' + shake + ' ' + props.theme['$motion-delay'].md + ' ' + props.theme['$motion-timing-function'].easeInOut + '\n    }\n\n  ';
-});
-FormWrapper.defaultProps = defaultProps$$1;
-
-exports['default'] = FormWrapper;
-exports.LoginForm = FormWrapper;
+exports['default'] = LoginFormRedux$1;
+exports.LoginForm = LoginFormRedux$1;
 exports.makeTheme = makeTheme$1;
 exports.theme = theme$2;
 

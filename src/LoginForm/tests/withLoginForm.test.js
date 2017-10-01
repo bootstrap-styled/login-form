@@ -5,12 +5,12 @@ import { mount } from 'enzyme';
 import React from 'react';
 import messages from 'message-common';
 import { BootstrapProvider } from 'bootstrap-styled';
-import LoginForm, { defaultProps } from '../LoginForm';
+import { defaultProps } from '../withLoginForm';
+import LoginForm from '../LoginFormRedux';
 
 describe('<LoginForm />', () => {
   let theme;
   let props;
-
   beforeEach(() => {
     theme = defaultProps.theme;
     props = Object.assign(defaultProps, {

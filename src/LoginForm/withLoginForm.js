@@ -7,9 +7,7 @@ import messages from 'message-common';
 import { LoadingIndicator } from 'loaders';
 import { FadeInRight, theme as themeMotion } from 'bootstrap-styled-motion';
 import { Form, Button, P, makeTheme } from 'bootstrap-styled';
-import { reduxForm, Field } from 'redux-form/immutable';
 import { theme as themeLoginForm } from './theme';
-import { validate as validateForm } from './validate';
 const theme = makeTheme({ ...themeLoginForm, ...themeMotion });
 
 export const defaultProps = {
@@ -73,93 +71,95 @@ const renderField = ({ input, placeHolder, theme: unused, type, label, name, met
 );
 /* eslint-enable react/require-default-props, react/prop-types, no-unused-vars */
 
-const LoginFormUnstyled = (props) => {
-  const {
-    className,
-    placeHolder,
-    header, footer,
-    beforeButton,
-    loading,
-    ...reduxFormProps
-  } = props;
-  const {
-    anyTouched,
-    asyncValidate,
-    asyncValidating,
-    blur,
-    change,
-    clearSubmit,
-    destroy,
-    dirty,
-    dispatch,
-    success,
-    error,
-    handleSubmit,
-    initialize,
-    initialized,
-    initialValues,
-    invalid,
-    pristine,
-    reset,
-    submitFailed,
-    submitSucceeded,
-    submitting,
-    touch,
-    untouch,
-    valid,
-    warning,
-    pure,
-    triggerSubmit,
-    autofill,
-    clearSubmitErrors,
-    clearAsyncError,
-    submit,
-    array,
-    onSubmit,
-    validate,
-    warn,
-    onError,
-    ...rest
-  } = reduxFormProps;
 
-  return (
-    <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit(onSubmit)} {...rest}>
-      {header}
-      <div className="form__field-wrapper">
-        <Field
-          name="username"
-          type="text"
-          label={<FormattedMessage {...messages.formUsername} />}
-          placeHolder={placeHolder.username}
-          component={renderField}
-        />
-      </div>
-      <div className="form__field-wrapper">
-        <Field
-          name="password"
-          type="password"
-          label={<FormattedMessage {...messages.formPassword} />}
-          placeHolder={placeHolder.password}
-          component={renderField}
-        />
-      </div>
-      <div className="form__submit-btn-wrapper">
-        <div>
-          {beforeButton}
-          <Button disabled={loading || submitting} color="success">
-            {<FormattedMessage {...messages.authLogin} />}
-            {(loading || submitting) && (<span>{' '}<LoadingIndicator /></span>)}
-          </Button>
+export default (Field) => {
+  const LoginFormUnstyled = (props) => {
+    const {
+      className,
+      placeHolder,
+      header, footer,
+      beforeButton,
+      loading,
+      ...reduxFormProps
+    } = props;
+    const {
+      anyTouched,
+      asyncValidate,
+      asyncValidating,
+      blur,
+      change,
+      clearSubmit,
+      destroy,
+      dirty,
+      dispatch,
+      success,
+      error,
+      handleSubmit,
+      initialize,
+      initialized,
+      initialValues,
+      invalid,
+      pristine,
+      reset,
+      submitFailed,
+      submitSucceeded,
+      submitting,
+      touch,
+      untouch,
+      valid,
+      warning,
+      pure,
+      triggerSubmit,
+      autofill,
+      clearSubmitErrors,
+      clearAsyncError,
+      submit,
+      array,
+      onSubmit,
+      validate,
+      warn,
+      onError,
+      ...rest
+    } = reduxFormProps;
+
+    return (
+      <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit(onSubmit)} {...rest}>
+        {header}
+        <div className="form__field-wrapper">
+          <Field
+            name="username"
+            type="text"
+            label={<FormattedMessage {...messages.formUsername} />}
+            placeHolder={placeHolder.username}
+            component={renderField}
+          />
         </div>
-      </div>
-      {footer}
-    </Form>
-  );
-};
+        <div className="form__field-wrapper">
+          <Field
+            name="password"
+            type="password"
+            label={<FormattedMessage {...messages.formPassword} />}
+            placeHolder={placeHolder.password}
+            component={renderField}
+          />
+        </div>
+        <div className="form__submit-btn-wrapper">
+          <div>
+            {beforeButton}
+            <Button disabled={loading || submitting} color="success">
+              {<FormattedMessage {...messages.authLogin} />}
+              {(loading || submitting) && (<span>{' '}<LoadingIndicator /></span>)}
+            </Button>
+          </div>
+        </div>
+        {footer}
+      </Form>
+    );
+  };
 
-LoginFormUnstyled.propTypes = propTypes;
+  LoginFormUnstyled.propTypes = propTypes;
 
-const LoginFormStyled = styled(LoginFormUnstyled)`
+  const LoginForm = styled(LoginFormUnstyled)`
   ${(props) => `
     .form__field-wrapper {
       width: 100%;
@@ -226,12 +226,7 @@ const LoginFormStyled = styled(LoginFormUnstyled)`
   `}
 `;
 
-LoginFormStyled.defaultProps = defaultProps;
+  LoginForm.defaultProps = defaultProps;
 
-const LoginForm = reduxForm({
-  form: 'login',
-  enableReinitialize: false,
-  validate: validateForm,
-})(LoginFormStyled);
-
-export default LoginForm;
+  return LoginForm;
+};
