@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { shallow, mount } from 'enzyme';
 import { BootstrapProvider } from 'bootstrap-styled';
-import FormWrapper, { defaultProps } from '../FormWrapper';
+import { defaultProps } from '../withFormWrapper';
+import FormWrapper from '../LoginFormRedux';
 
 describe('<FormWrapper />', () => {
   let theme;
   let props;
-
   beforeEach(() => {
     theme = defaultProps.theme;
     props = Object.assign(defaultProps, {
