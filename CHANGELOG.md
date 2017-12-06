@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [0.1.10] - 2017-09-30
 
 - Added pros `clearFields` to `LoginForm` so that it is not passed in `...rest` of `Form` component.
+- Upgrade dependency [bootstrap-styled](https://module.kopaxgroup.com/styled-components/bootstrap-styled/tags/1.4.3) from 1.4.1 to 1.4.3.
 
 ## [0.1.9] - 2017-09-30
 
