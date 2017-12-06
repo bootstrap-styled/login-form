@@ -318,6 +318,7 @@ var withLoginForm = (function (Field$$1) {
         asyncValidating = reduxFormProps.asyncValidating,
         blur = reduxFormProps.blur,
         change = reduxFormProps.change,
+        clearFields = reduxFormProps.clearFields,
         clearSubmit = reduxFormProps.clearSubmit,
         destroy = reduxFormProps.destroy,
         dirty = reduxFormProps.dirty,
@@ -349,7 +350,7 @@ var withLoginForm = (function (Field$$1) {
         validate = reduxFormProps.validate,
         warn = reduxFormProps.warn,
         onError = reduxFormProps.onError,
-        rest = objectWithoutProperties(reduxFormProps, ['anyTouched', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearSubmit', 'destroy', 'dirty', 'dispatch', 'success', 'error', 'handleSubmit', 'initialize', 'initialized', 'initialValues', 'invalid', 'pristine', 'reset', 'submitFailed', 'submitSucceeded', 'submitting', 'touch', 'untouch', 'valid', 'warning', 'pure', 'triggerSubmit', 'autofill', 'clearSubmitErrors', 'clearAsyncError', 'submit', 'array', 'onSubmit', 'validate', 'warn', 'onError']);
+        rest = objectWithoutProperties(reduxFormProps, ['anyTouched', 'asyncValidate', 'asyncValidating', 'blur', 'change', 'clearFields', 'clearSubmit', 'destroy', 'dirty', 'dispatch', 'success', 'error', 'handleSubmit', 'initialize', 'initialized', 'initialValues', 'invalid', 'pristine', 'reset', 'submitFailed', 'submitSucceeded', 'submitting', 'touch', 'untouch', 'valid', 'warning', 'pure', 'triggerSubmit', 'autofill', 'clearSubmitErrors', 'clearAsyncError', 'submit', 'array', 'onSubmit', 'validate', 'warn', 'onError']);
     return React.createElement(
       bootstrapStyled.Form,
       _extends({ name: 'login-form', className: cn('form', className), onSubmit: handleSubmit(onSubmit) }, rest),
