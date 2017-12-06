@@ -1,6 +1,6 @@
 {
   "name": "login-form",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Library login-form description",
   "main": "lib/index.js",
   "jsnext:main": "dist/login-form.es.js",
@@ -146,7 +146,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#v1.4.1",
+    "bootstrap-styled": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled.git#1.4.3",
     "bootstrap-styled-mixins": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-mixins.git#v1.0.0",
     "bootstrap-styled-motion": "git+ssh://git@module.kopaxgroup.com:20024/styled-components/bootstrap-styled-motion.git#v1.0.1",
     "classnames": "^2.2.5",
