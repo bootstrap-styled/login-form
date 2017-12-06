@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.10] - 2017-09-30
+
+- Added pros `clearFields` to `LoginForm` so that it is not passed in `...rest` of `Form` component.
+
 ## [0.1.9] - 2017-09-30
 
 - Refactor with HoC. 

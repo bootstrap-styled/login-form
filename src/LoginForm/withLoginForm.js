@@ -88,6 +88,7 @@ export default (Field) => {
       asyncValidating,
       blur,
       change,
+      clearFields,
       clearSubmit,
       destroy,
       dirty,
