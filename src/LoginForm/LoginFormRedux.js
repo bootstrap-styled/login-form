@@ -4,11 +4,11 @@ import withLoginForm from './withForm';
 import LoginWrapper from './LoginWrapper';
 import { validate as validateForm } from './validate';
 
-const LoginForm = () =>(
+const LoginForm = () => (
   <LoginWrapper>
     {withLoginForm(Field)}
   </LoginWrapper>
-)
+);
 
 const LoginFormRedux = reduxForm({
   form: 'login',

@@ -29,49 +29,49 @@ const LoginFormWrapperWrapper = styled(Card)`
 `;
 
 const sanitizeRestProps = ({
-    className,
-    location,
-    title,
-    array,
-    theme,
-    staticContext,
-    ...rest
+  className,
+  location,
+  title,
+  array,
+  theme,
+  staticContext,
+  ...rest
 }) => rest;
 
 const LoginWrapper = ({
-    className,
-    loginForm = DefaultLoginForm(Input),
-    logo,
-    version,
-    footer,
-    hideNotificationDelay,
-    ...rest
+  className,
+  loginForm = DefaultLoginForm(Input),
+  logo,
+  version,
+  footer,
+  hideNotificationDelay,
+  ...rest
 }) => (
-    <MainWrapper className={classnames(className, 'main-wrapper')} {...sanitizeRestProps(rest)}>
-        <LoginFormWrapperWrapper className="login-wrapper">
-            <div className="logo-wrapper">
-                {logo}
-                {version && (
-                    <Small className="text-center d-block">
-                          {version}
-                    </Small>
-                )}
-            </div>
-            {loginForm}
-            {footer}
-            <Alert />
-        </LoginFormWrapperWrapper>
-    </MainWrapper>
+  <MainWrapper className={classnames(className, 'main-wrapper')} {...sanitizeRestProps(rest)}>
+    <LoginFormWrapperWrapper className="login-wrapper">
+      <div className="logo-wrapper">
+        {logo}
+        {version && (
+          <Small className="text-center d-block">
+            {version}
+          </Small>
+        )}
+      </div>
+      {loginForm}
+      {footer}
+      <Alert />
+    </LoginFormWrapperWrapper>
+  </MainWrapper>
 );
 
 LoginWrapper.propTypes = {
-    className: PropTypes.string,
-    input: PropTypes.object,
-    meta: PropTypes.object,
-    loginForm: PropTypes.func,
-    logo: PropTypes.node,
-    version: PropTypes.string,
-    hideNotificationDelay: PropTypes.number,
+  className: PropTypes.string,
+  input: PropTypes.object,
+  meta: PropTypes.object,
+  loginForm: PropTypes.func,
+  logo: PropTypes.node,
+  version: PropTypes.string,
+  hideNotificationDelay: PropTypes.number,
 };
 
 

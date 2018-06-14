@@ -8,15 +8,15 @@ import { LoadingIndicator } from 'loaders';
 
 // see http://redux-form.com/6.4.3/examples/material-ui/
 const renderInput = ({
-    meta: { touched, error } = {}, // eslint-disable-line react/prop-types
-    input: { ...inputProps }, // eslint-disable-line react/prop-types
-    ...props
+  meta: { touched, error } = {}, // eslint-disable-line react/prop-types
+  input: { ...inputProps }, // eslint-disable-line react/prop-types
+  ...props
 }) => (
-    <FormGroup color={error && 'danger'}>
-        <Label>{props.label}</Label>
-        <Input {...inputProps} {...props} />
-        {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
-    </FormGroup>
+  <FormGroup color={error && 'danger'}>
+    <Label>{props.label}</Label>
+    <Input {...inputProps} {...props} />
+    {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
+  </FormGroup>
 );
 
 export default (Field) => {
@@ -102,4 +102,4 @@ export default (Field) => {
       </Form>
     );
   };
-}
+};

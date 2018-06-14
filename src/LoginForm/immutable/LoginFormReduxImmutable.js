@@ -8,7 +8,7 @@ const LoginForm = (
   <LoginWrapper>
     {withLoginForm(Field)}
   </LoginWrapper>
-)
+);
 
 
 const LoginFormRedux = reduxForm({
