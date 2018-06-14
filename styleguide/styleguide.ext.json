@@ -29,6 +29,20 @@
       ]
     },
     {
+      "name": "UI",
+      "content": "docs/ui.md",
+      "sections": [
+        {
+          "name": "LoginForm",
+          "content": "src/LoginForm/index.md",
+          "components": [
+            "src/LoginForm/LoginFormRedux.js",
+            "src/LoginForm/immtable/LoginFormReduxImmutable.js"
+          ]
+        }
+      ]
+    },
+    {
       "name": "FAQ",
       "content": "docs/faq.md"
     },

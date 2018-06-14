@@ -1,8 +1,7 @@
 import React from 'react';
 import { combineReducers } from 'redux';
 import Wrapper from '@yeutech/rollup-documentation/lib/components/Wrapper';
-import reducer from '../../src/components/reducer';
-import messages from '../../src/messages';
+import messages from '../../translation/en.json';
 
 /* eslint-disable global-require */
 export default (props) => (
@@ -10,7 +9,6 @@ export default (props) => (
     redux={require('redux')}
     react-redux={require('react-redux')}
     reducer={combineReducers({
-      'bs.demo': reducer,
       locale: () => 'en',
     })}
     react-intl={require('react-intl')}
