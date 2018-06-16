@@ -10,7 +10,7 @@ const LoginForm = () => (
   </LoginWrapper>
 );
 
-console.log(LoginForm)
+console.log(LoginForm);
 
 const LoginFormRedux = reduxForm({
   form: 'login',

@@ -113,7 +113,7 @@ export default (Field = renderInput) => {
       ...rest
     } = reduxFormProps;
 
-    console.log(this.props, 'props')
+    console.log(this.props, 'props');
     return (
       <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit(onSubmit)} {...rest}>
         <div className="field-wrapper">
@@ -158,5 +158,4 @@ export default (Field = renderInput) => {
   LoginForm.defaultProps = defaultProps;
 
   return LoginForm;
-
 };

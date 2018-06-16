@@ -48,11 +48,11 @@ const DefaultLoginFormHeader = ({ logo, version }) => (
     )}
   </Fragment>
 );
-console.log(props => React.createElement(withForm(), props))
+console.log((props) => React.createElement(withForm(), props));
 
-const LoginForm = ({ props }) => (cloneElement(withForm(), {...props}));
+const LoginForm = ({ props }) => (cloneElement(withForm(), { ...props }));
 
-console.log(LoginForm)
+console.log(LoginForm);
 
 const LoginWrapper = ({
   className,
