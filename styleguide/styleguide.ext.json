@@ -37,7 +37,7 @@
           "content": "src/LoginForm/index.md",
           "components": [
             "src/LoginForm/LoginFormRedux.js",
-            "src/LoginForm/immtable/LoginFormReduxImmutable.js"
+            "src/LoginForm/immutable/LoginFormReduxImmutable.js"
           ]
         }
       ]

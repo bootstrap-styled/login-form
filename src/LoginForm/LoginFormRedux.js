@@ -10,6 +10,8 @@ const LoginForm = () => (
   </LoginWrapper>
 );
 
+console.log(LoginForm)
+
 const LoginFormRedux = reduxForm({
   form: 'login',
   enableReinitialize: false,

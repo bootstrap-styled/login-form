@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import classnames from 'classnames';
@@ -7,7 +7,7 @@ import Alert from 'bootstrap-styled/lib/Alert';
 import Small from 'bootstrap-styled/lib/Small';
 import Input from 'bootstrap-styled/lib/Small';
 
-import DefaultLoginForm from './withForm';
+import withForm from './withForm';
 
 const MainWrapper = styled.div`
     display: flex;
@@ -38,28 +38,44 @@ const sanitizeRestProps = ({
   ...rest
 }) => rest;
 
+const DefaultLoginFormHeader = ({ logo, version }) => (
+  <Fragment>
+    {logo}
+    {version && (
+      <Small>
+        {version}
+      </Small>
+    )}
+  </Fragment>
+);
+console.log(props => React.createElement(withForm(), props))
+
+const LoginForm = ({ props }) => (cloneElement(withForm(), {...props}));
+
+console.log(LoginForm)
+
 const LoginWrapper = ({
   className,
-  loginForm = DefaultLoginForm(Input),
+  loginForm = <LoginForm />,
   logo,
   version,
   footer,
+  action,
+  header = <DefaultLoginFormHeader />,
   hideNotificationDelay,
   ...rest
 }) => (
   <MainWrapper className={classnames(className, 'main-wrapper')} {...sanitizeRestProps(rest)}>
     <LoginFormWrapperWrapper className="login-wrapper">
-      <div className="logo-wrapper">
-        {logo}
-        {version && (
-          <Small className="text-center d-block">
-            {version}
-          </Small>
-        )}
+      <div className="login-header-wrapper">
+        {header}
       </div>
-      {loginForm}
-      {footer}
-      <Alert />
+      <div className="login-form-wrapper">
+        {loginForm}
+      </div>
+      <div className="login-footer-wrapper">
+        {footer}
+      </div>
     </LoginFormWrapperWrapper>
   </MainWrapper>
 );
