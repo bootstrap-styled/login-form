@@ -10,6 +10,8 @@ import Button from 'bootstrap-styled/lib/Button';
 import Form from 'bootstrap-styled/lib/Form';
 import FormGroup from 'bootstrap-styled/lib/Form/FormGroup';
 import FormFeedback from 'bootstrap-styled/lib/Form/FormFeedback';
+import { mediaBreakpointUp } from 'bootstrap-styled-mixins/lib/breakpoints';
+
 import { LoadingIndicator } from 'loaders';
 
 export const defaultProps = {
@@ -53,10 +55,12 @@ function capitalizeFirstLetter(string) {
 const renderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
   input: { ...inputProps },
+  labelProps,
   ...props
 }) => (
   <FormGroup color={error && 'danger'}>
-    <Label>{capitalizeFirstLetter(props.label)}</Label>
+    <Label {...labelProps}>{capitalizeFirstLetter(props.label)}</Label>
+
     <Input {...inputProps} {...props} />
     {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
   </FormGroup>
@@ -70,7 +74,9 @@ export default (Field) => {
       className,
       placeHolder,
       loader = <LoadingIndicator />,
-      beforeButton,
+      beforeActions,
+      afterActions,
+      notification,
       isLoading,
       ...reduxFormProps
     } = props;
@@ -119,6 +125,7 @@ export default (Field) => {
     return (
       <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit ? handleSubmit(onSubmit) : onSubmit} {...rest}>
         <div className="field-wrapper">
+          {notification}
           {Field ? (
             <Field
               name="username"
@@ -152,19 +159,46 @@ export default (Field) => {
             })
           )}
         </div>
-        {beforeButton}
-        <div className="button-wrapper">
+        {beforeActions}
+        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+          {Field ? (
+            <Field
+              name="rememberMe"
+              type="check"
+              label="rememberMe"
+              disabled={isLoading}
+              component={renderInput}
+            />
+          ) : (
+            <FormGroup color={error && 'danger'}>
+              <Label check>{capitalizeFirstLetter('remember me')} <Input type="checkbox" /></Label>
+            </FormGroup>
+          )}
           <Button type="submit" disabled={isLoading || submitting} color="success">
+            Login
             {(isLoading || submitting) && loader}
           </Button>
         </div>
+        {afterActions}
       </Form>
     );
   };
 
   LoginFormUnstyled.propTypes = propTypes;
 
-  const LoginForm = styled(LoginFormUnstyled)``;
+  const LoginForm = styled(LoginFormUnstyled)`
+    ${(props) => `
+      .action-wrapper {     
+        .form-check-input {
+          margin-left: -9rem;
+        }
+        .btn {
+          width: 100%;
+          ${mediaBreakpointUp('md', props.theme['$grid-breakpoints'], 'width: 50%')}
+        }
+      }
+    `}
+  `;
 
   LoginForm.defaultProps = defaultProps;
   return LoginForm;

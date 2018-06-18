@@ -212,6 +212,7 @@
   },
   "dependencies": {
     "bootstrap-styled": "^1.7.0",
+    "bootstrap-styled-mixins": "^1.0.4",
     "bootstrap-styled-provider": "^1.1.5",
     "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.9",

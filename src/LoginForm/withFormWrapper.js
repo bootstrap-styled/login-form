@@ -3,31 +3,10 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import classnames from 'classnames';
 
-import Card from 'bootstrap-styled/lib/Cards';
 import Small from 'bootstrap-styled/lib/Small';
 import Alert from 'bootstrap-styled/lib/Alert';
 
 import { defaultProps as formDefaultProps } from './withLoginForm';
-
-const MainWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    height: 1px;
-    align-items: center;
-    justify-content: flex-start;
-    background: url(https://source.unsplash.com/random/1600x900);
-    background-repeat: no-repeat;
-    background-size: cover;
-`;
-
-const LoginFormWrapperWrapper = styled(Card)`
-    &.login-form {
-        min-width: 300px;
-        margin-top: 6em;
-    }
-`;
-
 
 const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   logo, version,
@@ -46,12 +25,11 @@ export const defaultProps = {
   logo: null,
   version: null,
   footer: null,
-  header: <DefaultLoginFormHeader />,
   notification: {
     text: '',
     type: 'info',
   },
-  hideNotificationDelay: 3000,
+  autoHideDuration: null,
   onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'),
   ...formDefaultProps,
 };
@@ -82,6 +60,9 @@ export default (LoginForm) => {
       footer: PropTypes.object,
       onSubmit: PropTypes.func,
       loginForm: PropTypes.node,
+      beforeActions: PropTypes.node,
+      afterActions: PropTypes.node,
+      autoHideDuration: PropTypes.number,
     };
 
     static defaultProps = defaultProps;
@@ -113,34 +94,41 @@ export default (LoginForm) => {
         header,
         footer,
         hideNotification,
-        hideNotificationDelay,
+        autoHideDuration,
         notification,
+        logo,
+        version,
         loginForm,
         className,
         onSubmit,
+        beforeActions,
+        afterActions,
         ...formRest
       } = this.props;
 
       return (
-        <MainWrapper className={classnames(className, 'main-wrapper')}>
-          <div className={classnames('form-page__form-wrapper', { 'js-form__err-animation': this.state.shacked })}>
-            <LoginFormWrapperWrapper className="login-wrapper">
-              <div className="login-header-wrapper">
-                {header}
-              </div>
-              {notification.text.length > 0 && <Alert color={notification.type} className="mx-2">DURE</Alert>}
-              <div className="login-form-wrapper">
-                {loginForm || createElement(LoginForm, {
-                  onSubmit,
-                  ...formRest,
-                })}
-              </div>
-              <div className="login-footer-wrapper">
-                {footer}
-              </div>
-            </LoginFormWrapperWrapper>
+        <div className={classnames(className, 'main-wrapper')}>
+          <div className={classnames('login-wrapper', { 'js-form__err-animation': this.state.shacked })}>
+            <div className="login-header-wrapper py-1 py-md-3 d-flex align-items-center flex-column">
+              {header || createElement(DefaultLoginFormHeader, {
+                logo,
+                version,
+              })}
+            </div>
+            <div className="login-form-wrapper">
+              {loginForm || createElement(LoginForm, {
+                notification: notification.text.length > 0 && <Alert color={notification.type} className="text-center" autoHideDuration={autoHideDuration}>{notification.text}</Alert>,
+                beforeActions,
+                afterActions,
+                onSubmit,
+                ...formRest,
+              })}
+            </div>
+            <div className="login-footer-wrapper">
+              {footer}
+            </div>
           </div>
-        </MainWrapper>
+        </div>
       );
     }
   }
@@ -161,7 +149,38 @@ export default (LoginForm) => {
   `;
 
   const FormWrapper = styled(FormWrapperUnstyled)`
-    ${shake}
+    ${(props) => `
+        &.main-wrapper {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          height: 1px;
+          align-items: center;
+          justify-content: flex-start;
+          background-color: white;
+        
+        .login-header-wrapper {
+          border-bottom: 1px solid lightgrey;
+        }
+        
+        .login-wrapper {
+          width: 100%;
+          
+          .login-form-wrapper {
+            padding: 2rem .75rem;
+            max-width: 30rem;
+            margin: 0 auto;
+          }
+        }
+      }
+      
+      &.login-form {
+        min-width: 300px;
+        margin-top: 6em;
+      }
+    
+    `}
+
   `;
 
   FormWrapper.defaultProps = defaultProps;
