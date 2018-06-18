@@ -7,6 +7,7 @@ import Small from 'bootstrap-styled/lib/Small';
 import Alert from 'bootstrap-styled/lib/Alert';
 import P from 'bootstrap-styled/lib/P';
 import A from 'bootstrap-styled/lib/A';
+import H1 from 'bootstrap-styled/lib/H1';
 
 import { defaultProps as formDefaultProps } from './withLoginForm';
 
@@ -14,7 +15,7 @@ const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   logo, version,
 }) => (
   <Fragment>
-    {logo}
+    <H1>{logo}</H1>
     {version && (
       <Small color="muted">
         {version}
@@ -128,7 +129,7 @@ export default (LoginForm) => {
       return (
         <div className={classnames(className, 'main-wrapper')}>
           <div className={classnames('login-wrapper', { 'js-form__err-animation': this.state.shacked })}>
-            <div className="login-header-wrapper py-1 mb-5 py-md-3 d-flex justify-content-center align-items-center flex-column">
+            <div className={classnames('login-header-wrapper py-1 mb-5 py-md-3 d-flex justify-content-center align-items-center flex-column')}>
               {header || createElement(DefaultLoginFormHeader, {
                 logo,
                 version,
@@ -182,17 +183,12 @@ export default (LoginForm) => {
         .login-wrapper {
           width: 100%;
           
-          .login-header-wrapper {
-            border-bottom: 1px solid lightgrey;
-          }
-          
           .login-form-wrapper {
             margin: 0 auto;
             max-width: 30rem;
           }
           
           .login-footer-wrapper {
-            border-top: 1px solid lightgrey;
             max-width: 28rem;
             margin: 0 auto;
             

@@ -163,7 +163,7 @@ export default (Field) => {
           )}
         </div>
         {beforeActions}
-        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-center py-3 my-3">
+        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-md-center py-3 my-3">
           {Field ? (
             <Field
               name="rememberMe"
@@ -173,7 +173,7 @@ export default (Field) => {
               component={renderInput}
             />
           ) : (
-            <FormGroup color={error && 'danger'} className="mb-0">
+            <FormGroup color={error && 'danger'} className="mb-md-0 mb-2">
               <Label check>{capitalizeFirstLetter('remember me')} <Input type="checkbox" /></Label>
             </FormGroup>
           )}

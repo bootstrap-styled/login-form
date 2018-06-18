@@ -7,9 +7,9 @@ const withLoginForm = require('./withLoginForm').default;
 const LoginFormExample = withFormWrapper(withLoginForm());
 
 <LoginFormExample
- logo={<h1>Login co.</h1>} 
- version="1.0.1" 
- labelHidden
+  logo="Login co." 
+  version="1.0.1" 
+  labelHidden
 />
 
 ```
