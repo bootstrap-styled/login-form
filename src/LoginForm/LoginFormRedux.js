@@ -1,22 +1,14 @@
-import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import withLoginForm from './withForm';
-import LoginWrapper from './LoginWrapper';
+import withLoginForm from './withLoginForm';
+import withFormWrapper from './withFormWrapper';
 import { validate as validateForm } from './validate';
 
-const LoginForm = () => (
-  <LoginWrapper>
-    {withLoginForm(Field)}
-  </LoginWrapper>
-);
-
-console.log(LoginForm);
 
 const LoginFormRedux = reduxForm({
   form: 'login',
   enableReinitialize: false,
   validate: validateForm,
-})(LoginForm);
+})(withLoginForm(Field));
 
 /** @component */
-export default LoginFormRedux;
+export default withFormWrapper(LoginFormRedux);

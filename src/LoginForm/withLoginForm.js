@@ -1,23 +1,19 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
-import messages from 'message-common';
 import cn from 'classnames';
 
 import Label from 'bootstrap-styled/lib/Label';
 import Input from 'bootstrap-styled/lib/Input';
+import Button from 'bootstrap-styled/lib/Button';
 import Form from 'bootstrap-styled/lib/Form';
 import FormGroup from 'bootstrap-styled/lib/Form/FormGroup';
 import FormFeedback from 'bootstrap-styled/lib/Form/FormFeedback';
 import { LoadingIndicator } from 'loaders';
 
 export const defaultProps = {
-  header: null,
-  footer: null,
   beforeButton: null,
-  onSubmit: null,
   loading: null,
   initialValues: {
     username: '',
@@ -36,7 +32,8 @@ export const propTypes = {
   beforeButton: PropTypes.node,
   className: PropTypes.string.isRequired,
   onSubmit: PropTypes.func,
-  loading: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  loader: PropTypes.node,
   initialValues: PropTypes.shape({
     username: PropTypes.string,
     password: PropTypes.string,
@@ -48,21 +45,26 @@ export const propTypes = {
   theme: PropTypes.object,
 };
 
+function capitalizeFirstLetter(string) {
+  return string[0].toUpperCase() + string.slice(1);
+}
 
 // see http://redux-form.com/6.4.3/examples/material-ui/
-const renderInput = ({
-  meta: { touched, error } = {}, // eslint-disable-line react/prop-types
-  input: { ...inputProps }, // eslint-disable-line react/prop-types
+const renderInput = ({ /* eslint-disable react/prop-types */
+  meta: { touched, error } = {},
+  input: { ...inputProps },
   ...props
 }) => (
   <FormGroup color={error && 'danger'}>
-    <Label>{props.label}</Label>
+    <Label>{capitalizeFirstLetter(props.label)}</Label>
     <Input {...inputProps} {...props} />
     {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
   </FormGroup>
 );
 
-export default (Field = renderInput) => {
+
+/** @component */
+export default (Field) => {
   const LoginFormUnstyled = (props) => {
     const {
       className,
@@ -72,6 +74,7 @@ export default (Field = renderInput) => {
       isLoading,
       ...reduxFormProps
     } = props;
+
     const {
       anyTouched,
       asyncValidate,
@@ -113,33 +116,45 @@ export default (Field = renderInput) => {
       ...rest
     } = reduxFormProps;
 
-    console.log(this.props, 'props');
     return (
-      <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit(onSubmit)} {...rest}>
+      <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit ? handleSubmit(onSubmit) : onSubmit} {...rest}>
         <div className="field-wrapper">
-          <Field
-            name="username"
-            type="text"
-            label={<FormattedMessage {...messages.formUsername} />}
-            placeHolder={placeHolder.username}
-            disabled={isLoading}
-            component={renderInput}
-          />
+          {Field ? (
+            <Field
+              name="username"
+              type="text"
+              label="username"
+              placeHolder={placeHolder.username}
+              disabled={isLoading}
+              component={renderInput}
+            />
+          ) : (
+            createElement(renderInput, {
+              label: 'username',
+              placeholder: placeHolder.username,
+            })
+          )}
         </div>
         <div className="field-wrapper">
-          <Field
-            name="password"
-            type="password"
-            label={<FormattedMessage {...messages.formPassword} />}
-            placeHolder={placeHolder.password}
-            disabled={isLoading}
-            component={renderInput}
-          />
+          {Field ? (
+            <Field
+              name="password"
+              type="password"
+              label="password"
+              placeHolder={placeHolder.username}
+              disabled={isLoading}
+              component={renderInput}
+            />
+          ) : (
+            createElement(renderInput, {
+              label: 'password',
+              placeholder: placeHolder.password,
+            })
+          )}
         </div>
         {beforeButton}
         <div className="button-wrapper">
           <Button type="submit" disabled={isLoading || submitting} color="success">
-            {<FormattedMessage {...messages.authLogin} />}
             {(isLoading || submitting) && loader}
           </Button>
         </div>
@@ -149,13 +164,8 @@ export default (Field = renderInput) => {
 
   LoginFormUnstyled.propTypes = propTypes;
 
-  const LoginForm = styled(LoginFormUnstyled)`
-  ${(props) => `
-
-  `}
-`;
+  const LoginForm = styled(LoginFormUnstyled)``;
 
   LoginForm.defaultProps = defaultProps;
-
   return LoginForm;
 };
