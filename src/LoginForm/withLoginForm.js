@@ -15,7 +15,7 @@ import { mediaBreakpointUp } from 'bootstrap-styled-mixins/lib/breakpoints';
 import { LoadingIndicator } from 'loaders';
 
 export const defaultProps = {
-  beforeButton: null,
+  beforeActions: null,
   loading: null,
   initialValues: {
     username: '',
@@ -31,7 +31,7 @@ export const defaultProps = {
 export const propTypes = {
   header: PropTypes.node,
   footer: PropTypes.node,
-  beforeButton: PropTypes.node,
+  beforeActions: PropTypes.node,
   className: PropTypes.string.isRequired,
   onSubmit: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -56,11 +56,11 @@ const renderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
   input: { ...inputProps },
   labelProps,
+  labelHidden,
   ...props
 }) => (
   <FormGroup color={error && 'danger'}>
-    <Label {...labelProps}>{capitalizeFirstLetter(props.label)}</Label>
-
+    <Label {...labelProps} hidden={labelHidden}>{capitalizeFirstLetter(props.label)}</Label>
     <Input {...inputProps} {...props} />
     {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
   </FormGroup>
@@ -78,6 +78,7 @@ export default (Field) => {
       afterActions,
       notification,
       isLoading,
+      labelHidden,
       ...reduxFormProps
     } = props;
 
@@ -124,8 +125,8 @@ export default (Field) => {
 
     return (
       <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit ? handleSubmit(onSubmit) : onSubmit} {...rest}>
-        <div className="field-wrapper">
-          {notification}
+        {notification}
+        <div className="field-wrapper mt-4">
           {Field ? (
             <Field
               name="username"
@@ -139,6 +140,7 @@ export default (Field) => {
             createElement(renderInput, {
               label: 'username',
               placeholder: placeHolder.username,
+              labelHidden,
             })
           )}
         </div>
@@ -156,11 +158,12 @@ export default (Field) => {
             createElement(renderInput, {
               label: 'password',
               placeholder: placeHolder.password,
+              labelHidden,
             })
           )}
         </div>
         {beforeActions}
-        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-center py-3 my-3">
           {Field ? (
             <Field
               name="rememberMe"
@@ -170,7 +173,7 @@ export default (Field) => {
               component={renderInput}
             />
           ) : (
-            <FormGroup color={error && 'danger'}>
+            <FormGroup color={error && 'danger'} className="mb-0">
               <Label check>{capitalizeFirstLetter('remember me')} <Input type="checkbox" /></Label>
             </FormGroup>
           )}
@@ -188,7 +191,7 @@ export default (Field) => {
 
   const LoginForm = styled(LoginFormUnstyled)`
     ${(props) => `
-      .action-wrapper {     
+      .action-wrapper {  
         .form-check-input {
           margin-left: -9rem;
         }

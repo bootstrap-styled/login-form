@@ -5,6 +5,8 @@ import classnames from 'classnames';
 
 import Small from 'bootstrap-styled/lib/Small';
 import Alert from 'bootstrap-styled/lib/Alert';
+import P from 'bootstrap-styled/lib/P';
+import A from 'bootstrap-styled/lib/A';
 
 import { defaultProps as formDefaultProps } from './withLoginForm';
 
@@ -14,17 +16,32 @@ const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   <Fragment>
     {logo}
     {version && (
-      <Small>
+      <Small color="muted">
         {version}
       </Small>
     )}
   </Fragment>
 );
 
+const DefaultLoginFormFooter = () => (
+  <Small className="footer-terms-conditions" color="muted">
+    By clicking you agree to the <A href="#">Terms & Conditions</A> and <A href="#">Privacy Policy</A>.
+  </Small>
+);
+
+const DefaultLoginFormAfterActions = () => (
+  <div className="text-center">
+    <A href="#">Forgot your username or password?</A>
+    <P className="mt-3">Dont have an account? <A href="#">Sign Up</A></P>
+  </div>
+);
+
 export const defaultProps = {
   logo: null,
   version: null,
-  footer: null,
+  labelHidden: false,
+  afterActions: <DefaultLoginFormAfterActions />,
+  footer: <DefaultLoginFormFooter />,
   notification: {
     text: '',
     type: 'info',
@@ -41,6 +58,7 @@ export default (LoginForm) => {
       className: PropTypes.string.isRequired,
       logo: PropTypes.any,
       version: PropTypes.any,
+      labelHidden: PropTypes.bool,
       notification: PropTypes.shape({
         text: PropTypes.string,
         type: PropTypes.oneOf([
@@ -95,6 +113,7 @@ export default (LoginForm) => {
         footer,
         hideNotification,
         autoHideDuration,
+        labelHidden,
         notification,
         logo,
         version,
@@ -109,22 +128,23 @@ export default (LoginForm) => {
       return (
         <div className={classnames(className, 'main-wrapper')}>
           <div className={classnames('login-wrapper', { 'js-form__err-animation': this.state.shacked })}>
-            <div className="login-header-wrapper py-1 py-md-3 d-flex align-items-center flex-column">
+            <div className="login-header-wrapper py-1 mb-5 py-md-3 d-flex justify-content-center align-items-center flex-column">
               {header || createElement(DefaultLoginFormHeader, {
                 logo,
                 version,
               })}
             </div>
-            <div className="login-form-wrapper">
+            <div className="login-form-wrapper mb-5">
               {loginForm || createElement(LoginForm, {
                 notification: notification.text.length > 0 && <Alert color={notification.type} className="text-center" autoHideDuration={autoHideDuration}>{notification.text}</Alert>,
                 beforeActions,
                 afterActions,
+                labelHidden,
                 onSubmit,
                 ...formRest,
               })}
             </div>
-            <div className="login-footer-wrapper">
+            <div className="login-footer-wrapper py-3">
               {footer}
             </div>
           </div>
@@ -150,37 +170,40 @@ export default (LoginForm) => {
 
   const FormWrapper = styled(FormWrapperUnstyled)`
     ${(props) => `
-        &.main-wrapper {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
-          height: 1px;
-          align-items: center;
-          justify-content: flex-start;
-          background-color: white;
-        
-        .login-header-wrapper {
-          border-bottom: 1px solid lightgrey;
-        }
+      &.main-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        height: 1px;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: white;
         
         .login-wrapper {
           width: 100%;
           
+          .login-header-wrapper {
+            border-bottom: 1px solid lightgrey;
+          }
+          
           .login-form-wrapper {
-            padding: 2rem .75rem;
-            max-width: 30rem;
             margin: 0 auto;
+            max-width: 30rem;
+          }
+          
+          .login-footer-wrapper {
+            border-top: 1px solid lightgrey;
+            max-width: 28rem;
+            margin: 0 auto;
+            
+            .footer-terms-conditions {
+              font-size: .6rem;
+              line-height: .5;
+            }
           }
         }
-      }
-      
-      &.login-form {
-        min-width: 300px;
-        margin-top: 6em;
-      }
-    
+      }    
     `}
-
   `;
 
   FormWrapper.defaultProps = defaultProps;
