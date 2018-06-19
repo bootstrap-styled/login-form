@@ -63,7 +63,7 @@ const renderInput = ({ /* eslint-disable react/prop-types */
   ...labelProps,
   ...props
 }) => (
-  <FormGroup color={!!(touched && error) ? 'danger' : ''}>
+  <FormGroup color={touched && error ? 'danger' : ''}>
     {props.type === 'checkbox' ? (
       <Fragment>
         <Label {...labelProps} hidden={labelHidden}><Input {...inputProps} {...props} type={props.type} />{capitalizeFirstLetter(props.label)}</Label>
@@ -180,7 +180,7 @@ export default (Field) => {
         </div>
         {beforeActions}
         <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-md-center py-3 my-3">
-          {rememberMe ? (Field ? (
+          {rememberMe ? (Field ? ( // eslint-disable-line no-nested-ternary
             <Field
               name="rememberMe"
               label="remember me"

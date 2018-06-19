@@ -1,6 +1,6 @@
 import React, { Fragment, createElement } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import classnames from 'classnames';
 
 import Small from 'bootstrap-styled/lib/Small';
@@ -51,7 +51,7 @@ export const defaultProps = {
 
 export const propTypes = {
   className: PropTypes.string.isRequired,
-  /** if you have not specified a header component you can directly insert your Logo in the default header provided.*/
+  /** if you have not specified a header component you can directly insert your Logo in the default header provided. */
   logo: PropTypes.any,
   version: PropTypes.any,
   labelHidden: PropTypes.bool,
@@ -71,8 +71,7 @@ export const propTypes = {
 
 /** @component */
 export default (LoginForm) => {
-  class FormWrapperUnstyled extends React.Component {
-
+  class FormWrapperUnstyled extends React.Component { // eslint-disable-line react/prefer-stateless-function
     static propTypes = propTypes;
     static defaultProps = defaultProps;
 
@@ -121,6 +120,7 @@ export default (LoginForm) => {
       );
     }
   }
+  /* eslint-disable no-unused-vars */
   const FormWrapper = styled(FormWrapperUnstyled)`
     ${(props) => `
       &.main-wrapper {
@@ -153,6 +153,7 @@ export default (LoginForm) => {
       }    
     `}
   `;
+  /* eslint-enable no-unused-vars */
 
   FormWrapper.defaultProps = defaultProps;
 
