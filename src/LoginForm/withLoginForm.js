@@ -1,4 +1,4 @@
-import React, { createElement } from 'react';
+import React, { createElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
@@ -16,7 +16,8 @@ import { LoadingIndicator } from 'loaders';
 
 export const defaultProps = {
   beforeActions: null,
-  loading: null,
+  isLoading: null,
+  rememberMe: false,
   initialValues: {
     username: '',
     password: '',
@@ -32,9 +33,12 @@ export const propTypes = {
   header: PropTypes.node,
   footer: PropTypes.node,
   beforeActions: PropTypes.node,
+  afterActions: PropTypes.node,
   className: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  labelHidden: PropTypes.bool,
+  rememberMe: PropTypes.bool,
   loader: PropTypes.node,
   initialValues: PropTypes.shape({
     username: PropTypes.string,
@@ -55,13 +59,22 @@ function capitalizeFirstLetter(string) {
 const renderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
   input: { ...inputProps },
-  labelProps,
   labelHidden,
+  ...labelProps,
   ...props
 }) => (
-  <FormGroup color={error && 'danger'}>
-    <Label {...labelProps} hidden={labelHidden}>{capitalizeFirstLetter(props.label)}</Label>
-    <Input {...inputProps} {...props} />
+  <FormGroup color={!!(touched && error) ? 'danger' : ''}>
+    {props.type === 'checkbox' ? (
+      <Fragment>
+        <Label {...labelProps} hidden={labelHidden}><Input {...inputProps} {...props} type={props.type} />{capitalizeFirstLetter(props.label)}</Label>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <Label {...labelProps} hidden={labelHidden}>{capitalizeFirstLetter(props.label)}</Label>
+        <Input {...inputProps} type={props.type} {...props} />
+      </Fragment>
+    )}
+
     {!!(touched && error) && <FormFeedback>{error}</FormFeedback>}
   </FormGroup>
 );
@@ -79,6 +92,7 @@ export default (Field) => {
       notification,
       isLoading,
       labelHidden,
+      rememberMe,
       ...reduxFormProps
     } = props;
 
@@ -130,11 +144,12 @@ export default (Field) => {
           {Field ? (
             <Field
               name="username"
+              label="usermame"
               type="text"
-              label="username"
-              placeHolder={placeHolder.username}
+              placeholder={placeHolder.username}
               disabled={isLoading}
               component={renderInput}
+              labelHidden={labelHidden}
             />
           ) : (
             createElement(renderInput, {
@@ -148,11 +163,12 @@ export default (Field) => {
           {Field ? (
             <Field
               name="password"
-              type="password"
               label="password"
-              placeHolder={placeHolder.username}
+              type="password"
+              placeholder={placeHolder.password}
               disabled={isLoading}
               component={renderInput}
+              labelHidden={labelHidden}
             />
           ) : (
             createElement(renderInput, {
@@ -164,20 +180,20 @@ export default (Field) => {
         </div>
         {beforeActions}
         <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-md-center py-3 my-3">
-          {Field ? (
+          {rememberMe ? (Field ? (
             <Field
               name="rememberMe"
-              type="check"
-              label="rememberMe"
+              label="remember me"
+              type="checkbox"
               disabled={isLoading}
               component={renderInput}
             />
           ) : (
-            <FormGroup color={error && 'danger'} className="mb-md-0 mb-2">
-              <Label check>{capitalizeFirstLetter('remember me')} <Input type="checkbox" /></Label>
+            <FormGroup>
+              <Label check>{capitalizeFirstLetter('remember me')}<Input type="checkbox" /></Label>
             </FormGroup>
-          )}
-          <Button type="submit" disabled={isLoading || submitting} color="success">
+          )) : null}
+          <Button type="submit" disabled={isLoading || submitting} color="primary">
             Login
             {(isLoading || submitting) && loader}
           </Button>
@@ -192,12 +208,15 @@ export default (Field) => {
   const LoginForm = styled(LoginFormUnstyled)`
     ${(props) => `
       .action-wrapper {  
-        .form-check-input {
-          margin-left: -9rem;
-        }
         .btn {
           width: 100%;
           ${mediaBreakpointUp('md', props.theme['$grid-breakpoints'], 'width: 50%')}
+        }
+        .form-group {
+          margin-bottom: 0;
+        }
+        .form-check-input {
+          margin-left: -8.5rem;
         }
       }
     `}
