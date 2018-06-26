@@ -218,8 +218,7 @@
     "immutable": "^4.0.0-rc.9",
     "prop-types": "^15.6.1",
     "react-transition-group": "^2.3.1",
-    "redux-immutable": "^4.0.0",
-    "reselect": "^3.0.1"
+    "redux-immutable": "^4.0.0"
   },
   "peerDependencies": {
     "react": "^16.4.0",

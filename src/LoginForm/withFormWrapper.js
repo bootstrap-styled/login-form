@@ -2,6 +2,7 @@ import React, { Fragment, createElement } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import classnames from 'classnames';
+import omit from 'lodash.omit';
 
 import Small from 'bootstrap-styled/lib/Small';
 import Alert from 'bootstrap-styled/lib/Alert';
@@ -47,8 +48,16 @@ export const defaultProps = {
   autoHideDuration: null,
   onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'),
   ...formDefaultProps,
+  theme: {
+    loginForm: {
+      '$wrapper-bg-color': '#fff',
+      '$wrapper-max-width': '26rem',
+      '$footer-font-size': '.6rem',
+      '$checkbox-margin-left': '-8.5rem',
+    },
+  },
 };
-
+/* eslint-disable react/no-unused-prop-types */
 export const propTypes = {
   className: PropTypes.string.isRequired,
   /** if you have not specified a header component you can directly insert your Logo in the default header provided. */
@@ -60,14 +69,28 @@ export const propTypes = {
   rememberMe: PropTypes.bool,
   input: PropTypes.object,
   meta: PropTypes.object,
-  header: PropTypes.object,
-  footer: PropTypes.object,
+  header: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  footer: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   onSubmit: PropTypes.func,
   loginForm: PropTypes.node,
-  beforeActions: PropTypes.node,
-  afterActions: PropTypes.node,
+  beforeActions: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  afterActions: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   autoHideDuration: PropTypes.number,
+  theme: PropTypes.object,
 };
+/* eslint-enable react/no-unused-prop-types */
 
 /** @component */
 export default (LoginForm) => {
@@ -90,8 +113,9 @@ export default (LoginForm) => {
         beforeActions,
         afterActions,
         rememberMe,
+        translate,
         ...formRest
-      } = this.props;
+      } = omit(this.props, ['theme']);
 
       return (
         <div className={classnames(className, 'main-wrapper')}>
@@ -109,6 +133,7 @@ export default (LoginForm) => {
                 afterActions,
                 labelHidden,
                 rememberMe,
+                translate,
                 ...formRest,
               })}
             </div>
@@ -127,26 +152,24 @@ export default (LoginForm) => {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        height: 1px;
         align-items: center;
         justify-content: flex-start;
-        background-color: white;
+        background-color: ${props.theme.loginForm['$wrapper-bg-color']};
         
         .login-wrapper {
           width: 100%;
           
           .login-form-wrapper {
             margin: 0 auto;
-            max-width: 26rem;
+            max-width: ${props.theme.loginForm['$wrapper-max-width']};
           }
           
           .login-footer-wrapper {
-            max-width: 26rem;
+            max-width: ${props.theme.loginForm['$wrapper-max-width']};
             margin: 0 auto;
             
             .footer-terms-conditions {
-              font-size: .6rem;
-              line-height: .5;
+              font-size: ${props.theme.loginForm['$footer-font-size']};
             }
           }
         }
