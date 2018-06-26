@@ -1,24 +1,19 @@
-export const makeTheme = (userTheme = {}) => {
+export const makeTheme = (userTheme = { loginForm: {} }) => {
   const newTheme = { loginForm: {} };
-  const u = userTheme;
+  const v = newTheme.loginForm;
+  const u = userTheme.loginForm || {};
 
-  // FormPageWrapper
-  newTheme.loginForm['$background-color'] = u.loginForm && u.loginForm['$background-color'] ? u.loginForm['$background-color'] : '#fff';
-  newTheme.loginForm['$box-shadow'] = u.loginForm && u.loginForm['$box-shadow'] ? u.loginForm['$box-shadow'] : '0px 1px 3px rgba(0, 0, 0, 0.25)';
-  newTheme.loginForm['$border-radius'] = u.loginForm && u.loginForm['$border-radius'] ? u.loginForm['$border-radius'] : '3px';
-  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
-  newTheme.loginForm['$max-width'] = u.loginForm && u.loginForm['$max-width'] ? u.loginForm['$max-width'] : '325px';
+  // LoginWrapper
+  v['$wrapper-bg-color'] = u['$wrapper-bg-color'] || '#fff';
+  v['$wrapper-max-width'] = u['$wrapper-max-width'] || '26rem';
+  v['$footer-font-size'] = u['$footer-font-size'] || '.6rem';
+
 
   // LoginForm
-  newTheme.loginForm['$color-lighter'] = u.loginForm && u.loginForm['$color-lighter'] ? u.loginForm['$color-lighter'] : '#EDEDED';
-  newTheme.loginForm['$color-light'] = u.loginForm && u.loginForm['$color-light'] ? u.loginForm['$color-light'] : '#999';
-  newTheme.loginForm.$color = u.loginForm && u.loginForm.$color ? u.loginForm.$color : '#666';
-  newTheme.loginForm['$color-dark'] = u.loginForm && u.loginForm['$color-dark'] ? u.loginForm['$color-dark'] : '#333';
+  v['$checkbox-margin-left'] = u['$checkbox-margin-left'] || '-8.5rem';
 
-  return newTheme;
+  newTheme.loginForm = v;
+  return { ...newTheme, ...userTheme };
 };
 
-export const theme = makeTheme();
-
-
-export default theme;
+export default makeTheme();
