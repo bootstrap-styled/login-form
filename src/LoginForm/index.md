@@ -34,12 +34,12 @@ const LoginFormExample = withFormWrapper(withLoginForm());
 | `rememberMe`        | bool     | false                          | activate the Remember me checkbox   |
 | `loginForm`         | node     | null                           | LoginForm component, should be passed as agurment to the withFormWrapper(), Hoc |
 | `beforeActions`     | node     | null                           | LoginForm component, should be passed as agurment to the withFormWrapper(), Hoc |
-| `afterActions`      | node     | <DefaultLoginFormAfterActions />                           | LoginForm component, should be passed as agurment to the withFormWrapper(), Hoc |
+| `afterActions`      | node     | DefaultLoginFormAfterActions                          | LoginForm component, should be passed as agurment to the withFormWrapper(), Hoc |
 | `notification`      | object   | { text: '', type: 'info' }     | notification system |
 | `hideNotification`  | func     | null                          | function hooked at the closing alert |
 | `autoHideDuration`  | number   | null                          | notification delay before hidding |
 | `header`            | any      | null                           | inserted in the header |
-| `footer`            | node     | <DefaultLoginFormFooter />                           | inserted in the footer |
+| `footer`            | node     | DefaultLoginFormFooter                           | inserted in the footer |
 | `beforeButton`      | any      | null                           | inserted before the button |
 | `onSubmit`          | function | null                           | handle onSubmit action    |
 | `initialValues`     | object   | { username: '', password: '' } | form initial values                 |
@@ -50,14 +50,10 @@ const LoginFormExample = withFormWrapper(withLoginForm());
 
 | key         | sub-key             | value                             |
 |-------------|---------------------|-----------------------------------|
-| `loginForm` | `$background-color` | '#fff'                            |
-|             | `$box-shadow`       | '0px 1px 3px rgba(0, 0, 0, 0.25)' |
-|             | `$border-radius`    | '3px'                             |
-|             | `$color-lighter`    | '#EDEDED'                         |
-|             | `$color-lighter`    | '#EDEDED'                         |
-|             | `$color-light`      | '#999'                            |
-|             | `$color`            | '#666'                            |
-|             | `$color-dark`       | '#333'                            |
+| `loginForm` | `$wrapper-bg-color` | '#fff'                            |
+|             | `$wrapper-max-width`| '26rem'                           |
+|             | `$footer-font-size`    | '.6rem'                             |
+|             | `$checkbox-margin-left`| '-8.5rem'                         |
 
 ```js
 const withFormWrapper = require('./withFormWrapper').default;
