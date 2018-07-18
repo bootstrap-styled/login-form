@@ -309,7 +309,7 @@
       "global": {
         "statements": 19,
         "branches": 13,
-        "functions": 45,
+        "functions": 19,
         "lines": 19
       }
     },
