@@ -1,3 +1,10 @@
+## [1.0.1](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.0...v1.0.1) (2018-07-18)
+
+
+### Bug Fixes
+
+* **transitive:** update release transitive to 1.0.9 ([a7cb929](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/a7cb929))
+
 # 1.0.0 (2018-07-18)
 
 
