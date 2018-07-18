@@ -12,7 +12,7 @@ import Form from 'bootstrap-styled/lib/Form';
 import FormGroup from 'bootstrap-styled/lib/Form/FormGroup';
 import FormFeedback from 'bootstrap-styled/lib/Form/FormFeedback';
 import { mediaBreakpointUp } from 'bootstrap-styled-mixins/lib/breakpoints';
-import { LoadingIndicator } from 'loaders';
+import { LoadingIndicator } from '@yeutech/loaders';
 
 export const defaultProps = {
   beforeActions: null,
