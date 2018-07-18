@@ -1,3 +1,10 @@
+## [1.0.2](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.1...v1.0.2) (2018-07-18)
+
+
+### Bug Fixes
+
+* **bootstrap-styled:** Upgrade to 1.7.1 ([4553436](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/4553436))
+
 ## [1.0.1](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.0...v1.0.1) (2018-07-18)
 
 
