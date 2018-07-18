@@ -1,6 +1,6 @@
 {
   "name": "@yeutech/login-form",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "login-form",
   "main": "lib/index.js",
   "homepage": "https://bootstrap-styled.yeutech.com/login-form",

@@ -1,3 +1,15 @@
+# 1.0.0 (2018-07-18)
+
+
+### Bug Fixes
+
+* **/LoginForm:** improved display and added default components ([a791401](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/a791401))
+* **/LoginForm:** improved display and added default components ([dc0fb1b](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/dc0fb1b))
+* **ci:** fix CI with scripts ci and using [@yeutech-lab](https://module.kopaxgroup.com/yeutech-lab)/rollup-umd-documentation ([4a5eb3f](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/4a5eb3f))
+* **loaders:** using [@yeutech](https://module.kopaxgroup.com/yeutech)/loaders and updated doc ([2064b03](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/2064b03))
+* **login-form:** updating form to newer version, first commit ([f5ce195](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/f5ce195))
+* **styleguide:** removed `setup.sh` ([f15ffd1](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/f15ffd1))
+
 <a name="1.0.32"></a>
 ## [1.0.32](https://module.kopaxgroup.com:20024/dev-tools/rollup-umd/compare/v1.0.31...v1.0.32) (2018-06-09)
 
