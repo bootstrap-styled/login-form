@@ -1,3 +1,11 @@
+## [1.0.4](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.3...v1.0.4) (2018-07-19)
+
+
+### Bug Fixes
+
+* **dependencies:** Upgrade bootstrap-styled to 1.7.4 ([3a975fe](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/3a975fe))
+* **doc:** Upgrade [@yeutech-lab](https://module.kopaxgroup.com/yeutech-lab)/rollup-umd-documentation to 2.3.18, react-styleguidist to 7.1.0 and [@yeutech](https://module.kopaxgroup.com/yeutech)/rollup-umd-ci-release-transitive to 1.1.3 ([299b8bd](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/299b8bd))
+
 ## [1.0.3](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.2...v1.0.3) (2018-07-19)
 
 
