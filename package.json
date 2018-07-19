@@ -236,14 +236,14 @@
     "bootstrap-styled-redux": "^0.1.2"
   },
   "publishConfig": {
-    "tag": "latest",
-    "registry": "https://npm.kopaxgroup.com"
+    "registry": "https://npm.kopaxgroup.com",
+    "tag": "latest"
   },
   "release": {
     "branch": "master",
     "success": false,
     "fail": false,
-    "npmPublish": false,
+    "npmPublish": true,
     "verifyConditions": [
       {
         "path": "@semantic-release/exec",
@@ -330,6 +330,5 @@
     ]
   },
   "declinationId": "bs-redux-immutable",
-  "contributor": [],
-  "private": true
+  "contributor": []
 }
