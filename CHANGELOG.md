@@ -1,3 +1,10 @@
+## [1.0.3](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.2...v1.0.3) (2018-07-19)
+
+
+### Bug Fixes
+
+* **package.json:** publishing set to protected ([e827091](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/e827091))
+
 ## [1.0.2](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.1...v1.0.2) (2018-07-18)
 
 
