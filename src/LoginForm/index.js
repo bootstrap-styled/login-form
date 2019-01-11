@@ -1,2 +1,2 @@
 export { default, default as LoginForm } from './LoginFormRedux';
-export { default as makeTheme } from './theme';
+export { default as theme, makeTheme } from './theme';
