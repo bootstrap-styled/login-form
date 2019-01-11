@@ -56,7 +56,7 @@ export const defaultProps = {
   afterActions: <DefaultLoginFormAfterActions />,
   footer: <DefaultLoginFormFooter />,
   autoHideDuration: null,
-  onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'),
+  onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'), // eslint-disable-line no-console
   ...formDefaultProps,
   theme: {
     loginForm: {
