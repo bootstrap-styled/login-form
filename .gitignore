@@ -15,3 +15,5 @@ dist
 /docs/declinations
 /docs/translation.md
 .npmrc
+.git-credentials
+/docs/cli

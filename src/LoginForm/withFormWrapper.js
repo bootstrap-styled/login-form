@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import classnames from 'classnames';
 import omit from 'lodash.omit';
 
-import Small from 'bootstrap-styled/lib/Small';
-import Alert from 'bootstrap-styled/lib/Alert';
-import P from 'bootstrap-styled/lib/P';
-import A from 'bootstrap-styled/lib/A';
-import H1 from 'bootstrap-styled/lib/H1';
+import Small from '@bootstrap-styled/v4/lib/Small';
+import Alert from '@bootstrap-styled/v4/lib/Alert';
+import P from '@bootstrap-styled/v4/lib/P';
+import A from '@bootstrap-styled/v4/lib/A';
+import H1 from '@bootstrap-styled/v4/lib/H1';
 
 import { defaultProps as formDefaultProps } from './withLoginForm';
 
@@ -27,14 +27,24 @@ const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
 
 const DefaultLoginFormFooter = () => (
   <Small className="footer-terms-conditions" color="muted">
-    By clicking you agree to the <A href="#">Terms & Conditions</A> and <A href="#">Privacy Policy</A>.
+    By clicking you agree to the
+    {' '}
+    <A href="#">Terms & Conditions</A>
+    {' '}
+and
+    {' '}
+    <A href="#">Privacy Policy</A>
+.
   </Small>
 );
 
 const DefaultLoginFormAfterActions = () => (
   <div className="text-center">
     <A href="#">Forgot your username or password?</A>
-    <P className="mt-3">Dont have an account? <A href="#">Sign Up</A></P>
+    <P className="mt-3">
+Dont have an account?
+      <A href="#">Sign Up</A>
+    </P>
   </div>
 );
 
@@ -96,6 +106,7 @@ export const propTypes = {
 export default (LoginForm) => {
   class FormWrapperUnstyled extends React.Component { // eslint-disable-line react/prefer-stateless-function
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     render() {

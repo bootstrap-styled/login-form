@@ -1,1 +1,3 @@
-export { default, LoginForm, makeTheme, theme } from './LoginForm/immutable';
+export {
+  default, LoginForm, makeTheme, theme,
+} from './LoginForm/immutable';

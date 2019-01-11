@@ -29,7 +29,7 @@
       ]
     },
     {
-      "name": "UI",
+      "name": "UI Components",
       "content": "docs/ui.md",
       "sections": [
         {

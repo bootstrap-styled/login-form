@@ -1,19 +1,11 @@
-export const makeTheme = (userTheme = { loginForm: {} }) => {
-  const newTheme = { loginForm: {} };
-  const v = newTheme.loginForm;
-  const u = userTheme.loginForm || {};
+import { makeScopedTheme, toMakeTheme } from 'bootstrap-styled';
 
-  // LoginWrapper
-  v['$wrapper-bg-color'] = u['$wrapper-bg-color'] || '#fff';
-  v['$wrapper-max-width'] = u['$wrapper-max-width'] || '26rem';
-  v['$footer-font-size'] = u['$footer-font-size'] || '.6rem';
+const theme = makeScopedTheme('loginForm', {
+  '$wrapper-bg-color': '#fff',
+  '$wrapper-max-width': '26rem',
+  '$footer-font-size': '.6rem',
+  '$checkbox-margin-left': '-8.5rem',
+});
+export const makeTheme = toMakeTheme(theme);
 
-
-  // LoginForm
-  v['$checkbox-margin-left'] = u['$checkbox-margin-left'] || '-8.5rem';
-
-  newTheme.loginForm = v;
-  return { ...newTheme, ...userTheme };
-};
-
-export default makeTheme();
+export default theme;
