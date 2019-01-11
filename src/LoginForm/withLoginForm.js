@@ -1,17 +1,15 @@
 import React, { createElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash.omit';
-
 import styled from 'styled-components';
 import cn from 'classnames';
-
-import Label from 'bootstrap-styled/lib/Label';
-import Input from 'bootstrap-styled/lib/Input';
-import Button from 'bootstrap-styled/lib/Button';
-import Form from 'bootstrap-styled/lib/Form';
-import FormGroup from 'bootstrap-styled/lib/Form/FormGroup';
-import FormFeedback from 'bootstrap-styled/lib/Form/FormFeedback';
-import { mediaBreakpointUp } from 'bootstrap-styled-mixins/lib/breakpoints';
+import Label from '@bootstrap-styled/v4/lib/Label';
+import Input from '@bootstrap-styled/v4/lib/Input';
+import Button from '@bootstrap-styled/v4/lib/Button';
+import Form from '@bootstrap-styled/v4/lib/Form';
+import FormGroup from '@bootstrap-styled/v4/lib/Form/FormGroup';
+import FormFeedback from '@bootstrap-styled/v4/lib/Form/FormFeedback';
+import bp from '@bootstrap-styled/mixins/lib/breakpoints';
 import { LoadingIndicator } from '@yeutech/loaders';
 
 export const defaultProps = {
@@ -101,29 +99,30 @@ const sanitizeRestProps = ({
 // see http://redux-form.com/6.4.3/examples/material-ui/
 const renderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
-  input: { ...inputProps },
+  input: inputProps,
   labelHidden,
   translate,
-  ...labelProps,
+  label,
+  type,
+  labelProps = {},
   ...props
 }) => (
   <FormGroup color={touched && error ? 'danger' : ''}>
-    {props.type === 'checkbox' ? (
+    {type === 'checkbox' ? (
       <Fragment>
         <Label {...labelProps} hidden={labelHidden}>
-          <Input {...inputProps} {...props} type={props.type} />
-          {props.label}
+          <Input {...inputProps} {...props} type={type} />
+          {label}
         </Label>
       </Fragment>
     ) : (
       <Fragment>
         <Label {...labelProps} hidden={labelHidden}>
-          {props.label}
+          {label}
         </Label>
-        <Input {...inputProps} type={props.type} {...props} />
+        <Input {...inputProps} type={type} {...props} />
       </Fragment>
     )}
-
     {!!(touched && error) && <FormFeedback>{translate ? translate(error) : error}</FormFeedback>}
   </FormGroup>
 );
@@ -205,7 +204,10 @@ export default (Field) => {
             />
           ) : (
             <FormGroup className="mb-0">
-              <Label check>{'Remember me'}<Input type="checkbox" /></Label>
+              <Label check>
+                {'Remember me'}
+                <Input type="checkbox" />
+              </Label>
             </FormGroup>
           )) : null}
           <Button type="submit" disabled={isLoading || submitting} color="primary">
@@ -225,7 +227,7 @@ export default (Field) => {
       .action-wrapper {  
         .btn {
           width: 100%;
-          ${mediaBreakpointUp('md', props.theme['$grid-breakpoints'], 'width: 50%')}
+          ${bp.up('md', props.theme['$grid-breakpoints'], 'width: 50%')}
         }
         .form-check-input {
           margin-left: ${props.theme.loginForm['$checkbox-margin-left']};
