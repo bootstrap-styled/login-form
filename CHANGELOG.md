@@ -1,3 +1,15 @@
+## [1.0.5](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.4...v1.0.5) (2019-01-11)
+
+
+### Bug Fixes
+
+* **login-form:** fixed export of theme ([4ac5da8](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/4ac5da8))
+
+
+### Performance Improvements
+
+* **login-form:** Upgrade all dependencies to latest ([0f3ccd9](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/0f3ccd9))
+
 ## [1.0.4](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.3...v1.0.4) (2018-07-19)
 
 
