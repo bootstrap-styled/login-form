@@ -1,3 +1,10 @@
+## [1.0.6](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.5...v1.0.6) (2019-02-14)
+
+
+### Bug Fixes
+
+* **dependencies:** Upgrade all dependencies, fixed dist having wrong global and externals for [@bootstrap-styled](https://module.kopaxgroup.com/bootstrap-styled)/redux ([c8e8468](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/c8e8468))
+
 ## [1.0.5](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.4...v1.0.5) (2019-01-11)
 
 
