@@ -6,7 +6,7 @@
     "redux": "redux",
     "react-redux": "react-redux",
     "redux-form": "redux-form",
-    "bootstrap-styled-redux": "bootstrap-styled-redux"
+    "@bootstrap-styled/redux": "bootstrap-styled-redux"
   },
   "external": [
     "react",
@@ -14,7 +14,7 @@
     "styled-components",
     "redux",
     "react-redux",
-    "bootstrap-styled-redux",
+    "@bootstrap-styled/redux",
     "redux-form"
   ]
 }
