@@ -10,7 +10,6 @@ import Form from '@bootstrap-styled/v4/lib/Form';
 import FormGroup from '@bootstrap-styled/v4/lib/Form/FormGroup';
 import FormFeedback from '@bootstrap-styled/v4/lib/Form/FormFeedback';
 import bp from '@bootstrap-styled/mixins/lib/breakpoints';
-import { LoadingIndicator } from '@yeutech/loaders';
 
 export const defaultProps = {
   beforeActions: null,
@@ -134,7 +133,6 @@ export default (Field) => {
     const {
       className,
       placeHolder,
-      loader = <LoadingIndicator />,
       beforeActions,
       afterActions,
       notification,
@@ -145,13 +143,14 @@ export default (Field) => {
       onSubmit,
       submitting,
       translate,
+      loader,
       ...rest
     } = omit(props, ['theme']);
 
     return (
       <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit ? handleSubmit(onSubmit) : onSubmit} {...sanitizeRestProps(rest)}>
         {notification}
-        <div className="field-wrapper mt-4">
+        <div className="field-wrapper">
           {Field ? (
             <Field
               name="username"
@@ -165,7 +164,7 @@ export default (Field) => {
             />
           ) : (
             createElement(renderInput, {
-              label: 'username',
+              label: 'Username',
               placeholder: placeHolder.username,
               labelHidden,
             })
@@ -185,14 +184,14 @@ export default (Field) => {
             />
           ) : (
             createElement(renderInput, {
-              label: 'password',
+              label: 'Password',
               placeholder: placeHolder.password,
               labelHidden,
             })
           )}
         </div>
         {beforeActions}
-        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-md-center py-3 my-3">
+        <div className="action-wrapper d-flex flex-column flex-md-row justify-content-around align-items-md-center py-3 my-3">
           {rememberMe ? (Field ? ( // eslint-disable-line no-nested-ternary
             <Field
               name="rememberMe"
@@ -211,8 +210,7 @@ export default (Field) => {
             </FormGroup>
           )) : null}
           <Button type="submit" disabled={isLoading || submitting} color="primary">
-            {translate ? translate('kopax.common.form.button.login') : 'kopax.common.form.button.login'}
-            {(isLoading || submitting) && loader}
+            {!(isLoading || submitting) ? translate ? translate('kopax.common.form.button.login') : 'kopax.common.form.button.login' : loader /* eslint-disable-line */}
           </Button>
         </div>
         {afterActions}
