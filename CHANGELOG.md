@@ -1,3 +1,10 @@
+## [1.0.8](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.7...v1.0.8) (2019-02-19)
+
+
+### Bug Fixes
+
+* **theme:** added default values ([44809bf](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/44809bf))
+
 ## [1.0.7](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.6...v1.0.7) (2019-02-19)
 
 
