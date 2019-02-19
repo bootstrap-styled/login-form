@@ -67,6 +67,7 @@ const LoginFormExample = withFormWrapper(withLoginForm());
   version="1.0.1"
   rememberMe
   labelHidden
+  isLoading
 />
 
 ```

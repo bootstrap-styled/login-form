@@ -10,7 +10,6 @@ import Form from '@bootstrap-styled/v4/lib/Form';
 import FormGroup from '@bootstrap-styled/v4/lib/Form/FormGroup';
 import FormFeedback from '@bootstrap-styled/v4/lib/Form/FormFeedback';
 import bp from '@bootstrap-styled/mixins/lib/breakpoints';
-import { LoadingIndicator } from '@yeutech/loaders';
 
 export const defaultProps = {
   beforeActions: null,
@@ -134,7 +133,6 @@ export default (Field) => {
     const {
       className,
       placeHolder,
-      loader = <LoadingIndicator />,
       beforeActions,
       afterActions,
       notification,
@@ -145,6 +143,7 @@ export default (Field) => {
       onSubmit,
       submitting,
       translate,
+      loader,
       ...rest
     } = omit(props, ['theme']);
 
@@ -211,8 +210,7 @@ export default (Field) => {
             </FormGroup>
           )) : null}
           <Button type="submit" disabled={isLoading || submitting} color="primary">
-            {translate ? translate('kopax.common.form.button.login') : 'kopax.common.form.button.login'}
-            {(isLoading || submitting) && loader}
+            {!(isLoading || submitting) ? translate ? translate('kopax.common.form.button.login') : 'kopax.common.form.button.login' : loader /* eslint-disable-line */}
           </Button>
         </div>
         {afterActions}

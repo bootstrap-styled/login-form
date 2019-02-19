@@ -225,7 +225,6 @@
   "dependencies": {
     "@bootstrap-styled/mixins": "^1.0.5",
     "@bootstrap-styled/v4": "^3.0.4",
-    "@yeutech/loaders": "^1.0.1",
     "bootstrap-styled": "^2.4.11",
     "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
