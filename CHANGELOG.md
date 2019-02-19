@@ -1,3 +1,11 @@
+## [1.0.7](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.6...v1.0.7) (2019-02-19)
+
+
+### Bug Fixes
+
+* **loader:** removed old loader to allow manual passing of loader through props ([22750be](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/22750be))
+* **theme:** added better theming variables ([8ca8ac8](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/8ca8ac8))
+
 ## [1.0.6](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.5...v1.0.6) (2019-02-14)
 
 
