@@ -41,7 +41,7 @@ and
 const DefaultLoginFormAfterActions = () => (
   <div className="text-center">
     <A href="#">Forgot your username or password?</A>
-    <P className="mt-3">
+    <P className="mt-1">
 Dont have an account?
       <A href="#">Sign Up</A>
     </P>
@@ -60,9 +60,16 @@ export const defaultProps = {
   ...formDefaultProps,
   theme: {
     loginForm: {
-      '$wrapper-bg-color': '#fff',
-      '$wrapper-max-width': '26rem',
-      '$footer-font-size': '.6rem',
+      '$wrapper-bg-color': '#E9EAEC',
+      '$login-font-size': '15px',
+      '$login-wrapper-padding': '2rem 1.25rem',
+      '$login-wrapper-bg-color': '#fff',
+      '$login-wrapper-width': '25rem',
+      '$login-wrapper-border-width': '0px',
+      '$login-wrapper-border-color': 'grey',
+      '$login-header-wrapper-margin': '0',
+      '$login-footer-wrapper-margin': '1rem auto',
+      '$login-footer-font-size': '.6rem',
       '$checkbox-margin-left': '-8.5rem',
     },
   },
@@ -131,13 +138,13 @@ export default (LoginForm) => {
       return (
         <div className={classnames(className, 'main-wrapper')}>
           <div className={classnames('login-wrapper')}>
-            <div className={classnames('login-header-wrapper py-1 mb-5 py-md-3 d-flex justify-content-center align-items-center flex-column')}>
+            <div className={classnames('login-header-wrapper d-flex justify-content-center align-items-center flex-column')}>
               {header || createElement(DefaultLoginFormHeader, {
                 logo,
                 version,
               })}
             </div>
-            <div className="login-form-wrapper mb-5">
+            <div>
               {loginForm || createElement(LoginForm, {
                 notification: notification && notification.message.length > 0 && <Alert color={notification.type} className="text-center w-100" autoHideDuration={notification.autoHideDuration || autoHideDuration}>{notification.message}</Alert>,
                 beforeActions,
@@ -148,7 +155,7 @@ export default (LoginForm) => {
                 ...formRest,
               })}
             </div>
-            <div className="login-footer-wrapper py-3">
+            <div className="login-footer-wrapper">
               {footer}
             </div>
           </div>
@@ -166,21 +173,22 @@ export default (LoginForm) => {
         align-items: center;
         justify-content: flex-start;
         background-color: ${props.theme.loginForm['$wrapper-bg-color']};
-        
+        font-size: ${props.theme.loginForm['$login-font-size']};
         .login-wrapper {
-          width: 100%;
-          
-          .login-form-wrapper {
-            margin: 0 auto;
-            max-width: ${props.theme.loginForm['$wrapper-max-width']};
+          padding: ${props.theme.loginForm['$login-wrapper-padding']};
+          background-color: ${props.theme.loginForm['$login-wrapper-bg-color']};
+          margin: auto;
+          width: ${props.theme.loginForm['$login-wrapper-width']};
+          border: ${props.theme.loginForm['$login-wrapper-border-width']} solid ${props.theme.loginForm['$login-wrapper-border-color']};
+  
+          .login-header-wrapper {
+            margin: ${props.theme.loginForm['$login-header-wrapper-margin']};
           }
-          
           .login-footer-wrapper {
-            max-width: ${props.theme.loginForm['$wrapper-max-width']};
-            margin: 0 auto;
+            margin: ${props.theme.loginForm['$login-footer-wrapper-margin']};
             
             .footer-terms-conditions {
-              font-size: ${props.theme.loginForm['$footer-font-size']};
+              font-size: ${props.theme.loginForm['$login-footer-font-size']};
             }
           }
         }
