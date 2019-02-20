@@ -57,7 +57,6 @@ export const defaultProps = {
   footer: <DefaultLoginFormFooter />,
   loader: 'Loading...',
   autoHideDuration: null,
-  hideNotification: false,
   onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'), // eslint-disable-line no-console
   ...formDefaultProps,
   theme: {
@@ -150,7 +149,7 @@ export default (LoginForm) => {
             </div>
             <div>
               {loginForm || createElement(LoginForm, {
-                notification: !hideNotification && notification && notification.message.length > 0 && <Alert color={notification.type} className="text-center w-100" autoHideDuration={notification.autoHideDuration || autoHideDuration}>{notification.message}</Alert>,
+                notification: notification && notification.message.length > 0 && <Alert color={notification.type} className="text-center w-100" autoHideDuration={notification.autoHideDuration || autoHideDuration} onClick={hideNotification}>{notification.message}</Alert>,
                 beforeActions,
                 afterActions,
                 labelHidden,
