@@ -1,3 +1,10 @@
+## [1.0.9](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.8...v1.0.9) (2019-02-20)
+
+
+### Bug Fixes
+
+* **theme:** added forgotten variables to the theme. ([4938656](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/4938656))
+
 ## [1.0.8](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.7...v1.0.8) (2019-02-19)
 
 
