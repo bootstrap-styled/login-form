@@ -202,7 +202,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
-    "react-styleguidist": "^9.0.3",
+    "react-styleguidist": "^8.0.6",
     "react-test-renderer": "^16.8.4",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
