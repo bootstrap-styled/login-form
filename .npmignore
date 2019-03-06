@@ -26,3 +26,5 @@ sonar-project.properties
 /styleguide
 /reports
 /internals
+**/tests/*.test.js
+.ncurc.js
