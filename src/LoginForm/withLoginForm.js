@@ -9,7 +9,7 @@ import Button from '@bootstrap-styled/v4/lib/Button';
 import Form from '@bootstrap-styled/v4/lib/Form';
 import FormGroup from '@bootstrap-styled/v4/lib/Form/FormGroup';
 import FormFeedback from '@bootstrap-styled/v4/lib/Form/FormFeedback';
-import bp from '@bootstrap-styled/mixins/lib/breakpoints';
+import bp from '@bootstrap-styled/css-mixins/lib/breakpoints';
 
 export const defaultProps = {
   beforeActions: null,
