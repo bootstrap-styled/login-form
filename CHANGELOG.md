@@ -1,3 +1,14 @@
+## [1.0.12](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.11...v1.0.12) (2019-03-28)
+
+
+### Bug Fixes
+
+* **dependencies:** upgrade all dependencies ([3939b6f](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/3939b6f))
+* **dependencies:** upgrade all dependencies ([c781d15](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/c781d15))
+* **documentation:** added right documntation template ([90e7904](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/90e7904))
+* **packge.json:** release github. ([e517f31](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/e517f31))
+* **theme:** added new theme variables ([4816e5f](https://module.kopaxgroup.com/bootstrap-styled/login-form/commit/4816e5f))
+
 ## [1.0.11](https://module.kopaxgroup.com/bootstrap-styled/login-form/compare/v1.0.10...v1.0.11) (2019-03-06)
 
 
