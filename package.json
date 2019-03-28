@@ -1,6 +1,6 @@
 {
   "name": "@bootstrap-styled/login-form",
-  "version": "1.0.12",
+  "version": "0.0.0-development",
   "description": "login-form",
   "main": "lib/index.js",
   "homepage": "https://bootstrap-styled.github.io/login-form",
@@ -166,7 +166,6 @@
     "@semantic-release/git": "^7.0.8",
     "@semantic-release/github": "^5.2.10",
     "@semantic-release/npm": "^5.1.4",
-    "@yeutech-lab/documentation": "^2.0.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
@@ -205,7 +204,7 @@
     "webpack": "^4.29.6"
   },
   "dependencies": {
-    "@bootstrap-styled/mixins": "^1.0.5",
+    "@bootstrap-styled/css-mixins": "^1.0.5",
     "@bootstrap-styled/v4": "^3.0.12",
     "bootstrap-styled": "^2.4.13",
     "classnames": "^2.2.6",
