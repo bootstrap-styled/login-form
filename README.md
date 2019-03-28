@@ -10,8 +10,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.github.bootstrap-styled.login-form&metric=coverage)](https://sonarcloud.io/dashboard?id=com.github.bootstrap-styled.login-form) [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=com.github.bootstrap-styled.login-form&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.bootstrap-styled.login-form)
 [![gitter](https://badges.gitter.im/bootstrap-styled/bootstrap-styled.svg)](https://gitter.im/bootstrap-styled)
 
-login-form
-
+Library of LoginForm components made for Bootstrap Styled. Support redux, react-intl and ImmutableJS.
 
 ## Table of Contents
 
