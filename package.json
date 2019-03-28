@@ -1,6 +1,6 @@
 {
   "name": "@bootstrap-styled/login-form",
-  "version": "0.0.0-development",
+  "version": "1.0.13",
   "description": "login-form",
   "main": "lib/index.js",
   "homepage": "https://bootstrap-styled.github.io/login-form",
