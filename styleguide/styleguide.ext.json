@@ -15,18 +15,8 @@
       "content": "docs/prerequisite.md"
     },
     {
-      "name": "Getting started",
-      "content": "docs/getting-started.md",
-      "sections": [
-        {
-          "name": "Installation",
-          "content": "docs/installation.md"
-        },
-        {
-          "name": "Configuration",
-          "content": "docs/configuration.md"
-        }
-      ]
+      "name": "Installation",
+      "content": "docs/installation.md"
     },
     {
       "name": "UI Components",
@@ -53,10 +43,6 @@
         {
           "name": "Commands",
           "content": "docs/commands.md"
-        },
-        {
-          "name": "Branches",
-          "content": "docs/branches.md"
         },
         {
           "name": "Release",

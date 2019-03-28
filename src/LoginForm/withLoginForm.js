@@ -23,6 +23,15 @@ export const defaultProps = {
     username: 'Santaclauze',
     password: '••••••••••',
   },
+  translate: undefined,
+  usernameTranslateKey: 'bootstrap-styled.login.form.label.username',
+  usernameLabel: 'Username',
+  passwordTranslateKey: 'bootstrap-styled.login.form.label.password',
+  passwordLabel: 'Password',
+  rememberMeTranslateKey: 'bootstrap-styled.login.form.label.rememberMe',
+  rememberMeLabel: 'Remember me',
+  loginTranslateKey: 'bootstrap-styled.login.form.button.login',
+  loginLabel: 'Login',
   theme: {
     loginForm: {
       '$wrapper-bg-color': '#E9EAEC',
@@ -60,6 +69,14 @@ export const propTypes = {
   }),
   theme: PropTypes.object,
   translate: PropTypes.func,
+  usernameTranslateKey: PropTypes.string,
+  usernameLabel: PropTypes.string,
+  passwordTranslateKey: PropTypes.string,
+  passwordLabel: PropTypes.string,
+  rememberMeTranslateKey: PropTypes.string,
+  rememberMeLabel: PropTypes.string,
+  loginTranslateKey: PropTypes.string,
+  loginLabel: PropTypes.string,
 };
 
 const sanitizeRestProps = ({
@@ -151,6 +168,14 @@ export default (Field) => {
       submitting,
       translate,
       loader,
+      usernameTranslateKey,
+      usernameLabel,
+      passwordTranslateKey,
+      passwordLabel,
+      rememberMeTranslateKey,
+      rememberMeLabel,
+      loginTranslateKey,
+      loginLabel,
       ...rest
     } = omit(props, ['theme']);
 
@@ -161,7 +186,7 @@ export default (Field) => {
           {Field ? (
             <Field
               name="username"
-              label={translate ? translate('kopax.common.form.label.username') : 'kopax.common.form.label.username'}
+              label={translate ? translate(usernameTranslateKey) : usernameLabel}
               type="text"
               placeholder={placeHolder.username}
               disabled={isLoading}
@@ -181,7 +206,7 @@ export default (Field) => {
           {Field ? (
             <Field
               name="password"
-              label={translate ? translate('kopax.common.form.label.password') : 'kopax.common.form.label.password'}
+              label={translate ? translate(passwordTranslateKey) : passwordLabel}
               type="password"
               placeholder={placeHolder.password}
               disabled={isLoading}
@@ -202,7 +227,7 @@ export default (Field) => {
           {rememberMe ? (Field ? ( // eslint-disable-line no-nested-ternary
             <Field
               name="rememberMe"
-              label={translate ? translate('kopax.common.form.label.rememberMe') : 'kopax.common.form.label.rememberMe'}
+              label={translate ? translate(rememberMeTranslateKey) : rememberMeLabel}
               type="checkbox"
               disabled={isLoading}
               component={renderInput}
@@ -217,7 +242,7 @@ export default (Field) => {
             </FormGroup>
           )) : null}
           <Button type="submit" disabled={isLoading || submitting} color="primary">
-            {!(isLoading || submitting) ? translate ? translate('kopax.common.form.button.login') : 'kopax.common.form.button.login' : loader /* eslint-disable-line */}
+            {!(isLoading || submitting) ? translate ? translate(loginTranslateKey) : loginLabel : loader /* eslint-disable-line */}
           </Button>
         </div>
         {afterActions}
