@@ -7,10 +7,10 @@ npx @rollup-umd/documentation-cli variable \
   PACKAGE_DESCRIPTION=$(node -p "require('./package.json').description") \
   NODE_VERSION=$(node --version) \
   NPM_VERSION=$(npm --version) \
-  CI_REPOSITORY_URL=${CI_REPOSITORY_URL} \
-  CI_PROJECT_URL=${CI_PROJECT_URL} \
-  CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE} \
-  CI_PROJECT_NAME=${CI_PROJECT_NAME}
+  CI_REPOSITORY_URL="https://github.com/${TRAVIS_REPO_SLUG}.git" \
+  CI_PROJECT_URL="https://github.com/${TRAVIS_REPO_SLUG}" \
+  CI_PROJECT_NAMESPACE=$(echo $TRAVIS_REPO_SLUG | awk -F / '{print $1}') \
+  CI_PROJECT_NAME=$(echo $TRAVIS_REPO_SLUG | awk -F / '{print $2}')
 
 npx @rollup-umd/documentation-cli add-section -n 'Code of conduct' -a 'FAQ' -c 'CODE_OF_CONDUCT.md' --force
 npx @rollup-umd/documentation-cli add-section -n 'Changelog' -a 'Code of conduct' -c 'CHANGELOG.md' --force
