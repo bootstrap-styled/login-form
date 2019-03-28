@@ -120,7 +120,7 @@ const sanitizeRestProps = ({
 }) => props;
 
 // see http://redux-form.com/6.4.3/examples/material-ui/
-const renderInput = ({ /* eslint-disable react/prop-types */
+export const RenderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
   input: inputProps,
   labelHidden,
@@ -190,12 +190,12 @@ export default (Field) => {
               type="text"
               placeholder={placeHolder.username}
               disabled={isLoading}
-              component={renderInput}
+              component={RenderInput}
               labelHidden={labelHidden}
               translate={translate}
             />
           ) : (
-            createElement(renderInput, {
+            createElement(RenderInput, {
               label: 'Username',
               placeholder: placeHolder.username,
               labelHidden,
@@ -210,12 +210,12 @@ export default (Field) => {
               type="password"
               placeholder={placeHolder.password}
               disabled={isLoading}
-              component={renderInput}
+              component={RenderInput}
               labelHidden={labelHidden}
               translate={translate}
             />
           ) : (
-            createElement(renderInput, {
+            createElement(RenderInput, {
               label: 'Password',
               placeholder: placeHolder.password,
               labelHidden,
@@ -230,7 +230,7 @@ export default (Field) => {
               label={translate ? translate(rememberMeTranslateKey) : rememberMeLabel}
               type="checkbox"
               disabled={isLoading}
-              component={renderInput}
+              component={RenderInput}
               translate={translate}
             />
           ) : (
