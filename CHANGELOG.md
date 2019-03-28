@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/bootstrap-styled/login-form/compare/v1.0.13...v1.0.14) (2019-03-28)
+
+
+### Bug Fixes
+
+* **keys:** validate key rescoped ([03db8d2](https://github.com/bootstrap-styled/login-form/commit/03db8d2))
+
 ## [1.0.13](https://github.com/bootstrap-styled/login-form/compare/v1.0.12...v1.0.13) (2019-03-28)
 
 
