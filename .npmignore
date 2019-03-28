@@ -28,3 +28,4 @@ sonar-project.properties
 /internals
 **/tests/*.test.js
 .ncurc.js
+.npmrc
