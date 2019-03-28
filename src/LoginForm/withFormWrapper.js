@@ -69,7 +69,14 @@ export const defaultProps = {
       '$login-wrapper-border-width': '0px',
       '$login-wrapper-border-color': 'grey',
       '$login-header-wrapper-margin': '0',
-      '$login-footer-wrapper-margin': '1rem auto',
+      '$login-header-wrapper-border-width': '1px',
+      '$login-header-wrapper-border-color': '#D9DADC',
+      '$login-header-wrapper-margin-top': '2rem',
+      '$login-header-wrapper-margin-bottom': '2rem',
+      '$login-header-wrapper-padding-bottom': '2rem',
+      '$login-footer-wrapper-border-width': '1px',
+      '$login-footer-wrapper-border-color': '#D9DADC',
+      '$login-footer-wrapper-margin': '2rem auto',
       '$login-footer-font-size': '.6rem',
       '$checkbox-margin-left': '-8.5rem',
     },
@@ -187,10 +194,15 @@ export default (LoginForm) => {
   
           .login-header-wrapper {
             margin: ${props.theme.loginForm['$login-header-wrapper-margin']};
+            border-bottom: ${props.theme.loginForm['$login-header-wrapper-border-width']} solid ${props.theme.loginForm['$login-header-wrapper-border-color']};
+            margin-top: ${props.theme.loginForm['$login-header-wrapper-margin-top']};
+            margin-bottom: ${props.theme.loginForm['$login-header-wrapper-margin-bottom']};
+            padding-bottom: ${props.theme.loginForm['$login-header-wrapper-padding-bottom']};
+
           }
           .login-footer-wrapper {
             margin: ${props.theme.loginForm['$login-footer-wrapper-margin']};
-            
+            border-top: ${props.theme.loginForm['$login-footer-wrapper-border-width']} solid ${props.theme.loginForm['$login-footer-wrapper-border-color']};
             .footer-terms-conditions {
               font-size: ${props.theme.loginForm['$login-footer-font-size']};
             }
