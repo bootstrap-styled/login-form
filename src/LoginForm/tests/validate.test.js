@@ -10,6 +10,10 @@ describe('validate function', () => {
     validate({ username: 'test' });
     expect(errors.username).toEqual('username_error');
   });
+  it('should display an username if username is null', () => {
+    validate({ username: null });
+    expect(errors.username).toEqual('username_error');
+  });
   it('should display an error if password is null', () => {
     validate({ password: null });
     expect(errors.password).toEqual('password_error');
