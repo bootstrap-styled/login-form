@@ -1,3 +1,12 @@
+## [1.0.15](https://github.com/bootstrap-styled/login-form/compare/v1.0.14...v1.0.15) (2019-03-29)
+
+
+### Bug Fixes
+
+* **tests:** added tests for withLoginForm. ([b6735cf](https://github.com/bootstrap-styled/login-form/commit/b6735cf))
+* **tests:** updated testst and upped coverage threshold. ([b1dd687](https://github.com/bootstrap-styled/login-form/commit/b1dd687))
+* **withLoginForm:** added missing default props for theme and added classes for betterv isuals. ([d91d5b0](https://github.com/bootstrap-styled/login-form/commit/d91d5b0))
+
 ## [1.0.14](https://github.com/bootstrap-styled/login-form/compare/v1.0.13...v1.0.14) (2019-03-28)
 
 
