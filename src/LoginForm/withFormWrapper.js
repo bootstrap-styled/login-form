@@ -12,7 +12,7 @@ import H1 from '@bootstrap-styled/v4/lib/H1';
 
 import { defaultProps as formDefaultProps } from './withLoginForm';
 
-const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
+export const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   logo, version,
 }) => (
   <Fragment>
@@ -25,7 +25,7 @@ const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   </Fragment>
 );
 
-const DefaultLoginFormFooter = () => (
+export const DefaultLoginFormFooter = () => (
   <Small className="footer-terms-conditions" color="muted">
     By clicking you agree to the
     {' '}
@@ -38,7 +38,7 @@ and
   </Small>
 );
 
-const DefaultLoginFormAfterActions = () => (
+export const DefaultLoginFormAfterActions = () => (
   <div className="text-center">
     <A href="#">Forgot your username or password?</A>
     <P className="mt-1">
