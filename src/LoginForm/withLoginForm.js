@@ -42,7 +42,14 @@ export const defaultProps = {
       '$login-wrapper-border-width': '0px',
       '$login-wrapper-border-color': 'grey',
       '$login-header-wrapper-margin': '0',
-      '$login-footer-wrapper-margin': '1rem auto',
+      '$login-header-wrapper-border-width': '1px',
+      '$login-header-wrapper-border-color': '#D9DADC',
+      '$login-header-wrapper-margin-top': '2rem',
+      '$login-header-wrapper-margin-bottom': '2rem',
+      '$login-header-wrapper-padding-bottom': '2rem',
+      '$login-footer-wrapper-border-width': '1px',
+      '$login-footer-wrapper-border-color': '#D9DADC',
+      '$login-footer-wrapper-margin': '2rem auto',
       '$login-footer-font-size': '.6rem',
       '$checkbox-margin-left': '-8.5rem',
     },
@@ -128,9 +135,10 @@ export const RenderInput = ({ /* eslint-disable react/prop-types */
   label,
   type,
   labelProps = {},
+  className,
   ...props
 }) => (
-  <FormGroup color={touched && error ? 'danger' : ''}>
+  <FormGroup color={touched && error ? 'danger' : ''} className={className}>
     {type === 'checkbox' ? (
       <Fragment>
         <Label {...labelProps} hidden={labelHidden}>
@@ -182,7 +190,7 @@ export default (Field) => {
     return (
       <Form name="login-form" className={cn('form', className)} onSubmit={handleSubmit ? handleSubmit(onSubmit) : onSubmit} {...sanitizeRestProps(rest)}>
         {notification}
-        <div className="field-wrapper">
+        <div className="field-wrapper mb-2">
           {Field ? (
             <Field
               name="username"
@@ -232,6 +240,8 @@ export default (Field) => {
               disabled={isLoading}
               component={RenderInput}
               translate={translate}
+              className="mb-0"
+              inputProps={{ className: 'ml-0' }}
             />
           ) : (
             <FormGroup className="mb-0">
