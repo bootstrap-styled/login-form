@@ -240,8 +240,7 @@ export default (Field) => {
               disabled={isLoading}
               component={RenderInput}
               translate={translate}
-              className="mb-0"
-              inputProps={{ className: 'ml-0' }}
+              className="mb-0, ml-0"
             />
           ) : (
             <FormGroup className="mb-0">
