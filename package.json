@@ -1,6 +1,6 @@
 {
   "name": "@bootstrap-styled/login-form",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Library of LoginForm components made for Bootstrap Styled. Support redux, react-intl and ImmutableJS",
   "main": "lib/index.js",
   "homepage": "https://bootstrap-styled.github.io/login-form",

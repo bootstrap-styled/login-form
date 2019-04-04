@@ -1,3 +1,10 @@
+## [1.0.16](https://github.com/bootstrap-styled/login-form/compare/v1.0.15...v1.0.16) (2019-04-04)
+
+
+### Bug Fixes
+
+* **withLoginForm:** removed wrongly attributed props to Field component. ([85fa26c](https://github.com/bootstrap-styled/login-form/commit/85fa26c))
+
 ## [1.0.15](https://github.com/bootstrap-styled/login-form/compare/v1.0.14...v1.0.15) (2019-03-29)
 
 
