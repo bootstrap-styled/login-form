@@ -1,12 +1,12 @@
 export const validate = (values) => {
   const errors = {};
   if (!values.username) {
-    errors.username = 'bootstrap-styled.login.form.warning.username.required';
+    errors.username = 'usernameRequired';
   } else if (values.username.length > 15) {
-    errors.username = 'bootstrap-styled.login.form.warning.username.maxLength';
+    errors.username = 'usernameMax';
   }
   if (!values.password) {
-    errors.password = 'bootstrap-styled.login.form.warning.password.required';
+    errors.password = 'passwordRequired';
   }
   return errors;
 };

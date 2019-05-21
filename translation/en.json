@@ -1,0 +1,16 @@
+{
+  "bootstrap-styled.login.form.actions.forgotCredentials": "Forgot your username or password?",
+  "bootstrap-styled.login.form.actions.noAccount": "Don't have an account?",
+  "bootstrap-styled.login.form.actions.signUp": "Sign Up",
+  "bootstrap-styled.login.form.button.login": "Login",
+  "bootstrap-styled.login.form.footer.and": "and",
+  "bootstrap-styled.login.form.footer.clicking": "By clicking you agree to the",
+  "bootstrap-styled.login.form.footer.privacyPolicy": "Privacy policy",
+  "bootstrap-styled.login.form.footer.termsConditions": "Terms & Conditions",
+  "bootstrap-styled.login.form.label.password": "Password",
+  "bootstrap-styled.login.form.label.rememberMe": "Remember me",
+  "bootstrap-styled.login.form.label.username": "Username",
+  "bootstrap-styled.login.form.password.required": "Password is required.",
+  "bootstrap-styled.login.form.username.maxLength": "Maximum length has been reached.",
+  "bootstrap-styled.login.form.username.required": "Username is required."
+}

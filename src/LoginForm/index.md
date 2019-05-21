@@ -7,7 +7,7 @@ The LoginForm in its most simple aspect gives us as follows.
 If you wish, you may strip the LoginForm from its defaultProps to render the form by itself.
 
 ```js
-<LoginFormExample footer={false} afterActions={false}/>
+<LoginFormExample footer={false} afterActions={false} header={false} />
 ```
 
 ## LoginForm
@@ -32,15 +32,6 @@ If you wish, you may strip the LoginForm from its defaultProps to render the for
 | `onSubmit`          | `function` | `null`                           | handle onSubmit action    |
 | `initialValues`     | `object`   | `{ username: '', password: '' }` | form initial values                 |
 | `placeHolder`       | `object`   | `{ username: 'Santaclauze', password: '••••••••••' }` | form initial values                 |
-| `translate`         | `object`   | `undefined` | A function that take a translate key as argument and return the translated text |
-| `usernameTranslateKey` | `string` | `bootstrap-styled.login.form.label.username` | Username translate key to be used when `prop.translate` is set |
-| `usernameLabel`        | `string` | `Username`| Label for username field |
-| `passwordTranslateKey` | `string` | `bootstrap-styled.login.form.label.password` | Password translate key to be used when `prop.translate` is set |
-| `passwordLabel`        | `string` | `Password` | Label for password field |
-| `rememberMeTranslateKey` | `string` | `bootstrap-styled.login.form.label.rememberMe` | Remember me translate key to be used when `prop.translate` is set |
-| `rememberMeLabel`      | `string` | `Remember me` | Label for remember me checkbox |
-| `loginTranslateKey`    | `string` | `bootstrap-styled.login.form.button.login` | Login translate key to be used `prop.translate` is set |
-| `loginLabel`           | `string` | `Login` | Text for login button |
 
 
 **theme**:

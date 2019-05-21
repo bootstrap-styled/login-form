@@ -1,16 +1,16 @@
 import React, { Fragment, createElement } from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import omit from 'lodash.omit';
-
 import Small from '@bootstrap-styled/v4/lib/Small';
 import Alert from '@bootstrap-styled/v4/lib/Alert';
 import P from '@bootstrap-styled/v4/lib/P';
 import A from '@bootstrap-styled/v4/lib/A';
 import H1 from '@bootstrap-styled/v4/lib/H1';
-
 import { defaultProps as formDefaultProps } from './withLoginForm';
+import messages from './messages';
 
 export const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
   logo, version,
@@ -27,23 +27,23 @@ export const DefaultLoginFormHeader = ({ /* eslint-disable react/prop-types */
 
 export const DefaultLoginFormFooter = () => (
   <Small className="footer-terms-conditions" color="muted">
-    By clicking you agree to the
+    {<FormattedMessage {...messages.clicking} />}
     {' '}
-    <A href="#">Terms & Conditions</A>
+    <A href="#">{<FormattedMessage {...messages.termsConditions} />}</A>
     {' '}
-and
+    {<FormattedMessage {...messages.and} />}
     {' '}
-    <A href="#">Privacy Policy</A>
+    <A href="#">{<FormattedMessage {...messages.privacyPolicy} />}</A>
 .
   </Small>
 );
 
 export const DefaultLoginFormAfterActions = () => (
   <div className="text-center">
-    <A href="#">Forgot your username or password?</A>
+    <A href="#">{<FormattedMessage {...messages.forgotCredentials} />}</A>
     <P className="mt-1">
-Dont have an account?
-      <A href="#">Sign Up</A>
+      {<FormattedMessage {...messages.noAccount} />}
+      <A href="#">{<FormattedMessage {...messages.signUp} />}</A>
     </P>
   </div>
 );
@@ -55,6 +55,7 @@ export const defaultProps = {
   rememberMe: false,
   afterActions: <DefaultLoginFormAfterActions />,
   footer: <DefaultLoginFormFooter />,
+  header: DefaultLoginFormHeader,
   loader: 'Loading...',
   autoHideDuration: null,
   onSubmit: () => console.warn('You must set an onSubmit() function to the LoginForm.'), // eslint-disable-line no-console
@@ -97,6 +98,7 @@ export const propTypes = {
   header: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.bool,
+    PropTypes.func,
   ]),
   footer: PropTypes.oneOfType([
     PropTypes.object,
@@ -141,19 +143,19 @@ export default (LoginForm) => {
         beforeActions,
         afterActions,
         rememberMe,
-        translate,
         ...formRest
       } = omit(this.props, ['theme']);
-
       return (
         <div className={classnames(className, 'main-wrapper')}>
           <div className={classnames('login-wrapper')}>
-            <div className={classnames('login-header-wrapper d-flex justify-content-center align-items-center flex-column')}>
-              {header || createElement(DefaultLoginFormHeader, {
-                logo,
-                version,
-              })}
-            </div>
+            {header && (
+              <div className={classnames('login-header-wrapper d-flex justify-content-center align-items-center flex-column')}>
+                {createElement(header, {
+                  logo,
+                  version,
+                })}
+              </div>
+            )}
             <div>
               {loginForm || createElement(LoginForm, {
                 notification: notification && notification.message.length > 0 && <Alert color={notification.type} className="text-center w-100" autoHideDuration={notification.autoHideDuration || autoHideDuration} onClick={hideNotification}>{notification.message}</Alert>,
@@ -161,14 +163,15 @@ export default (LoginForm) => {
                 afterActions,
                 labelHidden,
                 rememberMe,
-                translate,
                 loader,
                 ...formRest,
               })}
             </div>
-            <div className="login-footer-wrapper">
-              {footer}
-            </div>
+            {footer && (
+              <div className="login-footer-wrapper">
+                {footer}
+              </div>
+            )}
           </div>
         </div>
       );
