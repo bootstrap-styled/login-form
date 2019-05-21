@@ -28,6 +28,8 @@
     "lint": "eslint src",
     "prepublish": "npm run build",
     "lint-staged": "lint-staged",
+    "extract-intl": "npx @rollup-umd/intl intl extract",
+    "extract-intl:doc": "npx @rollup-umd/intl doc intl",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
@@ -173,6 +175,7 @@
     "babel-plugin-array-includes": "^2.0.3",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-react-transform": "^3.0.0",
+    "babel-plugin-react-intl": "^3.0.1",
     "babel-plugin-styled-components": "^1.10.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "cz-conventional-changelog": "^2.1.0",
@@ -213,6 +216,7 @@
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.7.2",
     "react-transition-group": "^2.7.1",
+    "react-intl": "^2.8.0",
     "redux-immutable": "^4.0.0"
   },
   "peerDependencies": {
@@ -321,7 +325,7 @@
     "coverageThreshold": {
       "global": {
         "statements": 78,
-        "branches": 80,
+        "branches": 65,
         "functions": 85,
         "lines": 78
       }

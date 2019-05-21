@@ -49,14 +49,6 @@ describe('withLoginForm', () => {
     });
     expect(renderedComponent.find('Label').at(2).text()).toEqual('Remember me');
   });
-  it('should display a translate loading key if loader is not defined and isLoading is false', () => {
-    const renderedComponent = renderComponent({
-      onSubmit: () => {},
-      translate: jest.fn(),
-      loginTranslateKey: 'translate test',
-    });
-    expect(renderedComponent.props().translate).toHaveBeenCalledWith(renderedComponent.props().loginTranslateKey);
-  });
   it('should display Field components', () => {
     const renderedComponent = renderComponentField({
       onSubmit: () => {},
@@ -64,32 +56,11 @@ describe('withLoginForm', () => {
     });
     expect(renderedComponent.find('Field').length).toBe(3);
   });
-  it('should display Field components with translated keys', () => {
-    const renderedComponent = renderComponentField({
-      onSubmit: () => {},
-      rememberMe: true,
-      translate: jest.fn(),
-      usernameTranslateKey: 'translate test',
-      passwordTranslateKey: 'translate test',
-      rememberMeTranslateKey: 'translate test',
-    });
-    expect(renderedComponent.props().translate).toHaveBeenCalledWith(renderedComponent.props().usernameTranslateKey);
-    expect(renderedComponent.props().translate).toHaveBeenCalledWith(renderedComponent.props().passwordTranslateKey);
-    expect(renderedComponent.props().translate).toHaveBeenCalledWith(renderedComponent.props().rememberMeTranslateKey);
-  });
   it('RenderInput should display error FormGroup if touched and error true', () => {
     const renderedComponent = renderComponentInput({
-      meta: { error: 'error', touched: true },
+      meta: { error: 'usernameRequired', touched: true },
     });
     expect(renderedComponent.find('FormGroup').props().color).toEqual('danger');
-    expect(renderedComponent.find('FormFeedback').length).toBe(1);
-  });
-  it('RenderInput should display error FormGroup if touched and error true', () => {
-    const renderedComponent = renderComponentInput({
-      meta: { error: 'error', touched: true },
-      translate: jest.fn(),
-    });
-    expect(renderedComponent.props().translate).toHaveBeenCalledWith(renderedComponent.props().meta.error);
     expect(renderedComponent.find('FormFeedback').length).toBe(1);
   });
   it('RenderInput should display a checkboc', () => {

@@ -1,4 +1,5 @@
 import React, { createElement, Fragment } from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import omit from 'lodash.omit';
 import styled from 'styled-components';
@@ -10,6 +11,7 @@ import Form from '@bootstrap-styled/v4/lib/Form';
 import FormGroup from '@bootstrap-styled/v4/lib/Form/FormGroup';
 import FormFeedback from '@bootstrap-styled/v4/lib/Form/FormFeedback';
 import bp from '@bootstrap-styled/css-mixins/lib/breakpoints';
+import messages from './messages';
 
 export const defaultProps = {
   beforeActions: null,
@@ -23,15 +25,6 @@ export const defaultProps = {
     username: 'Santaclauze',
     password: '••••••••••',
   },
-  translate: undefined,
-  usernameTranslateKey: 'bootstrap-styled.login.form.label.username',
-  usernameLabel: 'Username',
-  passwordTranslateKey: 'bootstrap-styled.login.form.label.password',
-  passwordLabel: 'Password',
-  rememberMeTranslateKey: 'bootstrap-styled.login.form.label.rememberMe',
-  rememberMeLabel: 'Remember me',
-  loginTranslateKey: 'bootstrap-styled.login.form.button.login',
-  loginLabel: 'Login',
   theme: {
     loginForm: {
       '$wrapper-bg-color': '#E9EAEC',
@@ -75,15 +68,6 @@ export const propTypes = {
     password: PropTypes.string,
   }),
   theme: PropTypes.object,
-  translate: PropTypes.func,
-  usernameTranslateKey: PropTypes.string,
-  usernameLabel: PropTypes.string,
-  passwordTranslateKey: PropTypes.string,
-  passwordLabel: PropTypes.string,
-  rememberMeTranslateKey: PropTypes.string,
-  rememberMeLabel: PropTypes.string,
-  loginTranslateKey: PropTypes.string,
-  loginLabel: PropTypes.string,
 };
 
 const sanitizeRestProps = ({
@@ -117,7 +101,6 @@ const sanitizeRestProps = ({
   submitSucceeded,
   submitting,
   touch,
-  translate,
   triggerSubmit,
   untouch,
   valid,
@@ -131,7 +114,6 @@ export const RenderInput = ({ /* eslint-disable react/prop-types */
   meta: { touched, error } = {},
   input: inputProps,
   labelHidden,
-  translate,
   label,
   type,
   labelProps = {},
@@ -154,7 +136,7 @@ export const RenderInput = ({ /* eslint-disable react/prop-types */
         <Input {...inputProps} type={type} {...props} />
       </Fragment>
     )}
-    {!!(touched && error) && <FormFeedback>{translate ? translate(error) : error}</FormFeedback>}
+    {!!(touched && error) && <FormFeedback><FormattedMessage {...messages[error]} /></FormFeedback>}
   </FormGroup>
 );
 
@@ -194,13 +176,12 @@ export default (Field) => {
           {Field ? (
             <Field
               name="username"
-              label={translate ? translate(usernameTranslateKey) : usernameLabel}
+              label={<FormattedMessage {...messages.username} />}
               type="text"
               placeholder={placeHolder.username}
               disabled={isLoading}
               component={RenderInput}
               labelHidden={labelHidden}
-              translate={translate}
             />
           ) : (
             createElement(RenderInput, {
@@ -214,13 +195,12 @@ export default (Field) => {
           {Field ? (
             <Field
               name="password"
-              label={translate ? translate(passwordTranslateKey) : passwordLabel}
+              label={<FormattedMessage {...messages.password} />}
               type="password"
               placeholder={placeHolder.password}
               disabled={isLoading}
               component={RenderInput}
               labelHidden={labelHidden}
-              translate={translate}
             />
           ) : (
             createElement(RenderInput, {
@@ -235,23 +215,22 @@ export default (Field) => {
           {rememberMe ? (Field ? ( // eslint-disable-line no-nested-ternary
             <Field
               name="rememberMe"
-              label={translate ? translate(rememberMeTranslateKey) : rememberMeLabel}
+              props={{ className: 'mb-0' }}
+              label={<FormattedMessage {...messages.rememberMe} />}
               type="checkbox"
               disabled={isLoading}
               component={RenderInput}
-              translate={translate}
-              className="mb-0, ml-0"
             />
           ) : (
             <FormGroup className="mb-0">
               <Label check>
-                {'Remember me'}
                 <Input type="checkbox" />
+                {'Remember me'}
               </Label>
             </FormGroup>
           )) : null}
           <Button type="submit" disabled={isLoading || submitting} color="primary">
-            {!(isLoading || submitting) ? translate ? translate(loginTranslateKey) : loginLabel : loader /* eslint-disable-line */}
+            {!(isLoading || submitting) ? <FormattedMessage {...messages.login} /> : loader /* eslint-disable-line */}
           </Button>
         </div>
         {afterActions}
@@ -267,9 +246,6 @@ export default (Field) => {
         .btn {
           width: 100%;
           ${bp.up('md', props.theme['$grid-breakpoints'], 'width: 50%')}
-        }
-        .form-check-input {
-          margin-left: ${props.theme.loginForm['$checkbox-margin-left']};
         }
       }
     `}
