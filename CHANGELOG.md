@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/bootstrap-styled/login-form/compare/v1.0.16...v2.0.0) (2019-05-21)
+
+
+### Features
+
+* 🎸 Added react-intl ([ae9934f](https://github.com/bootstrap-styled/login-form/commit/ae9934f))
+
+
+### BREAKING CHANGES
+
+* No more access to the translate function in favor of pure react-intl
+translation.
+
 ## [1.0.16](https://github.com/bootstrap-styled/login-form/compare/v1.0.15...v1.0.16) (2019-04-04)
 
 
