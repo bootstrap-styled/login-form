@@ -210,7 +210,7 @@
   "dependencies": {
     "@bootstrap-styled/css-mixins": "^2.0.6",
     "@bootstrap-styled/v4": "^3.0.12",
-    "bootstrap-styled": "^2.4.13",
+    "bootstrap-styled": "^2.7.2",
     "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
     "lodash.omit": "^4.5.0",
