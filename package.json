@@ -211,7 +211,7 @@
     "@bootstrap-styled/css-mixins": "^2.0.6",
     "@bootstrap-styled/v4": "^3.0.12",
     "bootstrap-styled": "^2.4.13",
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.0",
     "immutable": "^4.0.0-rc.12",
     "lodash.omit": "^4.5.0",
     "prop-types": "^15.7.2",
